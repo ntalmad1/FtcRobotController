@@ -171,6 +171,8 @@ public class RobotAutoDriveByEncoder_Linear extends LinearOpMode {
                 telemetry.addData("Currently at",  " at %7d :%7d",
                                             leftDrive.getCurrentPosition(), rightDrive.getCurrentPosition());
                 telemetry.update();
+
+
             }
 
             // Stop all motion;
