@@ -12,60 +12,24 @@ import org.firstinspires.ftc.teamcode.library.utility.Converter;
 /**
  *
  */
-public class DriveTrain
+public class SimpleDriveTrain extends  AbstractDriveTrain
 {
-    /**
-     */
-    private final DriveTrainConfiguration config;
-
-    /**
-     */
-    private MotorGroup motorGroup;
-
-    /**
-     */
-    private final ElapsedTime runtime = new ElapsedTime();
-
-    /**
-     */
-    private final LinearOpMode robot;
-
-    /**
-     */
-    private DcMotor leftFrontMotor;
-    private DcMotor rightFrontMotor;
-    private DcMotor rightRearMotor;
-    private DcMotor leftRearMotor;
-
-
     /**
      *
      * @param config The drive train configuration, because of the number of variables, instead of
      *               passing all the variables as parameters, pass the variables in a configurable
      *               object
      */
-    public DriveTrain (DriveTrainConfiguration config)
+    public SimpleDriveTrain(SimpleDriveTrainConfiguration config)
     {
-        this.config = config;
-
-        this.robot = config.robot;
+        super(config);
     }
-
 
     /**
      */
     public void init ()
     {
-        this.leftFrontMotor = this.initMotor(config.leftFrontDeviceName, DcMotor.Direction.REVERSE);
-        // this.rightFrontMotor = this.initMotor(config.rightFrontDeviceName, DcMotor.Direction.FORWARD);
-        // this.rightRearMotor = this.initMotor(config.leftRearDeviceName, DcMotor.Direction.REVERSE);
-        // this.leftRearMotor = this.initMotor(config.rightRearDeviceName, DcMotor.Direction.FORWARD);
-
-        this.motorGroup = new MotorGroup();
-        this.motorGroup.add(this.leftFrontMotor);
-        //this.motorGroup.add(this.rightFrontMotor);
-        //this.motorGroup.add(this.rightRearMotor);
-        //this.motorGroup.add(this.leftRearMotor);
+        super.init();
     }
 
     /**
@@ -77,7 +41,7 @@ public class DriveTrain
      */
     public void back (double startPower, double maxPower, double distance)
     {
-        this.back(startPower, maxPower, distance, this.config.defaultUnits);
+        this.back(startPower, maxPower, distance, this.getConfig().defaultUnits);
     }
 
     /**
@@ -108,7 +72,7 @@ public class DriveTrain
      */
     public void forward (double startPower, double maxPower, double distance)
     {
-        this.forward(startPower, maxPower, distance, this.config.defaultUnits);
+        this.forward(startPower, maxPower, distance, this.getConfig().defaultUnits);
     }
 
     /**
@@ -139,7 +103,7 @@ public class DriveTrain
     protected void line (double startPower, double maxPower, double distance, Units units)
     {
         if (units == null) {
-            units = this.config.defaultUnits;
+            units = this.getConfig().defaultUnits;
         }
 
         //-----------------------------------------------------------------
@@ -147,7 +111,7 @@ public class DriveTrain
         distance = Converter.convertToCm(distance, units);
         int tics = this.convertCmToTics(distance);
 
-        this.motorGroup.reset();
+        this.resetMotorGroup();
         this.motorGroup.setTargetPosition(tics);
         this.motorGroup.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
@@ -157,8 +121,8 @@ public class DriveTrain
 
         // TODO: future - more than one acceleration algorithm that is configurable (e.g. linear vs logarithmic)
 
-        int rampUpTics = this.convertCmToTics(this.config.rampUpDistanceCm);
-        int rampDownTics = this.convertCmToTics(this.config.rampDownDistanceCm);
+        int rampUpTics = this.convertCmToTics(this.getConfig().rampUpDistanceCm);
+        int rampDownTics = this.convertCmToTics(this.getConfig().rampDownDistanceCm);
 
         if ((rampUpTics + rampDownTics) > tics)
         {
@@ -200,115 +164,35 @@ public class DriveTrain
 
     /**
      *
+     * @return
+     */
+    protected SimpleDriveTrainConfiguration getConfig ()
+    {
+        return (SimpleDriveTrainConfiguration)super.getConfig();
+    }
+
+    /**
+     *
      * @param distance The distance in cm to convert to tics
      * @return The number ber tics converted from cm
      */
     private int convertCmToTics(double distance)
     {
-        double wheelCircumference = 2 * Math.PI * ( this.config.wheelDiameterCm / 2 );
+        double wheelCircumference = 2 * Math.PI * ( this.getConfig().wheelDiameterCm / 2 );
 
         double revs = distance / wheelCircumference;
 
-        double tics = revs * this.config.motorTicsPerRev;
+        double tics = revs * this.getConfig().motorTicsPerRev;
 
         return (int)Math.round(tics);
     }
 
     /**
      *
-     * @param deviceName The name of the device in the control hub
-     * @param direction The initial direction of the motor. NOTE: The direction will be reset for each
-     *                  operation
      */
-    private DcMotor initMotor (String deviceName, DcMotor.Direction direction)
+    private void resetMotorGroup ()
     {
-        DcMotor motor = this.robot.hardwareMap.get(DcMotor.class, deviceName);
-
-        motor.setDirection(direction);
-        motor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        motor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-
-        return motor;
-    }
-
-    /**
-     *
-     */
-    private static class MotorGroup
-    {
-        /**
-         */
-        private final List<DcMotor> motors = new ArrayList<>();
-
-        /**
-         * Adds a motor to the group
-         * 
-         * @param motor The motor to add to the group
-         */
-        public void add (DcMotor motor)
-        {
-            this.motors.add(motor);
-        }
-
-        /**
-         *
-         * @param mode Sets the mode of all motors in the group
-         */
-        public void setMode (DcMotor.RunMode mode)
-        {
-            for (DcMotor motor : this.motors ) {
-                motor.setMode(mode);
-            }
-        }
-
-        /**
-         *
-         * @param tics The number of tics to rotate to
-         */
-        public void setTargetPosition (int tics)
-        {
-            for (DcMotor motor : this.motors ) {
-                motor.setTargetPosition(tics);
-            }
-        }
-
-        /**
-         *
-         * @param power Sets the power on each motor in the group
-         */
-        public void setPower (double power)
-        {
-            for (DcMotor motor : this.motors ) {
-                motor.setPower(power);
-            }
-        }
-
-        /**
-         *
-         * @return True: if all of the motors in group are busy, False: if one of the motors is not busy
-         */
-        public boolean isBusy ()
-        {
-            if (this.motors.size() == 0) {
-                return false;
-            }
-
-            for (DcMotor motor : this.motors ) {
-                if (!motor.isBusy()) {
-                    return false;
-                }
-            }
-
-            return true;
-        }
-
-        /**
-         *
-         */
-        public void reset ()
-        {
-            this.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-            this.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        }
+        this.motorGroup.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        this.motorGroup.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
     }
 }

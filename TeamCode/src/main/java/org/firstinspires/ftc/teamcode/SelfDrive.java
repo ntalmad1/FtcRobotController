@@ -1,21 +1,23 @@
 package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
-import org.firstinspires.ftc.teamcode.library.DriveTrain;
-import org.firstinspires.ftc.teamcode.library.DriveTrainConfiguration;
+import org.firstinspires.ftc.teamcode.library.SimpleDriveTrain;
+import org.firstinspires.ftc.teamcode.library.SimpleDriveTrainConfiguration;
 import org.firstinspires.ftc.teamcode.library.Units;
 
 /**
  * 
  */
 @Autonomous(name="Robot: SelfDrive", group="Robot")
+@Disabled
 public class SelfDrive extends LinearOpMode
 {
     /**
      */
-    private final DriveTrain driveTrain;
+    private final SimpleDriveTrain driveTrain;
 
     //private MecanumDriveTrain driveTrain;
 
@@ -25,7 +27,7 @@ public class SelfDrive extends LinearOpMode
     {
         super();
 
-        DriveTrainConfiguration driveTrainConfig = new DriveTrainConfiguration();
+        SimpleDriveTrainConfiguration driveTrainConfig = new SimpleDriveTrainConfiguration();
 
         driveTrainConfig.robot = this;
         driveTrainConfig.motorTicsPerRev = 537.7;
@@ -37,7 +39,7 @@ public class SelfDrive extends LinearOpMode
         //driveTrainConfig.rightRearDeviceName  = "right_rear_drive";
         //driveTrainConfig.leftRearDeviceName   = "left_rear_drive";
 
-        this.driveTrain = new DriveTrain(driveTrainConfig);
+        this.driveTrain = new SimpleDriveTrain(driveTrainConfig);
     }
 
     @Override
