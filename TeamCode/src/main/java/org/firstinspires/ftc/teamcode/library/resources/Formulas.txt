@@ -1,10 +1,13 @@
-Line segment rotation formula:
+>>Line segment rotation formula:
 
-BAD DO NOT USE!
 https://math.stackexchange.com/questions/1687901/how-to-rotate-a-line-segment-around-one-of-the-end-points
 
-x3=cos(θ)(x2−x1) − sin(θ)(y2−y1) + x1
+x3 = cos(θ)(x2−x1) − sin(θ)(y2−y1) + x1
 
-y3=sin(θ)(x2−x1) + cos(θ)(y2−y1) + y1
+y3 = sin(θ)(x2−x1) + cos(θ)(y2−y1) + y1
+
+>>Arc Length Formula
+
+s = 2 π r (θ/360°)
 
 

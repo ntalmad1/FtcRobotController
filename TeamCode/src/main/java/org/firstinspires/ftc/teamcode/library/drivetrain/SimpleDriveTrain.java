@@ -1,18 +1,16 @@
-package org.firstinspires.ftc.teamcode.library;
+package org.firstinspires.ftc.teamcode.library.drivetrain;
 
-import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
-import com.qualcomm.robotcore.util.ElapsedTime;
-import java.util.List;
-import java.util.ArrayList;
 
+import org.firstinspires.ftc.teamcode.library.utility.Units;
 import org.firstinspires.ftc.teamcode.library.utility.Converter;
+import org.firstinspires.ftc.teamcode.library.utility.GridUtils;
 
 /**
  *
  */
-public class SimpleDriveTrain extends  AbstractDriveTrain
+public class SimpleDriveTrain extends AbstractDriveTrain
 {
     /**
      *
@@ -91,6 +89,52 @@ public class SimpleDriveTrain extends  AbstractDriveTrain
         this.rightRearMotor.setDirection(DcMotorSimple.Direction.FORWARD);
 
         this.line(startPower, maxPower, distance, units);
+    }
+
+    /**
+     *
+     * @param startPower
+     * @param maxPower
+     * @param degrees
+     */
+    public void turnLeft (double startPower, double maxPower, double degrees)
+    {
+        this.leftFrontMotor.setDirection(DcMotorSimple.Direction.FORWARD);
+        this.leftRearMotor.setDirection(DcMotorSimple.Direction.FORWARD);
+
+        this.rightFrontMotor.setDirection(DcMotorSimple.Direction.FORWARD);
+        this.rightRearMotor.setDirection(DcMotorSimple.Direction.FORWARD);
+
+        this.turn(startPower, maxPower, degrees);
+    }
+
+    /**
+     *
+     * @param startPower
+     * @param maxPower
+     * @param degrees
+     */
+    public void turnRight (double startPower, double maxPower, double degrees)
+    {
+        this.leftFrontMotor.setDirection(DcMotorSimple.Direction.REVERSE);
+        this.leftRearMotor.setDirection(DcMotorSimple.Direction.REVERSE);
+
+        this.rightFrontMotor.setDirection(DcMotorSimple.Direction.REVERSE);
+        this.rightRearMotor.setDirection(DcMotorSimple.Direction.REVERSE);
+
+        this.turn(startPower, maxPower, degrees);
+    }
+
+    /**
+     *
+     * @param startPower
+     * @param maxPower
+     * @param degrees
+     */
+    protected void turn (double startPower, double maxPower, double degrees)
+    {
+        double arcLength = GridUtils.arcLength(this.getConfig().turningRadiusCm, degrees);
+        this.line(startPower, maxPower, arcLength, Units.Centimeters);
     }
 
     /**

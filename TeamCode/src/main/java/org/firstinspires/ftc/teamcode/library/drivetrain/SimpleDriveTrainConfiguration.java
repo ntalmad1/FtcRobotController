@@ -1,6 +1,6 @@
-package org.firstinspires.ftc.teamcode.library;
+package org.firstinspires.ftc.teamcode.library.drivetrain;
 
-import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import org.firstinspires.ftc.teamcode.library.utility.Units;
 
 /**
  *
@@ -22,6 +22,10 @@ public class SimpleDriveTrainConfiguration extends AbstractDriveTrainConfigurati
     /**
      */
     public double rampDownDistanceCm;
+
+    /**
+     */
+    public double turningRadiusCm;
 
     /**
      */

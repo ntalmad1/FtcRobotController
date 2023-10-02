@@ -1,5 +1,7 @@
 package org.firstinspires.ftc.teamcode.library.utility;
 
+import androidx.annotation.NonNull;
+
 /**
  * A collection of utility methods for (x,y) coordinate manipulations
  * and calculations
@@ -18,6 +20,7 @@ public class GridUtils
      * @param degrees
      * @return
      */
+    @NonNull
     public static Point rotatePointByDegrees (double x, double y, double degrees)
     {
 //        Noah's attempt
@@ -50,24 +53,25 @@ public class GridUtils
     }
 
     /**
-     * x3 = cos(θ)(x2−x1) − sin(θ)(y2−y1) + x1
-     * y3 = sin(θ)(x2−x1) + cos(θ)(y2−y1) + y1
+     * s = 2 π r (θ/360°)
      *
-     * @param x1
-     * @param y1
+     * @param radius
+     * @param degrees
      * @return
      */
-    public static Point rotateLineByDegrees (double x1, double y1, double x2, double y2, double degrees)
+    public static double arcLength (double radius, double degrees)
     {
-        // TODO: BAD
-        double rads = degrees * Math.PI / (double)180;
+        double arcLength = 2 * Math.PI * radius * ( degrees / (double)360 );
 
-        double x3 = Math.cos(rads) * (x2 - x1) - Math.sin(rads) * (y2 - y1) + x1;
-        double y3 = Math.sin(rads) * (x2 - x1) + Math.cos(rads) * (y2 - y1) + y1;
-
-        return new Point(x3, y3);
+        return arcLength;
     }
 
+    /**
+     *
+     * @param value
+     * @param places
+     * @return
+     */
     public static double roundDecimal(double value, int places) {
         double scale = Math.pow(10, places);
         return Math.round(value * scale) / scale;

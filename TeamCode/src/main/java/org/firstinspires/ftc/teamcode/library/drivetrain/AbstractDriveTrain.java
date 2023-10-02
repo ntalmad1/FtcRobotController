@@ -1,8 +1,10 @@
-package org.firstinspires.ftc.teamcode.library;
+package org.firstinspires.ftc.teamcode.library.drivetrain;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.util.ElapsedTime;
+
+import org.firstinspires.ftc.teamcode.library.IsaacBot;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,7 +20,7 @@ public abstract class AbstractDriveTrain
 
     /**
      */
-    protected final LinearOpMode robot;
+    protected final IsaacBot robot;
 
     /**
      */
@@ -50,14 +52,14 @@ public abstract class AbstractDriveTrain
     public void init ()
     {
         this.leftFrontMotor = this.initMotor(this.getConfig().leftFrontDeviceName);
-        // this.rightFrontMotor = this.initMotor(config.rightFrontDeviceName);
-        // this.rightRearMotor = this.initMotor(config.leftRearDeviceName);
-        // this.leftRearMotor = this.initMotor(config.rightRearDeviceName);
+        this.rightFrontMotor = this.initMotor(config.rightFrontDeviceName);
+        this.rightRearMotor = this.initMotor(config.leftRearDeviceName);
+        this.leftRearMotor = this.initMotor(config.rightRearDeviceName);
 
         this.motorGroup.add(this.leftFrontMotor);
-        //this.motorGroup.add(this.rightFrontMotor);
-        //this.motorGroup.add(this.rightRearMotor);
-        //this.motorGroup.add(this.leftRearMotor);
+        this.motorGroup.add(this.rightFrontMotor);
+        this.motorGroup.add(this.rightRearMotor);
+        this.motorGroup.add(this.leftRearMotor);
     }
 
     /**

@@ -1,9 +1,10 @@
 package org.firstinspires.ftc.tests;
 
 import static org.junit.Assert.assertEquals;
+import org.junit.Test;
 
 import org.firstinspires.ftc.teamcode.library.utility.GridUtils;
-import org.junit.Test;
+
 
 import org.firstinspires.ftc.teamcode.library.utility.Point;
 

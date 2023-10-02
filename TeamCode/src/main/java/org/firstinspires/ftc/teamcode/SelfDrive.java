@@ -1,19 +1,19 @@
 package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
-import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
-import org.firstinspires.ftc.teamcode.library.SimpleDriveTrain;
-import org.firstinspires.ftc.teamcode.library.SimpleDriveTrainConfiguration;
-import org.firstinspires.ftc.teamcode.library.Units;
+import org.firstinspires.ftc.teamcode.library.IsaacBot;
+import org.firstinspires.ftc.teamcode.library.drivetrain.SimpleDriveTrain;
+import org.firstinspires.ftc.teamcode.library.drivetrain.SimpleDriveTrainConfiguration;
+import org.firstinspires.ftc.teamcode.library.utility.Units;
 
 /**
  * 
  */
 @Autonomous(name="Robot: SelfDrive", group="Robot")
-@Disabled
-public class SelfDrive extends LinearOpMode
+//@Disabled
+public class SelfDrive extends IsaacBot
 {
     /**
      */
@@ -30,14 +30,17 @@ public class SelfDrive extends LinearOpMode
         SimpleDriveTrainConfiguration driveTrainConfig = new SimpleDriveTrainConfiguration();
 
         driveTrainConfig.robot = this;
+        driveTrainConfig.leftFrontDeviceName  = "leftFrontDrive";
+        driveTrainConfig.rightFrontDeviceName = "rightFrontDrive";
+        driveTrainConfig.rightRearDeviceName  = "rightRearDrive";
+        driveTrainConfig.leftRearDeviceName   = "leftRearDrive";
+
         driveTrainConfig.motorTicsPerRev = 537.7;
         driveTrainConfig.wheelDiameterCm = 9.6;
         driveTrainConfig.rampUpDistanceCm = 50;
         driveTrainConfig.rampDownDistanceCm = 50;
-        driveTrainConfig.leftFrontDeviceName  = "left_front_drive";
-        //driveTrainConfig.rightFrontDeviceName = "right_front_drive";
-        //driveTrainConfig.rightRearDeviceName  = "right_rear_drive";
-        //driveTrainConfig.leftRearDeviceName   = "left_rear_drive";
+        driveTrainConfig.turningRadiusCm = 25;
+
 
         this.driveTrain = new SimpleDriveTrain(driveTrainConfig);
     }
@@ -56,10 +59,10 @@ public class SelfDrive extends LinearOpMode
 
         sleep(250);
 
-       // this.driveTrain.turnLeft(0.1, 90);
+        this.driveTrain.turnLeft(0.1, 0.5, 90);
 
-       // sleep(250);
+        sleep(250);
 
-       // this.driveTrain.forward(0.1, 0.5, 100, Units.Centimeters);
+        this.driveTrain.forward(0.1, 0.5, 100, Units.Centimeters);
     }
 }
