@@ -36,7 +36,7 @@ public class AlwaysForwards extends IsaacBot
         driveTrainConfig.rightRearDeviceName   = "rightRearDrive";
         driveTrainConfig.leftRearDeviceName    = "leftRearDrive";
         driveTrainConfig.accelerationIncrement = 0.02;
-        driveTrainConfig.maxpower = 0.5;
+        driveTrainConfig.maxpower = 0.9;
 
         driveTrainConfig.debug = true;
 
