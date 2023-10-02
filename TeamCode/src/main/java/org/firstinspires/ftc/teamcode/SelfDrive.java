@@ -55,7 +55,7 @@ public class SelfDrive extends IsaacBot
 
         waitForStart();
 
-        this.driveTrain.forward(0.1, 0.5, 100, Units.Centimeters);
+        this.driveTrain.forward(0.1, 0.5, 1, Units.Meters);
 
         sleep(250);
 
@@ -63,6 +63,6 @@ public class SelfDrive extends IsaacBot
 
         sleep(250);
 
-        this.driveTrain.forward(0.1, 0.5, 100, Units.Centimeters);
+        this.driveTrain.forward(0.1, 0.5, 1, Units.Meters);
     }
 }
