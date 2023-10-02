@@ -1,7 +1,5 @@
 package org.firstinspires.ftc.teamcode.library.utility;
 
-import org.firstinspires.ftc.teamcode.library.Units;
-
 /**
  * Utility class with static functions for converting units
  */

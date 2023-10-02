@@ -3,19 +3,21 @@ package org.firstinspires.ftc.teamcode;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
-import org.firstinspires.ftc.teamcode.library.DriveTrain;
-import org.firstinspires.ftc.teamcode.library.DriveTrainConfiguration;
-import org.firstinspires.ftc.teamcode.library.Units;
+import org.firstinspires.ftc.teamcode.library.IsaacBot;
+import org.firstinspires.ftc.teamcode.library.drivetrain.SimpleDriveTrain;
+import org.firstinspires.ftc.teamcode.library.drivetrain.SimpleDriveTrainConfiguration;
+import org.firstinspires.ftc.teamcode.library.utility.Units;
 
 /**
  * 
  */
 @Autonomous(name="Robot: SelfDrive", group="Robot")
-public class SelfDrive extends LinearOpMode
+//@Disabled
+public class SelfDrive extends IsaacBot
 {
     /**
      */
-    private final DriveTrain driveTrain;
+    private final SimpleDriveTrain driveTrain;
 
     //private MecanumDriveTrain driveTrain;
 
@@ -25,19 +27,22 @@ public class SelfDrive extends LinearOpMode
     {
         super();
 
-        DriveTrainConfiguration driveTrainConfig = new DriveTrainConfiguration();
+        SimpleDriveTrainConfiguration driveTrainConfig = new SimpleDriveTrainConfiguration();
 
         driveTrainConfig.robot = this;
+        driveTrainConfig.leftFrontDeviceName  = "leftFrontDrive";
+        driveTrainConfig.rightFrontDeviceName = "rightFrontDrive";
+        driveTrainConfig.rightRearDeviceName  = "rightRearDrive";
+        driveTrainConfig.leftRearDeviceName   = "leftRearDrive";
+
         driveTrainConfig.motorTicsPerRev = 537.7;
         driveTrainConfig.wheelDiameterCm = 9.6;
         driveTrainConfig.rampUpDistanceCm = 50;
         driveTrainConfig.rampDownDistanceCm = 50;
-        driveTrainConfig.leftFrontDeviceName  = "left_front_drive";
-        //driveTrainConfig.rightFrontDeviceName = "right_front_drive";
-        //driveTrainConfig.rightRearDeviceName  = "right_rear_drive";
-        //driveTrainConfig.leftRearDeviceName   = "left_rear_drive";
+        driveTrainConfig.turningRadiusCm = 25;
 
-        this.driveTrain = new DriveTrain(driveTrainConfig);
+
+        this.driveTrain = new SimpleDriveTrain(driveTrainConfig);
     }
 
     @Override
@@ -50,14 +55,14 @@ public class SelfDrive extends LinearOpMode
 
         waitForStart();
 
-        this.driveTrain.forward(0.1, 0.5, 100, Units.Centimeters);
+        this.driveTrain.forward(0.1, 0.5, 1, Units.Meters);
 
         sleep(250);
 
-       // this.driveTrain.turnLeft(0.1, 90);
+        this.driveTrain.turnLeft(0.1, 0.5, 90);
 
-       // sleep(250);
+        sleep(250);
 
-       // this.driveTrain.forward(0.1, 0.5, 100, Units.Centimeters);
+        this.driveTrain.forward(0.1, 0.5, 1, Units.Meters);
     }
 }
