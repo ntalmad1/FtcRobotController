@@ -31,11 +31,12 @@ public class AlwaysForwards extends IsaacBot
 
         MecanumDriveTrainConfiguration driveTrainConfig = new MecanumDriveTrainConfiguration();
         driveTrainConfig.robot = this;
-        driveTrainConfig.leftFrontDeviceName  = "leftFrontDrive";
-        driveTrainConfig.rightFrontDeviceName = "rightFrontDrive";
-        driveTrainConfig.rightRearDeviceName  = "rightRearDrive";
-        driveTrainConfig.leftRearDeviceName   = "leftRearDrive";
+        driveTrainConfig.leftFrontDeviceName   = "leftFrontDrive";
+        driveTrainConfig.rightFrontDeviceName  = "rightFrontDrive";
+        driveTrainConfig.rightRearDeviceName   = "rightRearDrive";
+        driveTrainConfig.leftRearDeviceName    = "leftRearDrive";
         driveTrainConfig.accelerationIncrement = 0.02;
+        driveTrainConfig.maxpower = 0.5;
 
         driveTrainConfig.debug = true;
 

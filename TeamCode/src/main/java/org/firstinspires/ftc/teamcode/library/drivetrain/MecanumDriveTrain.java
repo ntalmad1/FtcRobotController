@@ -102,7 +102,7 @@ public class MecanumDriveTrain extends AbstractDriveTrain
     private double accelerate (double targetPower, DcMotor motor)
     {
         double currentPower = motor.getPower();
-
+        double newpower = targetPower;
         if (currentPower < targetPower)
         {
             double power = currentPower + this.getConfig().accelerationIncrement;
@@ -111,7 +111,7 @@ public class MecanumDriveTrain extends AbstractDriveTrain
                 power = targetPower;
             }
 
-            return power;
+            newpower = power;
         }
         else if (currentPower > targetPower)
         {
@@ -121,12 +121,20 @@ public class MecanumDriveTrain extends AbstractDriveTrain
                 power = targetPower;
             }
 
-            return power;
+            newpower = power;
         }
-        else
+        if (Math.abs(newpower) > getConfig().maxpower)
         {
-            return targetPower;
+            if (newpower < 0)
+            {
+                newpower = getConfig().maxpower * -1;
+            }
+            else
+            {
+                newpower = getConfig().maxpower;
+            }
         }
+        return newpower;
 
     }
 }
