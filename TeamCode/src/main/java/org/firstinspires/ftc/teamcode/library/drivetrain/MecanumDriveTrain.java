@@ -102,6 +102,11 @@ public class MecanumDriveTrain extends AbstractDriveTrain
      */
     private double accelerate (double targetPower, DcMotor motor)
     {
+        if (!this.getConfig().incrementalDeceleration && targetPower == 0)
+        {
+            return 0;
+        }
+        
         double currentPower = motor.getPower();
         double newpower = targetPower;
         if (currentPower < targetPower)

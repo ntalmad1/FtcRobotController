@@ -37,6 +37,7 @@ public class AlwaysForwards extends IsaacBot
         driveTrainConfig.leftRearDeviceName    = "leftRearDrive";
         driveTrainConfig.accelerationIncrement = 0.02;
         driveTrainConfig.maxpower = 0.9;
+        driveTrainConfig.incrementalDeceleration = false;
 
         driveTrainConfig.leftFrontMotorDirection  = DcMotorSimple.Direction.REVERSE;
         driveTrainConfig.rightFrontMotorDirection = DcMotorSimple.Direction.FORWARD;

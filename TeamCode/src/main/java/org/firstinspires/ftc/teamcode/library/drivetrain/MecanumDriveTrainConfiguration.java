@@ -23,4 +23,8 @@ public class MecanumDriveTrainConfiguration extends AbstractDriveTrainConfigurat
     public DcMotor.Direction rightRearMotorDirection = DcMotor.Direction.FORWARD;
     public DcMotor.Direction leftRearMotorDirection = DcMotor.Direction.REVERSE;
 
+    /**
+     */
+    public boolean incrementalDeceleration = true;
+
 }
