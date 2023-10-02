@@ -52,9 +52,9 @@ public abstract class AbstractDriveTrain
     public void init ()
     {
         this.leftFrontMotor = this.initMotor(this.getConfig().leftFrontDeviceName);
-        this.rightFrontMotor = this.initMotor(config.rightFrontDeviceName);
-        this.rightRearMotor = this.initMotor(config.leftRearDeviceName);
-        this.leftRearMotor = this.initMotor(config.rightRearDeviceName);
+        this.rightFrontMotor = this.initMotor(this.getConfig().rightFrontDeviceName);
+        this.rightRearMotor = this.initMotor(this.getConfig().rightRearDeviceName);
+        this.leftRearMotor = this.initMotor(this.getConfig().leftRearDeviceName);
 
         this.motorGroup.add(this.leftFrontMotor);
         this.motorGroup.add(this.rightFrontMotor);
