@@ -43,9 +43,9 @@ public class MecanumDriveTrain extends AbstractDriveTrain
     {
         double yaw = this.robot.getYaw();
 
-        float leftY = this.robot.gamepad1.left_stick_y * (float) -1;
-        float leftX = this.robot.gamepad1.left_stick_x;
-        float rx = this.robot.gamepad1.right_stick_x;
+        float leftY = -this.robot.gamepad1.left_stick_y;
+        float leftX = -this.robot.gamepad1.left_stick_x;
+        float rx = -this.robot.gamepad1.right_stick_x;
 
         Point newPoint = GridUtils.rotatePointByDegrees(leftX,leftY,yaw);
         double x = newPoint.getX();
@@ -59,6 +59,20 @@ public class MecanumDriveTrain extends AbstractDriveTrain
         double backLeftPower   = (y - x + rx) / denominator;
         double frontRightPower = (y - x - rx) / denominator;
         double backRightPower  = (y + x - rx) / denominator;
+
+//        double r = Math.hypot(x,y);
+//        double robotAngle = Math.atan2(y,x) - Math.PI / 4;
+//        double rightX = rx;
+//        final double v1 = r * Math.cos(robotAngle) + rightX;
+//        final double v2 = r * Math.sin(robotAngle) - rightX;
+//        final double v3 = r * Math.sin(robotAngle) + rightX;
+//        final double v4 = r * Math.cos(robotAngle) - rightX;
+
+//        leftFront.setPower(v1);
+//        rightFront.setPower(v2);
+//        leftRear.setPower(v3)
+//        rightRear.setPower(v4);
+
 
         frontLeftPower  = accelerate(frontLeftPower, this.leftFrontMotor);
         frontRightPower = accelerate(frontRightPower, this.rightFrontMotor);
