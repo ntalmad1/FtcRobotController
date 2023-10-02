@@ -33,11 +33,10 @@ public class MecanumDriveTrain extends AbstractDriveTrain
         rightRearMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         leftRearMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
-        rightFrontMotor.setDirection(DcMotorSimple.Direction.FORWARD);
-        rightRearMotor.setDirection(DcMotorSimple.Direction.REVERSE);
-        leftFrontMotor.setDirection(DcMotorSimple.Direction.FORWARD);
-        leftRearMotor.setDirection(DcMotorSimple.Direction.FORWARD);
-
+        leftFrontMotor.setDirection(this.getConfig().leftFrontMotorDirection);
+        rightFrontMotor.setDirection(this.getConfig().rightFrontMotorDirection);
+        rightRearMotor.setDirection(this.getConfig().rightRearMotorDirection);
+        leftRearMotor.setDirection(this.getConfig().leftRearMotorDirection);
     }
 
     public void run ()

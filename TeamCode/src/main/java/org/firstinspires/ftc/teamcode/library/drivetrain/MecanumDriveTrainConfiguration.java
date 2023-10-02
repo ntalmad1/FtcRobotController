@@ -12,7 +12,15 @@ public class MecanumDriveTrainConfiguration extends AbstractDriveTrainConfigurat
      */
     public double accelerationIncrement = 0.01;
 
+    /**
+     */
     public double maxpower = 0.5;
 
+    /**
+     */
     public DcMotor.Direction leftFrontMotorDirection = DcMotor.Direction.REVERSE;
+    public DcMotor.Direction rightFrontMotorDirection = DcMotor.Direction.FORWARD;
+    public DcMotor.Direction rightRearMotorDirection = DcMotor.Direction.FORWARD;
+    public DcMotor.Direction leftRearMotorDirection = DcMotor.Direction.REVERSE;
+
 }
