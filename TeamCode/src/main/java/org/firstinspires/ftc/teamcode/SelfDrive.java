@@ -39,6 +39,7 @@ public class SelfDrive extends IsaacBot
         driveTrainConfig.rampUpDistanceCm = 50;
         driveTrainConfig.rampDownDistanceCm = 50;
         driveTrainConfig.wheelBaseCm = 29;
+        driveTrainConfig.turningRadiusCm = 20;
 
 
         this.driveTrain = new SimpleDriveTrain(driveTrainConfig);

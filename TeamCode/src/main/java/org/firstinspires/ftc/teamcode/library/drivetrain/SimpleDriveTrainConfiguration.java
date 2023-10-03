@@ -29,5 +29,9 @@ public class SimpleDriveTrainConfiguration extends AbstractDriveTrainConfigurati
 
     /**
      */
+    public double turningRadiusCm;
+
+    /**
+     */
     public Units defaultUnits = Units.Centimeters;
 }
