@@ -133,7 +133,8 @@ public class SimpleDriveTrain extends AbstractDriveTrain
      */
     protected void turn (double startPower, double maxPower, double degrees)
     {
-        double arcLength = GridUtils.arcLength(this.getConfig().turningRadiusCm, degrees);
+        double radius = this.getConfig().wheelBaseCm; // / Math.tan(0);
+        double arcLength = GridUtils.arcLength(radius, degrees);
         this.line(startPower, maxPower, arcLength, Units.Centimeters);
     }
 
