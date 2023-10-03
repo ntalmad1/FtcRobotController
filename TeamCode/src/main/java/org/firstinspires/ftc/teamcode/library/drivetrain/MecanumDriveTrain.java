@@ -45,7 +45,7 @@ public class MecanumDriveTrain extends AbstractDriveTrain
 
         float leftY = -this.robot.gamepad1.left_stick_y;
         float leftX = -this.robot.gamepad1.left_stick_x;
-        float rx = -this.robot.gamepad1.right_stick_x;
+        float rx = this.robot.gamepad1.right_stick_x;
 
         Point newPoint = GridUtils.rotatePointByDegrees(leftX,leftY,yaw);
         double x = newPoint.getX();
@@ -86,11 +86,9 @@ public class MecanumDriveTrain extends AbstractDriveTrain
 
         if (this.getConfig().isDebug())
         {
-            this.robot.telemetry.addData("Left X: ", "%.2f", leftX);
-            this.robot.telemetry.addData("Left Y: ", "%.2f", leftY);
-            this.robot.telemetry.addData("Right X: ", "%.2f", rx);
-            this.robot.telemetry.addData("Rotated X: ", "%.2f", x);
             this.robot.telemetry.addData("Rotated Y: ", "%.2f", y);
+            this.robot.telemetry.addData("Rotated X: ", "%.2f", x);
+            this.robot.telemetry.addData("Right X: ", "%.2f", rx);
             this.robot.telemetry.addData("frontLeftPower: ", "%.2f", frontLeftPower);
             this.robot.telemetry.addData("backLeftPower: ", "%.2f", backLeftPower);
             this.robot.telemetry.addData("frontRightPower: ", "%.2f", frontRightPower);
