@@ -44,6 +44,8 @@ public class AlwaysForwards extends IsaacBot
         driveTrainConfig.leftRearMotorDirection  =  DcMotorSimple.Direction.REVERSE;
         driveTrainConfig.rightRearMotorDirection  = DcMotorSimple.Direction.FORWARD;
 
+        driveTrainConfig.imuName = "imu";
+
 
         driveTrainConfig.debug = true;
 
@@ -54,7 +56,6 @@ public class AlwaysForwards extends IsaacBot
     @Override
     public void runOpMode()
     {
-        this.initImu("imu");
         this.driveTrain.init();
 
         waitForStart();

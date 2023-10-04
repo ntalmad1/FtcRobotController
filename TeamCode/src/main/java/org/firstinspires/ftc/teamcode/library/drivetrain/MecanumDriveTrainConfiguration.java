@@ -27,4 +27,6 @@ public class MecanumDriveTrainConfiguration extends AbstractDriveTrainConfigurat
      */
     public boolean incrementalDeceleration = true;
 
+    public String imuName;
+
 }

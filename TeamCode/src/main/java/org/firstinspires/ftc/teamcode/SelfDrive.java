@@ -39,7 +39,7 @@ public class SelfDrive extends IsaacBot
         driveTrainConfig.wheelDiameterCm = 9.6;
         driveTrainConfig.rampUpDistanceCm = 50;
         driveTrainConfig.rampDownDistanceCm = 50;
-        driveTrainConfig.turningRadiusCm = 25;
+        driveTrainConfig.turningRadiusCm = 29;
 
 
         this.driveTrain = new SimpleDriveTrain(driveTrainConfig);
@@ -59,7 +59,7 @@ public class SelfDrive extends IsaacBot
 
         sleep(250);
 
-        this.driveTrain.turnLeft(0.1, 0.5, 90);
+        this.driveTrain.turnLeft(0.1, 0.1, 90);
 
         sleep(250);
 

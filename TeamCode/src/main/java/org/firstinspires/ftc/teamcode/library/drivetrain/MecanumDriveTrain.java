@@ -28,6 +28,8 @@ public class MecanumDriveTrain extends AbstractDriveTrain
     {
         super.init();
 
+        this.robot.initImu(this.getConfig().imuName);
+
         leftFrontMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         rightFrontMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         rightRearMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
@@ -73,6 +75,11 @@ public class MecanumDriveTrain extends AbstractDriveTrain
 //        leftRear.setPower(v3)
 //        rightRear.setPower(v4);
 
+
+        if (robot.gamepad1.b) {
+            //resetIMU
+            this.robot.initImu(this.getConfig().imuName);
+        }
 
         frontLeftPower  = accelerate(frontLeftPower, this.leftFrontMotor);
         frontRightPower = accelerate(frontRightPower, this.rightFrontMotor);
