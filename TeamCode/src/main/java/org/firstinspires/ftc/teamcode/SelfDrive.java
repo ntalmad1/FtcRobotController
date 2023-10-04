@@ -1,7 +1,6 @@
 package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
-import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 import org.firstinspires.ftc.teamcode.library.IsaacBot;
 import org.firstinspires.ftc.teamcode.library.drivetrain.SimpleDriveTrain;
@@ -39,6 +38,7 @@ public class SelfDrive extends IsaacBot
         driveTrainConfig.wheelDiameterCm = 9.6;
         driveTrainConfig.rampUpDistanceCm = 50;
         driveTrainConfig.rampDownDistanceCm = 50;
+        driveTrainConfig.wheelBaseCm = 29;
         driveTrainConfig.turningRadiusCm = 29;
 
 
@@ -55,7 +55,7 @@ public class SelfDrive extends IsaacBot
 
         waitForStart();
 
-        this.driveTrain.forward(0.1, 0.5, 1, Units.Meters);
+        this.driveTrain.forward(0.1, 0.8, 1, Units.Meters);
 
         sleep(250);
 
@@ -63,6 +63,6 @@ public class SelfDrive extends IsaacBot
 
         sleep(250);
 
-        this.driveTrain.forward(0.1, 0.5, 1, Units.Meters);
+        this.driveTrain.forward(0.1, 0.8, 1, Units.Meters);
     }
 }
