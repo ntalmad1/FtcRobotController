@@ -1,11 +1,9 @@
 package org.firstinspires.ftc.teamcode.library.drivetrain;
 
 import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.DcMotorSimple;
 
 import org.firstinspires.ftc.teamcode.library.utility.GridUtils;
 import org.firstinspires.ftc.teamcode.library.utility.Point;
-import org.opencv.core.Mat;
 
 /**
  *
@@ -27,8 +25,6 @@ public class MecanumDriveTrain extends AbstractDriveTrain
     public void init ()
     {
         super.init();
-
-        this.robot.initImu(this.getConfig().imuName);
 
         leftFrontMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         rightFrontMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
@@ -149,15 +145,15 @@ public class MecanumDriveTrain extends AbstractDriveTrain
 
             newpower = power;
         }
-        if (Math.abs(newpower) > getConfig().maxpower)
+        if (Math.abs(newpower) > getConfig().maxPower)
         {
             if (newpower < 0)
             {
-                newpower = getConfig().maxpower * -1;
+                newpower = getConfig().maxPower * -1;
             }
             else
             {
-                newpower = getConfig().maxpower;
+                newpower = getConfig().maxPower;
             }
         }
         return newpower;

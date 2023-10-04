@@ -1,7 +1,5 @@
 package org.firstinspires.ftc.teamcode.library.drivetrain;
 
-import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
-
 import org.firstinspires.ftc.teamcode.library.IsaacBot;
 
 public class AbstractDriveTrainConfiguration
@@ -16,11 +14,18 @@ public class AbstractDriveTrainConfiguration
     public String rightFrontDeviceName;
     public String rightRearDeviceName;
     public String leftRearDeviceName;
+
+    /**
+     */
+    public String imuName;
+
+    /**
+     */
     public boolean debug = false;
 
     /**
      *
-     * @return
+     * @return True if debug else false
      */
     public boolean isDebug ()
     {

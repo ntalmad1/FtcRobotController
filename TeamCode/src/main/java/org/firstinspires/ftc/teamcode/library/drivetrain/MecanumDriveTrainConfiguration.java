@@ -1,7 +1,6 @@
 package org.firstinspires.ftc.teamcode.library.drivetrain;
 
 import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.DcMotorSimple;
 
 /**
  *
@@ -14,7 +13,7 @@ public class MecanumDriveTrainConfiguration extends AbstractDriveTrainConfigurat
 
     /**
      */
-    public double maxpower = 0.5;
+    public double maxPower = 0.5;
 
     /**
      */
@@ -26,7 +25,5 @@ public class MecanumDriveTrainConfiguration extends AbstractDriveTrainConfigurat
     /**
      */
     public boolean incrementalDeceleration = true;
-
-    public String imuName;
 
 }

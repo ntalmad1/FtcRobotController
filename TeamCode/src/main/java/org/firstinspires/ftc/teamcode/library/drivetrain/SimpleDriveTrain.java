@@ -93,6 +93,64 @@ public class SimpleDriveTrain extends AbstractDriveTrain
 
     /**
      *
+     * @param power
+     * @param degrees
+     */
+    public void gyroTurnLeft (double power, double degrees)
+    {
+        this.leftFrontMotor.setDirection(DcMotorSimple.Direction.FORWARD);
+        this.leftRearMotor.setDirection(DcMotorSimple.Direction.FORWARD);
+        this.rightFrontMotor.setDirection(DcMotorSimple.Direction.FORWARD);
+        this.rightRearMotor.setDirection(DcMotorSimple.Direction.FORWARD);
+
+        this.motorGroup.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+
+        degrees = -degrees;
+        this.robot.resetYaw();
+
+        this.motorGroup.setPower(power);
+
+        double yaw = this.robot.getYaw();
+        while (degrees > yaw)
+        {
+            if (yaw  )
+
+
+            yaw = this.robot.getYaw();
+        }
+
+        this.motorGroup.setPower(0);
+    }
+
+    /**
+     *
+     * @param power
+     * @param degrees
+     */
+    public void gyroTurnRight (double power, double degrees)
+    {
+        this.leftFrontMotor.setDirection(DcMotorSimple.Direction.FORWARD);
+        this.leftRearMotor.setDirection(DcMotorSimple.Direction.FORWARD);
+        this.rightFrontMotor.setDirection(DcMotorSimple.Direction.FORWARD);
+        this.rightRearMotor.setDirection(DcMotorSimple.Direction.FORWARD);
+
+        this.motorGroup.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+
+        this.robot.resetYaw();
+
+        this.motorGroup.setPower(power);
+
+        while (degrees > this.robot.getYaw())
+        {
+            continue;
+        }
+
+        this.motorGroup.setPower(0);
+    }
+
+
+    /**
+     *
      * @param startPower
      * @param maxPower
      * @param degrees
@@ -101,7 +159,6 @@ public class SimpleDriveTrain extends AbstractDriveTrain
     {
         this.leftFrontMotor.setDirection(DcMotorSimple.Direction.FORWARD);
         this.leftRearMotor.setDirection(DcMotorSimple.Direction.FORWARD);
-
         this.rightFrontMotor.setDirection(DcMotorSimple.Direction.FORWARD);
         this.rightRearMotor.setDirection(DcMotorSimple.Direction.FORWARD);
 

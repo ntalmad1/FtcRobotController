@@ -33,14 +33,15 @@ public class SelfDrive extends IsaacBot
         driveTrainConfig.rightFrontDeviceName = "rightFrontDrive";
         driveTrainConfig.rightRearDeviceName  = "rightRearDrive";
         driveTrainConfig.leftRearDeviceName   = "leftRearDrive";
+        driveTrainConfig.imuName = "imu";
 
         driveTrainConfig.motorTicsPerRev = 537.7;
         driveTrainConfig.wheelDiameterCm = 9.6;
         driveTrainConfig.rampUpDistanceCm = 50;
         driveTrainConfig.rampDownDistanceCm = 50;
-        driveTrainConfig.wheelBaseCm = 29;
-        driveTrainConfig.turningRadiusCm = 29;
 
+        // driveTrainConfig.wheelBaseCm = 29;
+        // driveTrainConfig.turningRadiusCm = 29;
 
         this.driveTrain = new SimpleDriveTrain(driveTrainConfig);
     }
