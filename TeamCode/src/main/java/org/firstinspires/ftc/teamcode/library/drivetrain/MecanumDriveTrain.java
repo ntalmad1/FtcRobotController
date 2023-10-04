@@ -96,6 +96,7 @@ public class MecanumDriveTrain extends AbstractDriveTrain
             this.robot.telemetry.addData("Rotated Y: ", "%.2f", y);
             this.robot.telemetry.addData("Rotated X: ", "%.2f", x);
             this.robot.telemetry.addData("Right X: ", "%.2f", rx);
+            this.robot.telemetry.addData("Right X: ", "%.2f", yaw);
             this.robot.telemetry.addData("frontLeftPower: ", "%.2f", frontLeftPower);
             this.robot.telemetry.addData("backLeftPower: ", "%.2f", backLeftPower);
             this.robot.telemetry.addData("frontRightPower: ", "%.2f", frontRightPower);
