@@ -60,7 +60,7 @@ public class SelfDrive extends IsaacBot
 
         sleep(250);
 
-        this.driveTrain.turnLeft(0.1, 0.1, 90);
+        this.driveTrain.gyroTurnLeft(0.05, 0.2, 90);
 
         sleep(250);
 

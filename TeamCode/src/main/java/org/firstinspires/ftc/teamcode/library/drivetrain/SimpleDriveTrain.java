@@ -93,10 +93,11 @@ public class SimpleDriveTrain extends AbstractDriveTrain
 
     /**
      *
-     * @param power
+     * @param startPower
+     * @param maxPower
      * @param degrees
      */
-    public void gyroTurnLeft (double power, double degrees)
+    public void gyroTurnLeft (double startPower, double maxPower, double degrees)
     {
         this.leftFrontMotor.setDirection(DcMotorSimple.Direction.FORWARD);
         this.leftRearMotor.setDirection(DcMotorSimple.Direction.FORWARD);
@@ -105,44 +106,64 @@ public class SimpleDriveTrain extends AbstractDriveTrain
 
         this.motorGroup.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
-        degrees = -degrees;
-        this.robot.resetYaw();
-
-        this.motorGroup.setPower(power);
-
-        double yaw = this.robot.getYaw();
-        while (degrees > yaw)
-        {
-            if (yaw  )
-
-
-            yaw = this.robot.getYaw();
-        }
-
-        this.motorGroup.setPower(0);
+        this.gyroTurn(startPower, maxPower, degrees);
     }
 
     /**
      *
-     * @param power
+     * @param startPower
+     * @param maxPower
      * @param degrees
      */
-    public void gyroTurnRight (double power, double degrees)
+    public void gyroTurnRight (double startPower, double maxPower, double degrees)
     {
-        this.leftFrontMotor.setDirection(DcMotorSimple.Direction.FORWARD);
-        this.leftRearMotor.setDirection(DcMotorSimple.Direction.FORWARD);
-        this.rightFrontMotor.setDirection(DcMotorSimple.Direction.FORWARD);
-        this.rightRearMotor.setDirection(DcMotorSimple.Direction.FORWARD);
+        this.leftFrontMotor.setDirection(DcMotorSimple.Direction.REVERSE);
+        this.leftRearMotor.setDirection(DcMotorSimple.Direction.REVERSE);
+        this.rightFrontMotor.setDirection(DcMotorSimple.Direction.REVERSE);
+        this.rightRearMotor.setDirection(DcMotorSimple.Direction.REVERSE);
 
         this.motorGroup.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
+        this.gyroTurn(startPower, maxPower, degrees);
+    }
+
+    /**
+     *
+     * @param startPower
+     * @param maxPower
+     * @param degrees
+     */
+    protected void gyroTurn (double startPower, double maxPower, double degrees)
+    {
+        double rampUpDegrees = degrees / 2;
+        double rampDownDegrees = degrees / 2;
+        double powerBand = maxPower - startPower;
+
         this.robot.resetYaw();
+        this.motorGroup.setPower(startPower);
 
-        this.motorGroup.setPower(power);
-
-        while (degrees > this.robot.getYaw())
+        double currentDegrees = Math.abs(this.robot.getYaw());
+        while (currentDegrees < degrees)
         {
-            continue;
+            if (currentDegrees <= rampUpDegrees)
+            {
+                double newPower = startPower + ((currentDegrees / rampUpDegrees) * powerBand);
+                this.motorGroup.setPower(newPower);
+            }
+            else if (currentDegrees > rampUpDegrees)
+            {
+                double newPower = maxPower - (((currentDegrees - rampUpDegrees) / rampDownDegrees) * powerBand);
+                this.motorGroup.setPower(newPower);
+            }
+
+            currentDegrees = Math.abs(this.robot.getYaw());
+
+            if (this.getConfig().isDebug())
+            {
+                this.robot.telemetry.addData("Current Degrees: ", "%2f", currentDegrees);
+                this.robot.telemetry.addData("Motor Power: ", "%2f", this.leftFrontMotor.getPower());
+                this.robot.telemetry.update();
+            }
         }
 
         this.motorGroup.setPower(0);
