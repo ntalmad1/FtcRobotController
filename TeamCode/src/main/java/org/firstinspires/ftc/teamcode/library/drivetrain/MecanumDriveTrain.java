@@ -1,11 +1,10 @@
 package org.firstinspires.ftc.teamcode.library.drivetrain;
 
 import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.DcMotorSimple;
+import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.teamcode.library.utility.GridUtils;
 import org.firstinspires.ftc.teamcode.library.utility.Point;
-import org.opencv.core.Mat;
 
 /**
  *
@@ -13,12 +12,30 @@ import org.opencv.core.Mat;
 public class MecanumDriveTrain extends AbstractDriveTrain
 {
     /**
+     */
+    private double maxPower;
+
+    private boolean leftBumperFlag;
+    private boolean rightBumperFlag;
+
+    private ElapsedTime leftBumperRuntime = new ElapsedTime();
+    private ElapsedTime rightBumperRuntime = new ElapsedTime();
+    private int bumperTimeout = 250;
+
+    /**
+     *
+     */
+
+    /**
      * Constructor
      *
      * @param config
      */
-    public MecanumDriveTrain(MecanumDriveTrainConfiguration config) {
+    public MecanumDriveTrain(MecanumDriveTrainConfiguration config)
+    {
         super(config);
+
+        this.maxPower = config.maxPower;
     }
 
     /**
@@ -75,10 +92,48 @@ public class MecanumDriveTrain extends AbstractDriveTrain
 //        leftRear.setPower(v3)
 //        rightRear.setPower(v4);
 
-
+        // button controls
         if (robot.gamepad1.b) {
             //resetIMU
             this.robot.initImu(this.getConfig().imuName);
+        }
+
+        if (!robot.gamepad1.left_bumper || this.leftBumperRuntime.milliseconds() > this.bumperTimeout)
+        {
+            this.leftBumperFlag = false;
+        }
+
+        if (robot.gamepad1.left_bumper)
+        {
+            if (!this.leftBumperFlag) {
+                leftBumperRuntime.reset();
+
+                double power = this.maxPower - 0.1;
+                if (power < 0.1) {
+                    power = 0.1;
+                }
+                this.maxPower = power;
+            }
+            this.leftBumperFlag = true;
+        }
+
+        if (!robot.gamepad1.right_bumper || rightBumperRuntime.milliseconds() > this.bumperTimeout)
+        {
+            this.rightBumperFlag = false;
+        }
+
+        if (robot.gamepad1.right_bumper)
+        {
+            if (!this.rightBumperFlag) {
+                rightBumperRuntime.reset();
+
+                double power = this.maxPower + 0.1;
+                if (power > 1) {
+                    power = 1;
+                }
+                this.maxPower = power;
+            }
+            this.rightBumperFlag = true;
         }
 
         frontLeftPower  = accelerate(frontLeftPower, this.leftFrontMotor);
@@ -96,11 +151,13 @@ public class MecanumDriveTrain extends AbstractDriveTrain
             this.robot.telemetry.addData("Rotated Y: ", "%.2f", y);
             this.robot.telemetry.addData("Rotated X: ", "%.2f", x);
             this.robot.telemetry.addData("Right X: ", "%.2f", rx);
-            this.robot.telemetry.addData("Right X: ", "%.2f", yaw);
+            this.robot.telemetry.addData("Yaw: ", "%.2f", yaw);
             this.robot.telemetry.addData("frontLeftPower: ", "%.2f", frontLeftPower);
             this.robot.telemetry.addData("backLeftPower: ", "%.2f", backLeftPower);
             this.robot.telemetry.addData("frontRightPower: ", "%.2f", frontRightPower);
             this.robot.telemetry.addData("backRightPower: ", "%.2f", backRightPower);
+            this.robot.telemetry.addData("Max Power: ", "%.2f", this.maxPower);
+            this.robot.telemetry.addData("Left Bumper Timer: ", "%.2f", this.leftBumperRuntime.milliseconds());
             this.robot.telemetry.update();
         }
     }
@@ -149,15 +206,15 @@ public class MecanumDriveTrain extends AbstractDriveTrain
 
             newpower = power;
         }
-        if (Math.abs(newpower) > getConfig().maxpower)
+        if (Math.abs(newpower) > this.maxPower)
         {
             if (newpower < 0)
             {
-                newpower = getConfig().maxpower * -1;
+                newpower = this.maxPower * -1;
             }
             else
             {
-                newpower = getConfig().maxpower;
+                newpower = this.maxPower;
             }
         }
         return newpower;

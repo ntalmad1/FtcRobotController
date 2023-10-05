@@ -1,14 +1,11 @@
 package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 
 import org.firstinspires.ftc.teamcode.library.IsaacBot;
 import org.firstinspires.ftc.teamcode.library.drivetrain.MecanumDriveTrain;
 import org.firstinspires.ftc.teamcode.library.drivetrain.MecanumDriveTrainConfiguration;
-import org.firstinspires.ftc.teamcode.library.utility.GridUtils;
-import org.firstinspires.ftc.teamcode.library.utility.Point;
 
 
 /**
@@ -36,7 +33,7 @@ public class AlwaysForwards extends IsaacBot
         driveTrainConfig.rightRearDeviceName   = "rightRearDrive";
         driveTrainConfig.leftRearDeviceName    = "leftRearDrive";
         driveTrainConfig.accelerationIncrement = 0.02;
-        driveTrainConfig.maxpower = 0.65;
+        driveTrainConfig.maxPower = 0.65;
         driveTrainConfig.incrementalDeceleration = true;
 
         driveTrainConfig.leftFrontMotorDirection  = DcMotorSimple.Direction.REVERSE;
