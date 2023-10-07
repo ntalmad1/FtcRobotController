@@ -34,11 +34,6 @@ public abstract class  IsaacBot extends LinearOpMode
         return yaw;
     }
 
-    public void resetYaw ()
-    {
-        imu.resetYaw();
-    }
-
     /**
      *
      * @param imuName
