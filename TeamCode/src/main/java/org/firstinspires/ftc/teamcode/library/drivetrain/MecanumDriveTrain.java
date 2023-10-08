@@ -45,8 +45,6 @@ public class MecanumDriveTrain extends AbstractDriveTrain
     {
         super.init();
 
-        this.robot.initImu(this.getConfig().imuName);
-
         leftFrontMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         rightFrontMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         rightRearMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
