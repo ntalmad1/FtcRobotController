@@ -32,7 +32,21 @@ public class CommandQueue {
 
         for (Command command : this.queue)
         {
-            this.component.runCommand(command);
+            if (command instanceof CommandGroup) {
+                CommandGroup group = (CommandGroup)command;
+
+                Command activeCommand = group.getActiveCommand();
+                if (activeCommand == null) {
+                    group.markAsCompleted();
+                }
+                this.component.runCommand(activeCommand);
+
+            }
+            else
+            {
+                this.component.runCommand(command);
+            }
+
             if (command.isCompleted()) {
                 completedCommands.add(command);
             }

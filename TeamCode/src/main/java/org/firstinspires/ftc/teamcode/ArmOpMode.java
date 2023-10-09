@@ -4,10 +4,14 @@ import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.Servo;
 
+import org.checkerframework.checker.units.qual.C;
 import org.firstinspires.ftc.teamcode.library.Control;
 import org.firstinspires.ftc.teamcode.library.IsaacBot;
 import org.firstinspires.ftc.teamcode.library.arm.Boom;
 import org.firstinspires.ftc.teamcode.library.arm.BoomConfiguration;
+import org.firstinspires.ftc.teamcode.library.component.command.CommandGroup;
+import org.firstinspires.ftc.teamcode.library.component.command.GoToDegreesCommand;
+import org.firstinspires.ftc.teamcode.library.component.command.WaitCommand;
 
 @TeleOp(name="ArmOpMode", group="Linear OpMode")
 //@Disabled
@@ -29,6 +33,8 @@ public class ArmOpMode extends IsaacBot {
         topBoomConfig.maxIncrement = 0.001;
         topBoomConfig.zeroDegreePosition = 0.586;
 
+
+
         // servo max position / degrees of articulation
         topBoomConfig.degree = 0.0033;
 
@@ -49,7 +55,15 @@ public class ArmOpMode extends IsaacBot {
 
             if (flag) {
                 sleep(2000);
-                topBoom.gotoDegrees(0);
+
+                CommandGroup commandGroup = new CommandGroup();
+                commandGroup.add(new GoToDegreesCommand(0));
+                commandGroup.add(new WaitCommand(2000));
+                commandGroup.add(new GoToDegreesCommand(90));
+
+
+                topBoom.addCommand(commandGroup);
+
                 flag = false;
             }
 

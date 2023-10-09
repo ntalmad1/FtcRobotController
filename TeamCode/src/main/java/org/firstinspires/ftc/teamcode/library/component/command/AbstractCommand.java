@@ -4,6 +4,8 @@ public class AbstractCommand implements Command {
 
     private boolean completed;
 
+    private boolean initialized = false;
+
     @Override
     public boolean isCompleted() {
         return this.completed;
@@ -11,5 +13,22 @@ public class AbstractCommand implements Command {
 
     public void markAsCompleted () {
         this.completed = true;
+    }
+
+    /**
+     *
+     * @return
+     */
+    @Override
+    public boolean isInitialized () {
+        return this.initialized;
+    }
+
+    /**
+     *
+     * @param initialized
+     */
+    public void setInitialized(boolean initialized) {
+        this.initialized = initialized;
     }
 }

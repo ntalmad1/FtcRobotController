@@ -20,6 +20,8 @@ public class GoToPositionCommand extends AbstractCommand {
         this.targetPosition = targetPosition;
     }
 
+    protected GoToPositionCommand() { }
+
     public double getStartPosition () {
         return this.startPosition;
     }
