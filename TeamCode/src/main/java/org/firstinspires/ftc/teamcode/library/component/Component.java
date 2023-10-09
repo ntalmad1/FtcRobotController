@@ -2,6 +2,8 @@ package org.firstinspires.ftc.teamcode.library.component;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.teamcode.library.IsaacBot;
+import org.firstinspires.ftc.teamcode.library.component.command.Command;
+import org.firstinspires.ftc.teamcode.library.component.command.CommandQueue;
 import org.firstinspires.ftc.teamcode.library.component.event.EventBus;
 import org.firstinspires.ftc.teamcode.library.component.event.HandlerRegistration;
 import org.firstinspires.ftc.teamcode.library.component.event.gp2_left_stick_x.Gp2_LeftStickXEvent;
@@ -12,6 +14,8 @@ import org.firstinspires.ftc.teamcode.library.component.event.gp2_left_stick_x.G
  */
 public abstract class Component {
 
+    private CommandQueue commandQueue;
+
     /**
      *
      */
@@ -20,7 +24,7 @@ public abstract class Component {
     /**
      *
      */
-    private IsaacBot robot;
+    protected IsaacBot robot;
 
     /**
      *
@@ -38,7 +42,18 @@ public abstract class Component {
         this.telemetry = this.robot.telemetry;
 
         this.eventBus = new EventBus(robot);
+
+        this.commandQueue = new CommandQueue(this);
     }
+
+    /**
+     *
+     * @param command
+     */
+    public void addCommand (Command command) {
+        this.commandQueue.add(command);
+    }
+
 
     /**
      *
@@ -59,7 +74,10 @@ public abstract class Component {
      */
     public void run (){
         this.eventBus.run();
+        this.commandQueue.run();
     }
+
+    public void runCommand (Command command) {}
 
     /**
      *
