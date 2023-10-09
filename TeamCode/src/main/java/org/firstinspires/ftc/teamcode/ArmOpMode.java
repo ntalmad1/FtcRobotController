@@ -28,6 +28,8 @@ public class ArmOpMode extends IsaacBot {
         topBoomConfig.homePosition = 0;
         topBoomConfig.maxIncrement = 0.001;
         topBoomConfig.zeroDegreePosition = 0.586;
+
+        // servo max position / degrees of articulation
         topBoomConfig.degree = 0.0033;
 
         this.topBoom = new Boom(topBoomConfig);

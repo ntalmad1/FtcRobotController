@@ -111,7 +111,10 @@ public class Boom extends Component
                     return;
                 }
 
-                this.move(1, this.config.maxIncrement, this.config.minPosition, goToCommand.getTargetPosition());
+                if (this.move(1, this.config.maxIncrement, this.config.minPosition, goToCommand.getTargetPosition())) {
+                    goToCommand.markAsCompleted();
+                    return;
+                };
             }
         }
     }
@@ -127,7 +130,6 @@ public class Boom extends Component
         double position = Math.abs(degrees * this.config.degree);
 
         double adjustedPosition = this.config.zeroDegreePosition;
-
         if (degrees < 0) {
             adjustedPosition = adjustedPosition + position;
         }
@@ -142,13 +144,17 @@ public class Boom extends Component
      *
      * @param input
      */
-    public void move (double input, double maxIncrement, double minPosition, double maxPosition)
+    public boolean move (double input, double maxIncrement, double minPosition, double maxPosition)
     {
+        boolean isMin = false;
+        boolean isMax = false;
+
         if (input > 0) {
             double newPos = servo.getPosition() + (maxIncrement * input);
 
             if (newPos > maxPosition) {
                 newPos = maxPosition;
+                isMax = true;
             }
 
             servo.setPosition(newPos);
@@ -158,9 +164,12 @@ public class Boom extends Component
 
             if (newPos < minPosition) {
                 newPos = minPosition;
+                isMin = true;
             }
 
             servo.setPosition(newPos);
         }
+
+        return isMin || isMax;
     }
 }
