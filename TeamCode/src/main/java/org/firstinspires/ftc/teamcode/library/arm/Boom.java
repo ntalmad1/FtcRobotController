@@ -85,6 +85,8 @@ public class Boom extends Component
      */
     public void runCommand (Command command)
     {
+        super.runCommand(command);
+
         if (command instanceof GoToDegreesCommand) {
             GoToDegreesCommand goToDegreesCommand = (GoToDegreesCommand)command;
 

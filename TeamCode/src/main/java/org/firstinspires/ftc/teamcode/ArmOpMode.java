@@ -25,7 +25,7 @@ public class ArmOpMode extends IsaacBot {
         BoomConfiguration topBoomConfig = new BoomConfiguration();
         topBoomConfig.robot = this;
         topBoomConfig.deviceName = "topServo";
-        topBoomConfig.direction = Servo.Direction.REVERSE;
+        topBoomConfig.direction = Servo.Direction.FORWARD;
         topBoomConfig.controllerInputMethod = Control.Gp2_LeftStickX;
         topBoomConfig.minPosition = 0;
         topBoomConfig.maxPosition = 1;

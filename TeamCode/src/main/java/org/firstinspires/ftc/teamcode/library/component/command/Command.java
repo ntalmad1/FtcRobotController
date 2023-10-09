@@ -5,4 +5,6 @@ public interface Command {
     boolean isCompleted();
 
     boolean isInitialized();
+
+    void init ();
 }

@@ -2,7 +2,7 @@ package org.firstinspires.ftc.teamcode.library.component.command;
 
 public class AbstractCommand implements Command {
 
-    private boolean completed;
+    protected boolean completed;
 
     private boolean initialized = false;
 
@@ -31,4 +31,6 @@ public class AbstractCommand implements Command {
     public void setInitialized(boolean initialized) {
         this.initialized = initialized;
     }
+
+    public void init () {};
 }

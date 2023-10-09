@@ -4,6 +4,7 @@ import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.teamcode.library.IsaacBot;
 import org.firstinspires.ftc.teamcode.library.component.command.Command;
 import org.firstinspires.ftc.teamcode.library.component.command.CommandQueue;
+import org.firstinspires.ftc.teamcode.library.component.command.WaitCommand;
 import org.firstinspires.ftc.teamcode.library.component.event.EventBus;
 import org.firstinspires.ftc.teamcode.library.component.event.HandlerRegistration;
 import org.firstinspires.ftc.teamcode.library.component.event.gp2_left_stick_x.Gp2_LeftStickXEvent;
@@ -77,7 +78,17 @@ public abstract class Component {
         this.commandQueue.run();
     }
 
-    public void runCommand (Command command) {}
+    public void runCommand (Command command) {
+        if (command instanceof WaitCommand) {
+            if (!command.isInitialized()) {
+                command.init();
+            }
+
+            if (command.isCompleted()) {
+                return;
+            }
+        }
+    }
 
     /**
      *
