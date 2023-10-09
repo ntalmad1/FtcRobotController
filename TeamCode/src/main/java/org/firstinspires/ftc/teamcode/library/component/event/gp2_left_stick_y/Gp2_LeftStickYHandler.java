@@ -11,5 +11,5 @@ public interface Gp2_LeftStickYHandler extends EventHandler
      *
      * @param event
      */
-    void onGp2_LeftStickX (Gp2_LeftStickYEvent event);
+    void onGp2_LeftStickY (Gp2_LeftStickYEvent event);
 }
