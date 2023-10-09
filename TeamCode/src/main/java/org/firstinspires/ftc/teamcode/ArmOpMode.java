@@ -1,13 +1,11 @@
 package org.firstinspires.ftc.teamcode;
 
-import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.Servo;
 
-import org.checkerframework.checker.units.qual.C;
 import org.firstinspires.ftc.teamcode.library.Control;
 import org.firstinspires.ftc.teamcode.library.IsaacBot;
-import org.firstinspires.ftc.teamcode.library.arm.Boom;
+import org.firstinspires.ftc.teamcode.library.arm.ArmConfiguration;
 import org.firstinspires.ftc.teamcode.library.arm.BoomConfiguration;
 import org.firstinspires.ftc.teamcode.library.component.command.CommandGroup;
 import org.firstinspires.ftc.teamcode.library.component.command.GoToDegreesCommand;
@@ -17,28 +15,31 @@ import org.firstinspires.ftc.teamcode.library.component.command.WaitCommand;
 //@Disabled
 public class ArmOpMode extends IsaacBot {
 
-    private Boom topBoom;
+    //private Boom topBoom;
 
     public ArmOpMode(){
         super();
 
         BoomConfiguration topBoomConfig = new BoomConfiguration();
         topBoomConfig.robot = this;
-        topBoomConfig.deviceName = "topServo";
+        topBoomConfig.servoName = "topServo";
         topBoomConfig.direction = Servo.Direction.FORWARD;
         topBoomConfig.controllerInputMethod = Control.Gp2_LeftStickX;
-        topBoomConfig.minPosition = 0;
-        topBoomConfig.maxPosition = 1;
-        topBoomConfig.homePosition = 0;
+        topBoomConfig.invertInput = false;
         topBoomConfig.maxIncrement = 0.001;
         topBoomConfig.zeroDegreePosition = 0.586;
 
+        BoomConfiguration midBoomConfig = new BoomConfiguration();
 
 
-        // servo max position / degrees of articulation
-        topBoomConfig.degree = 0.0033;
+        BoomConfiguration bottomBoomConfig = new BoomConfiguration();
 
-        this.topBoom = new Boom(topBoomConfig);
+        ArmConfiguration armConfig = new ArmConfiguration();
+        armConfig.topBoomConfig = topBoomConfig;
+        armConfig.midBoomConfig = midBoomConfig;
+        armConfig.bottomBoomConfig = bottomBoomConfig;
+
+        this.arm = new Arm(armConfig);
     }
 
 

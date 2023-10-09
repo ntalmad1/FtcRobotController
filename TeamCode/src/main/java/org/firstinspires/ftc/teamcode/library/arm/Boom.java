@@ -55,7 +55,7 @@ public class Boom extends Component
     {
         super.init();
 
-        this.servo = this.robot.hardwareMap.get(Servo.class, this.config.deviceName);
+        this.servo = this.robot.hardwareMap.get(Servo.class, this.config.servoName);
         this.servo.resetDeviceConfigurationForOpMode();
         this.servo.setDirection(this.config.direction);
 

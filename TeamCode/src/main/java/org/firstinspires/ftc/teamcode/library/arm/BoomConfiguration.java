@@ -16,7 +16,15 @@ public class BoomConfiguration {
 
     /**
      */
-    public String deviceName;
+    public String servoName;
+
+    /**
+     */
+    public boolean isDualServo = false;
+
+    /**
+     */
+    public String secondaryServoName;
 
     /**
      */
@@ -25,6 +33,10 @@ public class BoomConfiguration {
     /**
      */
     public Control controllerInputMethod;
+
+    /**
+     */
+    public boolean invertInput = false;
 
     /**
      */
