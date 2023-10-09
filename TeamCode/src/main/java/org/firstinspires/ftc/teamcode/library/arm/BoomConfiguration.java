@@ -56,7 +56,7 @@ public class BoomConfiguration {
 
     /**
      */
-    public double maxIncrement;
+    public double maxIncrement = 0.001;
 
     /**
      */

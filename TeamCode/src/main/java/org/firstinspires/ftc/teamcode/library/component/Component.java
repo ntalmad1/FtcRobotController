@@ -65,6 +65,18 @@ public abstract class Component {
         return this.eventBus.addHandler(Gp2_LeftStickXEvent.TYPE, handler);
     }
 
+    public HandlerRegistration addGp2_LeftStickYHandler (Gp2_LeftStickYHandler handler) {
+        return this.eventBus.addHandler(Gp2_LeftStickYEvent.TYPE, handler);
+    }
+
+    public HandlerRegistration addGp2_RightStickXHandler (Gp2_RightStickXHandler handler) {
+        return this.eventBus.addHandler(Gp2_RightStickXEvent.TYPE, handler);
+    }
+
+    public HandlerRegistration addGp2_RightStickYHandler (Gp2_RightStickYHandler handler) {
+        return this.eventBus.addHandler(Gp2_RightStickYEvent.TYPE, handler);
+    }
+
     /**
      *
      */

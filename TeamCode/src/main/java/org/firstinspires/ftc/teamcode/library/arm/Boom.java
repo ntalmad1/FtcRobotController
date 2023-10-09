@@ -40,6 +40,11 @@ public class Boom extends Component
 
     /**
      *
+     */
+    private Servo secondaryServo;
+
+    /**
+     *
      * @param config
      */
     public Boom(BoomConfiguration config) {
@@ -51,24 +56,68 @@ public class Boom extends Component
     /**
      *
      */
-    public void init ()
-    {
+    public void init () {
         super.init();
 
         this.servo = this.robot.hardwareMap.get(Servo.class, this.config.servoName);
         this.servo.resetDeviceConfigurationForOpMode();
         this.servo.setDirection(this.config.direction);
 
-        if (config.controllerInputMethod.equals(Control.Gp2_LeftStickX))
-        {
-            this.addGp2_LeftStickXHandler(new Gp2_LeftStickXHandler() {
-                public void onGp2_LeftStickX(Gp2_LeftStickXEvent event) {
-                    Boom.this.move(event.getPosition(), Boom.this.config.maxIncrement, Boom.this.config.minPosition, Boom.this.config.maxPosition);
+        if (this.config.isDualServo) {
+            this.secondaryServo = this.robot.hardwareMap.get(Servo.class, this.config.secondaryServoName);
+            this.secondaryServo.resetDeviceConfigurationForOpMode();
+            this.secondaryServo.setDirection(this.config.direction.equals(Servo.Direction.FORWARD) ? Servo.Direction.REVERSE : Servo.Direction.FORWARD);
+        }
+
+        if (config.controllerInputMethod.equals(Control.Gp2_LeftStickX)) {
+            this.addGp2_LeftStickXHandler(event -> {
+                double position = event.getPosition();
+                if (Boom.this.config.invertInput) {
+                    position = -position;
+                }
+                Boom.this.move(position, Boom.this.config.maxIncrement, Boom.this.config.minPosition, Boom.this.config.maxPosition);
+            });
+        }
+        else if (config.controllerInputMethod.equals(Control.Gp2_LeftStickY)) {
+            this.addGp2_LeftStickYHandler(new Gp2_LeftStickYHandler() {
+                public void onGp2_LeftStickY(Gp2_LeftStickYEvent event) {
+
+                    double position = event.getPosition();
+                    if (Boom.this.config.invertInput) {
+                        position = -position;
+                    }
+
+                    Boom.this.move(position, Boom.this.config.maxIncrement, Boom.this.config.minPosition, Boom.this.config.maxPosition);
+                }
+            });
+        }
+        else if (config.controllerInputMethod.equals(Control.Gp2_RightStickX)) {
+            this.addGp2_RightStickXHandler(new Gp2_RightStickXHandler() {
+                public void onGp2_RightStickX(Gp2_RightStickXEvent event) {
+                    double position = event.getPosition();
+                    if (Boom.this.config.invertInput) {
+                        position = -position;
+                    }
+
+                    Boom.this.move(position, Boom.this.config.maxIncrement, Boom.this.config.minPosition, Boom.this.config.maxPosition);
+                }
+            });
+        }
+        else if (config.controllerInputMethod.equals(Control.Gp2_RightStickY)) {
+            this.addGp2_RightStickYHandler(new Gp2_RightStickYHandler() {
+                public void onGp2_RightStickY(Gp2_RightStickYEvent event) {
+
+                    double position = event.getPosition();
+                    if (Boom.this.config.invertInput) {
+                        position = -position;
+                    }
+
+                    Boom.this.move(position, Boom.this.config.maxIncrement, Boom.this.config.minPosition, Boom.this.config.maxPosition);
                 }
             });
         }
 
-        this.servo.setPosition(this.config.homePosition);
+        this.setServoPosition(this.config.homePosition);
     }
 
     /**
@@ -135,7 +184,7 @@ public class Boom extends Component
                 isMax = true;
             }
 
-            servo.setPosition(newPos);
+            this.setServoPosition(newPos);
         }
         else if (input < 0) {
             double newPos = servo.getPosition() + (maxIncrement * input);
@@ -145,7 +194,7 @@ public class Boom extends Component
                 isMin = true;
             }
 
-            servo.setPosition(newPos);
+            this.setServoPosition(newPos);
         }
 
         return isMin || isMax;
@@ -188,6 +237,17 @@ public class Boom extends Component
                 goToCommand.markAsCompleted();
                 return;
             }
+        }
+    }
+
+    /**
+     *
+     * @param position
+     */
+    private void setServoPosition (double position) {
+        this.servo.setPosition(position);
+        if (this.config.isDualServo) {
+            this.secondaryServo.setPosition(1 - position);
         }
     }
 

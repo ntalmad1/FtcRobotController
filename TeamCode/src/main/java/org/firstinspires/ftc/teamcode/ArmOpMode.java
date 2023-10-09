@@ -5,6 +5,7 @@ import com.qualcomm.robotcore.hardware.Servo;
 
 import org.firstinspires.ftc.teamcode.library.Control;
 import org.firstinspires.ftc.teamcode.library.IsaacBot;
+import org.firstinspires.ftc.teamcode.library.arm.Arm;
 import org.firstinspires.ftc.teamcode.library.arm.ArmConfiguration;
 import org.firstinspires.ftc.teamcode.library.arm.BoomConfiguration;
 import org.firstinspires.ftc.teamcode.library.component.command.CommandGroup;
@@ -16,6 +17,7 @@ import org.firstinspires.ftc.teamcode.library.component.command.WaitCommand;
 public class ArmOpMode extends IsaacBot {
 
     //private Boom topBoom;
+    private Arm arm;
 
     public ArmOpMode(){
         super();
@@ -24,17 +26,32 @@ public class ArmOpMode extends IsaacBot {
         topBoomConfig.robot = this;
         topBoomConfig.servoName = "topServo";
         topBoomConfig.direction = Servo.Direction.FORWARD;
-        topBoomConfig.controllerInputMethod = Control.Gp2_LeftStickX;
-        topBoomConfig.invertInput = false;
-        topBoomConfig.maxIncrement = 0.001;
+        topBoomConfig.controllerInputMethod = Control.Gp2_RightStickY;
+        topBoomConfig.invertInput = true;
         topBoomConfig.zeroDegreePosition = 0.586;
 
         BoomConfiguration midBoomConfig = new BoomConfiguration();
-
+        midBoomConfig.robot = this;
+        midBoomConfig.servoName = "middleServo";
+        midBoomConfig.direction = Servo.Direction.REVERSE;
+        midBoomConfig.controllerInputMethod = Control.Gp2_RightStickX;
+        midBoomConfig.invertInput = false;
+        midBoomConfig.maxIncrement = 0.005;
+        midBoomConfig.zeroDegreePosition = 0.575;
 
         BoomConfiguration bottomBoomConfig = new BoomConfiguration();
+        bottomBoomConfig.robot = this;
+        bottomBoomConfig.servoName = "bottomLeftServo";
+        bottomBoomConfig.isDualServo = true;
+        bottomBoomConfig.secondaryServoName = "bottomRightServo";
+        bottomBoomConfig.direction = Servo.Direction.REVERSE;
+        bottomBoomConfig.controllerInputMethod = Control.Gp2_LeftStickX;
+        bottomBoomConfig.invertInput = true;
+        bottomBoomConfig.maxIncrement = 0.001;
+        bottomBoomConfig.zeroDegreePosition = 0.575;
 
         ArmConfiguration armConfig = new ArmConfiguration();
+        armConfig.robot = this;
         armConfig.topBoomConfig = topBoomConfig;
         armConfig.midBoomConfig = midBoomConfig;
         armConfig.bottomBoomConfig = bottomBoomConfig;
@@ -45,28 +62,28 @@ public class ArmOpMode extends IsaacBot {
 
     @Override
     public void runOpMode() throws InterruptedException {
-        this.topBoom.init();
+        this.arm.init();
 
         this.waitForStart();
 
-        boolean flag = true;
+//        boolean flag = true;
 
         while (this.opModeIsActive()) {
-            topBoom.run();
+            this.arm.run();
 
-            if (flag) {
-                sleep(2000);
-
-                CommandGroup commandGroup = new CommandGroup();
-                commandGroup.add(new GoToDegreesCommand(0));
-                commandGroup.add(new WaitCommand(2000));
-                commandGroup.add(new GoToDegreesCommand(90));
-
-
-                topBoom.addCommand(commandGroup);
-
-                flag = false;
-            }
+//            if (flag) {
+//                sleep(2000);
+//
+//                CommandGroup commandGroup = new CommandGroup();
+//                commandGroup.add(new GoToDegreesCommand(0));
+//                commandGroup.add(new WaitCommand(2000));
+//                commandGroup.add(new GoToDegreesCommand(90));
+//
+//
+//                topBoom.addCommand(commandGroup);
+//
+//                flag = false;
+//            }
 
 
             this.telemetry.update();

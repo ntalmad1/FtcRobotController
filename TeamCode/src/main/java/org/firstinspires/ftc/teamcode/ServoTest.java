@@ -16,7 +16,7 @@ public class ServoTest extends IsaacBot {
     /**
      * Top 90 "0 degrees" 0.586
      * Middle 90  "0 degrees" 0.575
-     * Bottom 90  "0 degrees" 0.0.29
+     * Bottom 90  "0 degrees" 0.29
      */
 
     @Override
