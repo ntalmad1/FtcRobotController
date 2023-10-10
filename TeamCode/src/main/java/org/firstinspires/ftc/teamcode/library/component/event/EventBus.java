@@ -14,12 +14,15 @@ import java.util.Map;
 /**
  *
  */
-public class EventBus {
+public class EventBus extends HandlerManager {
 
     /**
      *
      */
-    private Map<EventType, List<EventHandler>> handlerMap;
+    private double gp2_leftStickX;
+    private double gp2_leftStickY;
+    private double gp2_rightStickX;
+    private double gp2_rightStickY;
 
     /**
      *
@@ -27,56 +30,14 @@ public class EventBus {
     private IsaacBot robot;
 
     /**
+     * Constructor
      *
      * @param robot
      */
     public EventBus (IsaacBot robot) {
+        super();
         this.robot = robot;
-
-        this.handlerMap = new HashMap<EventType, List<EventHandler>>();
     }
-
-    /**
-     *
-     * @param eventType
-     * @param handler
-     * @return
-     * @param <T>
-     */
-    public <T extends EventHandler> HandlerRegistration addHandler (EventType<T> eventType, T handler)
-    {
-        if (!this.handlerMap.containsKey(eventType))
-        {
-            this.handlerMap.put((EventType)eventType, (List<EventHandler>) new ArrayList<T>());
-        }
-
-        this.handlerMap.get(eventType).add(handler);
-
-        return new HandlerRegistration(handler);
-    }
-
-    /**
-     *
-     * @param event
-     * @param <T>
-     */
-    public <T extends EventHandler> void fireEvent (Event<T> event) {
-
-        if (!this.handlerMap.containsKey(event.getType())) {
-            return;
-        }
-
-        List<T> handlers = (List<T>)this.handlerMap.get(event.getType());
-
-        for (T handler : handlers) {
-            event.handle(handler);
-        }
-    }
-
-    private double gp2_leftStickX;
-    private double gp2_leftStickY;
-    private double gp2_rightStickX;
-    private double gp2_rightStickY;
 
     /**
      *
@@ -122,7 +83,5 @@ public class EventBus {
             this.fireEvent(event);
             gp2_rightStickY = current_gp2_rightStickY;
         }
-
-
     }
 }
