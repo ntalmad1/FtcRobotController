@@ -36,6 +36,14 @@ public abstract class  IsaacBot extends LinearOpMode
 
     /**
      *
+     */
+    public void resetYaw () {
+        this.initImu(this.imu.getDeviceName());
+    }
+
+
+    /**
+     *
      * @param imuName
      */
     public void initImu (String imuName)
