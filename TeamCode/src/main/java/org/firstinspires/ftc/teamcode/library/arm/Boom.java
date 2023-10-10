@@ -9,6 +9,12 @@ import org.firstinspires.ftc.teamcode.library.component.command.GoToDegreesComma
 import org.firstinspires.ftc.teamcode.library.component.command.GoToPositionCommand;
 import org.firstinspires.ftc.teamcode.library.component.event.gp2_left_stick_x.Gp2_LeftStickXEvent;
 import org.firstinspires.ftc.teamcode.library.component.event.gp2_left_stick_x.Gp2_LeftStickXHandler;
+import org.firstinspires.ftc.teamcode.library.component.event.gp2_left_stick_y.Gp2_LeftStickYEvent;
+import org.firstinspires.ftc.teamcode.library.component.event.gp2_left_stick_y.Gp2_LeftStickYHandler;
+import org.firstinspires.ftc.teamcode.library.component.event.gp2_right_stick_x.Gp2_RightStickXEvent;
+import org.firstinspires.ftc.teamcode.library.component.event.gp2_right_stick_x.Gp2_RightStickXHandler;
+import org.firstinspires.ftc.teamcode.library.component.event.gp2_right_stick_y.Gp2_RightStickYEvent;
+import org.firstinspires.ftc.teamcode.library.component.event.gp2_right_stick_y.Gp2_RightStickYHandler;
 
 /**
  *
@@ -66,7 +72,7 @@ public class Boom extends Component
         if (this.config.isDualServo) {
             this.secondaryServo = this.robot.hardwareMap.get(Servo.class, this.config.secondaryServoName);
             this.secondaryServo.resetDeviceConfigurationForOpMode();
-            this.secondaryServo.setDirection(this.config.direction.equals(Servo.Direction.FORWARD) ? Servo.Direction.REVERSE : Servo.Direction.FORWARD);
+            this.secondaryServo.setDirection(this.config.direction);
         }
 
         if (config.controllerInputMethod.equals(Control.Gp2_LeftStickX)) {
@@ -79,41 +85,30 @@ public class Boom extends Component
             });
         }
         else if (config.controllerInputMethod.equals(Control.Gp2_LeftStickY)) {
-            this.addGp2_LeftStickYHandler(new Gp2_LeftStickYHandler() {
-                public void onGp2_LeftStickY(Gp2_LeftStickYEvent event) {
-
-                    double position = event.getPosition();
-                    if (Boom.this.config.invertInput) {
-                        position = -position;
-                    }
-
-                    Boom.this.move(position, Boom.this.config.maxIncrement, Boom.this.config.minPosition, Boom.this.config.maxPosition);
+            this.addGp2_LeftStickYHandler(event -> {
+                double position = event.getPosition();
+                if (Boom.this.config.invertInput) {
+                    position = -position;
                 }
+                Boom.this.move(position, Boom.this.config.maxIncrement, Boom.this.config.minPosition, Boom.this.config.maxPosition);
             });
         }
         else if (config.controllerInputMethod.equals(Control.Gp2_RightStickX)) {
-            this.addGp2_RightStickXHandler(new Gp2_RightStickXHandler() {
-                public void onGp2_RightStickX(Gp2_RightStickXEvent event) {
-                    double position = event.getPosition();
-                    if (Boom.this.config.invertInput) {
-                        position = -position;
-                    }
-
-                    Boom.this.move(position, Boom.this.config.maxIncrement, Boom.this.config.minPosition, Boom.this.config.maxPosition);
+            this.addGp2_RightStickXHandler(event -> {
+                double position = event.getPosition();
+                if (Boom.this.config.invertInput) {
+                    position = -position;
                 }
+                Boom.this.move(position, Boom.this.config.maxIncrement, Boom.this.config.minPosition, Boom.this.config.maxPosition);
             });
         }
         else if (config.controllerInputMethod.equals(Control.Gp2_RightStickY)) {
-            this.addGp2_RightStickYHandler(new Gp2_RightStickYHandler() {
-                public void onGp2_RightStickY(Gp2_RightStickYEvent event) {
-
-                    double position = event.getPosition();
-                    if (Boom.this.config.invertInput) {
-                        position = -position;
-                    }
-
-                    Boom.this.move(position, Boom.this.config.maxIncrement, Boom.this.config.minPosition, Boom.this.config.maxPosition);
+            this.addGp2_RightStickYHandler(event -> {
+                double position = event.getPosition();
+                if (Boom.this.config.invertInput) {
+                    position = -position;
                 }
+                Boom.this.move(position, Boom.this.config.maxIncrement, Boom.this.config.minPosition, Boom.this.config.maxPosition);
             });
         }
 
