@@ -24,8 +24,18 @@ public class HandlerManager {
     /**
      *
      */
+    protected IsaacBot robot;
+
     public HandlerManager() {
         this.handlerMap = new HashMap<EventType, List<EventHandler>>();
+    }
+
+    /**
+     *
+     */
+    public HandlerManager(IsaacBot robot) {
+        this();
+        this.robot = robot;
     }
 
     /**
@@ -54,15 +64,25 @@ public class HandlerManager {
      */
     public <T extends EventHandler> void fireEvent (Event<T> event) {
 
+        this.robot.telemetry.addData("size: ", "%d", this.handlerMap.size());
+
         if (!this.handlerMap.containsKey(event.getType())) {
+            this.robot.telemetry.addLine("no key found");
+            this.robot.telemetry.update();
             return;
         }
 
         List<T> handlers = (List<T>)this.handlerMap.get(event.getType());
 
         for (T handler : handlers) {
+            this.robot.telemetry.addLine("handler found");
+            this.robot.telemetry.update();
             event.handle(handler);
         }
+   }
+
+   public Map<EventType, List<EventHandler>> getHandlerMap() {
+        return this.handlerMap;
    }
 
 }

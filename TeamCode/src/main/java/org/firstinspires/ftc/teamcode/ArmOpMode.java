@@ -11,6 +11,8 @@ import org.firstinspires.ftc.teamcode.library.arm.BoomConfiguration;
 import org.firstinspires.ftc.teamcode.library.component.command.CommandGroup;
 import org.firstinspires.ftc.teamcode.library.component.command.GoToDegreesCommand;
 import org.firstinspires.ftc.teamcode.library.component.command.WaitCommand;
+import org.firstinspires.ftc.teamcode.library.component.event.gp2_a_press.Gp2_A_PressEvent;
+import org.firstinspires.ftc.teamcode.library.component.event.gp2_a_press.Gp2_A_PressHandler;
 
 @TeleOp(name="ArmOpMode", group="Linear OpMode")
 //@Disabled
@@ -62,7 +64,12 @@ public class ArmOpMode extends IsaacBot {
 
     @Override
     public void runOpMode() throws InterruptedException {
-        this.arm.init();
+        //this.arm.init();
+
+        this.arm.addGp2_A_PressHandler(event -> {
+            this.telemetry.addLine("Button A Pressed");
+            this.telemetry.update();
+        });
 
         this.waitForStart();
 
@@ -70,6 +77,14 @@ public class ArmOpMode extends IsaacBot {
 
         while (this.opModeIsActive()) {
             this.arm.run();
+
+//            if (this.gamepad2.a) {
+//                this.telemetry.addLine("Button A Pressed No Handler");
+//                this.telemetry.update();
+//            }
+
+
+
 
 //            if (flag) {
 //                sleep(2000);
@@ -86,7 +101,7 @@ public class ArmOpMode extends IsaacBot {
 //            }
 
 
-            this.telemetry.update();
+
 
 //            double lx = this.gamepad2.left_stick_x;
 //            this.telemetry.addData("Left stick x:", "%2f", lx);

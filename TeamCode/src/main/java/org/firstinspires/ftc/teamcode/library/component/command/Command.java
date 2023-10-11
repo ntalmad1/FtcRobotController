@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode.library.component.command;
 
 import org.firstinspires.ftc.teamcode.library.component.event.HandlerRegistration;
+import org.firstinspires.ftc.teamcode.library.component.event.command_callback.CommandCallbackHandler;
 
 /**
  *
@@ -12,7 +13,7 @@ public interface Command {
      * @param callback
      * @return
      */
-    HandlerRegistration addCallbackHandler (CommandCallback callback);
+    HandlerRegistration addCallbackHandler (CommandCallbackHandler callback);
 
     /**
      *

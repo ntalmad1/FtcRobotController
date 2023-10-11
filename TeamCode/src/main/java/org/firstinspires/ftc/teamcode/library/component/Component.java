@@ -6,7 +6,10 @@ import org.firstinspires.ftc.teamcode.library.component.command.Command;
 import org.firstinspires.ftc.teamcode.library.component.command.CommandQueue;
 import org.firstinspires.ftc.teamcode.library.component.command.WaitCommand;
 import org.firstinspires.ftc.teamcode.library.component.event.EventBus;
+import org.firstinspires.ftc.teamcode.library.component.event.HandlerManager;
 import org.firstinspires.ftc.teamcode.library.component.event.HandlerRegistration;
+import org.firstinspires.ftc.teamcode.library.component.event.gp2_a_press.Gp2_A_PressEvent;
+import org.firstinspires.ftc.teamcode.library.component.event.gp2_a_press.Gp2_A_PressHandler;
 import org.firstinspires.ftc.teamcode.library.component.event.gp2_left_stick_x.Gp2_LeftStickXEvent;
 import org.firstinspires.ftc.teamcode.library.component.event.gp2_left_stick_x.Gp2_LeftStickXHandler;
 import org.firstinspires.ftc.teamcode.library.component.event.gp2_left_stick_y.Gp2_LeftStickYEvent;
@@ -61,6 +64,19 @@ public abstract class Component {
         this.commandQueue.add(command);
     }
 
+    /**
+     *
+     * @param handler
+     * @return
+     */
+    public HandlerRegistration addGp2_A_PressHandler (Gp2_A_PressHandler handler) {
+        HandlerRegistration reg = this.eventBus.addHandler(Gp2_A_PressEvent.TYPE, handler);
+
+        this.telemetry.addData("Keys: ", "%d", this.eventBus.getHandlerMap().size());
+        this.telemetry.update();
+
+        return reg;
+    }
 
     /**
      *

@@ -5,14 +5,15 @@ import org.firstinspires.ftc.teamcode.library.component.command.Command;
 /**
  *
  */
-public class CommandSuccessEvent extends CommandCallbackEvent {
+public class CommandFailureEvent extends CommandCallbackEvent {
 
     /**
      *
      * @param command
      */
-    public CommandSuccessEvent (Command command) {
-        super(Type.SUCCESS, command);
+    public CommandFailureEvent(Command command, Exception error) {
+        super(Type.FAILURE, command);
+        this.setError(error);
     }
 
     /**
@@ -21,6 +22,6 @@ public class CommandSuccessEvent extends CommandCallbackEvent {
      */
     @Override
     public void handle( CommandCallbackHandler handler) {
-        handler.onSuccess(this);
+        handler.onFailure(this);
     }
 }

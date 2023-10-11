@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode.library.component.event;
 
 import org.firstinspires.ftc.teamcode.library.IsaacBot;
+import org.firstinspires.ftc.teamcode.library.component.event.gp2_a_press.Gp2_A_PressEvent;
 import org.firstinspires.ftc.teamcode.library.component.event.gp2_left_stick_x.Gp2_LeftStickXEvent;
 import org.firstinspires.ftc.teamcode.library.component.event.gp2_left_stick_y.Gp2_LeftStickYEvent;
 import org.firstinspires.ftc.teamcode.library.component.event.gp2_right_stick_x.Gp2_RightStickXEvent;
@@ -27,7 +28,7 @@ public class EventBus extends HandlerManager {
     /**
      *
      */
-    private IsaacBot robot;
+    private boolean gp2_a_down;
 
     /**
      * Constructor
@@ -35,8 +36,8 @@ public class EventBus extends HandlerManager {
      * @param robot
      */
     public EventBus (IsaacBot robot) {
-        super();
-        this.robot = robot;
+        super(robot);
+
     }
 
     /**
@@ -83,5 +84,11 @@ public class EventBus extends HandlerManager {
             this.fireEvent(event);
             gp2_rightStickY = current_gp2_rightStickY;
         }
+
+        boolean current_gp2_a = this.robot.gamepad2.a;
+        if (this.gp2_a_down && !current_gp2_a) {
+            this.fireEvent(new Gp2_A_PressEvent());
+        }
+        this.gp2_a_down = current_gp2_a;
     }
 }

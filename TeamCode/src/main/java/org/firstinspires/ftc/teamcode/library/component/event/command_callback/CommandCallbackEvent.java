@@ -10,6 +10,10 @@ import org.firstinspires.ftc.teamcode.library.component.event.EventType;
 public abstract class CommandCallbackEvent extends Event<CommandCallbackHandler> {
 
     /**
+     */
+    public final static EventType<CommandCallbackHandler> TYPE = new EventType<CommandCallbackHandler>();
+
+    /**
      *
      */
     public enum Type {
@@ -51,7 +55,7 @@ public abstract class CommandCallbackEvent extends Event<CommandCallbackHandler>
      */
     @Override
     public EventType<CommandCallbackHandler> getType() {
-        return this.eventType;
+        return TYPE;
     }
 
     /**
