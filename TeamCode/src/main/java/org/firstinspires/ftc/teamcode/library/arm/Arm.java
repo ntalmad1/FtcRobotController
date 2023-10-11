@@ -51,19 +51,11 @@ public class Arm extends Component {
      *
      */
     public void run ()  {
+        super.run();
+
         this.bottomBoom.run();
         this.midBoom.run();
         this.topBoom.run();
-    }
-
-    /**
-     *
-     * @param command
-     */
-    public void runCommand (Command command) {
-        super.runCommand(command);
-
-        command.run();
     }
 
 

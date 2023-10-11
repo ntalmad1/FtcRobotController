@@ -28,14 +28,7 @@ public class HandlerManager {
 
     public HandlerManager() {
         this.handlerMap = new HashMap<EventType, List<EventHandler>>();
-    }
-
-    /**
-     *
-     */
-    public HandlerManager(IsaacBot robot) {
-        this();
-        this.robot = robot;
+        this.robot = IsaacBot.getInstance();
     }
 
     /**

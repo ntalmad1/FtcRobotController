@@ -4,10 +4,6 @@ public class GoToDegreesCommand extends GoToPositionCommand {
 
     /**
      */
-    private Boom boom;
-
-    /**
-     */
     private double degrees;
 
     /**
@@ -15,9 +11,8 @@ public class GoToDegreesCommand extends GoToPositionCommand {
      * @param degrees
      */
     public GoToDegreesCommand (Boom boom, double degrees) {
-        super();
+        super(boom);
 
-        this.boom = boom;
         this.degrees = degrees;
     }
 
@@ -29,8 +24,8 @@ public class GoToDegreesCommand extends GoToPositionCommand {
      *
      */
     public void init () {
-        this.setStartPosition(this.boom.getPosition());
-        this.setTargetPosition(this.boom.calculateTargetPosition(this.degrees));
+        this.setStartPosition(this.getBoom().getPosition());
+        this.setTargetPosition(this.getBoom().calculateTargetPosition(this.degrees));
         this.setInitialized(true);
     }
 }

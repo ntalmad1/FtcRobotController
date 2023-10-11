@@ -35,7 +35,7 @@ public class EventBus extends HandlerManager {
      * @param robot
      */
     public static void init (IsaacBot robot) {
-        instance = new EventBus(robot);
+        instance = new EventBus();
     }
 
     /**
@@ -54,10 +54,9 @@ public class EventBus extends HandlerManager {
     /**
      * Hidden Constructor
      *
-     * @param robot
      */
-    protected EventBus (IsaacBot robot) {
-        super(robot);
+    protected EventBus () {
+        super();
     }
 
     /**

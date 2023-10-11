@@ -26,7 +26,7 @@ public class GoToPositionCommand extends AbstractCommand {
      * @param targetPosition
      */
     public GoToPositionCommand (Boom boom, double startPosition, double targetPosition) {
-        this.boom = boom;
+        this(boom);
 
         this.startPosition = startPosition;
         this.targetPosition = targetPosition;
@@ -36,7 +36,17 @@ public class GoToPositionCommand extends AbstractCommand {
      * Hidden Constructor
      *
      */
-    protected GoToPositionCommand() { }
+    protected GoToPositionCommand(Boom boom) {
+        this.boom = boom;
+    }
+
+    /**
+     *
+     * @return
+     */
+    public Boom getBoom () {
+        return this.boom;
+    }
 
     /**
      *
