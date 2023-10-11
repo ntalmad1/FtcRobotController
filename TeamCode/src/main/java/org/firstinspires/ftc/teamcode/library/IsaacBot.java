@@ -5,6 +5,7 @@ import com.qualcomm.robotcore.hardware.IMU;
 
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.YawPitchRollAngles;
+import org.firstinspires.ftc.teamcode.library.component.event.EventBus;
 
 /**
  *
@@ -20,6 +21,8 @@ public abstract class  IsaacBot extends LinearOpMode
     public IsaacBot()
     {
         super();
+
+        EventBus.init(this);
     }
 
     /**
@@ -32,6 +35,14 @@ public abstract class  IsaacBot extends LinearOpMode
         double yaw = gyro.getYaw(AngleUnit.DEGREES);
 
         return yaw;
+    }
+
+    /**
+     *
+     * @return
+     */
+    public EventBus getEventBus () {
+        return EventBus.getInstance();
     }
 
     /**

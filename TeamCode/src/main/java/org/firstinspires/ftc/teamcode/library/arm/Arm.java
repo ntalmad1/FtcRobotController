@@ -1,7 +1,9 @@
 package org.firstinspires.ftc.teamcode.library.arm;
 
-import org.firstinspires.ftc.teamcode.library.IsaacBot;
+import org.firstinspires.ftc.teamcode.library.arm.boom.Boom;
 import org.firstinspires.ftc.teamcode.library.component.Component;
+import org.firstinspires.ftc.teamcode.library.component.command.Command;
+import org.firstinspires.ftc.teamcode.library.component.command.WaitCommand;
 
 public class Arm extends Component {
 
@@ -52,5 +54,26 @@ public class Arm extends Component {
         this.bottomBoom.run();
         this.midBoom.run();
         this.topBoom.run();
+    }
+
+    /**
+     *
+     * @param command
+     */
+    public void runCommand (Command command) {
+        super.runCommand(command);
+
+        command.run();
+    }
+
+
+    public Arm moveTop (double degrees) {
+        this.addCommand(new BoomMoveCommand(this.topBoom, 30));
+        return this;
+    }
+
+    public Arm wait (int milliseconds) {
+        this.addCommand(new WaitCommand(milliseconds));
+        return this;
     }
 }

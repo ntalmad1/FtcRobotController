@@ -7,12 +7,7 @@ import org.firstinspires.ftc.teamcode.library.Control;
 import org.firstinspires.ftc.teamcode.library.IsaacBot;
 import org.firstinspires.ftc.teamcode.library.arm.Arm;
 import org.firstinspires.ftc.teamcode.library.arm.ArmConfiguration;
-import org.firstinspires.ftc.teamcode.library.arm.BoomConfiguration;
-import org.firstinspires.ftc.teamcode.library.component.command.CommandGroup;
-import org.firstinspires.ftc.teamcode.library.component.command.GoToDegreesCommand;
-import org.firstinspires.ftc.teamcode.library.component.command.WaitCommand;
-import org.firstinspires.ftc.teamcode.library.component.event.gp2_a_press.Gp2_A_PressEvent;
-import org.firstinspires.ftc.teamcode.library.component.event.gp2_a_press.Gp2_A_PressHandler;
+import org.firstinspires.ftc.teamcode.library.arm.boom.BoomConfiguration;
 
 @TeleOp(name="ArmOpMode", group="Linear OpMode")
 //@Disabled
@@ -64,26 +59,26 @@ public class ArmOpMode extends IsaacBot {
 
     @Override
     public void runOpMode() throws InterruptedException {
-        //this.arm.init();
+        this.arm.init();
 
         this.arm.addGp2_A_PressHandler(event -> {
-            this.telemetry.addLine("Button A Pressed");
-            this.telemetry.update();
+
+            ArmOpMode.this.arm
+                    .moveTop(30)
+                    .wait(2000)
+                    .moveTop(0);
+//                    .beginGroup()
+//                        .moveTop(10)
+//                    .endGroup();
         });
 
         this.waitForStart();
 
-//        boolean flag = true;
-
         while (this.opModeIsActive()) {
+
+            this.getEventBus().run();
+
             this.arm.run();
-
-//            if (this.gamepad2.a) {
-//                this.telemetry.addLine("Button A Pressed No Handler");
-//                this.telemetry.update();
-//            }
-
-
 
 
 //            if (flag) {
@@ -100,12 +95,6 @@ public class ArmOpMode extends IsaacBot {
 //                flag = false;
 //            }
 
-
-
-
-//            double lx = this.gamepad2.left_stick_x;
-//            this.telemetry.addData("Left stick x:", "%2f", lx);
-//            this.telemetry.update();
 
         }
     }

@@ -1,8 +1,7 @@
 package org.firstinspires.ftc.teamcode.library.arm;
 
-import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
-
 import org.firstinspires.ftc.teamcode.library.IsaacBot;
+import org.firstinspires.ftc.teamcode.library.arm.boom.BoomConfiguration;
 
 public class ArmConfiguration {
 

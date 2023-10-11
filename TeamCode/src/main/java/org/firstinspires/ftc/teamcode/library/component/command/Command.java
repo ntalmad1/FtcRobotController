@@ -29,6 +29,14 @@ public interface Command {
 
     /**
      *
+     * @return
+     */
+    boolean isSynchronous ();
+
+    /**
+     *
      */
     void init ();
+
+    void run ();
 }

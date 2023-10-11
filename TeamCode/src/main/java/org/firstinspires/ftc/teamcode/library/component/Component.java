@@ -24,22 +24,17 @@ import org.firstinspires.ftc.teamcode.library.component.event.gp2_right_stick_y.
  */
 public abstract class Component {
 
+    /**
+     */
     private CommandQueue commandQueue;
 
     /**
-     *
-     */
-    private EventBus eventBus;
-
-    /**
-     *
      */
     protected IsaacBot robot;
 
     /**
-     *
      */
-    protected Telemetry telemetry;
+    public Telemetry telemetry;
 
     /**
      *
@@ -50,8 +45,6 @@ public abstract class Component {
         this.robot = robot;
 
         this.telemetry = this.robot.telemetry;
-
-        this.eventBus = new EventBus(robot);
 
         this.commandQueue = new CommandQueue(this);
     }
@@ -70,12 +63,7 @@ public abstract class Component {
      * @return
      */
     public HandlerRegistration addGp2_A_PressHandler (Gp2_A_PressHandler handler) {
-        HandlerRegistration reg = this.eventBus.addHandler(Gp2_A_PressEvent.TYPE, handler);
-
-        this.telemetry.addData("Keys: ", "%d", this.eventBus.getHandlerMap().size());
-        this.telemetry.update();
-
-        return reg;
+        return EventBus.getInstance().addHandler(Gp2_A_PressEvent.TYPE, handler);
     }
 
     /**
@@ -84,19 +72,19 @@ public abstract class Component {
      * @return
      */
     public HandlerRegistration addGp2_LeftStickXHandler (Gp2_LeftStickXHandler handler) {
-        return this.eventBus.addHandler(Gp2_LeftStickXEvent.TYPE, handler);
+        return EventBus.getInstance().addHandler(Gp2_LeftStickXEvent.TYPE, handler);
     }
 
     public HandlerRegistration addGp2_LeftStickYHandler (Gp2_LeftStickYHandler handler) {
-        return this.eventBus.addHandler(Gp2_LeftStickYEvent.TYPE, handler);
+        return EventBus.getInstance().addHandler(Gp2_LeftStickYEvent.TYPE, handler);
     }
 
     public HandlerRegistration addGp2_RightStickXHandler (Gp2_RightStickXHandler handler) {
-        return this.eventBus.addHandler(Gp2_RightStickXEvent.TYPE, handler);
+        return EventBus.getInstance().addHandler(Gp2_RightStickXEvent.TYPE, handler);
     }
 
     public HandlerRegistration addGp2_RightStickYHandler (Gp2_RightStickYHandler handler) {
-        return this.eventBus.addHandler(Gp2_RightStickYEvent.TYPE, handler);
+        return EventBus.getInstance().addHandler(Gp2_RightStickYEvent.TYPE, handler);
     }
 
     /**
@@ -108,30 +96,13 @@ public abstract class Component {
      *
      */
     public void run (){
-        this.eventBus.run();
         this.commandQueue.run();
     }
 
     public void runCommand (Command command) {
-        if (command instanceof WaitCommand) {
-            if (!command.isInitialized()) {
-                command.init();
-            }
-
-            if (command.isCompleted()) {
-                return;
-            }
+        if (command.isCompleted()) {
+            return;
         }
+        command.run();
     }
-
-    /**
-     *
-     * @return
-     */
-    protected EventBus getEventBus ()
-    {
-        return this.eventBus;
-    }
-
-
 }

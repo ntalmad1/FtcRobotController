@@ -5,11 +5,12 @@ import org.firstinspires.ftc.teamcode.library.component.event.HandlerManager;
 import org.firstinspires.ftc.teamcode.library.component.event.HandlerRegistration;
 import org.firstinspires.ftc.teamcode.library.component.event.command_callback.CommandCallbackEvent;
 import org.firstinspires.ftc.teamcode.library.component.event.command_callback.CommandCallbackHandler;
+import org.firstinspires.ftc.teamcode.library.component.event.command_callback.CommandSuccessEvent;
 
 /**
  *
  */
-public class AbstractCommand implements Command {
+public abstract class AbstractCommand implements Command {
 
     /**
      */
@@ -18,6 +19,10 @@ public class AbstractCommand implements Command {
     /**
      */
     private boolean initialized = false;
+
+    /**
+     */
+    private boolean synchronous = false;
 
     private HandlerManager handlerManager = new HandlerManager();
 
@@ -52,6 +57,7 @@ public class AbstractCommand implements Command {
      */
     public void markAsCompleted () {
         this.completed = true;
+        this.fireEvent(new CommandSuccessEvent(this));
     }
 
     /**
@@ -65,6 +71,14 @@ public class AbstractCommand implements Command {
 
     /**
      *
+     * @return
+     */
+    public boolean isSynchronous () {
+        return this.synchronous;
+    }
+
+    /**
+     *
      * @param initialized
      */
     public void setInitialized(boolean initialized) {
@@ -73,6 +87,21 @@ public class AbstractCommand implements Command {
 
     /**
      *
+     * @param synchronous
      */
-    public void init () {};
+    public void setSynchronous (boolean synchronous) {
+       this.synchronous = synchronous;
+    }
+
+    /**
+     *
+     */
+    public void init () {
+        this.setInitialized(true);
+    };
+
+    /**
+     *
+     */
+    public abstract void run ();
 }

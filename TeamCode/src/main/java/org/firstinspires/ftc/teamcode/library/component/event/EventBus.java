@@ -20,6 +20,27 @@ public class EventBus extends HandlerManager {
     /**
      *
      */
+    public static EventBus instance;
+
+    /**
+     *
+     * @return
+     */
+    public static EventBus getInstance() {
+        return instance;
+    }
+
+    /**
+     *
+     * @param robot
+     */
+    public static void init (IsaacBot robot) {
+        instance = new EventBus(robot);
+    }
+
+    /**
+     *
+     */
     private double gp2_leftStickX;
     private double gp2_leftStickY;
     private double gp2_rightStickX;
@@ -31,13 +52,12 @@ public class EventBus extends HandlerManager {
     private boolean gp2_a_down;
 
     /**
-     * Constructor
+     * Hidden Constructor
      *
      * @param robot
      */
-    public EventBus (IsaacBot robot) {
+    protected EventBus (IsaacBot robot) {
         super(robot);
-
     }
 
     /**
