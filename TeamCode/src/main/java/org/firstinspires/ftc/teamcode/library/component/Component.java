@@ -10,6 +10,8 @@ import org.firstinspires.ftc.teamcode.library.component.event.HandlerManager;
 import org.firstinspires.ftc.teamcode.library.component.event.HandlerRegistration;
 import org.firstinspires.ftc.teamcode.library.component.event.gp2_a_press.Gp2_A_PressEvent;
 import org.firstinspires.ftc.teamcode.library.component.event.gp2_a_press.Gp2_A_PressHandler;
+import org.firstinspires.ftc.teamcode.library.component.event.gp2_b_press.Gp2_B_PressEvent;
+import org.firstinspires.ftc.teamcode.library.component.event.gp2_b_press.Gp2_B_PressHandler;
 import org.firstinspires.ftc.teamcode.library.component.event.gp2_left_stick_x.Gp2_LeftStickXEvent;
 import org.firstinspires.ftc.teamcode.library.component.event.gp2_left_stick_x.Gp2_LeftStickXHandler;
 import org.firstinspires.ftc.teamcode.library.component.event.gp2_left_stick_y.Gp2_LeftStickYEvent;
@@ -18,6 +20,10 @@ import org.firstinspires.ftc.teamcode.library.component.event.gp2_right_stick_x.
 import org.firstinspires.ftc.teamcode.library.component.event.gp2_right_stick_x.Gp2_RightStickXHandler;
 import org.firstinspires.ftc.teamcode.library.component.event.gp2_right_stick_y.Gp2_RightStickYEvent;
 import org.firstinspires.ftc.teamcode.library.component.event.gp2_right_stick_y.Gp2_RightStickYHandler;
+import org.firstinspires.ftc.teamcode.library.component.event.gp2_x_press.Gp2_X_PressEvent;
+import org.firstinspires.ftc.teamcode.library.component.event.gp2_x_press.Gp2_X_PressHandler;
+import org.firstinspires.ftc.teamcode.library.component.event.gp2_y_press.Gp2_Y_PressEvent;
+import org.firstinspires.ftc.teamcode.library.component.event.gp2_y_press.Gp2_Y_PressHandler;
 
 /**
  *
@@ -64,6 +70,18 @@ public abstract class Component {
      */
     public HandlerRegistration addGp2_A_PressHandler (Gp2_A_PressHandler handler) {
         return EventBus.getInstance().addHandler(Gp2_A_PressEvent.TYPE, handler);
+    }
+
+    public HandlerRegistration addGp2_B_PressHandler (Gp2_B_PressHandler handler) {
+        return EventBus.getInstance().addHandler(Gp2_B_PressEvent.TYPE, handler);
+    }
+
+    public HandlerRegistration addGp2_X_PressHandler (Gp2_X_PressHandler handler) {
+        return EventBus.getInstance().addHandler(Gp2_X_PressEvent.TYPE, handler);
+    }
+
+    public HandlerRegistration addGp2_Y_PressHandler (Gp2_Y_PressHandler handler) {
+        return EventBus.getInstance().addHandler(Gp2_Y_PressEvent.TYPE, handler);
     }
 
     /**
