@@ -24,16 +24,42 @@ public class CommandGroup  extends AbstractCommand {
         this.commands.add(command);
     }
 
-    public Command getActiveCommand () {
+    /**
+     *
+     * @return
+     */
+    public List<Command> getCommands  () {
+        return this.commands;
+    }
 
-        for (Command command : this.commands) {
-            if (!command.isCompleted()) {
-                return command;
+    /**
+     *
+     */
+    public void run () {
+        if (this.isCompleted()) {
+            return;
+        }
+
+        int completedCount = 0;
+
+        for (Command command : commands) {
+            if (command.isCompleted()) {
+                completedCount++;
+                continue;
+            }
+
+            if (!command.isInitialized()) {
+                command.init();
+            }
+            command.run();
+
+            if (!command.isCompleted() && command.isSynchronous()) {
+                break;
             }
         }
 
-        this.markAsCompleted();
-
-        return null;
+        if (completedCount == this.commands.size()) {
+            this.markAsCompleted();
+        }
     }
 }

@@ -2,30 +2,52 @@ package org.firstinspires.ftc.teamcode.library.component.command;
 
 import com.qualcomm.robotcore.util.ElapsedTime;
 
-public class WaitCommand extends AbstractCommand {
+public class WaitCommand extends AbstractSynchronousCommand {
 
     private double duration;
 
     private ElapsedTime timer;
 
+    /**
+     * Empty Constructor
+     */
+    public WaitCommand () {
+        super();
+        this.setBlocking(true);
+    }
+
+    /**
+     * Constructor
+     *
+     * @param duration
+     */
     public WaitCommand(double duration) {
+        this();
         this.duration = duration;
     }
 
+    /**
+     *
+     */
     public void init() {
-        this.timer = new ElapsedTime();
-        this.timer.reset();
+        if (this.duration > 0) {
+            this.timer = new ElapsedTime();
+            this.timer.reset();
+        }
         this.setInitialized(true);
     }
 
-    @Override
-    public boolean isCompleted() {
-        if (!this.isInitialized()) {
-            return false;
+    /**
+     *
+     */
+    public void run () {
+        if (this.isCompleted()) {
+            return;
         }
-        
-        if (this.completed) {
-            return true;
+
+        if (this.duration == 0) {
+            this.markAsCompleted();
+            return;
         }
 
         if (this.timer.milliseconds() >= this.duration)
@@ -33,7 +55,9 @@ public class WaitCommand extends AbstractCommand {
             this.timer = null;
             this.markAsCompleted();
         }
+    }
 
-        return this.completed;
+    public String toString () {
+        return this.getClass().toString() + ": " + this.duration;
     }
 }

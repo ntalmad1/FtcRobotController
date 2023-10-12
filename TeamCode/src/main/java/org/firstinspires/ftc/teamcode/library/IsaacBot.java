@@ -5,12 +5,19 @@ import com.qualcomm.robotcore.hardware.IMU;
 
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.YawPitchRollAngles;
+import org.firstinspires.ftc.teamcode.library.component.event.EventBus;
 
 /**
  *
  */
 public abstract class  IsaacBot extends LinearOpMode
 {
+    private static IsaacBot instance;
+
+    public static IsaacBot getInstance() {
+        return instance;
+    }
+
     /**
      */
     private IMU imu;
@@ -20,6 +27,10 @@ public abstract class  IsaacBot extends LinearOpMode
     public IsaacBot()
     {
         super();
+
+        instance = this;
+
+        EventBus.init(this);
     }
 
     /**
@@ -33,6 +44,22 @@ public abstract class  IsaacBot extends LinearOpMode
 
         return yaw;
     }
+
+    /**
+     *
+     * @return
+     */
+    public EventBus getEventBus () {
+        return EventBus.getInstance();
+    }
+
+    /**
+     *
+     */
+    public void resetYaw () {
+        this.initImu(this.imu.getDeviceName());
+    }
+
 
     /**
      *

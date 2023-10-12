@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.library.arm;
+package org.firstinspires.ftc.teamcode.library.arm.boom;
 
 import com.qualcomm.robotcore.hardware.Servo;
 

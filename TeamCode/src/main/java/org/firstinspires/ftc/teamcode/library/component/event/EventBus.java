@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode.library.component.event;
 
 import org.firstinspires.ftc.teamcode.library.IsaacBot;
+import org.firstinspires.ftc.teamcode.library.component.event.gp2_a_press.Gp2_A_PressEvent;
 import org.firstinspires.ftc.teamcode.library.component.event.gp2_left_stick_x.Gp2_LeftStickXEvent;
 import org.firstinspires.ftc.teamcode.library.component.event.gp2_left_stick_y.Gp2_LeftStickYEvent;
 import org.firstinspires.ftc.teamcode.library.component.event.gp2_right_stick_x.Gp2_RightStickXEvent;
@@ -14,69 +15,49 @@ import java.util.Map;
 /**
  *
  */
-public class EventBus {
+public class EventBus extends HandlerManager {
 
     /**
      *
      */
-    private Map<EventType, List<EventHandler>> handlerMap;
+    public static EventBus instance;
 
     /**
      *
+     * @return
      */
-    private IsaacBot robot;
+    public static EventBus getInstance() {
+        return instance;
+    }
 
     /**
      *
      * @param robot
      */
-    public EventBus (IsaacBot robot) {
-        this.robot = robot;
-
-        this.handlerMap = new HashMap<EventType, List<EventHandler>>();
+    public static void init (IsaacBot robot) {
+        instance = new EventBus();
     }
 
     /**
      *
-     * @param eventType
-     * @param handler
-     * @return
-     * @param <T>
      */
-    public <T extends EventHandler> HandlerRegistration addHandler (EventType<T> eventType, T handler)
-    {
-        if (!this.handlerMap.containsKey(eventType))
-        {
-            this.handlerMap.put((EventType)eventType, (List<EventHandler>) new ArrayList<T>());
-        }
-
-        this.handlerMap.get(eventType).add(handler);
-
-        return new HandlerRegistration(handler);
-    }
-
-    /**
-     *
-     * @param event
-     * @param <T>
-     */
-    public <T extends EventHandler> void fireEvent (Event<T> event) {
-
-        if (!this.handlerMap.containsKey(event.getType())) {
-            return;
-        }
-
-        List<T> handlers = (List<T>)this.handlerMap.get(event.getType());
-
-        for (T handler : handlers) {
-            event.handle(handler);
-        }
-    }
-
     private double gp2_leftStickX;
     private double gp2_leftStickY;
     private double gp2_rightStickX;
     private double gp2_rightStickY;
+
+    /**
+     *
+     */
+    private boolean gp2_a_down;
+
+    /**
+     * Hidden Constructor
+     *
+     */
+    protected EventBus () {
+        super();
+    }
 
     /**
      *
@@ -123,6 +104,10 @@ public class EventBus {
             gp2_rightStickY = current_gp2_rightStickY;
         }
 
-
+        boolean current_gp2_a = this.robot.gamepad2.a;
+        if (this.gp2_a_down && !current_gp2_a) {
+            this.fireEvent(new Gp2_A_PressEvent());
+        }
+        this.gp2_a_down = current_gp2_a;
     }
 }

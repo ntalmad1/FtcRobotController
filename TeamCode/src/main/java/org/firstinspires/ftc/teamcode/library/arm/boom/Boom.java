@@ -1,41 +1,34 @@
-package org.firstinspires.ftc.teamcode.library.arm;
+package org.firstinspires.ftc.teamcode.library.arm.boom;
 
 import com.qualcomm.robotcore.hardware.Servo;
 
 import org.firstinspires.ftc.teamcode.library.Control;
 import org.firstinspires.ftc.teamcode.library.component.Component;
 import org.firstinspires.ftc.teamcode.library.component.command.Command;
-import org.firstinspires.ftc.teamcode.library.component.command.GoToDegreesCommand;
-import org.firstinspires.ftc.teamcode.library.component.command.GoToPositionCommand;
-import org.firstinspires.ftc.teamcode.library.component.event.gp2_left_stick_x.Gp2_LeftStickXEvent;
-import org.firstinspires.ftc.teamcode.library.component.event.gp2_left_stick_x.Gp2_LeftStickXHandler;
-import org.firstinspires.ftc.teamcode.library.component.event.gp2_left_stick_y.Gp2_LeftStickYEvent;
-import org.firstinspires.ftc.teamcode.library.component.event.gp2_left_stick_y.Gp2_LeftStickYHandler;
-import org.firstinspires.ftc.teamcode.library.component.event.gp2_right_stick_x.Gp2_RightStickXEvent;
-import org.firstinspires.ftc.teamcode.library.component.event.gp2_right_stick_x.Gp2_RightStickXHandler;
-import org.firstinspires.ftc.teamcode.library.component.event.gp2_right_stick_y.Gp2_RightStickYEvent;
-import org.firstinspires.ftc.teamcode.library.component.event.gp2_right_stick_y.Gp2_RightStickYHandler;
 
 /**
  *
  */
-public class Boom extends Component
-{
+public class Boom extends Component {
+
     /**
      *
      */
     public enum Direction {
 
         /**
+         *
          */
         FORWARD,
 
         /**
+         *
          */
         REVERSE
     }
 
     /**
+     *
      */
     private BoomConfiguration config;
 
@@ -50,7 +43,6 @@ public class Boom extends Component
     private Servo secondaryServo;
 
     /**
-     *
      * @param config
      */
     public Boom(BoomConfiguration config) {
@@ -62,7 +54,7 @@ public class Boom extends Component
     /**
      *
      */
-    public void init () {
+    public void init() {
         super.init();
 
         this.servo = this.robot.hardwareMap.get(Servo.class, this.config.servoName);
@@ -83,8 +75,7 @@ public class Boom extends Component
                 }
                 Boom.this.move(position, Boom.this.config.maxIncrement, Boom.this.config.minPosition, Boom.this.config.maxPosition);
             });
-        }
-        else if (config.controllerInputMethod.equals(Control.Gp2_LeftStickY)) {
+        } else if (config.controllerInputMethod.equals(Control.Gp2_LeftStickY)) {
             this.addGp2_LeftStickYHandler(event -> {
                 double position = event.getPosition();
                 if (Boom.this.config.invertInput) {
@@ -92,8 +83,7 @@ public class Boom extends Component
                 }
                 Boom.this.move(position, Boom.this.config.maxIncrement, Boom.this.config.minPosition, Boom.this.config.maxPosition);
             });
-        }
-        else if (config.controllerInputMethod.equals(Control.Gp2_RightStickX)) {
+        } else if (config.controllerInputMethod.equals(Control.Gp2_RightStickX)) {
             this.addGp2_RightStickXHandler(event -> {
                 double position = event.getPosition();
                 if (Boom.this.config.invertInput) {
@@ -101,8 +91,7 @@ public class Boom extends Component
                 }
                 Boom.this.move(position, Boom.this.config.maxIncrement, Boom.this.config.minPosition, Boom.this.config.maxPosition);
             });
-        }
-        else if (config.controllerInputMethod.equals(Control.Gp2_RightStickY)) {
+        } else if (config.controllerInputMethod.equals(Control.Gp2_RightStickY)) {
             this.addGp2_RightStickYHandler(event -> {
                 double position = event.getPosition();
                 if (Boom.this.config.invertInput) {
@@ -118,37 +107,42 @@ public class Boom extends Component
     /**
      *
      */
-    public void run ()
-    {
+    public void run() {
         super.run();
     }
 
     /**
      *
-     * @param command
+     * @return
      */
-    public void runCommand (Command command)
-    {
-        super.runCommand(command);
-
-        if (command instanceof GoToDegreesCommand) {
-            GoToDegreesCommand goToDegreesCommand = (GoToDegreesCommand)command;
-
-            this.telemetry.addData("degrees: ", "%2f", goToDegreesCommand.getDegrees());
-            this.telemetry.addData("servo pos: ", "%2f", this.servo.getPosition());
-            this.telemetry.addData("target pos: ", "%2f", goToDegreesCommand.getTargetPosition());
-
-            if (!goToDegreesCommand.isInitialized()) {
-                goToDegreesCommand.setStartPosition(this.servo.getPosition());
-                goToDegreesCommand.setTargetPosition(this.calculateTargetPosition(goToDegreesCommand.getDegrees()));
-                goToDegreesCommand.setInitialized(true);
-            }
-        }
-
-        if (command instanceof GoToPositionCommand) {
-            this.runGoToPositionCommand((GoToPositionCommand)command);
-        }
+    public double getMaxIncrement() {
+        return this.config.maxIncrement;
     }
+
+    /**
+     *
+     * @return
+     */
+    public double getMaxPosition() {
+        return this.config.maxPosition;
+    }
+
+    /**
+     *
+     * @return
+     */
+    public double getMinPosition() {
+        return this.config.minPosition;
+    }
+
+    /**
+     *
+     * @return The position (0 - 1) of the primary servo
+     */
+    public double getPosition() {
+        return this.servo.getPosition();
+    }
+
 
     /**
      *
@@ -159,7 +153,7 @@ public class Boom extends Component
         double startPosition = this.servo.getPosition();
         double targetPosition = this.calculateTargetPosition(degrees);
 
-        this.addCommand(new GoToPositionCommand(startPosition, targetPosition));
+        this.addCommand(new GoToPositionCommand(this, startPosition, targetPosition));
     }
 
     /**
@@ -195,46 +189,6 @@ public class Boom extends Component
         return isMin || isMax;
     }
 
-    protected void runGoToPositionCommand (GoToPositionCommand goToCommand){
-
-        if (goToCommand.getTargetPosition() == goToCommand.getStartPosition()) {
-            goToCommand.markAsCompleted();
-            return;
-        }
-
-        Direction direction = goToCommand.getTargetPosition() > goToCommand.getStartPosition() ? Direction.REVERSE : Direction.FORWARD;
-
-        double currentPosition = this.servo.getPosition();
-
-        if (direction.equals(Direction.FORWARD)) {
-            telemetry.addLine("forwards");
-
-            if (currentPosition <= goToCommand.getTargetPosition()) {
-                goToCommand.markAsCompleted();
-                return;
-            }
-
-            if (this.move(-1, this.config.maxIncrement, goToCommand.getTargetPosition(), this.config.maxPosition)) {
-                goToCommand.markAsCompleted();
-                return;
-            }
-        }
-        else if (direction.equals(Direction.REVERSE)) {
-
-            telemetry.addLine("reversing");
-
-            if (currentPosition >= goToCommand.getTargetPosition()) {
-                goToCommand.markAsCompleted();
-                return;
-            }
-
-            if (this.move(1, this.config.maxIncrement, this.config.minPosition, goToCommand.getTargetPosition())) {
-                goToCommand.markAsCompleted();
-                return;
-            }
-        }
-    }
-
     /**
      *
      * @param position
@@ -251,7 +205,7 @@ public class Boom extends Component
      * @param degrees
      * @return
      */
-    private double calculateTargetPosition (double degrees)
+    double calculateTargetPosition(double degrees)
     {
         double degreesInPosition = Math.abs(degrees * this.config.degree);
 

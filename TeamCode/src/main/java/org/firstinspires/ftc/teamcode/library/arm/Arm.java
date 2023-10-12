@@ -1,7 +1,9 @@
 package org.firstinspires.ftc.teamcode.library.arm;
 
-import org.firstinspires.ftc.teamcode.library.IsaacBot;
+import org.firstinspires.ftc.teamcode.library.arm.boom.Boom;
 import org.firstinspires.ftc.teamcode.library.component.Component;
+import org.firstinspires.ftc.teamcode.library.component.command.Command;
+import org.firstinspires.ftc.teamcode.library.component.command.WaitCommand;
 
 public class Arm extends Component {
 
@@ -32,6 +34,11 @@ public class Arm extends Component {
         this.topBoom = new Boom(this.config.topBoomConfig);
         this.midBoom = new Boom(this.config.midBoomConfig);
         this.bottomBoom = new Boom(this.config.bottomBoomConfig);
+
+        this.addGp2_LeftStickXHandler(event -> Arm.this.cancelAllCommands());
+        this.addGp2_LeftStickYHandler(event -> Arm.this.cancelAllCommands());
+        this.addGp2_RightStickXHandler(event -> Arm.this.cancelAllCommands());
+        this.addGp2_RightStickYHandler(event -> Arm.this.cancelAllCommands());
     }
 
     /**
@@ -49,8 +56,31 @@ public class Arm extends Component {
      *
      */
     public void run ()  {
+        super.run();
+
         this.bottomBoom.run();
         this.midBoom.run();
         this.topBoom.run();
+    }
+
+
+    public Arm moveTop (double degrees) {
+        this.addCommand(new BoomMoveCommand(this.topBoom, degrees));
+        return this;
+    }
+
+    public Arm moveMiddle (double degrees) {
+        this.addCommand(new BoomMoveCommand(this.midBoom, degrees));
+        return this;
+    }
+
+    public Arm moveBottom (double degrees) {
+        this.addCommand(new BoomMoveCommand(this.bottomBoom, degrees));
+        return this;
+    }
+
+    public Arm wait (int milliseconds) {
+        this.addCommand(new WaitCommand(milliseconds));
+        return this;
     }
 }
