@@ -38,6 +38,7 @@ public class GoToPositionCommand extends AbstractCommand {
      */
     protected GoToPositionCommand(Boom boom) {
         this.boom = boom;
+        this.setSynchronous(true);
     }
 
     /**
@@ -124,5 +125,9 @@ public class GoToPositionCommand extends AbstractCommand {
                 return;
             }
         }
+    }
+
+    public String toString () {
+        return this.getClass().toString() + ": " + this.targetPosition;
     }
 }

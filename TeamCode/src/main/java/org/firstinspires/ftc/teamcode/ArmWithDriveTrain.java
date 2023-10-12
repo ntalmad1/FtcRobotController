@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode;
 
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.Servo;
@@ -13,6 +14,7 @@ import org.firstinspires.ftc.teamcode.library.drivetrain.MecanumDriveTrain;
 import org.firstinspires.ftc.teamcode.library.drivetrain.MecanumDriveTrainConfiguration;
 
 @TeleOp(name="ArmWithDriveTrain", group="Linear OpMode")
+@Disabled
 public class ArmWithDriveTrain extends IsaacBot{
 
     /**

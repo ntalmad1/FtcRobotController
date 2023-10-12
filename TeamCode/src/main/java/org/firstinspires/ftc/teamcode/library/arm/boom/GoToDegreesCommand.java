@@ -28,4 +28,8 @@ public class GoToDegreesCommand extends GoToPositionCommand {
         this.setTargetPosition(this.getBoom().calculateTargetPosition(this.degrees));
         this.setInitialized(true);
     }
+
+    public String toString () {
+        return this.getClass().toString() + ": " + this.degrees;
+    }
 }

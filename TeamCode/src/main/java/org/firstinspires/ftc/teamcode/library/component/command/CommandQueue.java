@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode.library.component.command;
 
+import org.firstinspires.ftc.teamcode.library.IsaacBot;
 import org.firstinspires.ftc.teamcode.library.component.Component;
 
 import java.util.ArrayList;
@@ -26,12 +27,27 @@ public class CommandQueue {
         this.queue.add(command);
     }
 
+    /**
+     *
+     */
+    public void clear () {
+        this.queue.clear();
+    }
+
+    /**
+     *
+     */
     public void run ()
     {
         List<Command> completedCommands = new ArrayList<Command>();
+        int runningCommandCount = 0;
 
         for (Command command : this.queue)
         {
+            if (command.isBlocker() && runningCommandCount > 0) {
+                break;
+            }
+
             if (!command.isInitialized()) {
                 command.init();
             }
@@ -39,6 +55,9 @@ public class CommandQueue {
 
             if (command.isCompleted()) {
                 completedCommands.add(command);
+            }
+            else {
+                runningCommandCount++;
             }
 
             if (!command.isCompleted() && command.isSynchronous()) {

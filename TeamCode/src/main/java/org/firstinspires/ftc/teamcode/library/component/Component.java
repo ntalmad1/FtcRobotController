@@ -90,6 +90,13 @@ public abstract class Component {
     /**
      *
      */
+    public void cancelAllCommands () {
+        this.commandQueue.clear();
+    }
+
+    /**
+     *
+     */
     public void init (){}
 
     /**

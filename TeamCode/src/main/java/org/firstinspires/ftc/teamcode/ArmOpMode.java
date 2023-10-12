@@ -25,6 +25,7 @@ public class ArmOpMode extends IsaacBot {
         topBoomConfig.direction = Servo.Direction.FORWARD;
         topBoomConfig.controllerInputMethod = Control.Gp2_RightStickY;
         topBoomConfig.invertInput = true;
+        topBoomConfig.maxIncrement = 0.005;
         topBoomConfig.zeroDegreePosition = 0.586;
 
         BoomConfiguration midBoomConfig = new BoomConfiguration();
@@ -33,7 +34,7 @@ public class ArmOpMode extends IsaacBot {
         midBoomConfig.direction = Servo.Direction.REVERSE;
         midBoomConfig.controllerInputMethod = Control.Gp2_RightStickX;
         midBoomConfig.invertInput = false;
-        midBoomConfig.maxIncrement = 0.0005;
+        midBoomConfig.maxIncrement = 0.001;
         midBoomConfig.zeroDegreePosition = 0.575;
 
         BoomConfiguration bottomBoomConfig = new BoomConfiguration();
@@ -44,7 +45,7 @@ public class ArmOpMode extends IsaacBot {
         bottomBoomConfig.direction = Servo.Direction.REVERSE;
         bottomBoomConfig.controllerInputMethod = Control.Gp2_LeftStickX;
         bottomBoomConfig.invertInput = true;
-        bottomBoomConfig.maxIncrement = 0.001;
+        bottomBoomConfig.maxIncrement = 0.005;
         bottomBoomConfig.zeroDegreePosition = 0.575;
 
         ArmConfiguration armConfig = new ArmConfiguration();
@@ -62,14 +63,30 @@ public class ArmOpMode extends IsaacBot {
         this.arm.init();
 
         this.arm.addGp2_A_PressHandler(event -> {
-
+            ArmOpMode.this.arm.cancelAllCommands();
             ArmOpMode.this.arm
-                    .moveTop(30)
-                    .wait(2000)
+                    .moveBottom(0)
+                    .moveMiddle(0)
+                    .moveTop(0)
+
+                    .wait(1000)
+
+                    .moveBottom(90)
+                    .moveMiddle(90)
+                    .moveTop(90)
+
+                    .wait(1000)
+
+                    .moveBottom(45)
+                    .moveMiddle(45)
+                    .moveTop(45)
+
+                    .wait(1000)
+
+                    .moveBottom(0)
+                    .moveMiddle(0)
                     .moveTop(0);
-//                    .beginGroup()
-//                        .moveTop(10)
-//                    .endGroup();
+
         });
 
         this.waitForStart();

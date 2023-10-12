@@ -19,13 +19,19 @@ public interface Command {
      *
      * @return
      */
-    boolean isCompleted();
+    boolean isBlocker ();
 
     /**
      *
      * @return
      */
-    boolean isInitialized();
+    boolean isCompleted ();
+
+    /**
+     *
+     * @return
+     */
+    boolean isInitialized ();
 
     /**
      *

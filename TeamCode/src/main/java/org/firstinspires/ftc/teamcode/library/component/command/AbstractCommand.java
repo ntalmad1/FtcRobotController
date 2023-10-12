@@ -18,6 +18,10 @@ public abstract class AbstractCommand implements Command {
 
     /**
      */
+    protected boolean blocker = false;
+
+    /**
+     */
     private boolean initialized = false;
 
     /**
@@ -41,6 +45,14 @@ public abstract class AbstractCommand implements Command {
      */
     public void fireEvent (Event event) {
         this.handlerManager.fireEvent(event);
+    }
+
+    /**
+     *
+     * @return
+     */
+    public boolean isBlocker () {
+        return this.blocker;
     }
 
     /**
@@ -75,6 +87,14 @@ public abstract class AbstractCommand implements Command {
      */
     public boolean isSynchronous () {
         return this.synchronous;
+    }
+
+    /**
+     *
+     * @param isBlocker
+     */
+    public void setBlocking (boolean isBlocker) {
+        this.blocker = isBlocker;
     }
 
     /**

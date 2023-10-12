@@ -27,7 +27,7 @@ public class BoomMoveCommand extends AbstractCommand {
     public BoomMoveCommand(Boom boom, double degrees) {
         this.boom = boom;
 
-        this.command = new GoToDegreesCommand(boom,30);
+        this.command = new GoToDegreesCommand(boom, degrees);
         command.addCallbackHandler(new CommandCallbackAdapter() {
             public void onSuccess(CommandSuccessEvent successEvent) {
                 BoomMoveCommand.this.markAsCompleted();

@@ -34,6 +34,11 @@ public class Arm extends Component {
         this.topBoom = new Boom(this.config.topBoomConfig);
         this.midBoom = new Boom(this.config.midBoomConfig);
         this.bottomBoom = new Boom(this.config.bottomBoomConfig);
+
+        this.addGp2_LeftStickXHandler(event -> Arm.this.cancelAllCommands());
+        this.addGp2_LeftStickYHandler(event -> Arm.this.cancelAllCommands());
+        this.addGp2_RightStickXHandler(event -> Arm.this.cancelAllCommands());
+        this.addGp2_RightStickYHandler(event -> Arm.this.cancelAllCommands());
     }
 
     /**
@@ -60,7 +65,17 @@ public class Arm extends Component {
 
 
     public Arm moveTop (double degrees) {
-        this.addCommand(new BoomMoveCommand(this.topBoom, 30));
+        this.addCommand(new BoomMoveCommand(this.topBoom, degrees));
+        return this;
+    }
+
+    public Arm moveMiddle (double degrees) {
+        this.addCommand(new BoomMoveCommand(this.midBoom, degrees));
+        return this;
+    }
+
+    public Arm moveBottom (double degrees) {
+        this.addCommand(new BoomMoveCommand(this.bottomBoom, degrees));
         return this;
     }
 
