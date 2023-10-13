@@ -64,39 +64,46 @@ public class ArmOpMode extends IsaacBot {
         this.arm.init();
 
         this.arm.addGp2_A_PressHandler(event -> {
+
             ArmOpMode.this.arm.cancelAllCommands();
-            ArmOpMode.this.arm
-                    .moveBottom(0)
-                    .moveMiddle(0)
-                    .moveTop(0)
 
-                    .wait(1000)
 
-                    .moveBottom(90)
-                    .moveMiddle(90)
-                    .moveTop(90)
-
-                    .wait(1000)
-
-                    .moveBottom(45)
-                    .moveMiddle(45)
-                    .moveTop(45)
-
-                    .wait(1000)
-
-                    .moveBottom(0)
-                    .moveMiddle(0)
-                    .moveTop(0);
 
         });
+
+//            ArmOpMode.this.arm.cancelAllCommands();
+//            ArmOpMode.this.arm
+//                    .moveBottom(0)
+//                    .moveMiddle(0)
+//                    .moveTop(0)
+//
+//                    .wait(1000)
+//
+//                    .moveBottom(90)
+//                    .moveMiddle(90)
+//                    .moveTop(90)
+//
+//                    .wait(1000)
+//
+//                    .moveBottom(45)
+//                    .moveMiddle(45)
+//                    .moveTop(45)
+//
+//                    .wait(1000)
+//
+//                    .moveBottom(0)
+//                    .moveMiddle(0)
+//                    .moveTop(0);
+//         });
 
         this.waitForStart();
 
         while (this.opModeIsActive()) {
 
             this.getEventBus().run();
-
             this.arm.run();
+
+
 
 
 //            if (flag) {
