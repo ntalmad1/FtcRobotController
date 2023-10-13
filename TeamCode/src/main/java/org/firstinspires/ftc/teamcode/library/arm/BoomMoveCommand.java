@@ -24,10 +24,10 @@ public class BoomMoveCommand extends AbstractCommand {
      * @param boom
      * @param degrees
      */
-    public BoomMoveCommand(Boom boom, double degrees) {
+    public BoomMoveCommand(Boom boom, double degrees, double power) {
         this.boom = boom;
 
-        this.command = new GoToDegreesCommand(boom, degrees);
+        this.command = new GoToDegreesCommand(boom, degrees, power);
         command.addCallbackHandler(new CommandCallbackAdapter() {
             public void onSuccess(CommandSuccessEvent successEvent) {
                 BoomMoveCommand.this.markAsCompleted();

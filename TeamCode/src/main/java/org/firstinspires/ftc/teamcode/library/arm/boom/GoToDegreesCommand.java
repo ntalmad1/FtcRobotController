@@ -10,8 +10,8 @@ public class GoToDegreesCommand extends GoToPositionCommand {
      *
      * @param degrees
      */
-    public GoToDegreesCommand (Boom boom, double degrees) {
-        super(boom);
+    public GoToDegreesCommand (Boom boom, double degrees, double power) {
+        super(boom, power);
 
         this.degrees = degrees;
     }

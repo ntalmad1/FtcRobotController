@@ -43,6 +43,10 @@ public class Boom extends Component {
     private Servo secondaryServo;
 
     /**
+     */
+    private boolean inverted = false;
+
+    /**
      * @param config
      */
     public Boom(BoomConfiguration config) {
@@ -143,12 +147,28 @@ public class Boom extends Component {
         return this.servo.getPosition();
     }
 
+    /**
+     *
+     * @return
+     */
+    public double getServoPosition() {
+        return this.servo.getPosition();
+    }
+
+    /**
+     *
+     * @return
+     */
     public double getPositionDegrees () {
         double servoPosition = this.servo.getPosition();
 
-        double offset = this.config.zeroDegreePosition = servoPosition;
+        double offset = this.config.zeroDegreePosition - servoPosition;
 
-        double degrees = offset * this.config.degree;
+        double degrees = offset / this.config.degree;
+
+        if (this.inverted) {
+            degrees = degrees * (double)-1;
+        }
 
         return degrees;
     }
@@ -163,7 +183,7 @@ public class Boom extends Component {
         double startPosition = this.servo.getPosition();
         double targetPosition = this.calculateTargetPosition(degrees);
 
-        this.addCommand(new GoToPositionCommand(this, startPosition, targetPosition));
+        this.addCommand(new GoToPositionCommand(this, this.getMaxIncrement(), startPosition, targetPosition));
     }
 
     /**
@@ -201,6 +221,16 @@ public class Boom extends Component {
 
     /**
      *
+     * @param inverted
+     * @return
+     */
+    public void setInverted (boolean inverted)
+    {
+        this.inverted = inverted;
+    }
+
+    /**
+     *
      * @param position
      */
     private void setServoPosition (double position) {
@@ -217,6 +247,11 @@ public class Boom extends Component {
      */
     double calculateTargetPosition(double degrees)
     {
+        if (this.inverted) {
+            degrees = degrees * (double)-1;
+        }
+
+
         double degreesInPosition = Math.abs(degrees * this.config.degree);
 
         double targetPosition = this.config.zeroDegreePosition;

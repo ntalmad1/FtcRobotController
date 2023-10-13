@@ -13,6 +13,10 @@ public class GoToPositionCommand extends AbstractCommand {
 
     /**
      */
+    private double power;
+
+    /**
+     */
     private double startPosition;
 
     /**
@@ -25,8 +29,8 @@ public class GoToPositionCommand extends AbstractCommand {
      * @param startPosition
      * @param targetPosition
      */
-    public GoToPositionCommand (Boom boom, double startPosition, double targetPosition) {
-        this(boom);
+    public GoToPositionCommand (Boom boom, double power, double startPosition, double targetPosition) {
+        this(boom, power);
 
         this.startPosition = startPosition;
         this.targetPosition = targetPosition;
@@ -36,8 +40,9 @@ public class GoToPositionCommand extends AbstractCommand {
      * Hidden Constructor
      *
      */
-    protected GoToPositionCommand(Boom boom) {
+    protected GoToPositionCommand(Boom boom, double power) {
         this.boom = boom;
+        this.power = power;
         this.setSynchronous(true);
     }
 
@@ -104,7 +109,7 @@ public class GoToPositionCommand extends AbstractCommand {
                 return;
             }
 
-            if (this.boom.move(-1, this.boom.getMaxIncrement(), this.getTargetPosition(), this.boom.getMaxPosition())) {
+            if (this.boom.move(-1, this.power, this.getTargetPosition(), this.boom.getMaxPosition())) {
                 this.markAsCompleted();
                 return;
             }
@@ -115,7 +120,7 @@ public class GoToPositionCommand extends AbstractCommand {
                 return;
             }
 
-            if (this.boom.move(1, this.boom.getMaxIncrement(), this.boom.getMinPosition(), this.getTargetPosition())) {
+            if (this.boom.move(1, this.power, this.boom.getMinPosition(), this.getTargetPosition())) {
                 this.markAsCompleted();
                 return;
             }
