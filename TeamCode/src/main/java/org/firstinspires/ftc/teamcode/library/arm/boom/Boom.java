@@ -143,6 +143,16 @@ public class Boom extends Component {
         return this.servo.getPosition();
     }
 
+    public double getPositionDegrees () {
+        double servoPosition = this.servo.getPosition();
+
+        double offset = this.config.zeroDegreePosition = servoPosition;
+
+        double degrees = offset * this.config.degree;
+
+        return degrees;
+    }
+
 
     /**
      *

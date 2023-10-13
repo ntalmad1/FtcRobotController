@@ -64,8 +64,11 @@ public class ArmOpMode extends IsaacBot {
         this.arm.init();
 
         this.arm.addGp2_A_PressHandler(event -> {
-            ArmOpMode.this.telemetry.addLine("A pressed...");
-            ArmOpMode.this.telemetry.update();
+
+            ArmOpMode.this.arm.cancelAllCommands();
+
+
+
         });
 
 //            ArmOpMode.this.arm.cancelAllCommands();

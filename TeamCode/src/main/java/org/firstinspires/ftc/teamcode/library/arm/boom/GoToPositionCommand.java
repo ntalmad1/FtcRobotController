@@ -99,8 +99,6 @@ public class GoToPositionCommand extends AbstractCommand {
         double currentPosition = this.boom.getPosition();
 
         if (direction.equals(Boom.Direction.FORWARD)) {
-            boom.telemetry.addLine("forwards");
-
             if (currentPosition <= this.getTargetPosition()) {
                 this.markAsCompleted();
                 return;
@@ -112,9 +110,6 @@ public class GoToPositionCommand extends AbstractCommand {
             }
         }
         else if (direction.equals(Boom.Direction.REVERSE)) {
-
-            this.boom.telemetry.addLine("reversing");
-
             if (currentPosition >= this.getTargetPosition()) {
                 this.markAsCompleted();
                 return;

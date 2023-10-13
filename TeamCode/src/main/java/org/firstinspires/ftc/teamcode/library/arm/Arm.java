@@ -61,6 +61,11 @@ public class Arm extends Component {
         this.bottomBoom.run();
         this.midBoom.run();
         this.topBoom.run();
+
+        this.telemetry.addData("Bottom degrees: ", "%2f", this.bottomBoom.getPositionDegrees());
+        this.telemetry.addData("Middle degrees: ", "%2f", this.midBoom.getPositionDegrees());
+        this.telemetry.addData("Top degrees: ", "%2f", this.topBoom.getPositionDegrees());
+        this.telemetry.update();
     }
 
 
