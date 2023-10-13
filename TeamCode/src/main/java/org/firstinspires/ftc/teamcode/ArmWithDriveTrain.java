@@ -1,6 +1,5 @@
 package org.firstinspires.ftc.teamcode;
 
-import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.Servo;
@@ -73,6 +72,8 @@ public class ArmWithDriveTrain extends IsaacBot{
         driveTrainConfig.leftRearDeviceName    = "leftRearDrive";
         driveTrainConfig.accelerationIncrement = 0.02;
         driveTrainConfig.maxPower = 0.65;
+        driveTrainConfig.maxPower = 0;
+        driveTrainConfig.yawOffset = -90;
         driveTrainConfig.incrementalDeceleration = true;
         driveTrainConfig.leftFrontMotorDirection  = DcMotorSimple.Direction.REVERSE;
         driveTrainConfig.rightFrontMotorDirection = DcMotorSimple.Direction.FORWARD;
