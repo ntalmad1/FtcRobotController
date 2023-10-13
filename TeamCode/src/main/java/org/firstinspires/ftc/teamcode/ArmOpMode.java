@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode;
 
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.Servo;
 
@@ -10,7 +11,7 @@ import org.firstinspires.ftc.teamcode.library.arm.ArmConfiguration;
 import org.firstinspires.ftc.teamcode.library.arm.boom.BoomConfiguration;
 
 @TeleOp(name="ArmOpMode", group="Linear OpMode")
-//@Disabled
+@Disabled
 public class ArmOpMode extends IsaacBot {
 
     //private Boom topBoom;

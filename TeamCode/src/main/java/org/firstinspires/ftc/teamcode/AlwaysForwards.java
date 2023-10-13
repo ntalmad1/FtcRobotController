@@ -13,7 +13,7 @@ import org.firstinspires.ftc.teamcode.library.drivetrain.MecanumDriveTrainConfig
  *
  */
 @TeleOp(name="Always Forwards", group="Linear OpMode")
-@Disabled
+//@Disabled
 public class AlwaysForwards extends IsaacBot
 {
     /**
@@ -35,6 +35,7 @@ public class AlwaysForwards extends IsaacBot
         driveTrainConfig.leftRearDeviceName    = "leftRearDrive";
         driveTrainConfig.accelerationIncrement = 0.02;
         driveTrainConfig.maxPower = 0.65;
+        driveTrainConfig.yawOffset = 0;
         driveTrainConfig.incrementalDeceleration = true;
         driveTrainConfig.leftFrontMotorDirection  = DcMotorSimple.Direction.REVERSE;
         driveTrainConfig.rightFrontMotorDirection = DcMotorSimple.Direction.FORWARD;
