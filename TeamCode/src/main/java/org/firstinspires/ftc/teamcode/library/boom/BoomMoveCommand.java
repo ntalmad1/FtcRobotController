@@ -1,7 +1,5 @@
-package org.firstinspires.ftc.teamcode.library.arm;
+package org.firstinspires.ftc.teamcode.library.boom;
 
-import org.firstinspires.ftc.teamcode.library.arm.boom.Boom;
-import org.firstinspires.ftc.teamcode.library.arm.boom.GoToDegreesCommand;
 import org.firstinspires.ftc.teamcode.library.component.command.AbstractCommand;
 import org.firstinspires.ftc.teamcode.library.component.event.command_callback.CommandCallbackAdapter;
 import org.firstinspires.ftc.teamcode.library.component.event.command_callback.CommandSuccessEvent;

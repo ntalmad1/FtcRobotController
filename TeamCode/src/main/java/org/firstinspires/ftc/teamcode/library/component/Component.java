@@ -74,6 +74,7 @@ public abstract class Component {
         this.commandQueue.add(command);
     }
 
+    //region Gamepad 2 A, B, X, Y Handlers
     /**
      *
      * @param handler
@@ -94,6 +95,7 @@ public abstract class Component {
     public HandlerRegistration addGp2_Y_PressHandler (Gp2_Y_PressHandler handler) {
         return EventBus.getInstance().addHandler(Gp2_Y_PressEvent.TYPE, handler);
     }
+    //endregion
 
     public HandlerRegistration addGp2_Left_Bumper_PressHandler (Gp2_Left_Bumper_PressHandler handler) {
         return EventBus.getInstance().addHandler(Gp2_Left_Bumper_PressEvent.TYPE, handler);
@@ -102,6 +104,7 @@ public abstract class Component {
     public HandlerRegistration addGp2_Right_Bumper_PressHandler (Gp2_Right_Bumper_PressHandler handler) {
         return EventBus.getInstance().addHandler(Gp2_Right_Bumper_PressEvent.TYPE, handler);
     }
+
 
     //-----------------------------------------------------------------------------------------
 

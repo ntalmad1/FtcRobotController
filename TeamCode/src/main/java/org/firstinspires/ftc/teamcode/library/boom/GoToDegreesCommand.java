@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.library.arm.boom;
+package org.firstinspires.ftc.teamcode.library.boom;
 
 public class GoToDegreesCommand extends GoToPositionCommand {
 

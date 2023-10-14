@@ -1,10 +1,9 @@
-package org.firstinspires.ftc.teamcode.library.arm.boom;
+package org.firstinspires.ftc.teamcode.library.boom;
 
 import com.qualcomm.robotcore.hardware.Servo;
 
 import org.firstinspires.ftc.teamcode.library.Control;
 import org.firstinspires.ftc.teamcode.library.component.Component;
-import org.firstinspires.ftc.teamcode.library.component.command.Command;
 
 /**
  *
@@ -161,6 +160,12 @@ public class Boom extends Component {
      */
     public void run() {
         super.run();
+
+        if (this.config.debug) {
+            this.telemetry.addData("servo position: ", "%2f", this.servo.getPosition());
+            this.telemetry.addData( "servo position degrees: ", "%2f", this.getPositionDegrees());
+            this.telemetry.update();
+        }
     }
 
     /**

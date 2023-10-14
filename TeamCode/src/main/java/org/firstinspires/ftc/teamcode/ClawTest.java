@@ -1,14 +1,14 @@
 package org.firstinspires.ftc.teamcode;
 
-import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.Servo;
 
 import org.firstinspires.ftc.teamcode.library.Control;
 import org.firstinspires.ftc.teamcode.library.IsaacBot;
-import org.firstinspires.ftc.teamcode.library.arm.Claw;
-import org.firstinspires.ftc.teamcode.library.arm.ClawConfig;
-import org.firstinspires.ftc.teamcode.library.arm.boom.BoomConfiguration;
+import org.firstinspires.ftc.teamcode.library.claw.Claw;
+import org.firstinspires.ftc.teamcode.library.claw.ClawConfig;
+import org.firstinspires.ftc.teamcode.library.boom.BoomConfiguration;
+import org.firstinspires.ftc.teamcode.library.rotator.RotatorConfiguration;
 import org.firstinspires.ftc.teamcode.library.component.event.EventBus;
 
 @TeleOp(name="ClawTest", group="Linear OpMode")
@@ -24,19 +24,33 @@ public class ClawTest extends IsaacBot {
         BoomConfiguration clawBoomConfig = new BoomConfiguration();
         clawBoomConfig.robot = this;
         clawBoomConfig.servoName = "baseClawServo";
-        clawBoomConfig.isDualServo = false;
         clawBoomConfig.direction = Servo.Direction.FORWARD;
         clawBoomConfig.controllerInputMethod = Control.Gp2_Dpad_Up;
         clawBoomConfig.controllerInputMethod2 = Control.Gp2_Dpad_Down;
-        clawBoomConfig.invertInput = false;
+        clawBoomConfig.invertInput = true;
         clawBoomConfig.minPosition = 0;
         clawBoomConfig.maxPosition = 1;
         clawBoomConfig.zeroDegreePosition = .5;
         clawBoomConfig.homePosition = 0.5;
         clawBoomConfig.maxIncrement = 0.001;
-        clawBoomConfig.degree = 0.0033;
+
+        RotatorConfiguration clawRotatorConfig = new RotatorConfiguration();
+        clawRotatorConfig.robot = this;
+        clawRotatorConfig.servoName = "rotateClawServo";
+        clawRotatorConfig.direction = Servo.Direction.FORWARD;
+        clawRotatorConfig.controllerInputMethod = Control.Gp2_Dpad_Left;
+        clawRotatorConfig.controllerInputMethod2 = Control.Gp2_Dpad_Right;
+        clawRotatorConfig.invertInput = true;
+        clawRotatorConfig.minPosition = 0;
+        clawRotatorConfig.maxPosition = 1;
+        clawRotatorConfig.zeroDegreePosition = .5;
+        clawRotatorConfig.homePosition = 0.5;
+        clawRotatorConfig.maxIncrement = 0.001;
+        clawRotatorConfig.debug = true;
 
         clawConfig.clawBoomConfig = clawBoomConfig;
+        clawConfig.clawRotatorConfig = clawRotatorConfig;
+
         this.claw = new Claw(clawConfig);
     }
 

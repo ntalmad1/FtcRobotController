@@ -1,8 +1,7 @@
-package org.firstinspires.ftc.teamcode.library.arm;
+package org.firstinspires.ftc.teamcode.library.claw;
 
-import org.firstinspires.ftc.teamcode.library.IsaacBot;
-import org.firstinspires.ftc.teamcode.library.arm.boom.Boom;
-import org.firstinspires.ftc.teamcode.library.arm.rotator.Rotator;
+import org.firstinspires.ftc.teamcode.library.boom.Boom;
+import org.firstinspires.ftc.teamcode.library.rotator.Rotator;
 import org.firstinspires.ftc.teamcode.library.component.Component;
 
 /**

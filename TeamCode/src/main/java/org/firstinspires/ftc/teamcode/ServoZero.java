@@ -7,13 +7,13 @@ import com.qualcomm.robotcore.hardware.Servo;
 import org.firstinspires.ftc.teamcode.library.IsaacBot;
 
 @TeleOp(name="Servo Zero", group="Linear OpMode")
-@Disabled
+//@Disabled
 public class ServoZero extends IsaacBot {
 
     @Override
     public void runOpMode() throws InterruptedException {
 
-        Servo servo = this.hardwareMap.get(Servo.class, "testServo");
+        Servo servo = this.hardwareMap.get(Servo.class, "leftClawServo");
 
         servo.resetDeviceConfigurationForOpMode();
 

@@ -1,8 +1,8 @@
 package org.firstinspires.ftc.teamcode.library.arm;
 
-import org.firstinspires.ftc.teamcode.library.arm.boom.Boom;
+import org.firstinspires.ftc.teamcode.library.boom.Boom;
+import org.firstinspires.ftc.teamcode.library.boom.BoomMoveCommand;
 import org.firstinspires.ftc.teamcode.library.component.Component;
-import org.firstinspires.ftc.teamcode.library.component.command.Command;
 import org.firstinspires.ftc.teamcode.library.component.command.WaitCommand;
 
 public class Arm extends Component {

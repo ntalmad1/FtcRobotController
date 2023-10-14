@@ -1,9 +1,8 @@
-package org.firstinspires.ftc.teamcode.library.arm;
+package org.firstinspires.ftc.teamcode.library.claw;
 
 import org.firstinspires.ftc.teamcode.library.IsaacBot;
-import org.firstinspires.ftc.teamcode.library.arm.boom.Boom;
-import org.firstinspires.ftc.teamcode.library.arm.boom.BoomConfiguration;
-import org.firstinspires.ftc.teamcode.library.arm.rotator.RotatorConfiguration;
+import org.firstinspires.ftc.teamcode.library.boom.BoomConfiguration;
+import org.firstinspires.ftc.teamcode.library.rotator.RotatorConfiguration;
 
 public class ClawConfig {
 
