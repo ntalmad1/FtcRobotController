@@ -34,6 +34,8 @@ public class BoomConfiguration {
      */
     public Control controllerInputMethod;
 
+    public Control controllerInputMethod2;
+
     /**
      */
     public boolean invertInput = false;

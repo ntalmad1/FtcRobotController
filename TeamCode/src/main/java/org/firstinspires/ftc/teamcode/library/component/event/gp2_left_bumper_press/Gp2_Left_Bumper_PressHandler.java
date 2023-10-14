@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.library.component.event.Gp2_left_bumper_press;
+package org.firstinspires.ftc.teamcode.library.component.event.gp2_left_bumper_press;
 
 import org.firstinspires.ftc.teamcode.library.component.event.EventHandler;
 

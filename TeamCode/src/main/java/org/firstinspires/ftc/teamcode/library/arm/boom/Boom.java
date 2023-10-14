@@ -105,6 +105,54 @@ public class Boom extends Component {
             });
         }
 
+        if (config.controllerInputMethod.equals(Control.Gp2_Dpad_Up)
+                || (config.controllerInputMethod2 != null && config.controllerInputMethod2.equals(Control.Gp2_Dpad_Up))) {
+            this.addGp2_Dpad_Up_DownHandler(event -> {
+                double position = (double) 1;
+                if (Boom.this.config.invertInput) {
+                    position = -position;
+                }
+                Boom.this.move(position, Boom.this.config.maxIncrement, Boom.this.config.minPosition, Boom.this.config.maxPosition);
+            });
+        }
+
+        if (config.controllerInputMethod.equals(Control.Gp2_Dpad_Right)
+                || (config.controllerInputMethod2 != null && config.controllerInputMethod2.equals(Control.Gp2_Dpad_Right))) {
+            this.addGp2_Dpad_Right_DownHandler(event -> {
+                double position = (double) 1;
+                if (Boom.this.config.invertInput) {
+                    position = -position;
+                }
+                Boom.this.move(position, Boom.this.config.maxIncrement, Boom.this.config.minPosition, Boom.this.config.maxPosition);
+            });
+        }
+
+        if (config.controllerInputMethod.equals(Control.Gp2_Dpad_Down)
+                || (config.controllerInputMethod2 != null && config.controllerInputMethod2.equals(Control.Gp2_Dpad_Down))) {
+            this.addGp2_Dpad_Down_DownHandler(event -> {
+                double position = (double) -1;
+                if (Boom.this.config.invertInput) {
+                    position = -position;
+                }
+                Boom.this.move(position, Boom.this.config.maxIncrement, Boom.this.config.minPosition, Boom.this.config.maxPosition);
+
+                this.telemetry.addLine("Dpad Down...");
+                this.telemetry.update();
+
+            });
+        }
+
+        if (config.controllerInputMethod.equals(Control.Gp2_Dpad_Left)
+                || (config.controllerInputMethod2 != null && config.controllerInputMethod2.equals(Control.Gp2_Dpad_Left))) {
+            this.addGp2_Dpad_Left_DownHandler(event -> {
+                double position = (double) -1;
+                if (Boom.this.config.invertInput) {
+                    position = -position;
+                }
+                Boom.this.move(position, Boom.this.config.maxIncrement, Boom.this.config.minPosition, Boom.this.config.maxPosition);
+            });
+        }
+
         this.setServoPosition(this.config.homePosition);
     }
 

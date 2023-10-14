@@ -19,5 +19,23 @@ public enum Control {
 
     /**
      */
-    Gp2_RightStickY
+    Gp2_RightStickY,
+
+    /**
+     */
+    Gp2_Dpad_Up,
+
+    /**
+     */
+    Gp2_Dpad_Down,
+
+    /**
+     */
+    Gp2_Dpad_Left,
+
+    /**
+     */
+    Gp2_Dpad_Right
+
+
 }
