@@ -6,6 +6,8 @@ import org.firstinspires.ftc.teamcode.library.component.command.Command;
 import org.firstinspires.ftc.teamcode.library.component.command.CommandQueue;
 import org.firstinspires.ftc.teamcode.library.component.command.WaitCommand;
 import org.firstinspires.ftc.teamcode.library.component.event.EventBus;
+import org.firstinspires.ftc.teamcode.library.component.event.Gp2_left_bumper_press.Gp2_Left_Bumper_PressEvent;
+import org.firstinspires.ftc.teamcode.library.component.event.Gp2_left_bumper_press.Gp2_Left_Bumper_PressHandler;
 import org.firstinspires.ftc.teamcode.library.component.event.HandlerManager;
 import org.firstinspires.ftc.teamcode.library.component.event.HandlerRegistration;
 import org.firstinspires.ftc.teamcode.library.component.event.gp2_a_press.Gp2_A_PressEvent;
@@ -16,6 +18,8 @@ import org.firstinspires.ftc.teamcode.library.component.event.gp2_left_stick_x.G
 import org.firstinspires.ftc.teamcode.library.component.event.gp2_left_stick_x.Gp2_LeftStickXHandler;
 import org.firstinspires.ftc.teamcode.library.component.event.gp2_left_stick_y.Gp2_LeftStickYEvent;
 import org.firstinspires.ftc.teamcode.library.component.event.gp2_left_stick_y.Gp2_LeftStickYHandler;
+import org.firstinspires.ftc.teamcode.library.component.event.gp2_right_bumper_press.Gp2_Right_Bumper_PressEvent;
+import org.firstinspires.ftc.teamcode.library.component.event.gp2_right_bumper_press.Gp2_Right_Bumper_PressHandler;
 import org.firstinspires.ftc.teamcode.library.component.event.gp2_right_stick_x.Gp2_RightStickXEvent;
 import org.firstinspires.ftc.teamcode.library.component.event.gp2_right_stick_x.Gp2_RightStickXHandler;
 import org.firstinspires.ftc.teamcode.library.component.event.gp2_right_stick_y.Gp2_RightStickYEvent;
@@ -82,6 +86,14 @@ public abstract class Component {
 
     public HandlerRegistration addGp2_Y_PressHandler (Gp2_Y_PressHandler handler) {
         return EventBus.getInstance().addHandler(Gp2_Y_PressEvent.TYPE, handler);
+    }
+
+    public HandlerRegistration addGp2_Left_Bumper_PressHandler (Gp2_Left_Bumper_PressHandler handler) {
+        return EventBus.getInstance().addHandler(Gp2_Left_Bumper_PressEvent.TYPE, handler);
+    }
+
+    public HandlerRegistration addGp2_Right_Bumper_PressHandler (Gp2_Right_Bumper_PressHandler handler) {
+        return EventBus.getInstance().addHandler(Gp2_Right_Bumper_PressEvent.TYPE, handler);
     }
 
     /**

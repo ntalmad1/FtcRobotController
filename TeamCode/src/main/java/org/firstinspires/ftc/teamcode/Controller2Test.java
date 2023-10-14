@@ -12,7 +12,7 @@ import org.firstinspires.ftc.teamcode.library.arm.boom.BoomConfiguration;
 import org.firstinspires.ftc.teamcode.library.component.Component;
 
 @TeleOp(name="Controller2Test", group="Linear OpMode")
-@Disabled
+//@Disabled
 public class Controller2Test extends IsaacBot {
 
     private TestComponent testComponent;
@@ -45,6 +45,16 @@ public class Controller2Test extends IsaacBot {
 
         this.testComponent.addGp2_Y_PressHandler(event -> {
             Controller2Test.this.telemetry.addLine("Y pressed...");
+            Controller2Test.this.telemetry.update();
+        });
+
+        this.testComponent.addGp2_Left_Bumper_PressHandler(event -> {
+            Controller2Test.this.telemetry.addLine("Left Bumper pressed...");
+            Controller2Test.this.telemetry.update();
+        });
+
+        this.testComponent.addGp2_Right_Bumper_PressHandler(event -> {
+            Controller2Test.this.telemetry.addLine("Right Bumper pressed...");
             Controller2Test.this.telemetry.update();
         });
 
