@@ -14,7 +14,7 @@ import org.firstinspires.ftc.teamcode.library.drivetrain.MecanumDriveTrain;
 import org.firstinspires.ftc.teamcode.library.drivetrain.MecanumDriveTrainConfiguration;
 
 @TeleOp(name="ArmWithDriveTrain", group="Linear OpMode")
-@Disabled
+//@Disabled
 public class ArmWithDriveTrain extends IsaacBot{
 
     /**
