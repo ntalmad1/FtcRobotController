@@ -164,6 +164,13 @@ public class Boom extends Component {
         if (this.config.debug) {
             this.telemetry.addData("servo position: ", "%2f", this.servo.getPosition());
             this.telemetry.addData( "servo position degrees: ", "%2f", this.getPositionDegrees());
+            this.telemetry.addLine("servo direction: " + this.servo.getDirection().toString());
+
+            if (this.config.isDualServo) {
+                this.telemetry.addData("secondary servo position: ", "%2f", this.secondaryServo.getPosition());
+                this.telemetry.addLine("secondary servo direction: " + this.servo.getDirection().toString());
+            }
+
             this.telemetry.update();
         }
     }

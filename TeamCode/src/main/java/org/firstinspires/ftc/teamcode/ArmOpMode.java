@@ -30,7 +30,7 @@ public class ArmOpMode extends IsaacBot {
 
         BoomConfiguration midBoomConfig = new BoomConfiguration();
         midBoomConfig.robot = this;
-        midBoomConfig.servoName = "middleServo";
+        midBoomConfig.servoName = "middleLeftServo";
         midBoomConfig.direction = Servo.Direction.FORWARD;
         midBoomConfig.controllerInputMethod = Control.Gp2_RightStickX;
         midBoomConfig.invertInput = false;
@@ -49,6 +49,7 @@ public class ArmOpMode extends IsaacBot {
         bottomBoomConfig.maxIncrement = 0.00054;
         bottomBoomConfig.zeroDegreePosition = 0.28;
         bottomBoomConfig.degree = 0.000556;
+        bottomBoomConfig.debug = true;
 
         ArmConfiguration armConfig = new ArmConfiguration();
         armConfig.robot = this;

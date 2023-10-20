@@ -12,4 +12,6 @@ public class ArmConfiguration {
     public BoomConfiguration midBoomConfig;
 
     public BoomConfiguration bottomBoomConfig;
+
+    public boolean debug = false;
 }

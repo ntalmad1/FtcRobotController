@@ -64,19 +64,23 @@ public class Arm extends Component {
         this.midBoom.run();
         this.topBoom.run();
 
-        this.telemetry.addData("Bottom degrees: ", "%2f", this.bottomBoom.getPositionDegrees());
-        this.telemetry.addData("Bottom position: ", "%2f", this.bottomBoom.getServoPosition());
-        this.telemetry.addLine();
+        if (this.config.debug) {
 
-        this.telemetry.addData("Middle degrees: ", "%2f", this.midBoom.getPositionDegrees());
-        this.telemetry.addData("Middle position: ", "%2f", this.midBoom.getServoPosition());
-        this.telemetry.addLine();
+            this.telemetry.addData("Bottom degrees: ", "%2f", this.bottomBoom.getPositionDegrees());
+            this.telemetry.addData("Bottom position: ", "%2f", this.bottomBoom.getServoPosition());
+            this.telemetry.addLine();
 
-        this.telemetry.addData("Top degrees: ", "%2f", this.topBoom.getPositionDegrees());
-        this.telemetry.addData("Top position: ", "%2f", this.topBoom.getServoPosition());
-        this.telemetry.addLine();
+            this.telemetry.addData("Middle degrees: ", "%2f", this.midBoom.getPositionDegrees());
+            this.telemetry.addData("Middle position: ", "%2f", this.midBoom.getServoPosition());
+            this.telemetry.addLine();
 
-        this.telemetry.update();
+            this.telemetry.addData("Top degrees: ", "%2f", this.topBoom.getPositionDegrees());
+            this.telemetry.addData("Top position: ", "%2f", this.topBoom.getServoPosition());
+            this.telemetry.addLine();
+
+            this.telemetry.update();
+
+        }
     }
 
     /**
