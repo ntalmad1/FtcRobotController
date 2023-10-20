@@ -27,6 +27,7 @@ public class ArmOpMode extends IsaacBot {
         topBoomConfig.invertInput = true;
         topBoomConfig.maxIncrement = 0.001;
         topBoomConfig.zeroDegreePosition = 0.586;
+        topBoomConfig.homePosition = .5;
 
         BoomConfiguration midBoomConfig = new BoomConfiguration();
         midBoomConfig.robot = this;
