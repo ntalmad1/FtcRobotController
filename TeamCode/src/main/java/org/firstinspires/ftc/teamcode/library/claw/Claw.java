@@ -12,6 +12,15 @@ import org.firstinspires.ftc.teamcode.library.component.Component;
 public class Claw extends Component {
 
     /**
+     *
+     */
+    public enum Side {
+        LEFT,
+        RIGHT
+    }
+
+
+    /**
      */
     private Boom clawBoom;
 
@@ -95,8 +104,26 @@ public class Claw extends Component {
 
     /**
      *
+     * @return
+     */
+    public boolean isLeftClosed () {
+        return !this.isLeftOpen;
+    }
+
+    /**
+     *
+     * @return
+     */
+    public boolean isRightClosed () {
+        return !this.isRightOpen;
+    }
+
+    /**
+     *
      */
     public void run () {
+        super.run();
+
         this.clawBoom.run();
         this.clawRotator.run();
     }
@@ -118,5 +145,25 @@ public class Claw extends Component {
         double pos = this.isRightOpen ? this.config.rightClawMaxPosition : this.config.rightClawMinPosition;
         this.rightClaw.setPosition(pos);
 
+    }
+
+    public void closeLeft () {
+        this.leftClaw.setPosition(this.config.leftClawMinPosition);
+        this.isLeftOpen = false;
+    }
+
+    public void closeRight () {
+        this.rightClaw.setPosition(this.config.rightClawMinPosition);
+        this.isRightOpen = false;
+    }
+
+    public void openLeft () {
+        this.leftClaw.setPosition(this.config.leftClawMaxPosition);
+        this.isLeftOpen = true;
+    }
+
+    public void openRight () {
+        this.rightClaw.setPosition(this.config.rightClawMaxPosition);
+        this.isRightOpen = true;
     }
 }

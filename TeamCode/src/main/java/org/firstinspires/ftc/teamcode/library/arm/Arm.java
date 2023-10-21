@@ -4,6 +4,8 @@ import org.firstinspires.ftc.teamcode.library.boom.Boom;
 import org.firstinspires.ftc.teamcode.library.boom.BoomMoveToDegreesCommand;
 import org.firstinspires.ftc.teamcode.library.boom.BoomMoveToPositionCommand;
 import org.firstinspires.ftc.teamcode.library.claw.Claw;
+import org.firstinspires.ftc.teamcode.library.claw.ClawCloseCommand;
+import org.firstinspires.ftc.teamcode.library.claw.ClawOpenCommand;
 import org.firstinspires.ftc.teamcode.library.component.Component;
 import org.firstinspires.ftc.teamcode.library.component.command.WaitCommand;
 
@@ -87,6 +89,27 @@ public class Arm extends Component {
             this.telemetry.update();
 
         }
+    }
+
+    public Arm closeLeftClaw () {
+        this.addCommand(new ClawCloseCommand(this.claw, Claw.Side.LEFT));
+
+        return this;
+    }
+
+    public Arm closeRightClaw () {
+        this.addCommand(new ClawCloseCommand(this.claw, Claw.Side.RIGHT));
+        return this;
+    }
+
+    public Arm openLeftClaw () {
+        this.addCommand(new ClawOpenCommand(this.claw, Claw.Side.LEFT));
+        return this;
+    }
+
+    public Arm openRightClaw () {
+        this.addCommand(new ClawOpenCommand(this.claw, Claw.Side.RIGHT));
+        return this;
     }
 
     /**

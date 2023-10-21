@@ -69,4 +69,12 @@ public class CommandQueue {
             this.queue.remove(command);
         }
     }
+
+    /**
+     *
+     * @return
+     */
+    public int size () {
+        return this.queue.size();
+    }
 }

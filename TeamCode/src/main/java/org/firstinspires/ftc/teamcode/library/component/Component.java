@@ -154,6 +154,14 @@ public abstract class Component implements IComponent {
 
     /**
      *
+     * @return
+     */
+    public CommandQueue getCommandQueue () {
+        return this.commandQueue;
+    }
+
+    /**
+     *
      */
     public void init (){}
 
