@@ -13,7 +13,7 @@ public class Arm extends Component {
 
     /**
      */
-    private Boom topBoom;
+    //private Boom topBoom;
 
     /**
      */
@@ -31,7 +31,7 @@ public class Arm extends Component {
 
         this.config = configuration;
 
-        this.topBoom = new Boom(this.config.topBoomConfig);
+        //this.topBoom = new Boom(this.config.topBoomConfig);
         this.midBoom = new Boom(this.config.midBoomConfig);
         this.midBoom.setInverted(true);
 
@@ -51,7 +51,7 @@ public class Arm extends Component {
 
         this.bottomBoom.init();
         this.midBoom.init();
-        this.topBoom.init();
+        //this.topBoom.init();
     }
 
     /**
@@ -62,7 +62,7 @@ public class Arm extends Component {
 
         this.bottomBoom.run();
         this.midBoom.run();
-        this.topBoom.run();
+        //this.topBoom.run();
 
         if (this.config.debug) {
 
@@ -74,8 +74,8 @@ public class Arm extends Component {
             this.telemetry.addData("Middle position: ", "%2f", this.midBoom.getServoPosition());
             this.telemetry.addLine();
 
-            this.telemetry.addData("Top degrees: ", "%2f", this.topBoom.getPositionDegrees());
-            this.telemetry.addData("Top position: ", "%2f", this.topBoom.getServoPosition());
+           // this.telemetry.addData("Top degrees: ", "%2f", this.topBoom.getPositionDegrees());
+           // this.telemetry.addData("Top position: ", "%2f", this.topBoom.getServoPosition());
             this.telemetry.addLine();
 
             this.telemetry.update();
@@ -88,9 +88,9 @@ public class Arm extends Component {
      * @param degrees
      * @return
      */
-    public Arm moveTop (double degrees) {
-        return this.moveTop(degrees, this.topBoom.getMaxIncrement());
-    }
+//    public Arm moveTop (double degrees) {
+//        return this.moveTop(degrees, this.topBoom.getMaxIncrement());
+//    }
 
     /**
      *
@@ -98,10 +98,10 @@ public class Arm extends Component {
      * @param power
      * @return
      */
-    public Arm moveTop (double degrees, double power) {
-        this.addCommand(new BoomMoveCommand(this.topBoom, degrees, power));
-        return this;
-    }
+//    public Arm moveTop (double degrees, double power) {
+//        this.addCommand(new BoomMoveCommand(this.topBoom, degrees, power));
+//        return this;
+//    }
 
     /**
      *
@@ -158,10 +158,10 @@ public class Arm extends Component {
         return this.moveMiddle(targetDegrees);
     }
 
-    public Arm moveTopFromCurrentPosition (double degrees) {
-        double targetDegrees = this.topBoom.getPositionDegrees() + degrees;
-        return this.moveTop(targetDegrees);
-    }
+//    public Arm moveTopFromCurrentPosition (double degrees) {
+//        double targetDegrees = this.topBoom.getPositionDegrees() + degrees;
+//        return this.moveTop(targetDegrees);
+//    }
 
     /**
      *

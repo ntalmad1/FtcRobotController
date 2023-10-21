@@ -60,7 +60,7 @@ public class ArmOpMode extends IsaacBot {
 
             ArmOpMode.this.arm
                     .moveBottomFromCurrentPosition(-10)
-                    .moveTopFromCurrentPosition(-15)
+                 //   .moveTopFromCurrentPosition(-15)
                     .wait(0)
 
                     .moveMiddle(-110, 0.005)
