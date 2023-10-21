@@ -157,26 +157,26 @@ public abstract class  IsaacBot extends LinearOpMode implements IComponent
     }
 
     public HandlerRegistration addGp2_Right_Bumper_PressHandler (Gp2_Right_Bumper_PressHandler handler) {
-        return EventBus.getInstance().addHandler(Gp2_Right_Bumper_PressEvent.TYPE, handler);
+        return this.robotComponent.addGp2_Right_Bumper_PressHandler(handler);
     }
 
 
     //-----------------------------------------------------------------------------------------
 
     public HandlerRegistration addGp2_Dpad_Left_DownHandler (Gp2_Dpad_Left_DownHandler handler) {
-        return EventBus.getInstance().addHandler(Gp2_Dpad_Left_DownEvent.TYPE, handler);
+        return this.robotComponent.addGp2_Dpad_Left_DownHandler(handler);
     }
 
     public HandlerRegistration addGp2_Dpad_Right_DownHandler (Gp2_Dpad_Right_DownHandler handler) {
-        return EventBus.getInstance().addHandler(Gp2_Dpad_Right_Down_DownEvent.TYPE, handler);
+        return this.robotComponent.addGp2_Dpad_Right_DownHandler(handler);
     }
 
     public HandlerRegistration addGp2_Dpad_Up_DownHandler (Gp2_Dpad_Up_DownHandler handler) {
-        return EventBus.getInstance().addHandler(Gp2_Dpad_Up_DownEvent.TYPE, handler);
+        return this.robotComponent.addGp2_Dpad_Up_DownHandler(handler);
     }
 
     public HandlerRegistration addGp2_Dpad_Down_DownHandler (Gp2_Dpad_Down_DownHandler handler) {
-        return EventBus.getInstance().addHandler(Gp2_Dpad_Down_DownEvent.TYPE, handler);
+        return this.robotComponent.addGp2_Dpad_Down_DownHandler(handler);
     }
 
     /**
@@ -185,19 +185,19 @@ public abstract class  IsaacBot extends LinearOpMode implements IComponent
      * @return
      */
     public HandlerRegistration addGp2_LeftStickXHandler (Gp2_LeftStickXHandler handler) {
-        return EventBus.getInstance().addHandler(Gp2_LeftStickXEvent.TYPE, handler);
+        return this.robotComponent.addGp2_LeftStickXHandler(handler);
     }
 
     public HandlerRegistration addGp2_LeftStickYHandler (Gp2_LeftStickYHandler handler) {
-        return EventBus.getInstance().addHandler(Gp2_LeftStickYEvent.TYPE, handler);
+        return this.robotComponent.addGp2_LeftStickYHandler(handler);
     }
 
     public HandlerRegistration addGp2_RightStickXHandler (Gp2_RightStickXHandler handler) {
-        return EventBus.getInstance().addHandler(Gp2_RightStickXEvent.TYPE, handler);
+        return this.robotComponent.addGp2_RightStickXHandler(handler);
     }
 
     public HandlerRegistration addGp2_RightStickYHandler (Gp2_RightStickYHandler handler) {
-        return EventBus.getInstance().addHandler(Gp2_RightStickYEvent.TYPE, handler);
+        return this.robotComponent.addGp2_RightStickYHandler(handler);
     }
 
 }
