@@ -23,6 +23,7 @@ public class ArmCompConfig extends ArmConfig {
         midBoomConfig.maxIncrement = 0.001;
         midBoomConfig.degree = 0.000556;
         midBoomConfig.zeroDegreePosition = 0.48;
+        midBoomConfig.gearRatio = 5;
 
         BoomConfig bottomBoomConfig = new BoomConfig();
         bottomBoomConfig.robot = robot;
@@ -35,6 +36,7 @@ public class ArmCompConfig extends ArmConfig {
         bottomBoomConfig.maxIncrement = 0.001;
         bottomBoomConfig.zeroDegreePosition = 0.28;
         bottomBoomConfig.degree = 0.000556;
+        bottomBoomConfig.gearRatio = 5;
 
         this.clawConfig = new ClawCompConfig(robot);
         this.midBoomConfig = midBoomConfig;

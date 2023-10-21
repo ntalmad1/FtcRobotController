@@ -64,5 +64,11 @@ public class BoomConfig {
      */
     public double degree = 0.0033;
 
+    /**
+     */
+    public double gearRatio = 1;
+
+    /**
+     */
     public boolean debug = false;
 }
