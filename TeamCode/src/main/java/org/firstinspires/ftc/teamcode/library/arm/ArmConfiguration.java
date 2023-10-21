@@ -1,7 +1,7 @@
 package org.firstinspires.ftc.teamcode.library.arm;
 
 import org.firstinspires.ftc.teamcode.library.IsaacBot;
-import org.firstinspires.ftc.teamcode.library.arm.boom.BoomConfiguration;
+import org.firstinspires.ftc.teamcode.library.boom.BoomConfiguration;
 
 public class ArmConfiguration {
 
@@ -12,4 +12,6 @@ public class ArmConfiguration {
     public BoomConfiguration midBoomConfig;
 
     public BoomConfiguration bottomBoomConfig;
+
+    public boolean debug = false;
 }

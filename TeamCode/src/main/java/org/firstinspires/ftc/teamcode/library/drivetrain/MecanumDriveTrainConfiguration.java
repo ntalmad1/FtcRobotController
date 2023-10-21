@@ -16,6 +16,11 @@ public class MecanumDriveTrainConfiguration extends AbstractDriveTrainConfigurat
     public double maxPower = 0.5;
 
     /**
+     *
+     */
+    public double yawOffset = 0;
+
+    /**
      */
     public DcMotor.Direction leftFrontMotorDirection = DcMotor.Direction.REVERSE;
     public DcMotor.Direction rightFrontMotorDirection = DcMotor.Direction.FORWARD;

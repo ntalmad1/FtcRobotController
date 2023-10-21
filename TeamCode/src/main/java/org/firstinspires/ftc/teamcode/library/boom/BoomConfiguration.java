@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.library.arm.boom;
+package org.firstinspires.ftc.teamcode.library.boom;
 
 import com.qualcomm.robotcore.hardware.Servo;
 
@@ -34,6 +34,8 @@ public class BoomConfiguration {
      */
     public Control controllerInputMethod;
 
+    public Control controllerInputMethod2;
+
     /**
      */
     public boolean invertInput = false;
@@ -61,4 +63,6 @@ public class BoomConfiguration {
     /**
      */
     public double degree = 0.0033;
+
+    public boolean debug = false;
 }

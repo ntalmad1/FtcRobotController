@@ -13,7 +13,7 @@ public class ServoZero extends IsaacBot {
     @Override
     public void runOpMode() throws InterruptedException {
 
-        Servo servo = this.hardwareMap.get(Servo.class, "testServo");
+        Servo servo = this.hardwareMap.get(Servo.class, "leftClawServo");
 
         servo.resetDeviceConfigurationForOpMode();
 

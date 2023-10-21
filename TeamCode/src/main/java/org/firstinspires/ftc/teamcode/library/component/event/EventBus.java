@@ -1,19 +1,20 @@
 package org.firstinspires.ftc.teamcode.library.component.event;
 
 import org.firstinspires.ftc.teamcode.library.IsaacBot;
+import org.firstinspires.ftc.teamcode.library.component.event.gp2_dpad_down_down.Gp2_Dpad_Down_DownEvent;
+import org.firstinspires.ftc.teamcode.library.component.event.gp2_dpad_left_down.Gp2_Dpad_Left_DownEvent;
+import org.firstinspires.ftc.teamcode.library.component.event.gp2_dpad_right_down.Gp2_Dpad_Right_Down_DownEvent;
+import org.firstinspires.ftc.teamcode.library.component.event.gp2_dpad_up_down.Gp2_Dpad_Up_DownEvent;
+import org.firstinspires.ftc.teamcode.library.component.event.gp2_left_bumper_press.Gp2_Left_Bumper_PressEvent;
 import org.firstinspires.ftc.teamcode.library.component.event.gp2_a_press.Gp2_A_PressEvent;
 import org.firstinspires.ftc.teamcode.library.component.event.gp2_b_press.Gp2_B_PressEvent;
 import org.firstinspires.ftc.teamcode.library.component.event.gp2_left_stick_x.Gp2_LeftStickXEvent;
 import org.firstinspires.ftc.teamcode.library.component.event.gp2_left_stick_y.Gp2_LeftStickYEvent;
+import org.firstinspires.ftc.teamcode.library.component.event.gp2_right_bumper_press.Gp2_Right_Bumper_PressEvent;
 import org.firstinspires.ftc.teamcode.library.component.event.gp2_right_stick_x.Gp2_RightStickXEvent;
 import org.firstinspires.ftc.teamcode.library.component.event.gp2_right_stick_y.Gp2_RightStickYEvent;
 import org.firstinspires.ftc.teamcode.library.component.event.gp2_x_press.Gp2_X_PressEvent;
 import org.firstinspires.ftc.teamcode.library.component.event.gp2_y_press.Gp2_Y_PressEvent;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 /**
  *
@@ -56,6 +57,8 @@ public class EventBus extends HandlerManager {
     private boolean gp2_b_down;
     private boolean gp2_x_down;
     private boolean gp2_y_down;
+    private boolean gp2_left_bumper_down;
+    private boolean gp2_right_bumper_down;
 
     /**
      * Hidden Constructor
@@ -112,6 +115,33 @@ public class EventBus extends HandlerManager {
 
         //------------------------------------------------------------------------------------
 
+        // Gamepad 2 Dpad Down Events
+        boolean current_gp2_dpad_left = this.robot.gamepad2.dpad_left;
+        if (current_gp2_dpad_left) {
+            this.fireEvent(new Gp2_Dpad_Left_DownEvent());
+        }
+
+
+        boolean current_gp2_dpad_right = this.robot.gamepad2.dpad_right;
+        if (current_gp2_dpad_right) {
+            this.fireEvent(new Gp2_Dpad_Right_Down_DownEvent());
+        }
+
+
+        boolean current_gp2_dpad_up = this.robot.gamepad2.dpad_up;
+        if (current_gp2_dpad_up) {
+            this.fireEvent(new Gp2_Dpad_Up_DownEvent());
+        }
+
+
+        boolean current_gp2_dpad_down = this.robot.gamepad2.dpad_down;
+        if (current_gp2_dpad_down) {
+            this.fireEvent(new Gp2_Dpad_Down_DownEvent());
+        }
+
+
+        //------------------------------------------------------------------------------------
+
         boolean current_gp2_a = this.robot.gamepad2.a;
         if (this.gp2_a_down && !current_gp2_a) {
             this.fireEvent(new Gp2_A_PressEvent());
@@ -135,5 +165,17 @@ public class EventBus extends HandlerManager {
             this.fireEvent(new Gp2_Y_PressEvent());
         }
         this.gp2_y_down = current_gp2_y;
+
+        boolean current_gp2_left_bumper = this.robot.gamepad2.left_bumper;
+        if (this.gp2_left_bumper_down && !current_gp2_left_bumper) {
+            this.fireEvent(new Gp2_Left_Bumper_PressEvent());
+        }
+        this.gp2_left_bumper_down = current_gp2_left_bumper;
+
+        boolean current_gp2_right_bumper = this.robot.gamepad2.right_bumper;
+        if (this.gp2_right_bumper_down && !current_gp2_right_bumper) {
+            this.fireEvent(new Gp2_Right_Bumper_PressEvent());
+        }
+        this.gp2_right_bumper_down = current_gp2_right_bumper;
     }
 }

@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.library.arm.boom;
+package org.firstinspires.ftc.teamcode.library.boom;
 
 public class GoToDegreesCommand extends GoToPositionCommand {
 
@@ -10,8 +10,8 @@ public class GoToDegreesCommand extends GoToPositionCommand {
      *
      * @param degrees
      */
-    public GoToDegreesCommand (Boom boom, double degrees) {
-        super(boom);
+    public GoToDegreesCommand (Boom boom, double degrees, double power) {
+        super(boom, power);
 
         this.degrees = degrees;
     }

@@ -1,10 +1,9 @@
-package org.firstinspires.ftc.teamcode.library.arm.boom;
+package org.firstinspires.ftc.teamcode.library.boom;
 
 import com.qualcomm.robotcore.hardware.Servo;
 
 import org.firstinspires.ftc.teamcode.library.Control;
 import org.firstinspires.ftc.teamcode.library.component.Component;
-import org.firstinspires.ftc.teamcode.library.component.command.Command;
 
 /**
  *
@@ -41,6 +40,10 @@ public class Boom extends Component {
      *
      */
     private Servo secondaryServo;
+
+    /**
+     */
+    private boolean inverted = false;
 
     /**
      * @param config
@@ -101,6 +104,54 @@ public class Boom extends Component {
             });
         }
 
+        if (config.controllerInputMethod.equals(Control.Gp2_Dpad_Up)
+                || (config.controllerInputMethod2 != null && config.controllerInputMethod2.equals(Control.Gp2_Dpad_Up))) {
+            this.addGp2_Dpad_Up_DownHandler(event -> {
+                double position = (double) 1;
+                if (Boom.this.config.invertInput) {
+                    position = -position;
+                }
+                Boom.this.move(position, Boom.this.config.maxIncrement, Boom.this.config.minPosition, Boom.this.config.maxPosition);
+            });
+        }
+
+        if (config.controllerInputMethod.equals(Control.Gp2_Dpad_Right)
+                || (config.controllerInputMethod2 != null && config.controllerInputMethod2.equals(Control.Gp2_Dpad_Right))) {
+            this.addGp2_Dpad_Right_DownHandler(event -> {
+                double position = (double) 1;
+                if (Boom.this.config.invertInput) {
+                    position = -position;
+                }
+                Boom.this.move(position, Boom.this.config.maxIncrement, Boom.this.config.minPosition, Boom.this.config.maxPosition);
+            });
+        }
+
+        if (config.controllerInputMethod.equals(Control.Gp2_Dpad_Down)
+                || (config.controllerInputMethod2 != null && config.controllerInputMethod2.equals(Control.Gp2_Dpad_Down))) {
+            this.addGp2_Dpad_Down_DownHandler(event -> {
+                double position = (double) -1;
+                if (Boom.this.config.invertInput) {
+                    position = -position;
+                }
+                Boom.this.move(position, Boom.this.config.maxIncrement, Boom.this.config.minPosition, Boom.this.config.maxPosition);
+
+                this.telemetry.addLine("Dpad Down...");
+                this.telemetry.update();
+
+            });
+        }
+
+        if (config.controllerInputMethod.equals(Control.Gp2_Dpad_Left)
+                || (config.controllerInputMethod2 != null && config.controllerInputMethod2.equals(Control.Gp2_Dpad_Left))) {
+            this.addGp2_Dpad_Left_DownHandler(event -> {
+                double position = (double) -1;
+                if (Boom.this.config.invertInput) {
+                    position = -position;
+                }
+                Boom.this.move(position, Boom.this.config.maxIncrement, Boom.this.config.minPosition, Boom.this.config.maxPosition);
+            });
+        }
+
         this.setServoPosition(this.config.homePosition);
     }
 
@@ -109,6 +160,19 @@ public class Boom extends Component {
      */
     public void run() {
         super.run();
+
+        if (this.config.debug) {
+            this.telemetry.addData("servo position: ", "%2f", this.servo.getPosition());
+            this.telemetry.addData( "servo position degrees: ", "%2f", this.getPositionDegrees());
+            this.telemetry.addLine("servo direction: " + this.servo.getDirection().toString());
+
+            if (this.config.isDualServo) {
+                this.telemetry.addData("secondary servo position: ", "%2f", this.secondaryServo.getPosition());
+                this.telemetry.addLine("secondary servo direction: " + this.servo.getDirection().toString());
+            }
+
+            this.telemetry.update();
+        }
     }
 
     /**
@@ -143,12 +207,28 @@ public class Boom extends Component {
         return this.servo.getPosition();
     }
 
+    /**
+     *
+     * @return
+     */
+    public double getServoPosition() {
+        return this.servo.getPosition();
+    }
+
+    /**
+     *
+     * @return
+     */
     public double getPositionDegrees () {
         double servoPosition = this.servo.getPosition();
 
-        double offset = this.config.zeroDegreePosition = servoPosition;
+        double offset = this.config.zeroDegreePosition - servoPosition;
 
-        double degrees = offset * this.config.degree;
+        double degrees = offset / this.config.degree;
+
+        if (this.inverted) {
+            degrees = degrees * (double)-1;
+        }
 
         return degrees;
     }
@@ -163,7 +243,7 @@ public class Boom extends Component {
         double startPosition = this.servo.getPosition();
         double targetPosition = this.calculateTargetPosition(degrees);
 
-        this.addCommand(new GoToPositionCommand(this, startPosition, targetPosition));
+        this.addCommand(new GoToPositionCommand(this, this.getMaxIncrement(), startPosition, targetPosition));
     }
 
     /**
@@ -201,6 +281,16 @@ public class Boom extends Component {
 
     /**
      *
+     * @param inverted
+     * @return
+     */
+    public void setInverted (boolean inverted)
+    {
+        this.inverted = inverted;
+    }
+
+    /**
+     *
      * @param position
      */
     private void setServoPosition (double position) {
@@ -217,6 +307,11 @@ public class Boom extends Component {
      */
     double calculateTargetPosition(double degrees)
     {
+        if (this.inverted) {
+            degrees = degrees * (double)-1;
+        }
+
+
         double degreesInPosition = Math.abs(degrees * this.config.degree);
 
         double targetPosition = this.config.zeroDegreePosition;

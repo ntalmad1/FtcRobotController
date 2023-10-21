@@ -1,6 +1,5 @@
 package org.firstinspires.ftc.teamcode;
 
-import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.Servo;
 
@@ -8,10 +7,12 @@ import org.firstinspires.ftc.teamcode.library.Control;
 import org.firstinspires.ftc.teamcode.library.IsaacBot;
 import org.firstinspires.ftc.teamcode.library.arm.Arm;
 import org.firstinspires.ftc.teamcode.library.arm.ArmConfiguration;
-import org.firstinspires.ftc.teamcode.library.arm.boom.BoomConfiguration;
+import org.firstinspires.ftc.teamcode.library.boom.BoomConfiguration;
+import org.firstinspires.ftc.teamcode.library.claw.ClawConfig;
+import org.firstinspires.ftc.teamcode.library.component.Component;
 
 @TeleOp(name="ArmOpMode", group="Linear OpMode")
-@Disabled
+//@Disabled
 public class ArmOpMode extends IsaacBot {
 
     //private Boom topBoom;
@@ -20,42 +21,63 @@ public class ArmOpMode extends IsaacBot {
     public ArmOpMode(){
         super();
 
-        BoomConfiguration topBoomConfig = new BoomConfiguration();
-        topBoomConfig.robot = this;
-        topBoomConfig.servoName = "topServo";
-        topBoomConfig.direction = Servo.Direction.FORWARD;
-        topBoomConfig.controllerInputMethod = Control.Gp2_RightStickY;
-        topBoomConfig.invertInput = true;
-        topBoomConfig.maxIncrement = 0.005;
-        topBoomConfig.zeroDegreePosition = 0.586;
+        ClawConfig clawBase = new ClawConfig();
 
         BoomConfiguration midBoomConfig = new BoomConfiguration();
         midBoomConfig.robot = this;
-        midBoomConfig.servoName = "middleServo";
+        midBoomConfig.isDualServo = true;
+        midBoomConfig.servoName = "middleLeftServo";
+        midBoomConfig.secondaryServoName = "middleRightServo";
         midBoomConfig.direction = Servo.Direction.REVERSE;
         midBoomConfig.controllerInputMethod = Control.Gp2_RightStickX;
         midBoomConfig.invertInput = false;
-        midBoomConfig.maxIncrement = 0.001;
-        midBoomConfig.zeroDegreePosition = 0.575;
+        midBoomConfig.maxIncrement = 0.00054;
+        midBoomConfig.degree = 0.000556;
+        midBoomConfig.zeroDegreePosition = 0.0;
 
         BoomConfiguration bottomBoomConfig = new BoomConfiguration();
         bottomBoomConfig.robot = this;
-        bottomBoomConfig.servoName = "bottomLeftServo";
         bottomBoomConfig.isDualServo = true;
+        bottomBoomConfig.servoName = "bottomLeftServo";
         bottomBoomConfig.secondaryServoName = "bottomRightServo";
-        bottomBoomConfig.direction = Servo.Direction.REVERSE;
+        bottomBoomConfig.direction = Servo.Direction.FORWARD;
         bottomBoomConfig.controllerInputMethod = Control.Gp2_LeftStickX;
         bottomBoomConfig.invertInput = true;
-        bottomBoomConfig.maxIncrement = 0.005;
-        bottomBoomConfig.zeroDegreePosition = 0.575;
+        bottomBoomConfig.maxIncrement = 0.00054;
+        bottomBoomConfig.zeroDegreePosition = 0.28;
+        bottomBoomConfig.degree = 0.000556;
 
         ArmConfiguration armConfig = new ArmConfiguration();
         armConfig.robot = this;
-        armConfig.topBoomConfig = topBoomConfig;
         armConfig.midBoomConfig = midBoomConfig;
         armConfig.bottomBoomConfig = bottomBoomConfig;
 
         this.arm = new Arm(armConfig);
+
+        // pickup pixel routine
+        this.arm.addGp2_A_PressHandler(event -> {
+            ArmOpMode.this.arm.cancelAllCommands();
+
+            ArmOpMode.this.arm
+                    .moveBottomFromCurrentPosition(-10)
+                    .moveTopFromCurrentPosition(-15)
+                    .wait(0)
+
+                    .moveMiddle(-110, 0.005)
+                    .moveBottom(45, 0.001)
+                    .wait(0)
+
+                    .moveMiddle(-30, 0.005)
+                    .wait(0)
+
+//                    .moveBottom(0, 0.001)
+//                    .moveMiddle(10,0.005)
+//                    .wait(0)
+            ;
+            //ArmOpMode.this.arm.moveBottom(0);
+
+        });
+
     }
 
 
@@ -63,13 +85,6 @@ public class ArmOpMode extends IsaacBot {
     public void runOpMode() throws InterruptedException {
         this.arm.init();
 
-        this.arm.addGp2_A_PressHandler(event -> {
-
-            ArmOpMode.this.arm.cancelAllCommands();
-
-
-
-        });
 
 //            ArmOpMode.this.arm.cancelAllCommands();
 //            ArmOpMode.this.arm

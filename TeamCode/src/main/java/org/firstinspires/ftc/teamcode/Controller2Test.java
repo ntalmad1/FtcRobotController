@@ -1,13 +1,8 @@
 package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-import com.qualcomm.robotcore.hardware.Servo;
 
-import org.firstinspires.ftc.teamcode.library.Control;
 import org.firstinspires.ftc.teamcode.library.IsaacBot;
-import org.firstinspires.ftc.teamcode.library.arm.Arm;
-import org.firstinspires.ftc.teamcode.library.arm.ArmConfiguration;
-import org.firstinspires.ftc.teamcode.library.arm.boom.BoomConfiguration;
 import org.firstinspires.ftc.teamcode.library.component.Component;
 
 @TeleOp(name="Controller2Test", group="Linear OpMode")
@@ -44,6 +39,36 @@ public class Controller2Test extends IsaacBot {
 
         this.testComponent.addGp2_Y_PressHandler(event -> {
             Controller2Test.this.telemetry.addLine("Y pressed...");
+            Controller2Test.this.telemetry.update();
+        });
+
+        this.testComponent.addGp2_Left_Bumper_PressHandler(event -> {
+            Controller2Test.this.telemetry.addLine("Left Bumper Holding...");
+            Controller2Test.this.telemetry.update();
+        });
+
+        this.testComponent.addGp2_Right_Bumper_PressHandler(event -> {
+            Controller2Test.this.telemetry.addLine("Right Bumper Holding...");
+            Controller2Test.this.telemetry.update();
+        });
+
+        this.testComponent.addGp2_Dpad_Left_DownHandler(event -> {
+            Controller2Test.this.telemetry.addLine("Dpad Left Holding...");
+            Controller2Test.this.telemetry.update();
+        });
+
+        this.testComponent.addGp2_Dpad_Right_DownHandler(event -> {
+            Controller2Test.this.telemetry.addLine("Dpad Right Holding...");
+            Controller2Test.this.telemetry.update();
+        });
+
+        this.testComponent.addGp2_Dpad_Up_DownHandler(event -> {
+            Controller2Test.this.telemetry.addLine("Dpad Up Holding...");
+            Controller2Test.this.telemetry.update();
+        });
+
+        this.testComponent.addGp2_Dpad_Down_DownHandler(event -> {
+            Controller2Test.this.telemetry.addLine("Dpad Down Holding...");
             Controller2Test.this.telemetry.update();
         });
 

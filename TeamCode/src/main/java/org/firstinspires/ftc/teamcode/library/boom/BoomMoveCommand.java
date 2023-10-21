@@ -1,7 +1,5 @@
-package org.firstinspires.ftc.teamcode.library.arm;
+package org.firstinspires.ftc.teamcode.library.boom;
 
-import org.firstinspires.ftc.teamcode.library.arm.boom.Boom;
-import org.firstinspires.ftc.teamcode.library.arm.boom.GoToDegreesCommand;
 import org.firstinspires.ftc.teamcode.library.component.command.AbstractCommand;
 import org.firstinspires.ftc.teamcode.library.component.event.command_callback.CommandCallbackAdapter;
 import org.firstinspires.ftc.teamcode.library.component.event.command_callback.CommandSuccessEvent;
@@ -24,10 +22,10 @@ public class BoomMoveCommand extends AbstractCommand {
      * @param boom
      * @param degrees
      */
-    public BoomMoveCommand(Boom boom, double degrees) {
+    public BoomMoveCommand(Boom boom, double degrees, double power) {
         this.boom = boom;
 
-        this.command = new GoToDegreesCommand(boom, degrees);
+        this.command = new GoToDegreesCommand(boom, degrees, power);
         command.addCallbackHandler(new CommandCallbackAdapter() {
             public void onSuccess(CommandSuccessEvent successEvent) {
                 BoomMoveCommand.this.markAsCompleted();

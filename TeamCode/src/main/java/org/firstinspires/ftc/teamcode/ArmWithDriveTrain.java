@@ -9,12 +9,12 @@ import org.firstinspires.ftc.teamcode.library.Control;
 import org.firstinspires.ftc.teamcode.library.IsaacBot;
 import org.firstinspires.ftc.teamcode.library.arm.Arm;
 import org.firstinspires.ftc.teamcode.library.arm.ArmConfiguration;
-import org.firstinspires.ftc.teamcode.library.arm.boom.BoomConfiguration;
+import org.firstinspires.ftc.teamcode.library.boom.BoomConfiguration;
 import org.firstinspires.ftc.teamcode.library.drivetrain.MecanumDriveTrain;
 import org.firstinspires.ftc.teamcode.library.drivetrain.MecanumDriveTrainConfiguration;
 
 @TeleOp(name="ArmWithDriveTrain", group="Linear OpMode")
-@Disabled
+//@Disabled
 public class ArmWithDriveTrain extends IsaacBot{
 
     /**
@@ -73,6 +73,8 @@ public class ArmWithDriveTrain extends IsaacBot{
         driveTrainConfig.leftRearDeviceName    = "leftRearDrive";
         driveTrainConfig.accelerationIncrement = 0.02;
         driveTrainConfig.maxPower = 0.65;
+        driveTrainConfig.maxPower = 0;
+        driveTrainConfig.yawOffset = -90;
         driveTrainConfig.incrementalDeceleration = true;
         driveTrainConfig.leftFrontMotorDirection  = DcMotorSimple.Direction.REVERSE;
         driveTrainConfig.rightFrontMotorDirection = DcMotorSimple.Direction.FORWARD;
