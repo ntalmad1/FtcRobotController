@@ -9,6 +9,7 @@ import org.firstinspires.ftc.teamcode.competition.config.MecanumDriveCompConfig;
 import org.firstinspires.ftc.teamcode.library.IsaacBot;
 import org.firstinspires.ftc.teamcode.library.arm.Arm;
 import org.firstinspires.ftc.teamcode.library.arm.ArmConfig;
+import org.firstinspires.ftc.teamcode.library.component.Component;
 import org.firstinspires.ftc.teamcode.library.component.event.EventBus;
 import org.firstinspires.ftc.teamcode.library.drivetrain.MecanumDriveTrain;
 import org.firstinspires.ftc.teamcode.library.drivetrain.MecanumDriveTrainConfig;
@@ -42,6 +43,11 @@ public class CompBot extends IsaacBot{
         this.armConfig = new ArmCompConfig(this);
 
         this.driveTrainConfig = new MecanumDriveCompConfig(this);
+
+        this.addGp2_A_PressHandler(event -> {
+            CompBot.this.arm.cancelAllCommands();
+            CompBot.this.moveArm_fromHome_toPixelReady();
+        });
     }
 
     /**
@@ -55,17 +61,25 @@ public class CompBot extends IsaacBot{
 
         this.driveTrain.init();
         this.arm.init();
-
-
     }
 
-    int loop = 0;
-
+    /**
+     *
+     */
     public void run () {
         super.run();
 
         this.driveTrain.run();
         this.arm.run();
+    }
+
+    /**
+     *
+     */
+    public void moveArm_fromHome_toPixelReady () {
+
+            
+
     }
 
 

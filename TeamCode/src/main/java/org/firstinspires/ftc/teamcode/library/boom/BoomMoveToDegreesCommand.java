@@ -7,7 +7,7 @@ import org.firstinspires.ftc.teamcode.library.component.event.command_callback.C
 /**
  *
  */
-public class BoomMoveCommand extends AbstractCommand {
+public class BoomMoveToDegreesCommand extends AbstractCommand {
 
     /**
      */
@@ -22,13 +22,13 @@ public class BoomMoveCommand extends AbstractCommand {
      * @param boom
      * @param degrees
      */
-    public BoomMoveCommand(Boom boom, double degrees, double power) {
+    public BoomMoveToDegreesCommand(Boom boom, double degrees, double power) {
         this.boom = boom;
 
         this.command = new GoToDegreesCommand(boom, degrees, power);
         command.addCallbackHandler(new CommandCallbackAdapter() {
             public void onSuccess(CommandSuccessEvent successEvent) {
-                BoomMoveCommand.this.markAsCompleted();
+                BoomMoveToDegreesCommand.this.markAsCompleted();
             }
         });
     }
