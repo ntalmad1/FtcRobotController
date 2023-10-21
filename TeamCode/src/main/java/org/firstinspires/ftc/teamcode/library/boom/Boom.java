@@ -29,7 +29,7 @@ public class Boom extends Component {
     /**
      *
      */
-    private BoomConfiguration config;
+    private BoomConfig config;
 
     /**
      *
@@ -48,7 +48,7 @@ public class Boom extends Component {
     /**
      * @param config
      */
-    public Boom(BoomConfiguration config) {
+    public Boom(BoomConfig config) {
         super(config.robot);
 
         this.config = config;

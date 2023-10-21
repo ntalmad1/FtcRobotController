@@ -11,7 +11,7 @@ import org.firstinspires.ftc.teamcode.library.IsaacBot;
  *
  */
 @TeleOp(name="Servo Test", group="Linear OpMode")
-//@Disabled
+@Disabled
 public class ServoTest extends IsaacBot {
 
     /**

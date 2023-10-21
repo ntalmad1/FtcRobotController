@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode.library.arm;
 
 import org.firstinspires.ftc.teamcode.library.boom.Boom;
 import org.firstinspires.ftc.teamcode.library.boom.BoomMoveCommand;
+import org.firstinspires.ftc.teamcode.library.claw.Claw;
 import org.firstinspires.ftc.teamcode.library.component.Component;
 import org.firstinspires.ftc.teamcode.library.component.command.WaitCommand;
 
@@ -9,11 +10,11 @@ public class Arm extends Component {
 
     /**
      */
-    private ArmConfiguration config;
+    private ArmConfig config;
 
     /**
      */
-    //private Boom topBoom;
+    private Claw claw;
 
     /**
      */
@@ -26,12 +27,12 @@ public class Arm extends Component {
     /**
      * @param configuration
      */
-    public Arm (ArmConfiguration configuration) {
+    public Arm (ArmConfig configuration) {
         super(configuration.robot);
 
         this.config = configuration;
 
-        //this.topBoom = new Boom(this.config.topBoomConfig);
+        this.claw = new Claw(this.config.clawConfig);
         this.midBoom = new Boom(this.config.midBoomConfig);
         this.midBoom.setInverted(true);
 
@@ -51,7 +52,7 @@ public class Arm extends Component {
 
         this.bottomBoom.init();
         this.midBoom.init();
-        //this.topBoom.init();
+        this.claw.init();
     }
 
     /**
@@ -62,20 +63,24 @@ public class Arm extends Component {
 
         this.bottomBoom.run();
         this.midBoom.run();
-        //this.topBoom.run();
+        this.claw.run();
 
         if (this.config.debug) {
 
-            this.telemetry.addData("Bottom degrees: ", "%2f", this.bottomBoom.getPositionDegrees());
-            this.telemetry.addData("Bottom position: ", "%2f", this.bottomBoom.getServoPosition());
+            this.telemetry.addData("Bottom boom degrees: ", "%2f", this.bottomBoom.getPositionDegrees());
+            this.telemetry.addData("Bottom boom position: ", "%2f", this.bottomBoom.getServoPosition());
             this.telemetry.addLine();
 
-            this.telemetry.addData("Middle degrees: ", "%2f", this.midBoom.getPositionDegrees());
-            this.telemetry.addData("Middle position: ", "%2f", this.midBoom.getServoPosition());
+            this.telemetry.addData("Middle boom degrees: ", "%2f", this.midBoom.getPositionDegrees());
+            this.telemetry.addData("Middle boom position: ", "%2f", this.midBoom.getServoPosition());
             this.telemetry.addLine();
 
-           // this.telemetry.addData("Top degrees: ", "%2f", this.topBoom.getPositionDegrees());
-           // this.telemetry.addData("Top position: ", "%2f", this.topBoom.getServoPosition());
+            this.telemetry.addData("Claw boom degrees: ", "%2f", this.claw.getBase().getPositionDegrees());
+            this.telemetry.addData("Claw boom position: ", "%2f", this.claw.getBase().getServoPosition());
+            this.telemetry.addLine();
+
+            this.telemetry.addData("Claw rotator degrees: ", "%2f", this.claw.getRotator().getPositionDegrees());
+            this.telemetry.addData("Claw rotator position: ", "%2f", this.claw.getRotator().getServoPosition());
             this.telemetry.addLine();
 
             this.telemetry.update();

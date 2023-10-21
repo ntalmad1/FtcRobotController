@@ -79,6 +79,22 @@ public class Claw extends Component {
 
     /**
      *
+     * @return
+     */
+    public Boom getBase () {
+        return this.clawBoom;
+    }
+
+    /**
+     *
+     * @return
+     */
+    public Rotator getRotator () {
+        return this.clawRotator;
+    }
+
+    /**
+     *
      */
     public void run () {
         this.clawBoom.run();

@@ -14,7 +14,7 @@ import org.firstinspires.ftc.teamcode.library.IsaacBot;
  *
  */
 @TeleOp(name="Distance Sensor", group="Linear OpMode")
-//@Disabled
+@Disabled
 public class DistanceSensorTest extends IsaacBot {
 
 

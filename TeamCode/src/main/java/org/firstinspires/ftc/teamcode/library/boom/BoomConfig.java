@@ -8,7 +8,7 @@ import org.firstinspires.ftc.teamcode.library.IsaacBot;
 /**
  *
  */
-public class BoomConfiguration {
+public class BoomConfig {
 
     /**
      */

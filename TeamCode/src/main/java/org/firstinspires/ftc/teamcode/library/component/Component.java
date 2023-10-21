@@ -39,7 +39,7 @@ import org.firstinspires.ftc.teamcode.library.component.event.gp2_y_press.Gp2_Y_
 /**
  *
  */
-public abstract class Component {
+public abstract class Component implements IComponent {
 
     /**
      */

@@ -6,7 +6,7 @@ import com.qualcomm.robotcore.hardware.DcMotorSimple;
 
 import org.firstinspires.ftc.teamcode.library.IsaacBot;
 import org.firstinspires.ftc.teamcode.library.drivetrain.MecanumDriveTrain;
-import org.firstinspires.ftc.teamcode.library.drivetrain.MecanumDriveTrainConfiguration;
+import org.firstinspires.ftc.teamcode.library.drivetrain.MecanumDriveTrainConfig;
 
 
 /**
@@ -27,7 +27,7 @@ public class AlwaysForwards extends IsaacBot
     {
         super();
 
-        MecanumDriveTrainConfiguration driveTrainConfig = new MecanumDriveTrainConfiguration();
+        MecanumDriveTrainConfig driveTrainConfig = new MecanumDriveTrainConfig();
         driveTrainConfig.robot = this;
         driveTrainConfig.leftFrontDeviceName   = "leftFrontDrive";
         driveTrainConfig.rightFrontDeviceName  = "rightFrontDrive";
