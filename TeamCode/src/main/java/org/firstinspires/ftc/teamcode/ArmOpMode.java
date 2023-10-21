@@ -8,6 +8,8 @@ import org.firstinspires.ftc.teamcode.library.IsaacBot;
 import org.firstinspires.ftc.teamcode.library.arm.Arm;
 import org.firstinspires.ftc.teamcode.library.arm.ArmConfiguration;
 import org.firstinspires.ftc.teamcode.library.boom.BoomConfiguration;
+import org.firstinspires.ftc.teamcode.library.claw.ClawConfig;
+import org.firstinspires.ftc.teamcode.library.component.Component;
 
 @TeleOp(name="ArmOpMode", group="Linear OpMode")
 //@Disabled
@@ -19,15 +21,7 @@ public class ArmOpMode extends IsaacBot {
     public ArmOpMode(){
         super();
 
-        BoomConfiguration topBoomConfig = new BoomConfiguration();
-        topBoomConfig.robot = this;
-        topBoomConfig.servoName = "topServo";
-        topBoomConfig.direction = Servo.Direction.FORWARD;
-        topBoomConfig.controllerInputMethod = Control.Gp2_RightStickY;
-        topBoomConfig.invertInput = true;
-        topBoomConfig.maxIncrement = 0.001;
-        topBoomConfig.zeroDegreePosition = 0.586;
-        topBoomConfig.homePosition = .5;
+        ClawConfig clawBase = new ClawConfig();
 
         BoomConfiguration midBoomConfig = new BoomConfiguration();
         midBoomConfig.robot = this;
@@ -55,7 +49,6 @@ public class ArmOpMode extends IsaacBot {
 
         ArmConfiguration armConfig = new ArmConfiguration();
         armConfig.robot = this;
-        armConfig.topBoomConfig = topBoomConfig;
         armConfig.midBoomConfig = midBoomConfig;
         armConfig.bottomBoomConfig = bottomBoomConfig;
 

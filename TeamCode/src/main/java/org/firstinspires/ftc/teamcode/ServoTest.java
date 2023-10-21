@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.qualcomm.robotcore.hardware.DigitalChannel;
 import com.qualcomm.robotcore.hardware.Servo;
 
 import org.firstinspires.ftc.teamcode.library.IsaacBot;
@@ -21,17 +22,74 @@ public class ServoTest extends IsaacBot {
 
     @Override
     public void runOpMode() throws InterruptedException {
+        DigitalChannel led1Green = this.hardwareMap.get(DigitalChannel.class, "ledOneGreen");
+        DigitalChannel led1Red = this.hardwareMap.get(DigitalChannel.class, "ledOneRed");
+
+        led1Green.setMode(DigitalChannel.Mode.OUTPUT);
+        led1Red.setMode(DigitalChannel.Mode.OUTPUT);
+
+        led1Green.setState(true);
+        led1Red.setState(true);
+
+//        Servo rightClawServo = this.hardwareMap.get(Servo.class, "rightClawServo");
+//        Servo leftClawServo = this.hardwareMap.get(Servo.class, "leftClawServo");
+//        rightClawServo.resetDeviceConfigurationForOpMode();
+//        leftClawServo.resetDeviceConfigurationForOpMode();
+//        leftClawServo.setDirection(Servo.Direction.REVERSE);
+//
+//        rightClawServo.setPosition(0.5);
+//        leftClawServo.setPosition(0.0);
 
         waitForStart();
 
-        Servo topServo = this.hardwareMap.get(Servo.class, "topServo");
-        topServo.resetDeviceConfigurationForOpMode();
-        topServo.setPosition(0.5);
+//        leftClawServo.setPosition(0.12);
+//        sleep(250);
 
         while (this.opModeIsActive()) {
+//            leftClawServo.setPosition(0.0);
 
-            telemetry.addData("top servo position: ", "%2f", topServo.getPosition());
-            telemetry.update();
+            led1Green.setState(true);
+            led1Red.setState(false);
+
+            this.telemetry.addLine("green");
+            this.telemetry.update();
+
+            sleep(1000);
+
+            led1Green.setState(false);
+            led1Red.setState(true);
+
+            this.telemetry.addLine("red");
+            this.telemetry.update();
+
+            sleep(1000);
+            led1Green.setState(false);
+            led1Red.setState(false);
+
+
+            this.telemetry.addLine("amber");
+            this.telemetry.update();
+
+            sleep(1000);
+
+            led1Green.setState(true);
+            led1Red.setState(true);
+
+            this.telemetry.addLine("off");
+            this.telemetry.update();
+
+            sleep(1000);
+
+
+
+//
+//
+//
+//            telemetry.addData("right claw servo position: ", "%2f", rightClawServo.getPosition());
+//            telemetry.addData("left claw servo position: ", "%2f", leftClawServo.getPosition());
+//            telemetry.update();
+
+
 
         }
     }

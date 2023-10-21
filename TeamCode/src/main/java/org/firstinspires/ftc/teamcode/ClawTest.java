@@ -20,6 +20,12 @@ public class ClawTest extends IsaacBot {
     public ClawTest() {
         ClawConfig clawConfig = new ClawConfig();
         clawConfig.robot = this;
+        clawConfig.leftClawName = "leftClawServo";
+        clawConfig.rightClawName = "rightClawServo";
+        clawConfig.leftClawMinPosition = 0;
+        clawConfig.leftClawMaxPosition = 0.35;
+        clawConfig.rightClawMinPosition = 0;
+        clawConfig.rightClawMaxPosition = 0.35;
 
         BoomConfiguration clawBoomConfig = new BoomConfiguration();
         clawBoomConfig.robot = this;

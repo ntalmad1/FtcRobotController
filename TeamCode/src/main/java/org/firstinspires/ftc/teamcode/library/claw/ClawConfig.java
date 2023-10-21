@@ -11,4 +11,11 @@ public class ClawConfig {
     public BoomConfiguration clawBoomConfig;
 
     public RotatorConfiguration clawRotatorConfig;
+
+    public double rightClawMaxPosition;
+    public double rightClawMinPosition;
+    public double leftClawMaxPosition;
+    public double leftClawMinPosition;
+    public String leftClawName;
+    public String rightClawName;
 }
