@@ -32,7 +32,7 @@ public class ClawCompConfig extends ClawConfig {
         clawBoomConfig.minPosition = 0;
         clawBoomConfig.maxPosition = 1;
         clawBoomConfig.zeroDegreePosition = .5;
-        clawBoomConfig.homePosition = 0.5;
+        clawBoomConfig.homePosition = 1;
         clawBoomConfig.maxIncrement = 0.001;
 
         RotatorConfiguration clawRotatorConfig = new RotatorConfiguration();

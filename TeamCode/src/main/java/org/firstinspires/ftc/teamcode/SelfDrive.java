@@ -5,7 +5,7 @@ import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 
 import org.firstinspires.ftc.teamcode.library.IsaacBot;
 import org.firstinspires.ftc.teamcode.library.drivetrain.SimpleDriveTrain;
-import org.firstinspires.ftc.teamcode.library.drivetrain.SimpleDriveTrainConfiguration;
+import org.firstinspires.ftc.teamcode.library.drivetrain.SimpleDriveTrainConfig;
 import org.firstinspires.ftc.teamcode.library.utility.Units;
 
 /**
@@ -27,7 +27,7 @@ public class SelfDrive extends IsaacBot
     {
         super();
 
-        SimpleDriveTrainConfiguration driveTrainConfig = new SimpleDriveTrainConfiguration();
+        SimpleDriveTrainConfig driveTrainConfig = new SimpleDriveTrainConfig();
 
         driveTrainConfig.robot = this;
         driveTrainConfig.leftFrontDeviceName  = "leftFrontDrive";

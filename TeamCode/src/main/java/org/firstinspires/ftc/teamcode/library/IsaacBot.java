@@ -51,6 +51,8 @@ public abstract class  IsaacBot extends LinearOpMode implements IComponent
 
     private RobotComponent robotComponent;
 
+    private String imuName;
+
     /**
      */
     private IMU imu;
@@ -92,7 +94,7 @@ public abstract class  IsaacBot extends LinearOpMode implements IComponent
      *
      */
     public void resetYaw () {
-        this.initImu(this.imu.getDeviceName());
+        this.initImu(this.imuName);
     }
 
 
@@ -102,6 +104,9 @@ public abstract class  IsaacBot extends LinearOpMode implements IComponent
      */
     public void initImu (String imuName)
     {
+        telemetry.addLine("Imu Name: " + imuName);
+        telemetry.update();
+
         this.imu = this.hardwareMap.get(IMU.class, imuName);
         this.imu.resetYaw();
     }
@@ -112,6 +117,14 @@ public abstract class  IsaacBot extends LinearOpMode implements IComponent
     public void initBot () {
        this.robotComponent.init();
     }
+
+    /**
+     *
+     */
+    public void go () {
+
+    }
+
 
     /**
      *
@@ -129,6 +142,8 @@ public abstract class  IsaacBot extends LinearOpMode implements IComponent
         this.initBot();
 
         this.waitForStart();
+
+        this.go();
 
         while (this.opModeIsActive()) {
             this.run();
@@ -198,6 +213,14 @@ public abstract class  IsaacBot extends LinearOpMode implements IComponent
 
     public HandlerRegistration addGp2_RightStickYHandler (Gp2_RightStickYHandler handler) {
         return this.robotComponent.addGp2_RightStickYHandler(handler);
+    }
+
+    /**
+     *
+     * @param imuName
+     */
+    public void setImuName (String imuName) {
+        this.imuName = imuName;
     }
 
 }

@@ -34,12 +34,12 @@ public abstract class AbstractDriveTrain
 
     /**
      */
-    private final AbstractDriveTrainConfiguration config;
+    private final AbstractDriveTrainConfig config;
 
     /**
      *
      */
-    protected AbstractDriveTrain(AbstractDriveTrainConfiguration config)
+    protected AbstractDriveTrain(AbstractDriveTrainConfig config)
     {
         this.config = config;
 
@@ -67,7 +67,7 @@ public abstract class AbstractDriveTrain
      *
      * @return The configuration variables and values for the drive train
      */
-    protected AbstractDriveTrainConfiguration getConfig ()
+    protected AbstractDriveTrainConfig getConfig ()
     {
         return this.config;
     }

@@ -5,7 +5,7 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 /**
  *
  */
-public class MecanumDriveTrainConfig extends AbstractDriveTrainConfiguration
+public class MecanumDriveTrainConfig extends AbstractDriveTrainConfig
 {
     /**
      */

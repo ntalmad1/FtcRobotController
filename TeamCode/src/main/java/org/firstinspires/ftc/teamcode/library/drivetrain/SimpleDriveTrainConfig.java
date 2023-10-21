@@ -5,7 +5,7 @@ import org.firstinspires.ftc.teamcode.library.utility.Units;
 /**
  *
  */
-public class SimpleDriveTrainConfiguration extends AbstractDriveTrainConfiguration
+public class SimpleDriveTrainConfig extends AbstractDriveTrainConfig
 {
     /**
      */

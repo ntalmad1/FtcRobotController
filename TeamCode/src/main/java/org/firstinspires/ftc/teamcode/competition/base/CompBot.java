@@ -1,14 +1,12 @@
-package org.firstinspires.ftc.teamcode.competition;
+package org.firstinspires.ftc.teamcode.competition.base;
 
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.Servo;
 
 import org.firstinspires.ftc.teamcode.competition.config.ArmCompConfig;
-import org.firstinspires.ftc.teamcode.competition.config.MecanumDriveCompConfig;
 import org.firstinspires.ftc.teamcode.library.IsaacBot;
 import org.firstinspires.ftc.teamcode.library.arm.Arm;
-import org.firstinspires.ftc.teamcode.library.drivetrain.MecanumDriveTrain;
 
 /**
  *
@@ -36,9 +34,7 @@ public class CompBot extends IsaacBot{
 
     protected Servo catcherServo;
 
-    /**
-     */
-    protected MecanumDriveCompConfig driveTrainConfig;
+
 
     /**
      */
@@ -49,10 +45,6 @@ public class CompBot extends IsaacBot{
     private ArmPosition armPosition = ArmPosition.HOME;
 
     /**
-     */
-    private MecanumDriveTrain driveTrain;
-
-    /**
      * Constructor
      *
      */
@@ -60,8 +52,6 @@ public class CompBot extends IsaacBot{
         super();
 
         this.armConfig = new ArmCompConfig(this);
-
-        this.driveTrainConfig = new MecanumDriveCompConfig(this);
 
         this.addGp2_A_PressHandler(event -> {
             CompBot.this.arm.cancelAllCommands();
@@ -126,15 +116,20 @@ public class CompBot extends IsaacBot{
         super.initBot();
 
         this.arm = new Arm(armConfig);
-        this.driveTrain = new MecanumDriveTrain(driveTrainConfig);
-
-        this.driveTrain.init();
         this.arm.init();
 
         this.catcherServo = this.hardwareMap.get(Servo.class, "catcherServo");
         this.catcherServo.resetDeviceConfigurationForOpMode();
         this.catcherServo.setDirection(Servo.Direction.REVERSE);
         this.catcherServo.setPosition(0);
+    }
+
+    /**
+     *
+     */
+    public void go () {
+        super.go();
+
         this.catcherServo.setPosition(0.12);
         this.sleep(250);
         this.catcherServo.setPosition(0);
@@ -146,7 +141,6 @@ public class CompBot extends IsaacBot{
     public void run () {
         super.run();
 
-        this.driveTrain.run();
         this.arm.run();
     }
 

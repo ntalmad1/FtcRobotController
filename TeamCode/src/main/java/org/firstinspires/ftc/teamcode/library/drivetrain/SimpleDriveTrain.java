@@ -18,7 +18,7 @@ public class SimpleDriveTrain extends AbstractDriveTrain
      *               passing all the variables as parameters, pass the variables in a configurable
      *               object
      */
-    public SimpleDriveTrain(SimpleDriveTrainConfiguration config)
+    public SimpleDriveTrain(SimpleDriveTrainConfig config)
     {
         super(config);
     }
@@ -290,9 +290,9 @@ public class SimpleDriveTrain extends AbstractDriveTrain
      *
      * @return
      */
-    protected SimpleDriveTrainConfiguration getConfig ()
+    protected SimpleDriveTrainConfig getConfig ()
     {
-        return (SimpleDriveTrainConfiguration)super.getConfig();
+        return (SimpleDriveTrainConfig)super.getConfig();
     }
 
     /**
