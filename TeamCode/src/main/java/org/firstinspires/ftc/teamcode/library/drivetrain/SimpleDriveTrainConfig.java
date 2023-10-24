@@ -25,10 +25,6 @@ public class SimpleDriveTrainConfig extends AbstractDriveTrainConfig
 
     /**
      */
-    public double wheelBaseCm;
-
-    /**
-     */
     public double turningRadiusCm;
 
     /**

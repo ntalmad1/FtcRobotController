@@ -4,6 +4,7 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.teamcode.library.IsaacBot;
+import org.firstinspires.ftc.teamcode.library.component.Component;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,15 +12,11 @@ import java.util.List;
 /**
  *
  */
-public abstract class AbstractDriveTrain
+public abstract class AbstractDriveTrain extends Component
 {
     /**
      */
     protected SimpleDriveTrain.MotorGroup motorGroup = new MotorGroup();
-
-    /**
-     */
-    protected final IsaacBot robot;
 
     /**
      */
@@ -41,9 +38,9 @@ public abstract class AbstractDriveTrain
      */
     protected AbstractDriveTrain(AbstractDriveTrainConfig config)
     {
-        this.config = config;
+        super(config.robot);
 
-        this.robot = config.robot;
+        this.config = config;
     }
 
     /**
@@ -86,8 +83,48 @@ public abstract class AbstractDriveTrain
 
     /**
      *
+     * @return
      */
-    protected static class MotorGroup
+    public MotorGroup getMotorGroup () {
+        return this.motorGroup;
+    }
+
+    /**
+     *
+     * @return
+     */
+    public DcMotor getLeftFrontMotor () {
+        return this.leftFrontMotor;
+    }
+
+    /**
+     *
+     * @return
+     */
+    public DcMotor getRightFrontMotor () {
+        return this.rightFrontMotor;
+    }
+
+    /**
+     *
+     * @return
+     */
+    public DcMotor getRightRearMotor () {
+        return this.rightRearMotor;
+    }
+
+    /**
+     *
+     * @return
+     */
+    public DcMotor getLeftRearMotor () {
+        return this.leftRearMotor;
+    }
+
+    /**
+     *
+     */
+    public static class MotorGroup
     {
         /**
          */
