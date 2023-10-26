@@ -5,9 +5,19 @@ import com.qualcomm.robotcore.hardware.DcMotorSimple;
 
 import org.firstinspires.ftc.teamcode.library.drivetrain.commands.AbstractDriveTrainLineCommand;
 import org.firstinspires.ftc.teamcode.library.drivetrain.commands.DriveTrainBackwardsCommand;
+import org.firstinspires.ftc.teamcode.library.drivetrain.commands.DriveTrainDiagFrontLeftCommand;
+import org.firstinspires.ftc.teamcode.library.drivetrain.commands.DriveTrainDiagFrontRightCommand;
+import org.firstinspires.ftc.teamcode.library.drivetrain.commands.DriveTrainDiagRearLeftCommand;
+import org.firstinspires.ftc.teamcode.library.drivetrain.commands.DriveTrainDiagRearRightCommand;
 import org.firstinspires.ftc.teamcode.library.drivetrain.commands.DriveTrainForwardsCommand;
+import org.firstinspires.ftc.teamcode.library.drivetrain.commands.DriveTrainGyroFrontAxlePivotLeftCommand;
+import org.firstinspires.ftc.teamcode.library.drivetrain.commands.DriveTrainGyroFrontAxlePivotRightCommand;
+import org.firstinspires.ftc.teamcode.library.drivetrain.commands.DriveTrainGyroRearAxlePivotLeftCommand;
+import org.firstinspires.ftc.teamcode.library.drivetrain.commands.DriveTrainGyroRearAxlePivotRightCommand;
 import org.firstinspires.ftc.teamcode.library.drivetrain.commands.DriveTrainGyroTurnLeftCommand;
 import org.firstinspires.ftc.teamcode.library.drivetrain.commands.DriveTrainGyroTurnRightCommand;
+import org.firstinspires.ftc.teamcode.library.drivetrain.commands.DriveTrainSidewaysLeftCommand;
+import org.firstinspires.ftc.teamcode.library.drivetrain.commands.DriveTrainSidewaysRightCommand;
 import org.firstinspires.ftc.teamcode.library.utility.Units;
 import org.firstinspires.ftc.teamcode.library.utility.GridUtils;
 
@@ -25,6 +35,9 @@ public class SimpleDriveTrain extends AbstractDriveTrain
     public SimpleDriveTrain(SimpleDriveTrainConfig config)
     {
         super(config);
+
+        telemetry.addLine("Imu Name: " + config.imuName);
+        telemetry.update();
     }
 
     /**
@@ -56,6 +69,34 @@ public class SimpleDriveTrain extends AbstractDriveTrain
     public SimpleDriveTrain back (double startPower, double maxPower, double distance, Units units)
     {
         this.addCommand(new DriveTrainBackwardsCommand(this, startPower, maxPower, distance, units));
+        return this;
+    }
+
+    /**
+     *
+     * @param startPower
+     * @param maxPower
+     * @param distance
+     * @param units
+     * @return
+     */
+    public SimpleDriveTrain diagFrontLeft (double startPower, double maxPower, double distance, Units units) {
+        this.addCommand(new DriveTrainDiagFrontLeftCommand(this, startPower, maxPower, distance, units));
+        return this;
+    }
+
+    public SimpleDriveTrain diagFrontRight (double startPower, double maxPower, double distance, Units units) {
+        this.addCommand(new DriveTrainDiagFrontRightCommand(this, startPower, maxPower, distance, units));
+        return this;
+    }
+
+    public SimpleDriveTrain diagRearLeft (double startPower, double maxPower, double distance, Units units) {
+        this.addCommand(new DriveTrainDiagRearLeftCommand(this, startPower, maxPower, distance, units));
+        return this;
+    }
+
+    public SimpleDriveTrain diagRearRight (double startPower, double maxPower, double distance, Units units) {
+        this.addCommand(new DriveTrainDiagRearRightCommand(this, startPower, maxPower, distance, units));
         return this;
     }
 
@@ -116,6 +157,86 @@ public class SimpleDriveTrain extends AbstractDriveTrain
     public SimpleDriveTrain gyroTurnRight (double startPower, double maxPower, double degrees)
     {
         this.addCommand(new DriveTrainGyroTurnRightCommand(this, startPower, maxPower, degrees));
+        return this;
+    }
+
+    /**
+     *
+     * @param startPower
+     * @param maxPower
+     * @param degrees
+     * @return
+     */
+    public SimpleDriveTrain frontAxelPivotLeft (double startPower, double maxPower, double degrees)
+    {
+        this.addCommand(new DriveTrainGyroFrontAxlePivotLeftCommand(this, startPower, maxPower, degrees));
+        return this;
+    }
+
+    /**
+     *
+     * @param startPower
+     * @param maxPower
+     * @param degrees
+     * @return
+     */
+    public SimpleDriveTrain frontAxelPivotRight (double startPower, double maxPower, double degrees)
+    {
+        this.addCommand(new DriveTrainGyroFrontAxlePivotRightCommand(this, startPower, maxPower, degrees));
+        return this;
+    }
+
+    /**
+     *
+     * @param startPower
+     * @param maxPower
+     * @param degrees
+     * @return
+     */
+    public SimpleDriveTrain rearAxelPivotLeft (double startPower, double maxPower, double degrees)
+    {
+        this.addCommand(new DriveTrainGyroRearAxlePivotLeftCommand(this, startPower, maxPower, degrees));
+        return this;
+    }
+
+    /**
+     *
+     * @param startPower
+     * @param maxPower
+     * @param degrees
+     * @return
+     */
+    public SimpleDriveTrain rearAxelPivotRight (double startPower, double maxPower, double degrees)
+    {
+        this.addCommand(new DriveTrainGyroRearAxlePivotRightCommand(this, startPower, maxPower, degrees));
+        return this;
+    }
+
+    /**
+     *
+     * @param startPower
+     * @param maxPower
+     * @param distance
+     * @param units
+     * @return
+     */
+    public SimpleDriveTrain sidewaysLeft (double startPower, double maxPower, double distance, Units units)
+    {
+        this.addCommand(new DriveTrainSidewaysLeftCommand(this, startPower, maxPower, distance, units));
+        return this;
+    }
+
+    /**
+     *
+     * @param startPower
+     * @param maxPower
+     * @param distance
+     * @param units
+     * @return
+     */
+    public SimpleDriveTrain sidewaysRight (double startPower, double maxPower, double distance, Units units)
+    {
+        this.addCommand(new DriveTrainSidewaysRightCommand(this, startPower, maxPower, distance, units));
         return this;
     }
 

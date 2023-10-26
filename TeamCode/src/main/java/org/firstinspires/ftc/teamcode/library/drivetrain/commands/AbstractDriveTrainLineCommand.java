@@ -104,6 +104,7 @@ public abstract class AbstractDriveTrainLineCommand extends AbstractSynchronousC
             this.markAsCompleted();
 
             this.driveTrain.getMotorGroup().setPower(0);
+            this.driveTrain.getMotorGroup().enableAll();
             this.driveTrain.getMotorGroup().setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         }
 

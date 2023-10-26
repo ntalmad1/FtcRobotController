@@ -40,6 +40,8 @@ public abstract class AbstractDriveTrain extends Component
     {
         super(config.robot);
 
+        this.robot.setImuName(config.imuName);
+
         this.config = config;
     }
 
@@ -130,6 +132,8 @@ public abstract class AbstractDriveTrain extends Component
          */
         private final List<DcMotor> motors = new ArrayList<>();
 
+        private final List<DcMotor> disabledMotors = new ArrayList<>();
+
         /**
          * Adds a motor to the group
          *
@@ -138,6 +142,21 @@ public abstract class AbstractDriveTrain extends Component
         public void add (DcMotor motor)
         {
             this.motors.add(motor);
+        }
+
+        /**
+         *
+         * @param motor
+         */
+        public void disable (DcMotor motor) {
+            this.disabledMotors.add(motor);
+        }
+
+        /**
+         *
+         */
+        public void enableAll () {
+            this.disabledMotors.clear();
         }
 
         /**
@@ -169,6 +188,11 @@ public abstract class AbstractDriveTrain extends Component
         public void setPower (double power)
         {
             for (DcMotor motor : this.motors ) {
+
+                if (disabledMotors.contains(motor)) {
+                    continue;
+                }
+
                 motor.setPower(power);
             }
         }
@@ -184,6 +208,11 @@ public abstract class AbstractDriveTrain extends Component
             }
 
             for (DcMotor motor : this.motors ) {
+
+                if (this.disabledMotors.contains(motor)) {
+                    continue;
+                }
+
                 if (!motor.isBusy()) {
                     return false;
                 }

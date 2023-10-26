@@ -5,7 +5,7 @@ import com.qualcomm.robotcore.hardware.DcMotorSimple;
 
 import org.firstinspires.ftc.teamcode.library.drivetrain.SimpleDriveTrain;
 
-public class DriveTrainGyroTurnLeftCommand extends AbstractDriveTrainGyroTurnCommand{
+public class DriveTrainGyroRearAxlePivotLeftCommand extends AbstractDriveTrainGyroTurnCommand{
 
     /**
      * Constructor
@@ -15,7 +15,7 @@ public class DriveTrainGyroTurnLeftCommand extends AbstractDriveTrainGyroTurnCom
      * @param maxPower
      * @param degrees
      */
-    public DriveTrainGyroTurnLeftCommand (SimpleDriveTrain driveTrain, double startPower, double maxPower, double degrees) {
+    public DriveTrainGyroRearAxlePivotLeftCommand(SimpleDriveTrain driveTrain, double startPower, double maxPower, double degrees) {
         super(driveTrain, startPower, maxPower, degrees);
     }
 
@@ -25,9 +25,13 @@ public class DriveTrainGyroTurnLeftCommand extends AbstractDriveTrainGyroTurnCom
     public void init () {
 
         this.driveTrain.getLeftFrontMotor().setDirection(DcMotorSimple.Direction.FORWARD);
-        this.driveTrain.getLeftRearMotor().setDirection(DcMotorSimple.Direction.FORWARD);
+        //this.driveTrain.getLeftRearMotor().setDirection(DcMotorSimple.Direction.FORWARD);
+
+        this.driveTrain.getMotorGroup().disable(this.driveTrain.getLeftRearMotor());
+        this.driveTrain.getMotorGroup().disable(this.driveTrain.getRightRearMotor());
+
         this.driveTrain.getRightFrontMotor().setDirection(DcMotorSimple.Direction.FORWARD);
-        this.driveTrain.getRightRearMotor().setDirection(DcMotorSimple.Direction.FORWARD);
+        //this.driveTrain.getRightRearMotor().setDirection(DcMotorSimple.Direction.FORWARD);
 
         this.driveTrain.getMotorGroup().setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 

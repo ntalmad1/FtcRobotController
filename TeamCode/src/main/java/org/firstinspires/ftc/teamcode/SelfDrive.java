@@ -72,9 +72,18 @@ public class SelfDrive extends IsaacBot
             this.driveTrain.run();
 
             if (!commandAdded) {
+//                this.driveTrain
+//                        .forward(0.1, 0.2, 10, Units.Centimeters)
+//                        .back(0.1, 0.2, 10, Units.Centimeters);
+
                 this.driveTrain
-                        .forward(0.1, 0.2, 10, Units.Centimeters)
-                        .back(0.1, 0.2, 10, Units.Centimeters);
+                        //.sidewaysRight(0.1, 0.3, 10, Units.Centimeters);
+                        //.frontAxelPivotLeft(0.1, 0.3, 45);
+                        //.diagFrontRight(0.1, 0.3, 10, Units.Centimeters)
+                        //.diagRearLeft(0.1, 0.3, 10, Units.Centimeters)
+                        //.diagFrontLeft(0.1, 0.3, 10, Units.Centimeters)
+                        .diagRearRight(0.1, 0.3, 10, Units.Centimeters)
+                ;
                 commandAdded = true;
             }
         }

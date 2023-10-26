@@ -75,10 +75,12 @@ public abstract class AbstractDriveTrainGyroTurnCommand extends AbstractSynchron
                 this.driveTrain.telemetry.addData("Current Degrees: ", "%2f", currentDegrees);
                 this.driveTrain.telemetry.addData("Motor Power: ", "%2f", this.driveTrain.getLeftFrontMotor().getPower());
                 this.driveTrain.telemetry.update();
-            }
+           }
         }
         else {
             this.driveTrain.getMotorGroup().setPower(0);
+            this.driveTrain.getMotorGroup().enableAll();
+            this.markAsCompleted();
         }
     }
 
