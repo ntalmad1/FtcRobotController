@@ -6,7 +6,7 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import org.firstinspires.ftc.teamcode.competition.base.CompDriverBot;
 
 @TeleOp(name="BlueDriverCompBot", group="Competition OpMode")
-@Disabled
+//@Disabled
 public class BlueDriverCompBot extends CompDriverBot {
 
     /**
