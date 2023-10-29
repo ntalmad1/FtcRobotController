@@ -33,7 +33,7 @@ public class ClawCompConfig extends ClawConfig {
         clawBoomConfig.maxPosition = 1;
         clawBoomConfig.zeroDegreePosition = .5;
         clawBoomConfig.homePosition = 1;
-        clawBoomConfig.maxIncrement = 0.001;
+        clawBoomConfig.maxIncrement = 0.003;
 
         RotatorConfiguration clawRotatorConfig = new RotatorConfiguration();
         clawRotatorConfig.robot = robot;
@@ -46,7 +46,7 @@ public class ClawCompConfig extends ClawConfig {
         clawRotatorConfig.maxPosition = 1;
         clawRotatorConfig.zeroDegreePosition = .5;
         clawRotatorConfig.homePosition = 0.5;
-        clawRotatorConfig.maxIncrement = 0.001;
+        clawRotatorConfig.maxIncrement = 0.0038;
 
         this.clawBoomConfig = clawBoomConfig;
         this.clawRotatorConfig = clawRotatorConfig;
