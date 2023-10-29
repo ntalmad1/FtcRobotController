@@ -104,8 +104,8 @@ public abstract class  IsaacBot extends LinearOpMode implements IComponent
      */
     public void initImu (String imuName)
     {
-        telemetry.addLine("Imu Name: " + imuName);
-        telemetry.update();
+//        telemetry.addLine("Imu Name: " + imuName);
+//        telemetry.update();
 
         this.imu = this.hardwareMap.get(IMU.class, imuName);
         this.imu.resetYaw();

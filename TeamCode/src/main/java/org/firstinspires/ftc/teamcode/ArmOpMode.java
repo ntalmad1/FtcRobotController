@@ -13,7 +13,7 @@ import org.firstinspires.ftc.teamcode.library.boom.BoomConfig;
 import org.firstinspires.ftc.teamcode.library.claw.ClawConfig;
 
 @TeleOp(name="ArmOpMode", group="Linear OpMode")
-//@Disabled
+@Disabled
 public class ArmOpMode extends IsaacBot {
 
     //private Boom topBoom;

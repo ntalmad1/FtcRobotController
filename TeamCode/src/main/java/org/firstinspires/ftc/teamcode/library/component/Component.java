@@ -162,6 +162,14 @@ public abstract class Component implements IComponent {
 
     /**
      *
+     * @return
+     */
+    public IsaacBot getRobot () {
+        return this.robot;
+    }
+
+    /**
+     *
      */
     public void init (){}
 

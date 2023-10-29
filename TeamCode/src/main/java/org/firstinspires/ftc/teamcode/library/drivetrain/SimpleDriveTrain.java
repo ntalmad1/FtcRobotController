@@ -3,8 +3,22 @@ package org.firstinspires.ftc.teamcode.library.drivetrain;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 
+import org.firstinspires.ftc.teamcode.library.drivetrain.commands.AbstractDriveTrainLineCommand;
+import org.firstinspires.ftc.teamcode.library.drivetrain.commands.DriveTrainBackwardsCommand;
+import org.firstinspires.ftc.teamcode.library.drivetrain.commands.DriveTrainDiagFrontLeftCommand;
+import org.firstinspires.ftc.teamcode.library.drivetrain.commands.DriveTrainDiagFrontRightCommand;
+import org.firstinspires.ftc.teamcode.library.drivetrain.commands.DriveTrainDiagRearLeftCommand;
+import org.firstinspires.ftc.teamcode.library.drivetrain.commands.DriveTrainDiagRearRightCommand;
+import org.firstinspires.ftc.teamcode.library.drivetrain.commands.DriveTrainForwardsCommand;
+import org.firstinspires.ftc.teamcode.library.drivetrain.commands.DriveTrainGyroFrontAxlePivotLeftCommand;
+import org.firstinspires.ftc.teamcode.library.drivetrain.commands.DriveTrainGyroFrontAxlePivotRightCommand;
+import org.firstinspires.ftc.teamcode.library.drivetrain.commands.DriveTrainGyroRearAxlePivotLeftCommand;
+import org.firstinspires.ftc.teamcode.library.drivetrain.commands.DriveTrainGyroRearAxlePivotRightCommand;
+import org.firstinspires.ftc.teamcode.library.drivetrain.commands.DriveTrainGyroTurnLeftCommand;
+import org.firstinspires.ftc.teamcode.library.drivetrain.commands.DriveTrainGyroTurnRightCommand;
+import org.firstinspires.ftc.teamcode.library.drivetrain.commands.DriveTrainSidewaysLeftCommand;
+import org.firstinspires.ftc.teamcode.library.drivetrain.commands.DriveTrainSidewaysRightCommand;
 import org.firstinspires.ftc.teamcode.library.utility.Units;
-import org.firstinspires.ftc.teamcode.library.utility.Converter;
 import org.firstinspires.ftc.teamcode.library.utility.GridUtils;
 
 /**
@@ -21,6 +35,9 @@ public class SimpleDriveTrain extends AbstractDriveTrain
     public SimpleDriveTrain(SimpleDriveTrainConfig config)
     {
         super(config);
+
+        telemetry.addLine("Imu Name: " + config.imuName);
+        telemetry.update();
     }
 
     /**
@@ -37,9 +54,9 @@ public class SimpleDriveTrain extends AbstractDriveTrain
      * @param distance The distance to travel - Units will default to the default units defined int he
      *                 drive train configuration
      */
-    public void back (double startPower, double maxPower, double distance)
+    public SimpleDriveTrain back (double startPower, double maxPower, double distance)
     {
-        this.back(startPower, maxPower, distance, this.getConfig().defaultUnits);
+        return this.back(startPower, maxPower, distance, this.getConfig().defaultUnits);
     }
 
     /**
@@ -49,15 +66,38 @@ public class SimpleDriveTrain extends AbstractDriveTrain
      * @param distance The distance to travel
      * @param units The unit type for distance
      */
-    public void back (double startPower, double maxPower, double distance, Units units)
+    public SimpleDriveTrain back (double startPower, double maxPower, double distance, Units units)
     {
-        this.leftFrontMotor.setDirection(DcMotorSimple.Direction.FORWARD);
-        this.leftRearMotor.setDirection(DcMotorSimple.Direction.FORWARD);
+        this.addCommand(new DriveTrainBackwardsCommand(this, startPower, maxPower, distance, units));
+        return this;
+    }
 
-        this.rightFrontMotor.setDirection(DcMotorSimple.Direction.REVERSE);
-        this.rightRearMotor.setDirection(DcMotorSimple.Direction.REVERSE);
+    /**
+     *
+     * @param startPower
+     * @param maxPower
+     * @param distance
+     * @param units
+     * @return
+     */
+    public SimpleDriveTrain diagFrontLeft (double startPower, double maxPower, double distance, Units units) {
+        this.addCommand(new DriveTrainDiagFrontLeftCommand(this, startPower, maxPower, distance, units));
+        return this;
+    }
 
-        this.line(startPower, maxPower, distance, units);
+    public SimpleDriveTrain diagFrontRight (double startPower, double maxPower, double distance, Units units) {
+        this.addCommand(new DriveTrainDiagFrontRightCommand(this, startPower, maxPower, distance, units));
+        return this;
+    }
+
+    public SimpleDriveTrain diagRearLeft (double startPower, double maxPower, double distance, Units units) {
+        this.addCommand(new DriveTrainDiagRearLeftCommand(this, startPower, maxPower, distance, units));
+        return this;
+    }
+
+    public SimpleDriveTrain diagRearRight (double startPower, double maxPower, double distance, Units units) {
+        this.addCommand(new DriveTrainDiagRearRightCommand(this, startPower, maxPower, distance, units));
+        return this;
     }
 
 
@@ -68,9 +108,9 @@ public class SimpleDriveTrain extends AbstractDriveTrain
      * @param distance The distance to travel - Units will default to the default units defined int he
      *                 drive train configuration
      */
-    public void forward (double startPower, double maxPower, double distance)
+    public SimpleDriveTrain forward (double startPower, double maxPower, double distance)
     {
-        this.forward(startPower, maxPower, distance, this.getConfig().defaultUnits);
+        return this.forward(startPower, maxPower, distance, this.getConfig().defaultUnits);
     }
 
     /**
@@ -80,15 +120,18 @@ public class SimpleDriveTrain extends AbstractDriveTrain
      * @param distance The distance to travel
      * @param units The unit type for distance
      */
-    public void forward (double startPower, double maxPower, double distance, Units units)
+    public SimpleDriveTrain forward (double startPower, double maxPower, double distance, Units units)
     {
-        this.leftFrontMotor.setDirection(DcMotorSimple.Direction.REVERSE);
-        this.leftRearMotor.setDirection(DcMotorSimple.Direction.REVERSE);
+        this.addCommand(new DriveTrainForwardsCommand(this, startPower, maxPower, distance, units));
+        return this;
+    }
 
-        this.rightFrontMotor.setDirection(DcMotorSimple.Direction.FORWARD);
-        this.rightRearMotor.setDirection(DcMotorSimple.Direction.FORWARD);
-
-        this.line(startPower, maxPower, distance, units);
+    /**
+     *
+     *
+     */
+    public double getYaw () {
+        return this.robot.getYaw();
     }
 
     /**
@@ -96,17 +139,12 @@ public class SimpleDriveTrain extends AbstractDriveTrain
      * @param startPower
      * @param maxPower
      * @param degrees
+     * @return
      */
-    public void gyroTurnLeft (double startPower, double maxPower, double degrees)
+    public SimpleDriveTrain gyroTurnLeft (double startPower, double maxPower, double degrees)
     {
-        this.leftFrontMotor.setDirection(DcMotorSimple.Direction.FORWARD);
-        this.leftRearMotor.setDirection(DcMotorSimple.Direction.FORWARD);
-        this.rightFrontMotor.setDirection(DcMotorSimple.Direction.FORWARD);
-        this.rightRearMotor.setDirection(DcMotorSimple.Direction.FORWARD);
-
-        this.motorGroup.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-
-        this.gyroTurn(startPower, maxPower, degrees);
+        this.addCommand(new DriveTrainGyroTurnLeftCommand(this, startPower, maxPower, degrees));
+        return this;
     }
 
     /**
@@ -114,17 +152,12 @@ public class SimpleDriveTrain extends AbstractDriveTrain
      * @param startPower
      * @param maxPower
      * @param degrees
+     * @return
      */
-    public void gyroTurnRight (double startPower, double maxPower, double degrees)
+    public SimpleDriveTrain gyroTurnRight (double startPower, double maxPower, double degrees)
     {
-        this.leftFrontMotor.setDirection(DcMotorSimple.Direction.REVERSE);
-        this.leftRearMotor.setDirection(DcMotorSimple.Direction.REVERSE);
-        this.rightFrontMotor.setDirection(DcMotorSimple.Direction.REVERSE);
-        this.rightRearMotor.setDirection(DcMotorSimple.Direction.REVERSE);
-
-        this.motorGroup.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-
-        this.gyroTurn(startPower, maxPower, degrees);
+        this.addCommand(new DriveTrainGyroTurnRightCommand(this, startPower, maxPower, degrees));
+        return this;
     }
 
     /**
@@ -132,58 +165,93 @@ public class SimpleDriveTrain extends AbstractDriveTrain
      * @param startPower
      * @param maxPower
      * @param degrees
+     * @return
      */
-    protected void gyroTurn (double startPower, double maxPower, double degrees)
+    public SimpleDriveTrain frontAxelPivotLeft (double startPower, double maxPower, double degrees)
     {
-        double rampUpDegrees = degrees / 2;
-        double rampDownDegrees = degrees / 2;
-        double powerBand = maxPower - startPower;
+        this.addCommand(new DriveTrainGyroFrontAxlePivotLeftCommand(this, startPower, maxPower, degrees));
+        return this;
+    }
 
+    /**
+     *
+     * @param startPower
+     * @param maxPower
+     * @param degrees
+     * @return
+     */
+    public SimpleDriveTrain frontAxelPivotRight (double startPower, double maxPower, double degrees)
+    {
+        this.addCommand(new DriveTrainGyroFrontAxlePivotRightCommand(this, startPower, maxPower, degrees));
+        return this;
+    }
+
+    /**
+     *
+     * @param startPower
+     * @param maxPower
+     * @param degrees
+     * @return
+     */
+    public SimpleDriveTrain rearAxelPivotLeft (double startPower, double maxPower, double degrees)
+    {
+        this.addCommand(new DriveTrainGyroRearAxlePivotLeftCommand(this, startPower, maxPower, degrees));
+        return this;
+    }
+
+    /**
+     *
+     * @param startPower
+     * @param maxPower
+     * @param degrees
+     * @return
+     */
+    public SimpleDriveTrain rearAxelPivotRight (double startPower, double maxPower, double degrees)
+    {
+        this.addCommand(new DriveTrainGyroRearAxlePivotRightCommand(this, startPower, maxPower, degrees));
+        return this;
+    }
+
+    /**
+     *
+     * @param startPower
+     * @param maxPower
+     * @param distance
+     * @param units
+     * @return
+     */
+    public SimpleDriveTrain sidewaysLeft (double startPower, double maxPower, double distance, Units units)
+    {
+        this.addCommand(new DriveTrainSidewaysLeftCommand(this, startPower, maxPower, distance, units));
+        return this;
+    }
+
+    /**
+     *
+     * @param startPower
+     * @param maxPower
+     * @param distance
+     * @param units
+     * @return
+     */
+    public SimpleDriveTrain sidewaysRight (double startPower, double maxPower, double distance, Units units)
+    {
+        this.addCommand(new DriveTrainSidewaysRightCommand(this, startPower, maxPower, distance, units));
+        return this;
+    }
+
+    /**
+     *
+     */
+    public void resetYaw () {
         this.robot.resetYaw();
-        this.motorGroup.setPower(startPower);
-
-        double currentDegrees = Math.abs(this.robot.getYaw());
-        while (currentDegrees < degrees)
-        {
-            if (currentDegrees <= rampUpDegrees)
-            {
-                double newPower = startPower + ((currentDegrees / rampUpDegrees) * powerBand);
-                this.motorGroup.setPower(newPower);
-            }
-            else if (currentDegrees > rampUpDegrees)
-            {
-                double newPower = maxPower - (((currentDegrees - rampUpDegrees) / rampDownDegrees) * powerBand);
-                this.motorGroup.setPower(newPower);
-            }
-
-            currentDegrees = Math.abs(this.robot.getYaw());
-
-            if (this.getConfig().isDebug())
-            {
-                this.robot.telemetry.addData("Current Degrees: ", "%2f", currentDegrees);
-                this.robot.telemetry.addData("Motor Power: ", "%2f", this.leftFrontMotor.getPower());
-                this.robot.telemetry.update();
-            }
-        }
-
-        this.motorGroup.setPower(0);
     }
-
 
     /**
      *
-     * @param startPower
-     * @param maxPower
-     * @param degrees
      */
-    public void turnLeft (double startPower, double maxPower, double degrees)
-    {
-        this.leftFrontMotor.setDirection(DcMotorSimple.Direction.FORWARD);
-        this.leftRearMotor.setDirection(DcMotorSimple.Direction.FORWARD);
-        this.rightFrontMotor.setDirection(DcMotorSimple.Direction.FORWARD);
-        this.rightRearMotor.setDirection(DcMotorSimple.Direction.FORWARD);
-
-        this.turn(startPower, maxPower, degrees);
+    public void run () {
+        super.run();
     }
 
     /**
@@ -192,16 +260,15 @@ public class SimpleDriveTrain extends AbstractDriveTrain
      * @param maxPower
      * @param degrees
      */
-    public void turnRight (double startPower, double maxPower, double degrees)
-    {
-        this.leftFrontMotor.setDirection(DcMotorSimple.Direction.REVERSE);
-        this.leftRearMotor.setDirection(DcMotorSimple.Direction.REVERSE);
-
-        this.rightFrontMotor.setDirection(DcMotorSimple.Direction.REVERSE);
-        this.rightRearMotor.setDirection(DcMotorSimple.Direction.REVERSE);
-
-        this.turn(startPower, maxPower, degrees);
-    }
+//    public void turnLeft (double startPower, double maxPower, double degrees)
+//    {
+//        this.leftFrontMotor.setDirection(DcMotorSimple.Direction.FORWARD);
+//        this.leftRearMotor.setDirection(DcMotorSimple.Direction.FORWARD);
+//        this.rightFrontMotor.setDirection(DcMotorSimple.Direction.FORWARD);
+//        this.rightRearMotor.setDirection(DcMotorSimple.Direction.FORWARD);
+//
+//        this.turn(startPower, maxPower, degrees);
+//    }
 
     /**
      *
@@ -209,13 +276,30 @@ public class SimpleDriveTrain extends AbstractDriveTrain
      * @param maxPower
      * @param degrees
      */
-    protected void turn (double startPower, double maxPower, double degrees)
-    {
-        // double radius = this.getConfig().wheelBaseCm; // / Math.tan(0);
-        double radius = this.getConfig().turningRadiusCm;
-        double arcLength = GridUtils.arcLength(radius, degrees);
-        this.line(startPower, maxPower, arcLength, Units.Centimeters);
-    }
+//    public void turnRight (double startPower, double maxPower, double degrees)
+//    {
+//        this.leftFrontMotor.setDirection(DcMotorSimple.Direction.REVERSE);
+//        this.leftRearMotor.setDirection(DcMotorSimple.Direction.REVERSE);
+//
+//        this.rightFrontMotor.setDirection(DcMotorSimple.Direction.REVERSE);
+//        this.rightRearMotor.setDirection(DcMotorSimple.Direction.REVERSE);
+//
+//        this.turn(startPower, maxPower, degrees);
+//    }
+
+    /**
+     *
+     * @param startPower
+     * @param maxPower
+     * @param degrees
+     */
+//    protected void turn (double startPower, double maxPower, double degrees)
+//    {
+//        // double radius = this.getConfig().wheelBaseCm; // / Math.tan(0);
+//        double radius = this.getConfig().turningRadiusCm;
+//        double arcLength = GridUtils.arcLength(radius, degrees);
+//        this.line(startPower, maxPower, arcLength, Units.Centimeters);
+//    }
 
     /**
      *
@@ -224,73 +308,16 @@ public class SimpleDriveTrain extends AbstractDriveTrain
      * @param distance The distance to travel
      * @param units The units for distance, defaults to default units from configuration
      */
-    protected void line (double startPower, double maxPower, double distance, Units units)
-    {
-        if (units == null) {
-            units = this.getConfig().defaultUnits;
-        }
-
-        //-----------------------------------------------------------------
-
-        distance = Converter.convertToCm(distance, units);
-        int tics = this.convertCmToTics(distance);
-
-        this.resetMotorGroup();
-        this.motorGroup.setTargetPosition(tics);
-        this.motorGroup.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-
-        runtime.reset();
-
-        this.motorGroup.setPower(startPower);
-
-        // TODO: future - more than one acceleration algorithm that is configurable (e.g. linear vs logarithmic)
-
-        int rampUpTics = this.convertCmToTics(this.getConfig().rampUpDistanceCm);
-        int rampDownTics = this.convertCmToTics(this.getConfig().rampDownDistanceCm);
-
-        if ((rampUpTics + rampDownTics) > tics)
-        {
-            rampUpTics = tics / 2;
-            rampDownTics = tics / 2;
-        }
-
-        int rampUpTicsEnd = rampUpTics;
-        int rampDownTicsStart = tics - rampDownTics;
-
-        double powerBand = maxPower - startPower;
-
-        while (this.robot.opModeIsActive() && this.motorGroup.isBusy())
-        {
-            int currentPosition = this.leftFrontMotor.getCurrentPosition();
-
-            this.robot.telemetry.addData("Running to",  " %7d", tics);
-            this.robot.telemetry.addData("Left Front Currently at",  " at %7d", this.leftFrontMotor.getCurrentPosition());
-            this.robot.telemetry.addData("Left Front  Motor Power: ", " %f", this.leftFrontMotor.getPower());
-            this.robot.telemetry.update();
-
-            if (currentPosition <= rampUpTicsEnd)
-            {
-                double newPower = startPower + (((double)currentPosition / (double)rampUpTics) * powerBand);
-                this.motorGroup.setPower(newPower);
-            }
-            else if (currentPosition > rampDownTicsStart)
-            {
-                double newPower = maxPower - (((double)(currentPosition - rampDownTicsStart) / (double)rampDownTics) * powerBand);
-                this.motorGroup.setPower(newPower);
-            }
-        }
-
-        //-----------------------------------------------------------------
-
-        this.motorGroup.setPower(0);
-        this.motorGroup.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-    }
+//    protected void line (double startPower, double maxPower, double distance, Units units)
+//    {
+//
+//    }
 
     /**
      *
      * @return
      */
-    protected SimpleDriveTrainConfig getConfig ()
+    public SimpleDriveTrainConfig getConfig ()
     {
         return (SimpleDriveTrainConfig)super.getConfig();
     }
@@ -300,7 +327,7 @@ public class SimpleDriveTrain extends AbstractDriveTrain
      * @param distance The distance in cm to convert to tics
      * @return The number ber tics converted from cm
      */
-    private int convertCmToTics(double distance)
+    public int convertCmToTics(double distance)
     {
         double wheelCircumference = 2 * Math.PI * ( this.getConfig().wheelDiameterCm / 2 );
 
@@ -314,7 +341,7 @@ public class SimpleDriveTrain extends AbstractDriveTrain
     /**
      *
      */
-    private void resetMotorGroup ()
+    public void resetMotorGroup ()
     {
         this.motorGroup.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         this.motorGroup.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
