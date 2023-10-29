@@ -23,6 +23,9 @@ public class ClawCompConfig extends ClawConfig {
         this.rightClawMinPosition = 0;
         this.rightClawMaxPosition = 0.35;
 
+        this.rightClawInitPosition = 0.0;
+        this.leftClawInitPosition = 0.0;
+
         BoomConfig clawBoomConfig = new BoomConfig();
         clawBoomConfig.robot = robot;
         clawBoomConfig.servoName = "baseClawServo";

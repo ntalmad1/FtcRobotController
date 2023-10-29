@@ -13,22 +13,24 @@ public class Arm extends Component {
 
     /**
      */
-    private ArmConfig config;
+    private final ArmConfig config;
 
     /**
      */
-    private Claw claw;
+    private final Claw claw;
 
     /**
      */
-    private Boom midBoom;
+    private final Boom midBoom;
 
     /**
      */
-    private Boom bottomBoom;
+    private final Boom bottomBoom;
 
     /**
-     * @param configuration
+     * Constructor
+     *
+     * @param configuration The configuration values for the Arm
      */
     public Arm (ArmConfig configuration) {
         super(configuration.robot);
@@ -53,9 +55,11 @@ public class Arm extends Component {
     public void init () {
         super.init();
 
+        this.claw.init();
+
         this.bottomBoom.init();
         this.midBoom.init();
-        this.claw.init();
+
     }
 
     /**
@@ -114,8 +118,8 @@ public class Arm extends Component {
 
     /**
      *
-     * @param degrees
-     * @return
+     * @param degrees Move the claw base to the given degrees position
+     * @return "this" for a fluid interface
      */
     public Arm moveClawToDegrees (double degrees) {
         return this.moveClawToDegrees(degrees, this.claw.getBase().getMaxIncrement());
@@ -123,9 +127,9 @@ public class Arm extends Component {
 
     /**
      *
-     * @param degrees
-     * @param power
-     * @return
+     * @param degrees Moves the claw base to the given degrees position
+     * @param power The increment to move by for each cycle
+     * @return "this" for a fluid interface
      */
     public Arm moveClawToDegrees (double degrees, double power) {
         this.addCommand(new BoomMoveToDegreesCommand(this.claw.getBase(), degrees, power));
@@ -134,8 +138,8 @@ public class Arm extends Component {
 
     /**
      *
-     * @param position
-     * @return
+     * @param position Move the claw base to the given position ( 0 - 1 )
+     * @return "this" for a fluid interface
      */
     public Arm moveClawToPosition (double position) {
         return this.moveClawToPosition(position, this.claw.getBase().getMaxIncrement());
@@ -143,9 +147,9 @@ public class Arm extends Component {
 
     /**
      *
-     * @param position
-     * @param power
-     * @return
+     * @param position Move the claw to the given position ( 0 - 1 )
+     * @param power The amount to increment position by each cycle ( 0 - 1 )
+     * @return "this" for a fluid interface
      */
     public Arm moveClawToPosition (double position, double power) {
         this.addCommand(new BoomMoveToPositionCommand(this.claw.getBase(), this.claw.getBase().getServoPosition(), position, power));
@@ -154,8 +158,8 @@ public class Arm extends Component {
 
     /**
      *
-     * @param degrees
-     * @return
+     * @param degrees Rotates the claw to the given degrees position
+     * @return "this" for a fluid interface
      */
     public Arm rotateClawToDegrees (double degrees) {
         return this.rotateClawToDegrees(degrees, this.claw.getRotator().getMaxIncrement());
@@ -163,9 +167,9 @@ public class Arm extends Component {
 
     /**
      *
-     * @param degrees
-     * @param power
-     * @return
+     * @param degrees Rotates the claw to the given degrees position
+     * @param power The increment to rotate by each cycle ( 0 -1 )
+     * @return "this" for a fluid interface
      */
     public Arm rotateClawToDegrees (double degrees, double power) {
         this.addCommand(new BoomMoveToDegreesCommand(this.claw.getRotator(), degrees, power));
@@ -174,8 +178,8 @@ public class Arm extends Component {
 
     /**
      *
-     * @param position
-     * @return
+     * @param position The position to rotate the claw to ( 0 - 1 )
+     * @return "this" for a fluid interface
      */
     public Arm rotateClawToPosition (double position) {
         return this.rotateClawToPosition(position, this.claw.getRotator().getMaxIncrement());
@@ -185,7 +189,7 @@ public class Arm extends Component {
      *
      * @param position
      * @param power
-     * @return
+     * @return "this" for a fluid interface
      */
     public Arm rotateClawToPosition (double position, double power) {
         this.addCommand(new BoomMoveToPositionCommand(this.claw.getRotator(), this.claw.getRotator().getServoPosition(), position, power));
@@ -196,7 +200,7 @@ public class Arm extends Component {
     /**
      *
      * @param degrees
-     * @return
+     * @return "this" for a fluid interface
      */
     public Arm moveMiddleToDegrees (double degrees) {
         return this.moveMiddleToDegrees(degrees, this.midBoom.getMaxIncrement());
@@ -206,7 +210,7 @@ public class Arm extends Component {
      *
      * @param degrees
      * @param power
-     * @return
+     * @return "this" for a fluid interface
      */
     public Arm moveMiddleToDegrees (double degrees, double power) {
         this.addCommand(new BoomMoveToDegreesCommand(this.midBoom, degrees, power));
@@ -216,7 +220,7 @@ public class Arm extends Component {
     /**
      *
      * @param position
-     * @return
+     * @return "this" for a fluid interface
      */
     public Arm moveMiddleToPosition (double position) {
         return this.moveMiddleToPosition(position, this.midBoom.getMaxIncrement());
@@ -226,7 +230,7 @@ public class Arm extends Component {
      *
      * @param position
      * @param power
-     * @return
+     * @return "this" for a fluid interface
      */
     public Arm moveMiddleToPosition (double position, double power) {
         this.addCommand(new BoomMoveToPositionCommand(this.midBoom, this.midBoom.getServoPosition(), position, power));
@@ -236,7 +240,7 @@ public class Arm extends Component {
     /**
      *
      * @param degrees
-     * @return
+     * @return "this" for a fluid interface
      */
     public Arm moveBottomToDegrees (double degrees) {
         return this.moveBottomToDegrees(degrees, this.bottomBoom.getMaxIncrement());
@@ -246,7 +250,7 @@ public class Arm extends Component {
      *
      * @param degrees
      * @param power
-     * @return
+     * @return "this" for a fluid interface
      */
     public Arm moveBottomToDegrees (double degrees, double power) {
         this.addCommand(new BoomMoveToDegreesCommand(this.bottomBoom, degrees, power));
@@ -256,7 +260,7 @@ public class Arm extends Component {
     /**
      *
      * @param position
-     * @return
+     * @return "this" for a fluid interface
      */
     public Arm moveBottomToPosition (double position) {
         return this.moveBottomToPosition(position, this.bottomBoom.getMaxIncrement());
@@ -266,7 +270,7 @@ public class Arm extends Component {
      *
      * @param position
      * @param power
-     * @return
+     * @return "this" for a fluid interface
      */
     public Arm moveBottomToPosition (double position, double power) {
         this.addCommand(new BoomMoveToPositionCommand(this.bottomBoom, this.bottomBoom.getServoPosition(), position, power));
@@ -275,8 +279,8 @@ public class Arm extends Component {
 
     /**
      *
-     * @param degrees
-     * @return
+     * @param degrees Number of degrees to move the bottom boom two
+     * @return "this" for a fluid interface
      */
     public Arm moveBottomDegreesFromCurrentPosition (double degrees) {
         double targetDegrees = this.bottomBoom.getPositionDegrees() + degrees;
@@ -285,8 +289,8 @@ public class Arm extends Component {
 
     /**
      *
-     * @param degrees
-     * @return
+     * @param degrees Number of degrees to move the middle boom by
+     * @return "this" for a fluid interface
      */
     public Arm moveMiddleDegreesFromCurrentPosition (double degrees) {
         double targetDegrees = this.midBoom.getPositionDegrees() + degrees;
@@ -295,8 +299,8 @@ public class Arm extends Component {
 
     /**
      *
-     * @param degrees
-     * @return
+     * @param degrees Number of degrees to move the claw base by
+     * @return "this" for a fluid interface
      */
     public Arm moveClawDegreesFromCurrentPosition (double degrees) {
         double targetDegrees = this.claw.getBase().getPositionDegrees() + degrees;
@@ -305,8 +309,8 @@ public class Arm extends Component {
 
     /**
      *
-     * @param milliseconds
-     * @return
+     * @param milliseconds Number of milliseconds to wait for
+     * @return "this" for a fluid interface
      */
     public Arm wait (int milliseconds) {
         this.addCommand(new WaitCommand(milliseconds));

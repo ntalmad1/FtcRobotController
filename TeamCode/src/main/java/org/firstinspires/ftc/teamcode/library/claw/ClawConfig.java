@@ -16,6 +16,9 @@ public class ClawConfig {
     public double rightClawMinPosition;
     public double leftClawMaxPosition;
     public double leftClawMinPosition;
+    public double rightClawInitPosition = 0.0;
+    public double leftClawInitPosition = 0.0;
+
     public String leftClawName;
     public String rightClawName;
 }

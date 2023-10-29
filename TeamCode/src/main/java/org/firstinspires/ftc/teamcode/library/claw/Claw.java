@@ -65,8 +65,6 @@ public class Claw extends Component {
      */
     public void init () {
         super.init();
-        this.clawBoom.init();
-        this.clawRotator.init();
 
         this.leftClaw = this.robot.hardwareMap.get(Servo.class, this.config.leftClawName);
         this.rightClaw = this.robot.hardwareMap.get(Servo.class, this.config.rightClawName);
@@ -74,8 +72,13 @@ public class Claw extends Component {
         this.leftClaw.resetDeviceConfigurationForOpMode();
         this.rightClaw.resetDeviceConfigurationForOpMode();
 
-        this.leftClaw.setPosition(this.config.leftClawMinPosition);
-        this.rightClaw.setPosition(this.config.rightClawMinPosition);
+        this.leftClaw.setPosition(this.config.leftClawInitPosition);
+        this.rightClaw.setPosition(this.config.rightClawInitPosition);
+
+        this.clawBoom.init();
+        this.clawRotator.init();
+
+
 
         this.addGp2_Left_Bumper_PressHandler(event -> {
             Claw.this.toggleLeftClaw();
