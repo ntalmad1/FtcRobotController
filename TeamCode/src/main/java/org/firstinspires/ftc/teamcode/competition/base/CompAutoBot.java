@@ -21,6 +21,7 @@ public class CompAutoBot extends CompBot {
 
         this.armConfig.clawConfig.leftClawInitPosition = 0.35;
         this.armConfig.clawConfig.rightClawInitPosition = 0.35;
+        this.armConfig.debug = true;
 
         this.driveTrainConfig = new SimpleDriveCompConfig(this);
         this.setImuName(driveTrainConfig.imuName);
@@ -49,6 +50,7 @@ public class CompAutoBot extends CompBot {
      *
      */
     public void run () {
-
+        super.run();
+        driveTrain.run();
     }
 }

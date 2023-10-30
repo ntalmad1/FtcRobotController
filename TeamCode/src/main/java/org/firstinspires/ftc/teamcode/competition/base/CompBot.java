@@ -32,13 +32,13 @@ public class CompBot extends IsaacBot{
      */
     protected ArmCompConfig armConfig;
 
+    /**
+     */
     protected Servo catcherServo;
-
-
 
     /**
      */
-    private Arm arm;
+    protected Arm arm;
 
     /**
      */
@@ -140,7 +140,6 @@ public class CompBot extends IsaacBot{
      */
     public void run () {
         super.run();
-
         this.arm.run();
     }
 
