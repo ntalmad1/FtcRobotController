@@ -4,6 +4,9 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import org.firstinspires.ftc.teamcode.competition.base.CompAutoBot;
+import org.firstinspires.ftc.teamcode.library.component.command.OneTimeSynchronousCommand;
+import org.firstinspires.ftc.teamcode.library.component.event.ping.PingEvent;
+import org.firstinspires.ftc.teamcode.library.component.event.ping.PingHandler;
 import org.firstinspires.ftc.teamcode.library.utility.Units;
 
 /**
@@ -39,9 +42,17 @@ public class BlueFarCompAutoBot extends CompAutoBot {
 
         super.go();
 
-        //this.driveTrain.forward(0.1, 0.2, 8, Units.Centimeters);
-        //this.driveTrain.gyroTurnLeft(0.1, 0.5, 90);
-        //this.driveTrain.forward(0.1, 0.5, 243, Units.Centimeters);
+        this.addCommand(new OneTimeSynchronousCommand() {
+            public void runOnce() {
+                BlueFarCompAutoBot.this.ping(0, 0, new PingHandler() {
+                    public void onPing(PingEvent event) {
+                        BlueFarCompAutoBot.this.telemetry.addData("Degrees: ", "%2f", event.getDegrees());
+                        BlueFarCompAutoBot.this.telemetry.addData("Distance: ", "%2f", + event.getDistance());
+                        BlueFarCompAutoBot.this.telemetry.update();
+                    }
+                });
+            }
+        });
     }
 
     public void run () {
