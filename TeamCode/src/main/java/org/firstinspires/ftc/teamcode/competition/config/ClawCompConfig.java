@@ -48,8 +48,8 @@ public class ClawCompConfig extends ClawConfig {
         clawRotatorConfig.invertInput = true;
         clawRotatorConfig.minPosition = 0.00;
         clawRotatorConfig.maxPosition = 1.00;
-        clawRotatorConfig.zeroDegreePosition = 0.30;
-        clawRotatorConfig.homePosition = 0.30;
+        clawRotatorConfig.zeroDegreePosition = 0.307;
+        clawRotatorConfig.homePosition = 0.307;
         clawRotatorConfig.maxIncrement = 0.0015;
 
         this.clawBoomConfig = clawBoomConfig;

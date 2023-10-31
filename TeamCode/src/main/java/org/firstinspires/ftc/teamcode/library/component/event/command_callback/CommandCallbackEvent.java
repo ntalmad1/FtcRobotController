@@ -1,6 +1,6 @@
 package org.firstinspires.ftc.teamcode.library.component.event.command_callback;
 
-import org.firstinspires.ftc.teamcode.library.component.command.Command;
+import org.firstinspires.ftc.teamcode.library.component.command.ICommand;
 import org.firstinspires.ftc.teamcode.library.component.event.Event;
 import org.firstinspires.ftc.teamcode.library.component.event.EventType;
 
@@ -23,12 +23,16 @@ public abstract class CommandCallbackEvent extends Event<CommandCallbackHandler>
 
         /**
          */
-        FAILURE
+        FAILURE,
+
+        /**
+         */
+        AFTER
     }
 
     /**
      */
-    private Command command;
+    private ICommand command;
 
     /**
      */
@@ -44,7 +48,7 @@ public abstract class CommandCallbackEvent extends Event<CommandCallbackHandler>
      * @param commmandCallbackType
      * @param command
      */
-    public CommandCallbackEvent (Type commmandCallbackType, Command command) {
+    public CommandCallbackEvent (Type commmandCallbackType, ICommand command) {
         this.commandCallbackType = commmandCallbackType;
         this.command = command;
     }

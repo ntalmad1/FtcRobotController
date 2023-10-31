@@ -1,9 +1,8 @@
 package org.firstinspires.ftc.teamcode.library.component;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
-import org.firstinspires.ftc.teamcode.R;
 import org.firstinspires.ftc.teamcode.library.IsaacBot;
-import org.firstinspires.ftc.teamcode.library.component.command.Command;
+import org.firstinspires.ftc.teamcode.library.component.command.ICommand;
 import org.firstinspires.ftc.teamcode.library.component.command.CommandQueue;
 import org.firstinspires.ftc.teamcode.library.component.event.EventBus;
 import org.firstinspires.ftc.teamcode.library.component.event.gp2_dpad_down_down.Gp2_Dpad_Down_DownEvent;
@@ -70,7 +69,7 @@ public abstract class Component implements IComponent {
      *
      * @param command
      */
-    public void addCommand (Command command) {
+    public void addCommand (ICommand command) {
         this.commandQueue.add(command);
     }
 
@@ -180,7 +179,7 @@ public abstract class Component implements IComponent {
         this.commandQueue.run();
     }
 
-    public void runCommand (Command command) {
+    public void runCommand (ICommand command) {
         if (command.isCompleted()) {
             return;
         }

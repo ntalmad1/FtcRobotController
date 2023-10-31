@@ -104,6 +104,7 @@ public class GoToPositionCommand extends AbstractCommand {
         double currentPosition = this.boom.getPosition();
 
         if (direction.equals(Boom.Direction.FORWARD)) {
+
             if (currentPosition <= this.getTargetPosition()) {
                 this.markAsCompleted();
                 return;
@@ -115,6 +116,7 @@ public class GoToPositionCommand extends AbstractCommand {
             }
         }
         else if (direction.equals(Boom.Direction.REVERSE)) {
+
             if (currentPosition >= this.getTargetPosition()) {
                 this.markAsCompleted();
                 return;

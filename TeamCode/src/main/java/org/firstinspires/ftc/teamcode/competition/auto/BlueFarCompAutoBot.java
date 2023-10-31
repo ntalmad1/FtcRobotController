@@ -37,6 +37,8 @@ public class BlueFarCompAutoBot extends CompAutoBot {
      */
     public void go () {
 
+        super.go();
+
         //this.driveTrain.forward(0.1, 0.2, 8, Units.Centimeters);
         //this.driveTrain.gyroTurnLeft(0.1, 0.5, 90);
         //this.driveTrain.forward(0.1, 0.5, 243, Units.Centimeters);

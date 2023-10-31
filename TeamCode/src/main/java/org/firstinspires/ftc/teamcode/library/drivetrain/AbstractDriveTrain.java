@@ -5,6 +5,9 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.teamcode.library.IsaacBot;
 import org.firstinspires.ftc.teamcode.library.component.Component;
+import org.firstinspires.ftc.teamcode.library.component.command.ICommand;
+import org.firstinspires.ftc.teamcode.library.component.command.WaitCommand;
+import org.firstinspires.ftc.teamcode.library.component.event.command_callback.CommandCallbackHandler;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -121,6 +124,13 @@ public abstract class AbstractDriveTrain extends Component
      */
     public DcMotor getLeftRearMotor () {
         return this.leftRearMotor;
+    }
+
+    public void wait (int milliseconds, CommandCallbackHandler handler) {
+        ICommand command = new WaitCommand(milliseconds);
+        command.addCallbackHandler(handler);
+
+        this.addCommand(command);
     }
 
     /**

@@ -7,7 +7,9 @@ import org.firstinspires.ftc.teamcode.library.claw.Claw;
 import org.firstinspires.ftc.teamcode.library.claw.ClawCloseCommand;
 import org.firstinspires.ftc.teamcode.library.claw.ClawOpenCommand;
 import org.firstinspires.ftc.teamcode.library.component.Component;
+import org.firstinspires.ftc.teamcode.library.component.command.ICommand;
 import org.firstinspires.ftc.teamcode.library.component.command.WaitCommand;
+import org.firstinspires.ftc.teamcode.library.component.event.command_callback.CommandCallbackHandler;
 
 public class Arm extends Component {
 
@@ -47,6 +49,8 @@ public class Arm extends Component {
         this.addGp2_LeftStickYHandler(event -> Arm.this.cancelAllCommands());
         this.addGp2_RightStickXHandler(event -> Arm.this.cancelAllCommands());
         this.addGp2_RightStickYHandler(event -> Arm.this.cancelAllCommands());
+
+        // this.getCommandQueue().setDebug(true);
     }
 
     /**
@@ -152,7 +156,7 @@ public class Arm extends Component {
      * @return "this" for a fluid interface
      */
     public Arm moveClawToPosition (double position, double power) {
-        this.addCommand(new BoomMoveToPositionCommand(this.claw.getBase(), this.claw.getBase().getServoPosition(), position, power));
+        this.addCommand(new BoomMoveToPositionCommand(this.claw.getBase(), position, power));
         return this;
     }
 
@@ -192,7 +196,7 @@ public class Arm extends Component {
      * @return "this" for a fluid interface
      */
     public Arm rotateClawToPosition (double position, double power) {
-        this.addCommand(new BoomMoveToPositionCommand(this.claw.getRotator(), this.claw.getRotator().getServoPosition(), position, power));
+        this.addCommand(new BoomMoveToPositionCommand(this.claw.getRotator(), position, power));
         return this;
     }
 
@@ -233,7 +237,7 @@ public class Arm extends Component {
      * @return "this" for a fluid interface
      */
     public Arm moveMiddleToPosition (double position, double power) {
-        this.addCommand(new BoomMoveToPositionCommand(this.midBoom, this.midBoom.getServoPosition(), position, power));
+        this.addCommand(new BoomMoveToPositionCommand(this.midBoom, position, power));
         return this;
     }
 
@@ -273,7 +277,7 @@ public class Arm extends Component {
      * @return "this" for a fluid interface
      */
     public Arm moveBottomToPosition (double position, double power) {
-        this.addCommand(new BoomMoveToPositionCommand(this.bottomBoom, this.bottomBoom.getServoPosition(), position, power));
+        this.addCommand(new BoomMoveToPositionCommand(this.bottomBoom, position, power));
         return this;
     }
 
@@ -314,6 +318,13 @@ public class Arm extends Component {
      */
     public Arm wait (int milliseconds) {
         this.addCommand(new WaitCommand(milliseconds));
+        return this;
+    }
+
+    public Arm wait (int milliseconds, CommandCallbackHandler handler) {
+        ICommand command = new WaitCommand(milliseconds);
+        command.addCallbackHandler(handler);
+        this.addCommand(command);
         return this;
     }
 }
