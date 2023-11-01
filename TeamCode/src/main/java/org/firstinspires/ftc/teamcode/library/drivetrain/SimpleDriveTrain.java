@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode.library.drivetrain;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 
+import org.firstinspires.ftc.teamcode.library.component.event.command_callback.CommandCallbackHandler;
 import org.firstinspires.ftc.teamcode.library.drivetrain.commands.AbstractDriveTrainLineCommand;
 import org.firstinspires.ftc.teamcode.library.drivetrain.commands.DriveTrainBackwardsCommand;
 import org.firstinspires.ftc.teamcode.library.drivetrain.commands.DriveTrainDiagFrontLeftCommand;
@@ -18,6 +19,7 @@ import org.firstinspires.ftc.teamcode.library.drivetrain.commands.DriveTrainGyro
 import org.firstinspires.ftc.teamcode.library.drivetrain.commands.DriveTrainGyroTurnRightCommand;
 import org.firstinspires.ftc.teamcode.library.drivetrain.commands.DriveTrainSidewaysLeftCommand;
 import org.firstinspires.ftc.teamcode.library.drivetrain.commands.DriveTrainSidewaysRightCommand;
+import org.firstinspires.ftc.teamcode.library.utility.Direction;
 import org.firstinspires.ftc.teamcode.library.utility.Units;
 import org.firstinspires.ftc.teamcode.library.utility.GridUtils;
 
@@ -214,6 +216,27 @@ public class SimpleDriveTrain extends AbstractDriveTrain
 
     /**
      *
+     * @param direction
+     * @param startPower
+     * @param maxPower
+     * @param distance
+     * @param units
+     * @return
+     */
+    public SimpleDriveTrain sideways (Direction direction, double startPower, double maxPower, double distance, Units units) {
+
+        switch (direction) {
+            case Right:
+                return this.sidewaysRight(startPower, maxPower, distance, units);
+            case LEFT:
+                return this.sidewaysLeft(startPower, maxPower, distance, units);
+        }
+
+        return this;
+    }
+
+    /**
+     *
      * @param startPower
      * @param maxPower
      * @param distance
@@ -345,5 +368,24 @@ public class SimpleDriveTrain extends AbstractDriveTrain
     {
         this.motorGroup.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         this.motorGroup.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+    }
+
+    /**
+     *
+     * @param milliseconds
+     * @return
+     */
+    public SimpleDriveTrain wait (int milliseconds) {
+        return (SimpleDriveTrain) super.wait(milliseconds);
+    }
+
+    /**
+     *
+     * @param milliseconds
+     * @param handler
+     * @return
+     */
+    public SimpleDriveTrain wait (int milliseconds, CommandCallbackHandler handler) {
+        return (SimpleDriveTrain) super.wait(milliseconds, handler);
     }
 }

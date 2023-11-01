@@ -10,12 +10,12 @@ public abstract class OneTimeCommand extends AbstractCommand {
     public void run () {
         if (firstTime) {
             this.firstTime = false;
-            this.runOnce();
+            this.runOnce(this);
         }
     }
 
     /**
      *
      */
-    public abstract void runOnce ();
+    public abstract void runOnce (ICommand command);
 }

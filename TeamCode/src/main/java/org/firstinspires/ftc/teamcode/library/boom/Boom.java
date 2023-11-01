@@ -13,22 +13,6 @@ public class Boom extends Component {
     /**
      *
      */
-    public enum Direction {
-
-        /**
-         *
-         */
-        FORWARD,
-
-        /**
-         *
-         */
-        REVERSE
-    }
-
-    /**
-     *
-     */
     private BoomConfig config;
 
     /**

@@ -7,6 +7,7 @@ import org.firstinspires.ftc.teamcode.competition.base.CompAutoBot;
 import org.firstinspires.ftc.teamcode.library.component.command.OneTimeSynchronousCommand;
 import org.firstinspires.ftc.teamcode.library.component.event.ping.PingEvent;
 import org.firstinspires.ftc.teamcode.library.component.event.ping.PingHandler;
+import org.firstinspires.ftc.teamcode.library.utility.Direction;
 import org.firstinspires.ftc.teamcode.library.utility.Units;
 
 /**
@@ -21,6 +22,8 @@ public class BlueFarCompAutoBot extends CompAutoBot {
      */
     public BlueFarCompAutoBot () {
         super();
+
+        this.robotAutoConfig.startingTrussDirection = Direction.LEFT;
     }
 
     /**
@@ -42,17 +45,6 @@ public class BlueFarCompAutoBot extends CompAutoBot {
 
         super.go();
 
-        this.addCommand(new OneTimeSynchronousCommand() {
-            public void runOnce() {
-                BlueFarCompAutoBot.this.ping(0, 0, new PingHandler() {
-                    public void onPing(PingEvent event) {
-                        BlueFarCompAutoBot.this.telemetry.addData("Degrees: ", "%2f", event.getDegrees());
-                        BlueFarCompAutoBot.this.telemetry.addData("Distance: ", "%2f", + event.getDistance());
-                        BlueFarCompAutoBot.this.telemetry.update();
-                    }
-                });
-            }
-        });
     }
 
     public void run () {

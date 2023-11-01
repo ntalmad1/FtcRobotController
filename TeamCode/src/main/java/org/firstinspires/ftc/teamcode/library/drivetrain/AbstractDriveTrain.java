@@ -126,11 +126,31 @@ public abstract class AbstractDriveTrain extends Component
         return this.leftRearMotor;
     }
 
-    public void wait (int milliseconds, CommandCallbackHandler handler) {
+    /**
+     *
+     * @param milliseconds
+     * @return
+     */
+    public AbstractDriveTrain wait (int milliseconds) {
+        ICommand command = new WaitCommand(milliseconds);
+        this.addCommand(command);
+
+        return this;
+    }
+
+    /**
+     *
+     * @param milliseconds
+     * @param handler
+     * @return
+     */
+    public AbstractDriveTrain wait (int milliseconds, CommandCallbackHandler handler) {
         ICommand command = new WaitCommand(milliseconds);
         command.addCallbackHandler(handler);
 
         this.addCommand(command);
+
+        return this;
     }
 
     /**
