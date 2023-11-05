@@ -24,8 +24,8 @@ public class DriveTrainDiagFrontLeftCommand extends AbstractDriveTrainLineComman
      *
      */
     public void init () {
-        this.driveTrain.getMotorGroup().disable(this.driveTrain.getLeftFrontMotor());
-        this.driveTrain.getMotorGroup().disable(this.driveTrain.getRightRearMotor());
+        this.driveTrain.getMotorGroup().lock(this.driveTrain.getLeftFrontMotor());
+        this.driveTrain.getMotorGroup().lock(this.driveTrain.getRightRearMotor());
 
         //this.driveTrain.getLeftFrontMotor().setDirection(DcMotorSimple.Direction.REVERSE);
 

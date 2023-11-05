@@ -164,6 +164,8 @@ public abstract class AbstractDriveTrain extends Component
 
         private final List<DcMotor> disabledMotors = new ArrayList<>();
 
+        private final List<DcMotor> lockedMotors = new ArrayList<>();
+
         /**
          * Adds a motor to the group
          *
@@ -184,9 +186,19 @@ public abstract class AbstractDriveTrain extends Component
 
         /**
          *
+         * @param motor
+         */
+        public void lock (DcMotor motor) {
+            this.lockedMotors.add(motor);
+        }
+
+        /**
+         *
          */
         public void enableAll () {
+
             this.disabledMotors.clear();
+            this.lockedMotors.clear();
         }
 
         /**
@@ -208,7 +220,7 @@ public abstract class AbstractDriveTrain extends Component
         {
             for (DcMotor motor : this.motors ) {
 
-                if (disabledMotors.contains(motor)) {
+                if (lockedMotors.contains(motor)) {
                     motor.setTargetPosition(0);
                     continue;
                 }
@@ -225,9 +237,9 @@ public abstract class AbstractDriveTrain extends Component
         {
             for (DcMotor motor : this.motors ) {
 
-//                if (disabledMotors.contains(motor)) {
-//                    continue;
-//                }
+                if (disabledMotors.contains(motor)) {
+                    continue;
+                }
 
                 motor.setPower(power);
             }
@@ -245,7 +257,7 @@ public abstract class AbstractDriveTrain extends Component
 
             for (DcMotor motor : this.motors ) {
 
-                if (this.disabledMotors.contains(motor)) {
+                if (this.disabledMotors.contains(motor) || this.lockedMotors.contains(motor)) {
                     continue;
                 }
 

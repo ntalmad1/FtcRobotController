@@ -207,6 +207,26 @@ public class SimpleDriveTrain extends AbstractDriveTrain
 
     /**
      *
+     * @param direction
+     * @param startPower
+     * @param maxPower
+     * @param degrees
+     * @return
+     */
+    public SimpleDriveTrain frontAxelPivot (Direction direction, double startPower, double maxPower, double degrees)
+    {
+        switch (direction) {
+            case Right:
+                return this.frontAxelPivotRight(startPower, maxPower, degrees);
+            case LEFT:
+                return this.frontAxelPivotLeft(startPower, maxPower, degrees);
+        }
+
+        return this;
+    }
+
+    /**
+     *
      * @param startPower
      * @param maxPower
      * @param degrees

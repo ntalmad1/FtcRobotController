@@ -33,7 +33,7 @@ public class DriveTrainGyroRearAxlePivotRightCommand extends AbstractDriveTrainG
         this.driveTrain.getRightFrontMotor().setDirection(DcMotorSimple.Direction.REVERSE);
         //this.driveTrain.getRightRearMotor().setDirection(DcMotorSimple.Direction.FORWARD);
 
-        this.driveTrain.getMotorGroup().setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        this.driveTrain.getMotorGroup().setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
         super.init();
     }
