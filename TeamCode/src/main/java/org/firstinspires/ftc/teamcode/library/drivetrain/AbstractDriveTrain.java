@@ -207,6 +207,12 @@ public abstract class AbstractDriveTrain extends Component
         public void setTargetPosition (int tics)
         {
             for (DcMotor motor : this.motors ) {
+
+                if (disabledMotors.contains(motor)) {
+                    motor.setTargetPosition(0);
+                    continue;
+                }
+
                 motor.setTargetPosition(tics);
             }
         }
@@ -219,9 +225,9 @@ public abstract class AbstractDriveTrain extends Component
         {
             for (DcMotor motor : this.motors ) {
 
-                if (disabledMotors.contains(motor)) {
-                    continue;
-                }
+//                if (disabledMotors.contains(motor)) {
+//                    continue;
+//                }
 
                 motor.setPower(power);
             }

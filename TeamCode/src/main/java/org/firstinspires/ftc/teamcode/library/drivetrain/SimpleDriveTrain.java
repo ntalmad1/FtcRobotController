@@ -76,6 +76,28 @@ public class SimpleDriveTrain extends AbstractDriveTrain
 
     /**
      *
+     * @param direction
+     * @param startPower
+     * @param maxPower
+     * @param distance
+     * @param units
+     * @return
+     */
+    public SimpleDriveTrain diagFront (Direction direction, double startPower, double maxPower, double distance, Units units) {
+
+        switch (direction) {
+            case Right:
+                return this.diagFrontRight(startPower, maxPower, distance, units);
+            case LEFT:
+                return this.diagFrontLeft(startPower, maxPower, distance, units);
+        }
+
+        return this;
+    }
+
+
+    /**
+     *
      * @param startPower
      * @param maxPower
      * @param distance
@@ -135,6 +157,27 @@ public class SimpleDriveTrain extends AbstractDriveTrain
     public double getYaw () {
         return this.robot.getYaw();
     }
+
+    /**
+     *
+     * @param direction
+     * @param startPower
+     * @param maxPower
+     * @param degrees
+     * @return
+     */
+    public SimpleDriveTrain gyroTurn (Direction direction, double startPower, double maxPower, double degrees)
+    {
+        switch (direction) {
+            case Right:
+                return this.gyroTurnRight(startPower, maxPower, degrees);
+            case LEFT:
+                return this.gyroTurnLeft(startPower, maxPower, degrees);
+        }
+
+       return this;
+    }
+
 
     /**
      *

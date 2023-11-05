@@ -17,7 +17,7 @@ public class DriveTrainDiagRearLeftCommand extends AbstractDriveTrainLineCommand
      * @param units
      */
     public DriveTrainDiagRearLeftCommand(SimpleDriveTrain driveTrain, double startPower, double maxPower, double distance, Units units) {
-        super(driveTrain, startPower, maxPower, distance, units);
+        super(driveTrain, startPower, maxPower, distance * ((double)5/(double)(3)), units);
     }
 
     /**

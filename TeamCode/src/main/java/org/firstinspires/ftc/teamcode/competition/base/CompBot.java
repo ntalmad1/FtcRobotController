@@ -7,6 +7,7 @@ import com.qualcomm.robotcore.hardware.Servo;
 import org.firstinspires.ftc.teamcode.competition.config.ArmCompConfig;
 import org.firstinspires.ftc.teamcode.library.IsaacBot;
 import org.firstinspires.ftc.teamcode.library.arm.Arm;
+import org.firstinspires.ftc.teamcode.library.component.event.command_callback.CommandCallbackHandler;
 
 /**
  *
@@ -53,23 +54,23 @@ public class CompBot extends IsaacBot{
 
         this.armConfig = new ArmCompConfig(this);
 
-        this.addGp2_A_PressHandler(event -> {
-            CompBot.this.arm.cancelAllCommands();
-
-            if (this.armPosition.equals(ArmPosition.HOME)) {
-                CompBot.this.armPosition = ArmPosition.PIXEL_READY;
-                CompBot.this.moveArm_fromHome_toPixelReady();
-            }
-            else if (this.armPosition.equals(ArmPosition.PIXEL_READY) || this.armPosition.equals(ArmPosition.PIXEL_PICKED)) {
-                CompBot.this.armPosition = ArmPosition.PIXEL_PICKED;
-                CompBot.this.moveArm_pickPixels();
-            }
-            else if (this.armPosition.equals(ArmPosition.PIXEL_TRAVEL)) {
-                CompBot.this.armPosition = ArmPosition.PIXEL_READY;
-                CompBot.this.moveArm_fromPixelTravel_toPixelReady();
-            }
-
-        });
+//        this.addGp2_A_PressHandler(event -> {
+//            CompBot.this.arm.cancelAllCommands();
+//
+//            if (this.armPosition.equals(ArmPosition.HOME)) {
+//                CompBot.this.armPosition = ArmPosition.PIXEL_READY;
+//                CompBot.this.moveArm_fromHome_toPixelReady();
+//            }
+//            else if (this.armPosition.equals(ArmPosition.PIXEL_READY) || this.armPosition.equals(ArmPosition.PIXEL_PICKED)) {
+//                CompBot.this.armPosition = ArmPosition.PIXEL_PICKED;
+//                CompBot.this.moveArm_pickPixels();
+//            }
+//            else if (this.armPosition.equals(ArmPosition.PIXEL_TRAVEL)) {
+//                CompBot.this.armPosition = ArmPosition.PIXEL_READY;
+//                CompBot.this.moveArm_fromPixelTravel_toPixelReady();
+//            }
+//
+//        });
 
         this.addGp2_B_PressHandler(event -> {
             CompBot.this.arm.cancelAllCommands();
@@ -77,7 +78,7 @@ public class CompBot extends IsaacBot{
             if (this.armPosition.equals(ArmPosition.PIXEL_READY)
              || this.armPosition.equals(ArmPosition.PIXEL_PICKED)) {
                 CompBot.this.armPosition = ArmPosition.PIXEL_TRAVEL;
-                CompBot.this.moveArm_pixelTravel();
+                CompBot.this.moveArm_toPixelTravel();
             }
             else if (this.armPosition.equals(ArmPosition.PIXEL_PLACE_LOW)
                     || this.armPosition.equals(ArmPosition.PIXEL_PLACE_MID)
@@ -196,15 +197,18 @@ public class CompBot extends IsaacBot{
     /**
      *
      */
-    public void moveArm_pixelTravel () {
+    public void moveArm_toPixelTravel () {
 
-            this.arm.moveMiddleToDegrees(60, 1)
+            this.arm.rotateClawToDegrees(0, 1)
+                    .moveClawToDegrees(60, 1)
+                    .moveMiddleToDegrees(60, 1)
                     .wait(1000)
                     .moveBottomToDegrees(-10, 1)
                     .wait(1000)
                     .moveBottomToPosition(0.568, 1)
                     .moveMiddleToPosition(0.994, 1)
-                    .moveClawToPosition(0.562, 1)
+                    .wait(2000)
+                    .moveClawToDegrees(-5, 1)
                     .wait(0)
             ;
 
@@ -259,6 +263,16 @@ public class CompBot extends IsaacBot{
                 .rotateClawToPosition(0.491)
                 .wait(0);
 
+    }
+
+    /**
+     *
+     * @param milliseconds
+     * @param callbackHandler
+     * @return
+     */
+    public CompBot wait (int milliseconds, CommandCallbackHandler callbackHandler) {
+        return (CompBot) super.wait(milliseconds, callbackHandler);
     }
 
 
