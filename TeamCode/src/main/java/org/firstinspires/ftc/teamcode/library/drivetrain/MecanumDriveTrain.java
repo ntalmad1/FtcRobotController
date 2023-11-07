@@ -45,8 +45,6 @@ public class MecanumDriveTrain extends AbstractDriveTrain
     {
         super.init();
 
-        this.robot.initImu(this.getConfig().imuName);
-
         leftFrontMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         rightFrontMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         rightRearMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
@@ -60,10 +58,10 @@ public class MecanumDriveTrain extends AbstractDriveTrain
 
     public void run ()
     {
-        double yaw = this.robot.getYaw();
+        double yaw = -(this.robot.getYaw() + getConfig().yawOffset);
 
         float leftY = -this.robot.gamepad1.left_stick_y;
-        float leftX = -this.robot.gamepad1.left_stick_x;
+        float leftX = this.robot.gamepad1.left_stick_x;
         float rx = this.robot.gamepad1.right_stick_x;
 
         Point newPoint = GridUtils.rotatePointByDegrees(leftX,leftY,yaw);

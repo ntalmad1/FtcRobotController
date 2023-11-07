@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode;
 
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 
@@ -12,7 +13,7 @@ import org.firstinspires.ftc.teamcode.library.drivetrain.MecanumDriveTrainConfig
  *
  */
 @TeleOp(name="Always Forwards", group="Linear OpMode")
-//@Disabled
+@Disabled
 public class AlwaysForwards extends IsaacBot
 {
     /**
@@ -34,18 +35,14 @@ public class AlwaysForwards extends IsaacBot
         driveTrainConfig.leftRearDeviceName    = "leftRearDrive";
         driveTrainConfig.accelerationIncrement = 0.02;
         driveTrainConfig.maxPower = 0.65;
+        driveTrainConfig.yawOffset = -90;
         driveTrainConfig.incrementalDeceleration = true;
-
         driveTrainConfig.leftFrontMotorDirection  = DcMotorSimple.Direction.REVERSE;
         driveTrainConfig.rightFrontMotorDirection = DcMotorSimple.Direction.FORWARD;
         driveTrainConfig.leftRearMotorDirection  =  DcMotorSimple.Direction.REVERSE;
         driveTrainConfig.rightRearMotorDirection  = DcMotorSimple.Direction.FORWARD;
-
         driveTrainConfig.imuName = "imu";
-
-
         driveTrainConfig.debug = true;
-
 
         this.driveTrain = new MecanumDriveTrain(driveTrainConfig);
     }

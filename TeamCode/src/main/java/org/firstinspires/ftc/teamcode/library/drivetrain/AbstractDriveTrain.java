@@ -1,6 +1,5 @@
 package org.firstinspires.ftc.teamcode.library.drivetrain;
 
-import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
@@ -60,11 +59,13 @@ public abstract class AbstractDriveTrain
         this.motorGroup.add(this.rightFrontMotor);
         this.motorGroup.add(this.rightRearMotor);
         this.motorGroup.add(this.leftRearMotor);
+
+        this.robot.initImu(this.getConfig().imuName);
     }
 
     /**
      *
-     * @return
+     * @return The configuration variables and values for the drive train
      */
     protected AbstractDriveTrainConfiguration getConfig ()
     {
@@ -77,7 +78,8 @@ public abstract class AbstractDriveTrain
      */
     protected DcMotor initMotor (String deviceName)
     {
-        DcMotor motor = this.robot.hardwareMap.get(DcMotor.class, deviceName);
+        DcMotor motor;
+        motor = this.robot.hardwareMap.get(DcMotor.class, deviceName);
 
         return motor;
     }

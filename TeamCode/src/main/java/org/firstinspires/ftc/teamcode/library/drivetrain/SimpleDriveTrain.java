@@ -97,11 +97,89 @@ public class SimpleDriveTrain extends AbstractDriveTrain
      * @param maxPower
      * @param degrees
      */
+    public void gyroTurnLeft (double startPower, double maxPower, double degrees)
+    {
+        this.leftFrontMotor.setDirection(DcMotorSimple.Direction.FORWARD);
+        this.leftRearMotor.setDirection(DcMotorSimple.Direction.FORWARD);
+        this.rightFrontMotor.setDirection(DcMotorSimple.Direction.FORWARD);
+        this.rightRearMotor.setDirection(DcMotorSimple.Direction.FORWARD);
+
+        this.motorGroup.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+
+        this.gyroTurn(startPower, maxPower, degrees);
+    }
+
+    /**
+     *
+     * @param startPower
+     * @param maxPower
+     * @param degrees
+     */
+    public void gyroTurnRight (double startPower, double maxPower, double degrees)
+    {
+        this.leftFrontMotor.setDirection(DcMotorSimple.Direction.REVERSE);
+        this.leftRearMotor.setDirection(DcMotorSimple.Direction.REVERSE);
+        this.rightFrontMotor.setDirection(DcMotorSimple.Direction.REVERSE);
+        this.rightRearMotor.setDirection(DcMotorSimple.Direction.REVERSE);
+
+        this.motorGroup.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+
+        this.gyroTurn(startPower, maxPower, degrees);
+    }
+
+    /**
+     *
+     * @param startPower
+     * @param maxPower
+     * @param degrees
+     */
+    protected void gyroTurn (double startPower, double maxPower, double degrees)
+    {
+        double rampUpDegrees = degrees / 2;
+        double rampDownDegrees = degrees / 2;
+        double powerBand = maxPower - startPower;
+
+        this.robot.resetYaw();
+        this.motorGroup.setPower(startPower);
+
+        double currentDegrees = Math.abs(this.robot.getYaw());
+        while (currentDegrees < degrees)
+        {
+            if (currentDegrees <= rampUpDegrees)
+            {
+                double newPower = startPower + ((currentDegrees / rampUpDegrees) * powerBand);
+                this.motorGroup.setPower(newPower);
+            }
+            else if (currentDegrees > rampUpDegrees)
+            {
+                double newPower = maxPower - (((currentDegrees - rampUpDegrees) / rampDownDegrees) * powerBand);
+                this.motorGroup.setPower(newPower);
+            }
+
+            currentDegrees = Math.abs(this.robot.getYaw());
+
+            if (this.getConfig().isDebug())
+            {
+                this.robot.telemetry.addData("Current Degrees: ", "%2f", currentDegrees);
+                this.robot.telemetry.addData("Motor Power: ", "%2f", this.leftFrontMotor.getPower());
+                this.robot.telemetry.update();
+            }
+        }
+
+        this.motorGroup.setPower(0);
+    }
+
+
+    /**
+     *
+     * @param startPower
+     * @param maxPower
+     * @param degrees
+     */
     public void turnLeft (double startPower, double maxPower, double degrees)
     {
         this.leftFrontMotor.setDirection(DcMotorSimple.Direction.FORWARD);
         this.leftRearMotor.setDirection(DcMotorSimple.Direction.FORWARD);
-
         this.rightFrontMotor.setDirection(DcMotorSimple.Direction.FORWARD);
         this.rightRearMotor.setDirection(DcMotorSimple.Direction.FORWARD);
 
