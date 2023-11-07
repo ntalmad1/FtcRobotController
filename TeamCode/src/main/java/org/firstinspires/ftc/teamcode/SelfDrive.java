@@ -5,21 +5,19 @@ import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 
 import org.firstinspires.ftc.teamcode.library.IsaacBot;
 import org.firstinspires.ftc.teamcode.library.drivetrain.SimpleDriveTrain;
-import org.firstinspires.ftc.teamcode.library.drivetrain.SimpleDriveTrainConfiguration;
+import org.firstinspires.ftc.teamcode.library.drivetrain.SimpleDriveTrainConfig;
 import org.firstinspires.ftc.teamcode.library.utility.Units;
 
 /**
  * 
  */
 @Autonomous(name="Robot: SelfDrive", group="Robot")
-@Disabled
+//@Disabled
 public class SelfDrive extends IsaacBot
 {
     /**
      */
     private final SimpleDriveTrain driveTrain;
-
-    //private MecanumDriveTrain driveTrain;
 
     /**
      */
@@ -27,7 +25,7 @@ public class SelfDrive extends IsaacBot
     {
         super();
 
-        SimpleDriveTrainConfiguration driveTrainConfig = new SimpleDriveTrainConfiguration();
+        SimpleDriveTrainConfig driveTrainConfig = new SimpleDriveTrainConfig();
 
         driveTrainConfig.robot = this;
         driveTrainConfig.leftFrontDeviceName  = "leftFrontDrive";
@@ -41,8 +39,7 @@ public class SelfDrive extends IsaacBot
         driveTrainConfig.rampUpDistanceCm = 50;
         driveTrainConfig.rampDownDistanceCm = 50;
 
-        // driveTrainConfig.wheelBaseCm = 29;
-        // driveTrainConfig.turningRadiusCm = 29;
+        driveTrainConfig.debug = true;
 
         this.driveTrain = new SimpleDriveTrain(driveTrainConfig);
     }
@@ -57,14 +54,38 @@ public class SelfDrive extends IsaacBot
 
         waitForStart();
 
-        this.driveTrain.forward(0.1, 0.8, 1, Units.Meters);
 
-        sleep(250);
 
-        this.driveTrain.gyroTurnLeft(0.05, 0.2, 90);
+//        this.driveTrain.forward(0.1, 0.8, 1, Units.Meters);
+//
+//        sleep(250);
+//
+//        this.driveTrain.gyroTurnLeft(0.05, 0.2, 90);
+//
+//        sleep(250);
+//
+//        this.driveTrain.forward(0.1, 0.8, 1, Units.Meters);
 
-        sleep(250);
+        boolean commandAdded = false;
 
-        this.driveTrain.forward(0.1, 0.8, 1, Units.Meters);
+        while (this.opModeIsActive()) {
+            this.driveTrain.run();
+
+            if (!commandAdded) {
+//                this.driveTrain
+//                        .forward(0.1, 0.2, 10, Units.Centimeters)
+//                        .back(0.1, 0.2, 10, Units.Centimeters);
+
+                this.driveTrain
+                        //.sidewaysRight(0.1, 0.3, 10, Units.Centimeters);
+                        //.frontAxelPivotLeft(0.1, 0.3, 45);
+                        //.diagFrontRight(0.1, 0.3, 10, Units.Centimeters)
+                        //.diagRearLeft(0.1, 0.3, 10, Units.Centimeters)
+                        //.diagFrontLeft(0.1, 0.3, 10, Units.Centimeters)
+                        .diagRearRight(0.1, 0.3, 10, Units.Centimeters)
+                ;
+                commandAdded = true;
+            }
+        }
     }
 }

@@ -1,9 +1,8 @@
 package org.firstinspires.ftc.teamcode.library.component;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
-import org.firstinspires.ftc.teamcode.R;
 import org.firstinspires.ftc.teamcode.library.IsaacBot;
-import org.firstinspires.ftc.teamcode.library.component.command.Command;
+import org.firstinspires.ftc.teamcode.library.component.command.ICommand;
 import org.firstinspires.ftc.teamcode.library.component.command.CommandQueue;
 import org.firstinspires.ftc.teamcode.library.component.event.EventBus;
 import org.firstinspires.ftc.teamcode.library.component.event.gp2_dpad_down_down.Gp2_Dpad_Down_DownEvent;
@@ -39,7 +38,7 @@ import org.firstinspires.ftc.teamcode.library.component.event.gp2_y_press.Gp2_Y_
 /**
  *
  */
-public abstract class Component {
+public abstract class Component implements IComponent {
 
     /**
      */
@@ -70,7 +69,7 @@ public abstract class Component {
      *
      * @param command
      */
-    public void addCommand (Command command) {
+    public void addCommand (ICommand command) {
         this.commandQueue.add(command);
     }
 
@@ -154,6 +153,22 @@ public abstract class Component {
 
     /**
      *
+     * @return
+     */
+    public CommandQueue getCommandQueue () {
+        return this.commandQueue;
+    }
+
+    /**
+     *
+     * @return
+     */
+    public IsaacBot getRobot () {
+        return this.robot;
+    }
+
+    /**
+     *
      */
     public void init (){}
 
@@ -164,7 +179,7 @@ public abstract class Component {
         this.commandQueue.run();
     }
 
-    public void runCommand (Command command) {
+    public void runCommand (ICommand command) {
         if (command.isCompleted()) {
             return;
         }

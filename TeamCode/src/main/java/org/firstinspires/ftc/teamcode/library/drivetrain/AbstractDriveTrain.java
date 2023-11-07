@@ -4,6 +4,10 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.teamcode.library.IsaacBot;
+import org.firstinspires.ftc.teamcode.library.component.Component;
+import org.firstinspires.ftc.teamcode.library.component.command.ICommand;
+import org.firstinspires.ftc.teamcode.library.component.command.WaitCommand;
+import org.firstinspires.ftc.teamcode.library.component.event.command_callback.CommandCallbackHandler;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,15 +15,11 @@ import java.util.List;
 /**
  *
  */
-public abstract class AbstractDriveTrain
+public abstract class AbstractDriveTrain extends Component
 {
     /**
      */
     protected SimpleDriveTrain.MotorGroup motorGroup = new MotorGroup();
-
-    /**
-     */
-    protected final IsaacBot robot;
 
     /**
      */
@@ -34,16 +34,18 @@ public abstract class AbstractDriveTrain
 
     /**
      */
-    private final AbstractDriveTrainConfiguration config;
+    private final AbstractDriveTrainConfig config;
 
     /**
      *
      */
-    protected AbstractDriveTrain(AbstractDriveTrainConfiguration config)
+    protected AbstractDriveTrain(AbstractDriveTrainConfig config)
     {
-        this.config = config;
+        super(config.robot);
 
-        this.robot = config.robot;
+        this.robot.setImuName(config.imuName);
+
+        this.config = config;
     }
 
     /**
@@ -67,7 +69,7 @@ public abstract class AbstractDriveTrain
      *
      * @return The configuration variables and values for the drive train
      */
-    protected AbstractDriveTrainConfiguration getConfig ()
+    protected AbstractDriveTrainConfig getConfig ()
     {
         return this.config;
     }
@@ -86,12 +88,83 @@ public abstract class AbstractDriveTrain
 
     /**
      *
+     * @return
      */
-    protected static class MotorGroup
+    public MotorGroup getMotorGroup () {
+        return this.motorGroup;
+    }
+
+    /**
+     *
+     * @return
+     */
+    public DcMotor getLeftFrontMotor () {
+        return this.leftFrontMotor;
+    }
+
+    /**
+     *
+     * @return
+     */
+    public DcMotor getRightFrontMotor () {
+        return this.rightFrontMotor;
+    }
+
+    /**
+     *
+     * @return
+     */
+    public DcMotor getRightRearMotor () {
+        return this.rightRearMotor;
+    }
+
+    /**
+     *
+     * @return
+     */
+    public DcMotor getLeftRearMotor () {
+        return this.leftRearMotor;
+    }
+
+    /**
+     *
+     * @param milliseconds
+     * @return
+     */
+    public AbstractDriveTrain wait (int milliseconds) {
+        ICommand command = new WaitCommand(milliseconds);
+        this.addCommand(command);
+
+        return this;
+    }
+
+    /**
+     *
+     * @param milliseconds
+     * @param handler
+     * @return
+     */
+    public AbstractDriveTrain wait (int milliseconds, CommandCallbackHandler handler) {
+        ICommand command = new WaitCommand(milliseconds);
+        command.addCallbackHandler(handler);
+
+        this.addCommand(command);
+
+        return this;
+    }
+
+    /**
+     *
+     */
+    public static class MotorGroup
     {
         /**
          */
         private final List<DcMotor> motors = new ArrayList<>();
+
+        private final List<DcMotor> disabledMotors = new ArrayList<>();
+
+        private final List<DcMotor> lockedMotors = new ArrayList<>();
 
         /**
          * Adds a motor to the group
@@ -101,6 +174,31 @@ public abstract class AbstractDriveTrain
         public void add (DcMotor motor)
         {
             this.motors.add(motor);
+        }
+
+        /**
+         *
+         * @param motor
+         */
+        public void disable (DcMotor motor) {
+            this.disabledMotors.add(motor);
+        }
+
+        /**
+         *
+         * @param motor
+         */
+        public void lock (DcMotor motor) {
+            this.lockedMotors.add(motor);
+        }
+
+        /**
+         *
+         */
+        public void enableAll () {
+
+            this.disabledMotors.clear();
+            this.lockedMotors.clear();
         }
 
         /**
@@ -121,6 +219,12 @@ public abstract class AbstractDriveTrain
         public void setTargetPosition (int tics)
         {
             for (DcMotor motor : this.motors ) {
+
+                if (lockedMotors.contains(motor)) {
+                    motor.setTargetPosition(0);
+                    continue;
+                }
+
                 motor.setTargetPosition(tics);
             }
         }
@@ -132,6 +236,11 @@ public abstract class AbstractDriveTrain
         public void setPower (double power)
         {
             for (DcMotor motor : this.motors ) {
+
+                if (disabledMotors.contains(motor)) {
+                    continue;
+                }
+
                 motor.setPower(power);
             }
         }
@@ -147,6 +256,11 @@ public abstract class AbstractDriveTrain
             }
 
             for (DcMotor motor : this.motors ) {
+
+                if (this.disabledMotors.contains(motor) || this.lockedMotors.contains(motor)) {
+                    continue;
+                }
+
                 if (!motor.isBusy()) {
                     return false;
                 }

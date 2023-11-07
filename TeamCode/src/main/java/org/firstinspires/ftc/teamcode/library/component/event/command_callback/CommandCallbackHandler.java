@@ -19,4 +19,9 @@ public interface CommandCallbackHandler extends EventHandler {
      */
     void onFailure (CommandFailureEvent failureEvent);
 
+    /**
+     *
+     * @param afterEvent
+     */
+    void onAfter(CommandAfterEvent afterEvent);
 }

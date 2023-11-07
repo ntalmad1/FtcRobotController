@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode.library.boom;
 
 import org.firstinspires.ftc.teamcode.library.component.command.AbstractCommand;
+import org.firstinspires.ftc.teamcode.library.utility.Direction;
 
 /**
  *
@@ -99,11 +100,12 @@ public class GoToPositionCommand extends AbstractCommand {
             return;
         }
 
-        Boom.Direction direction = this.getTargetPosition() > this.getStartPosition() ? Boom.Direction.REVERSE : Boom.Direction.FORWARD;
+        Direction direction = this.getTargetPosition() > this.getStartPosition() ? Direction.REVERSE : Direction.FORWARD;
 
         double currentPosition = this.boom.getPosition();
 
-        if (direction.equals(Boom.Direction.FORWARD)) {
+        if (direction.equals(Direction.FORWARD)) {
+
             if (currentPosition <= this.getTargetPosition()) {
                 this.markAsCompleted();
                 return;
@@ -114,7 +116,8 @@ public class GoToPositionCommand extends AbstractCommand {
                 return;
             }
         }
-        else if (direction.equals(Boom.Direction.REVERSE)) {
+        else if (direction.equals(Direction.REVERSE)) {
+
             if (currentPosition >= this.getTargetPosition()) {
                 this.markAsCompleted();
                 return;

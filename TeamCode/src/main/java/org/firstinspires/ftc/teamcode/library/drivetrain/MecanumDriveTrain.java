@@ -31,7 +31,7 @@ public class MecanumDriveTrain extends AbstractDriveTrain
      *
      * @param config
      */
-    public MecanumDriveTrain(MecanumDriveTrainConfiguration config)
+    public MecanumDriveTrain(MecanumDriveTrainConfig config)
     {
         super(config);
 
@@ -165,8 +165,8 @@ public class MecanumDriveTrain extends AbstractDriveTrain
      *
      * @return
      */
-    protected MecanumDriveTrainConfiguration getConfig() {
-        return (MecanumDriveTrainConfiguration)super.getConfig();
+    protected MecanumDriveTrainConfig getConfig() {
+        return (MecanumDriveTrainConfig)super.getConfig();
     }
 
     /**

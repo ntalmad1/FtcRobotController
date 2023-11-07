@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode;
 
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.Servo;
 
@@ -7,12 +8,12 @@ import org.firstinspires.ftc.teamcode.library.Control;
 import org.firstinspires.ftc.teamcode.library.IsaacBot;
 import org.firstinspires.ftc.teamcode.library.claw.Claw;
 import org.firstinspires.ftc.teamcode.library.claw.ClawConfig;
-import org.firstinspires.ftc.teamcode.library.boom.BoomConfiguration;
+import org.firstinspires.ftc.teamcode.library.boom.BoomConfig;
 import org.firstinspires.ftc.teamcode.library.rotator.RotatorConfiguration;
 import org.firstinspires.ftc.teamcode.library.component.event.EventBus;
 
 @TeleOp(name="ClawTest", group="Linear OpMode")
-//@Disabled
+@Disabled
 public class ClawTest extends IsaacBot {
 
     private Claw claw;
@@ -27,7 +28,7 @@ public class ClawTest extends IsaacBot {
         clawConfig.rightClawMinPosition = 0;
         clawConfig.rightClawMaxPosition = 0.35;
 
-        BoomConfiguration clawBoomConfig = new BoomConfiguration();
+        BoomConfig clawBoomConfig = new BoomConfig();
         clawBoomConfig.robot = this;
         clawBoomConfig.servoName = "baseClawServo";
         clawBoomConfig.direction = Servo.Direction.FORWARD;

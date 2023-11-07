@@ -8,7 +8,7 @@ import org.firstinspires.ftc.teamcode.library.IsaacBot;
 /**
  *
  */
-public class BoomConfiguration {
+public class BoomConfig {
 
     /**
      */
@@ -64,5 +64,11 @@ public class BoomConfiguration {
      */
     public double degree = 0.0033;
 
+    /**
+     */
+    public double gearRatio = 1;
+
+    /**
+     */
     public boolean debug = false;
 }

@@ -12,6 +12,15 @@ import org.firstinspires.ftc.teamcode.library.component.Component;
 public class Claw extends Component {
 
     /**
+     *
+     */
+    public enum Side {
+        LEFT,
+        RIGHT
+    }
+
+
+    /**
      */
     private Boom clawBoom;
 
@@ -56,8 +65,6 @@ public class Claw extends Component {
      */
     public void init () {
         super.init();
-        this.clawBoom.init();
-        this.clawRotator.init();
 
         this.leftClaw = this.robot.hardwareMap.get(Servo.class, this.config.leftClawName);
         this.rightClaw = this.robot.hardwareMap.get(Servo.class, this.config.rightClawName);
@@ -65,8 +72,22 @@ public class Claw extends Component {
         this.leftClaw.resetDeviceConfigurationForOpMode();
         this.rightClaw.resetDeviceConfigurationForOpMode();
 
-        this.leftClaw.setPosition(this.config.leftClawMinPosition);
-        this.rightClaw.setPosition(this.config.rightClawMinPosition);
+        this.leftClaw.setPosition(this.config.leftClawInitPosition);
+        this.rightClaw.setPosition(this.config.rightClawInitPosition);
+
+        if (this.config.leftClawInitPosition > this.config.leftClawMinPosition) {
+            this.isLeftOpen = true;
+        }
+
+        if (this.config.rightClawInitPosition > this.config.rightClawMinPosition) {
+            this.isRightOpen = true;
+        }
+
+
+        this.clawBoom.init();
+        this.clawRotator.init();
+
+
 
         this.addGp2_Left_Bumper_PressHandler(event -> {
             Claw.this.toggleLeftClaw();
@@ -79,8 +100,42 @@ public class Claw extends Component {
 
     /**
      *
+     * @return
+     */
+    public Boom getBase () {
+        return this.clawBoom;
+    }
+
+    /**
+     *
+     * @return
+     */
+    public Rotator getRotator () {
+        return this.clawRotator;
+    }
+
+    /**
+     *
+     * @return
+     */
+    public boolean isLeftClosed () {
+        return !this.isLeftOpen;
+    }
+
+    /**
+     *
+     * @return
+     */
+    public boolean isRightClosed () {
+        return !this.isRightOpen;
+    }
+
+    /**
+     *
      */
     public void run () {
+        super.run();
+
         this.clawBoom.run();
         this.clawRotator.run();
     }
@@ -102,5 +157,25 @@ public class Claw extends Component {
         double pos = this.isRightOpen ? this.config.rightClawMaxPosition : this.config.rightClawMinPosition;
         this.rightClaw.setPosition(pos);
 
+    }
+
+    public void closeLeft () {
+        this.leftClaw.setPosition(this.config.leftClawMinPosition);
+        this.isLeftOpen = false;
+    }
+
+    public void closeRight () {
+        this.rightClaw.setPosition(this.config.rightClawMinPosition);
+        this.isRightOpen = false;
+    }
+
+    public void openLeft () {
+        this.leftClaw.setPosition(this.config.leftClawMaxPosition);
+        this.isLeftOpen = true;
+    }
+
+    public void openRight () {
+        this.rightClaw.setPosition(this.config.rightClawMaxPosition);
+        this.isRightOpen = true;
     }
 }

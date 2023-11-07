@@ -1,18 +1,19 @@
 package org.firstinspires.ftc.teamcode;
 
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.Servo;
 
+import org.firstinspires.ftc.teamcode.competition.config.ClawCompConfig;
 import org.firstinspires.ftc.teamcode.library.Control;
 import org.firstinspires.ftc.teamcode.library.IsaacBot;
 import org.firstinspires.ftc.teamcode.library.arm.Arm;
-import org.firstinspires.ftc.teamcode.library.arm.ArmConfiguration;
-import org.firstinspires.ftc.teamcode.library.boom.BoomConfiguration;
+import org.firstinspires.ftc.teamcode.library.arm.ArmConfig;
+import org.firstinspires.ftc.teamcode.library.boom.BoomConfig;
 import org.firstinspires.ftc.teamcode.library.claw.ClawConfig;
-import org.firstinspires.ftc.teamcode.library.component.Component;
 
 @TeleOp(name="ArmOpMode", group="Linear OpMode")
-//@Disabled
+@Disabled
 public class ArmOpMode extends IsaacBot {
 
     //private Boom topBoom;
@@ -21,9 +22,9 @@ public class ArmOpMode extends IsaacBot {
     public ArmOpMode(){
         super();
 
-        ClawConfig clawBase = new ClawConfig();
+        ClawConfig clawConfig = new ClawCompConfig(this);
 
-        BoomConfiguration midBoomConfig = new BoomConfiguration();
+        BoomConfig midBoomConfig = new BoomConfig();
         midBoomConfig.robot = this;
         midBoomConfig.isDualServo = true;
         midBoomConfig.servoName = "middleLeftServo";
@@ -35,7 +36,7 @@ public class ArmOpMode extends IsaacBot {
         midBoomConfig.degree = 0.000556;
         midBoomConfig.zeroDegreePosition = 0.0;
 
-        BoomConfiguration bottomBoomConfig = new BoomConfiguration();
+        BoomConfig bottomBoomConfig = new BoomConfig();
         bottomBoomConfig.robot = this;
         bottomBoomConfig.isDualServo = true;
         bottomBoomConfig.servoName = "bottomLeftServo";
@@ -47,36 +48,37 @@ public class ArmOpMode extends IsaacBot {
         bottomBoomConfig.zeroDegreePosition = 0.28;
         bottomBoomConfig.degree = 0.000556;
 
-        ArmConfiguration armConfig = new ArmConfiguration();
+        ArmConfig armConfig = new ArmConfig();
         armConfig.robot = this;
+        armConfig.clawConfig = clawConfig;
         armConfig.midBoomConfig = midBoomConfig;
         armConfig.bottomBoomConfig = bottomBoomConfig;
 
         this.arm = new Arm(armConfig);
 
         // pickup pixel routine
-        this.arm.addGp2_A_PressHandler(event -> {
-            ArmOpMode.this.arm.cancelAllCommands();
-
-            ArmOpMode.this.arm
-                    .moveBottomFromCurrentPosition(-10)
-                    .moveTopFromCurrentPosition(-15)
-                    .wait(0)
-
-                    .moveMiddle(-110, 0.005)
-                    .moveBottom(45, 0.001)
-                    .wait(0)
-
-                    .moveMiddle(-30, 0.005)
-                    .wait(0)
-
-//                    .moveBottom(0, 0.001)
-//                    .moveMiddle(10,0.005)
+//        this.arm.addGp2_A_PressHandler(event -> {
+//            ArmOpMode.this.arm.cancelAllCommands();
+//
+//            ArmOpMode.this.arm
+//                    .moveBottomFromCurrentPosition(-10)
+//                 //   .moveTopFromCurrentPosition(-15)
 //                    .wait(0)
-            ;
-            //ArmOpMode.this.arm.moveBottom(0);
-
-        });
+//
+//                    .moveMiddle(-110, 0.005)
+//                    .moveBottom(45, 0.001)
+//                    .wait(0)
+//
+//                    .moveMiddle(-30, 0.005)
+//                    .wait(0)
+//
+////                    .moveBottom(0, 0.001)
+////                    .moveMiddle(10,0.005)
+////                    .wait(0)
+//            ;
+//            //ArmOpMode.this.arm.moveBottom(0);
+//
+//        });
 
     }
 

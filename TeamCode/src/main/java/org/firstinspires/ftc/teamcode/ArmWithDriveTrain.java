@@ -8,13 +8,13 @@ import com.qualcomm.robotcore.hardware.Servo;
 import org.firstinspires.ftc.teamcode.library.Control;
 import org.firstinspires.ftc.teamcode.library.IsaacBot;
 import org.firstinspires.ftc.teamcode.library.arm.Arm;
-import org.firstinspires.ftc.teamcode.library.arm.ArmConfiguration;
-import org.firstinspires.ftc.teamcode.library.boom.BoomConfiguration;
+import org.firstinspires.ftc.teamcode.library.arm.ArmConfig;
+import org.firstinspires.ftc.teamcode.library.boom.BoomConfig;
 import org.firstinspires.ftc.teamcode.library.drivetrain.MecanumDriveTrain;
-import org.firstinspires.ftc.teamcode.library.drivetrain.MecanumDriveTrainConfiguration;
+import org.firstinspires.ftc.teamcode.library.drivetrain.MecanumDriveTrainConfig;
 
 @TeleOp(name="ArmWithDriveTrain", group="Linear OpMode")
-//@Disabled
+@Disabled
 public class ArmWithDriveTrain extends IsaacBot{
 
     /**
@@ -28,7 +28,7 @@ public class ArmWithDriveTrain extends IsaacBot{
     public ArmWithDriveTrain () {
         super();
 
-        BoomConfiguration topBoomConfig = new BoomConfiguration();
+        BoomConfig topBoomConfig = new BoomConfig();
         topBoomConfig.robot = this;
         topBoomConfig.servoName = "topServo";
         topBoomConfig.direction = Servo.Direction.FORWARD;
@@ -37,7 +37,7 @@ public class ArmWithDriveTrain extends IsaacBot{
         topBoomConfig.zeroDegreePosition = 0.586;
         topBoomConfig.maxIncrement = 0.005;
 
-        BoomConfiguration midBoomConfig = new BoomConfiguration();
+        BoomConfig midBoomConfig = new BoomConfig();
         midBoomConfig.robot = this;
         midBoomConfig.servoName = "middleServo";
         midBoomConfig.direction = Servo.Direction.REVERSE;
@@ -46,7 +46,7 @@ public class ArmWithDriveTrain extends IsaacBot{
         midBoomConfig.maxIncrement = 0.002;
         midBoomConfig.zeroDegreePosition = 0.575;
 
-        BoomConfiguration bottomBoomConfig = new BoomConfiguration();
+        BoomConfig bottomBoomConfig = new BoomConfig();
         bottomBoomConfig.robot = this;
         bottomBoomConfig.servoName = "bottomLeftServo";
         bottomBoomConfig.isDualServo = true;
@@ -57,15 +57,14 @@ public class ArmWithDriveTrain extends IsaacBot{
         bottomBoomConfig.maxIncrement = 0.005;
         bottomBoomConfig.zeroDegreePosition = 0.575;
 
-        ArmConfiguration armConfig = new ArmConfiguration();
+        ArmConfig armConfig = new ArmConfig();
         armConfig.robot = this;
-        armConfig.topBoomConfig = topBoomConfig;
         armConfig.midBoomConfig = midBoomConfig;
         armConfig.bottomBoomConfig = bottomBoomConfig;
 
         this.arm = new Arm(armConfig);
 
-        MecanumDriveTrainConfiguration driveTrainConfig = new MecanumDriveTrainConfiguration();
+        MecanumDriveTrainConfig driveTrainConfig = new MecanumDriveTrainConfig();
         driveTrainConfig.robot = this;
         driveTrainConfig.leftFrontDeviceName   = "leftFrontDrive";
         driveTrainConfig.rightFrontDeviceName  = "rightFrontDrive";

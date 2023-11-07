@@ -11,7 +11,7 @@ import org.firstinspires.ftc.teamcode.library.IsaacBot;
  *
  */
 @TeleOp(name="Servo Test", group="Linear OpMode")
-//@Disabled
+@Disabled
 public class ServoTest extends IsaacBot {
 
     /**
@@ -22,18 +22,18 @@ public class ServoTest extends IsaacBot {
 
     @Override
     public void runOpMode() throws InterruptedException {
-        DigitalChannel led1Green = this.hardwareMap.get(DigitalChannel.class, "ledOneGreen");
-        DigitalChannel led1Red = this.hardwareMap.get(DigitalChannel.class, "ledOneRed");
+//        DigitalChannel led1Green = this.hardwareMap.get(DigitalChannel.class, "ledOneGreen");
+//        DigitalChannel led1Red = this.hardwareMap.get(DigitalChannel.class, "ledOneRed");
+//
+//        led1Green.setMode(DigitalChannel.Mode.OUTPUT);
+//        led1Red.setMode(DigitalChannel.Mode.OUTPUT);
+//
+//        led1Green.setState(true);
+//        led1Red.setState(true);
 
-        led1Green.setMode(DigitalChannel.Mode.OUTPUT);
-        led1Red.setMode(DigitalChannel.Mode.OUTPUT);
-
-        led1Green.setState(true);
-        led1Red.setState(true);
-
-//        Servo rightClawServo = this.hardwareMap.get(Servo.class, "rightClawServo");
+        Servo servo = this.hardwareMap.get(Servo.class, "testServo");
 //        Servo leftClawServo = this.hardwareMap.get(Servo.class, "leftClawServo");
-//        rightClawServo.resetDeviceConfigurationForOpMode();
+        servo.resetDeviceConfigurationForOpMode();
 //        leftClawServo.resetDeviceConfigurationForOpMode();
 //        leftClawServo.setDirection(Servo.Direction.REVERSE);
 //
@@ -42,43 +42,43 @@ public class ServoTest extends IsaacBot {
 
         waitForStart();
 
-//        leftClawServo.setPosition(0.12);
+        servo.setPosition(0.0);
 //        sleep(250);
 
         while (this.opModeIsActive()) {
 //            leftClawServo.setPosition(0.0);
-
-            led1Green.setState(true);
-            led1Red.setState(false);
-
-            this.telemetry.addLine("green");
-            this.telemetry.update();
-
-            sleep(1000);
-
-            led1Green.setState(false);
-            led1Red.setState(true);
-
-            this.telemetry.addLine("red");
-            this.telemetry.update();
-
-            sleep(1000);
-            led1Green.setState(false);
-            led1Red.setState(false);
-
-
-            this.telemetry.addLine("amber");
-            this.telemetry.update();
-
-            sleep(1000);
-
-            led1Green.setState(true);
-            led1Red.setState(true);
-
-            this.telemetry.addLine("off");
-            this.telemetry.update();
-
-            sleep(1000);
+//
+//            led1Green.setState(true);
+//            led1Red.setState(false);
+//
+//            this.telemetry.addLine("green");
+//            this.telemetry.update();
+//
+//            sleep(1000);
+//
+//            led1Green.setState(false);
+//            led1Red.setState(true);
+//
+//            this.telemetry.addLine("red");
+//            this.telemetry.update();
+//
+//            sleep(1000);
+//            led1Green.setState(false);
+//            led1Red.setState(false);
+//
+//
+//            this.telemetry.addLine("amber");
+//            this.telemetry.update();
+//
+//            sleep(1000);
+//
+//            led1Green.setState(true);
+//            led1Red.setState(true);
+//
+//            this.telemetry.addLine("off");
+//            this.telemetry.update();
+//
+//            sleep(1000);
 
 
 

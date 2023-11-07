@@ -13,23 +13,7 @@ public class Boom extends Component {
     /**
      *
      */
-    public enum Direction {
-
-        /**
-         *
-         */
-        FORWARD,
-
-        /**
-         *
-         */
-        REVERSE
-    }
-
-    /**
-     *
-     */
-    private BoomConfiguration config;
+    private BoomConfig config;
 
     /**
      *
@@ -48,7 +32,7 @@ public class Boom extends Component {
     /**
      * @param config
      */
-    public Boom(BoomConfiguration config) {
+    public Boom(BoomConfig config) {
         super(config.robot);
 
         this.config = config;
@@ -224,7 +208,7 @@ public class Boom extends Component {
 
         double offset = this.config.zeroDegreePosition - servoPosition;
 
-        double degrees = offset / this.config.degree;
+        double degrees = (offset / this.config.degree) / this.config.gearRatio;
 
         if (this.inverted) {
             degrees = degrees * (double)-1;
@@ -232,7 +216,6 @@ public class Boom extends Component {
 
         return degrees;
     }
-
 
     /**
      *
@@ -311,10 +294,12 @@ public class Boom extends Component {
             degrees = degrees * (double)-1;
         }
 
+        degrees = degrees * this.config.gearRatio;
 
         double degreesInPosition = Math.abs(degrees * this.config.degree);
 
         double targetPosition = this.config.zeroDegreePosition;
+
         if (degrees < 0) {
             targetPosition = targetPosition + degreesInPosition;
         }
