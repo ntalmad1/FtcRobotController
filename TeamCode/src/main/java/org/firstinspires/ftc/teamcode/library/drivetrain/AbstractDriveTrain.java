@@ -5,6 +5,9 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.teamcode.library.IsaacBot;
 import org.firstinspires.ftc.teamcode.library.component.Component;
+import org.firstinspires.ftc.teamcode.library.component.command.ICommand;
+import org.firstinspires.ftc.teamcode.library.component.command.WaitCommand;
+import org.firstinspires.ftc.teamcode.library.component.event.command_callback.CommandCallbackHandler;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -125,6 +128,33 @@ public abstract class AbstractDriveTrain extends Component
 
     /**
      *
+     * @param milliseconds
+     * @return
+     */
+    public AbstractDriveTrain wait (int milliseconds) {
+        ICommand command = new WaitCommand(milliseconds);
+        this.addCommand(command);
+
+        return this;
+    }
+
+    /**
+     *
+     * @param milliseconds
+     * @param handler
+     * @return
+     */
+    public AbstractDriveTrain wait (int milliseconds, CommandCallbackHandler handler) {
+        ICommand command = new WaitCommand(milliseconds);
+        command.addCallbackHandler(handler);
+
+        this.addCommand(command);
+
+        return this;
+    }
+
+    /**
+     *
      */
     public static class MotorGroup
     {
@@ -133,6 +163,8 @@ public abstract class AbstractDriveTrain extends Component
         private final List<DcMotor> motors = new ArrayList<>();
 
         private final List<DcMotor> disabledMotors = new ArrayList<>();
+
+        private final List<DcMotor> lockedMotors = new ArrayList<>();
 
         /**
          * Adds a motor to the group
@@ -154,9 +186,19 @@ public abstract class AbstractDriveTrain extends Component
 
         /**
          *
+         * @param motor
+         */
+        public void lock (DcMotor motor) {
+            this.lockedMotors.add(motor);
+        }
+
+        /**
+         *
          */
         public void enableAll () {
+
             this.disabledMotors.clear();
+            this.lockedMotors.clear();
         }
 
         /**
@@ -177,6 +219,12 @@ public abstract class AbstractDriveTrain extends Component
         public void setTargetPosition (int tics)
         {
             for (DcMotor motor : this.motors ) {
+
+                if (lockedMotors.contains(motor)) {
+                    motor.setTargetPosition(0);
+                    continue;
+                }
+
                 motor.setTargetPosition(tics);
             }
         }
@@ -209,7 +257,7 @@ public abstract class AbstractDriveTrain extends Component
 
             for (DcMotor motor : this.motors ) {
 
-                if (this.disabledMotors.contains(motor)) {
+                if (this.disabledMotors.contains(motor) || this.lockedMotors.contains(motor)) {
                     continue;
                 }
 

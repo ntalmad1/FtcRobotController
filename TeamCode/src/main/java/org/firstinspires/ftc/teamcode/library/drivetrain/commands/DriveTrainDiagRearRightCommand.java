@@ -17,15 +17,15 @@ public class DriveTrainDiagRearRightCommand extends AbstractDriveTrainLineComman
      * @param units
      */
     public DriveTrainDiagRearRightCommand(SimpleDriveTrain driveTrain, double startPower, double maxPower, double distance, Units units) {
-        super(driveTrain, startPower, maxPower, distance, units);
+        super(driveTrain, startPower, maxPower, distance * ((double)5/(double)(3)), units);
     }
 
     /**
      *
      */
     public void init () {
-        this.driveTrain.getMotorGroup().disable(this.driveTrain.getLeftFrontMotor());
-        this.driveTrain.getMotorGroup().disable(this.driveTrain.getRightRearMotor());
+        this.driveTrain.getMotorGroup().lock(this.driveTrain.getLeftFrontMotor());
+        this.driveTrain.getMotorGroup().lock(this.driveTrain.getRightRearMotor());
 
         //this.driveTrain.getLeftFrontMotor().setDirection(DcMotorSimple.Direction.REVERSE);
 

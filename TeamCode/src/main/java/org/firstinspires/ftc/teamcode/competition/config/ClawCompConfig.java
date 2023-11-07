@@ -35,7 +35,8 @@ public class ClawCompConfig extends ClawConfig {
         clawBoomConfig.minPosition = 0;
         clawBoomConfig.maxPosition = 1;
         clawBoomConfig.zeroDegreePosition = .5;
-        clawBoomConfig.homePosition = 1;
+        //clawBoomConfig.homePosition = 1;
+        clawBoomConfig.homePosition = 0.85;
         clawBoomConfig.maxIncrement = 0.003;
 
         RotatorConfiguration clawRotatorConfig = new RotatorConfiguration();
@@ -45,11 +46,11 @@ public class ClawCompConfig extends ClawConfig {
         clawRotatorConfig.controllerInputMethod = Control.Gp2_Dpad_Left;
         clawRotatorConfig.controllerInputMethod2 = Control.Gp2_Dpad_Right;
         clawRotatorConfig.invertInput = true;
-        clawRotatorConfig.minPosition = 0;
-        clawRotatorConfig.maxPosition = 1;
-        clawRotatorConfig.zeroDegreePosition = .5;
-        clawRotatorConfig.homePosition = 0.5;
-        clawRotatorConfig.maxIncrement = 0.0038;
+        clawRotatorConfig.minPosition = 0.00;
+        clawRotatorConfig.maxPosition = 1.00;
+        clawRotatorConfig.zeroDegreePosition = 0.307;
+        clawRotatorConfig.homePosition = 0.307;
+        clawRotatorConfig.maxIncrement = 0.0015;
 
         this.clawBoomConfig = clawBoomConfig;
         this.clawRotatorConfig = clawRotatorConfig;

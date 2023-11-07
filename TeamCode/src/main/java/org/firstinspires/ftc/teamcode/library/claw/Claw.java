@@ -75,6 +75,15 @@ public class Claw extends Component {
         this.leftClaw.setPosition(this.config.leftClawInitPosition);
         this.rightClaw.setPosition(this.config.rightClawInitPosition);
 
+        if (this.config.leftClawInitPosition > this.config.leftClawMinPosition) {
+            this.isLeftOpen = true;
+        }
+
+        if (this.config.rightClawInitPosition > this.config.rightClawMinPosition) {
+            this.isRightOpen = true;
+        }
+
+
         this.clawBoom.init();
         this.clawRotator.init();
 

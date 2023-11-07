@@ -7,20 +7,20 @@ public class CommandGroup  extends AbstractCommand {
 
     /**
      */
-    private List<Command> commands;
+    private List<ICommand> commands;
 
     /**
      *
      */
     public CommandGroup () {
-        this.commands = new ArrayList<Command>();
+        this.commands = new ArrayList<ICommand>();
     }
 
     /**
      *
      * @param command
      */
-    public void add(Command command) {
+    public void add(ICommand command) {
         this.commands.add(command);
     }
 
@@ -28,7 +28,7 @@ public class CommandGroup  extends AbstractCommand {
      *
      * @return
      */
-    public List<Command> getCommands  () {
+    public List<ICommand> getCommands  () {
         return this.commands;
     }
 
@@ -42,7 +42,7 @@ public class CommandGroup  extends AbstractCommand {
 
         int completedCount = 0;
 
-        for (Command command : commands) {
+        for (ICommand command : commands) {
             if (command.isCompleted()) {
                 completedCount++;
                 continue;

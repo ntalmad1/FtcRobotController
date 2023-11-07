@@ -7,8 +7,11 @@ import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.YawPitchRollAngles;
 import org.firstinspires.ftc.teamcode.library.component.IComponent;
 import org.firstinspires.ftc.teamcode.library.component.RobotComponent;
+import org.firstinspires.ftc.teamcode.library.component.command.ICommand;
+import org.firstinspires.ftc.teamcode.library.component.command.WaitCommand;
 import org.firstinspires.ftc.teamcode.library.component.event.EventBus;
 import org.firstinspires.ftc.teamcode.library.component.event.HandlerRegistration;
+import org.firstinspires.ftc.teamcode.library.component.event.command_callback.CommandCallbackHandler;
 import org.firstinspires.ftc.teamcode.library.component.event.gp2_a_press.Gp2_A_PressEvent;
 import org.firstinspires.ftc.teamcode.library.component.event.gp2_a_press.Gp2_A_PressHandler;
 import org.firstinspires.ftc.teamcode.library.component.event.gp2_b_press.Gp2_B_PressEvent;
@@ -131,6 +134,7 @@ public abstract class  IsaacBot extends LinearOpMode implements IComponent
      */
     public void run () {
         this.getEventBus().run();
+        this.robotComponent.run();
     }
 
     /**
@@ -148,6 +152,14 @@ public abstract class  IsaacBot extends LinearOpMode implements IComponent
         while (this.opModeIsActive()) {
             this.run();
         }
+    }
+
+    /**
+     *
+     * @param command
+     */
+    public void addCommand (ICommand command) {
+        this.robotComponent.addCommand(command);
     }
 
     public HandlerRegistration addGp2_A_PressHandler (Gp2_A_PressHandler handler) {
@@ -213,6 +225,20 @@ public abstract class  IsaacBot extends LinearOpMode implements IComponent
 
     public HandlerRegistration addGp2_RightStickYHandler (Gp2_RightStickYHandler handler) {
         return this.robotComponent.addGp2_RightStickYHandler(handler);
+    }
+
+    /**
+     *
+     * @param milliseconds
+     * @param callbackHandler
+     */
+    public IsaacBot wait (int milliseconds, CommandCallbackHandler callbackHandler) {
+        WaitCommand command = new WaitCommand(milliseconds);
+        command.addCallbackHandler(callbackHandler);
+
+        this.robotComponent.addCommand(command);
+
+        return this;
     }
 
     /**

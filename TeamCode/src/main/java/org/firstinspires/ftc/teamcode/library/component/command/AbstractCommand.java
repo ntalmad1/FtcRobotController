@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode.library.component.command;
 import org.firstinspires.ftc.teamcode.library.component.event.Event;
 import org.firstinspires.ftc.teamcode.library.component.event.HandlerManager;
 import org.firstinspires.ftc.teamcode.library.component.event.HandlerRegistration;
+import org.firstinspires.ftc.teamcode.library.component.event.command_callback.CommandAfterEvent;
 import org.firstinspires.ftc.teamcode.library.component.event.command_callback.CommandCallbackEvent;
 import org.firstinspires.ftc.teamcode.library.component.event.command_callback.CommandCallbackHandler;
 import org.firstinspires.ftc.teamcode.library.component.event.command_callback.CommandSuccessEvent;
@@ -10,7 +11,7 @@ import org.firstinspires.ftc.teamcode.library.component.event.command_callback.C
 /**
  *
  */
-public abstract class AbstractCommand implements Command {
+public abstract class AbstractCommand implements ICommand {
 
     /**
      */
@@ -70,6 +71,7 @@ public abstract class AbstractCommand implements Command {
     public void markAsCompleted () {
         this.completed = true;
         this.fireEvent(new CommandSuccessEvent(this));
+        this.fireEvent(new CommandAfterEvent(this));
     }
 
     /**

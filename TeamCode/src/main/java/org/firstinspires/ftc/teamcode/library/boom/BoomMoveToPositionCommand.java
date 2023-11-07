@@ -18,24 +18,37 @@ public class BoomMoveToPositionCommand extends AbstractCommand {
     private GoToPositionCommand command;
 
     /**
+     */
+    private double power;
+
+    /**
+     */
+    private double targetPosition;
+
+    /**
      *
      * @param boom
-     * @param startPosition
      * @param targetPosition
      * @param power
      */
-    public BoomMoveToPositionCommand(Boom boom, double startPosition, double targetPosition, double power) {
+    public BoomMoveToPositionCommand(Boom boom, double targetPosition, double power) {
         this.boom = boom;
 
-        this.command = new GoToPositionCommand(boom, power, startPosition, targetPosition);
+        this.power = power;
+
+        this.targetPosition = targetPosition;
+
+
+    }
+
+    public void init () {
+        this.command = new GoToPositionCommand(boom, power, this.boom.getServoPosition(), targetPosition);
         command.addCallbackHandler(new CommandCallbackAdapter() {
             public void onSuccess(CommandSuccessEvent successEvent) {
                 BoomMoveToPositionCommand.this.markAsCompleted();
             }
         });
-    }
 
-    public void init () {
         this.boom.addCommand(command);
     }
 

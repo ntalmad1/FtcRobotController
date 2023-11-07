@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode.competition.auto;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 
 import org.firstinspires.ftc.teamcode.competition.base.CompAutoBot;
 import org.firstinspires.ftc.teamcode.library.utility.Units;
@@ -9,7 +10,7 @@ import org.firstinspires.ftc.teamcode.library.utility.Units;
  *
  */
 @Autonomous(name="RedNearCompAutoBot", group="Competition")
-//@Disabled
+@Disabled
 public class RedNearCompAutoBot extends CompAutoBot {
 
     /**

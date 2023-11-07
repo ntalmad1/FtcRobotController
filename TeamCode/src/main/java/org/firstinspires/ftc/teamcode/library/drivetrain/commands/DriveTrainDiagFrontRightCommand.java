@@ -17,15 +17,15 @@ public class DriveTrainDiagFrontRightCommand extends AbstractDriveTrainLineComma
      * @param units
      */
     public DriveTrainDiagFrontRightCommand(SimpleDriveTrain driveTrain, double startPower, double maxPower, double distance, Units units) {
-        super(driveTrain, startPower, maxPower, distance, units);
+        super(driveTrain, startPower, maxPower, distance * ((double)5/(double)(3)) , units);
     }
 
     /**
      *
      */
     public void init () {
-        this.driveTrain.getMotorGroup().disable(this.driveTrain.getRightFrontMotor());
-        this.driveTrain.getMotorGroup().disable(this.driveTrain.getLeftRearMotor());
+        this.driveTrain.getMotorGroup().lock(this.driveTrain.getRightFrontMotor());
+        this.driveTrain.getMotorGroup().lock(this.driveTrain.getLeftRearMotor());
 
         this.driveTrain.getLeftFrontMotor().setDirection(DcMotorSimple.Direction.REVERSE);
 

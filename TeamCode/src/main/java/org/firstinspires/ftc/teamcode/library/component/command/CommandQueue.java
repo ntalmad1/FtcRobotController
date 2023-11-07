@@ -1,6 +1,5 @@
 package org.firstinspires.ftc.teamcode.library.component.command;
 
-import org.firstinspires.ftc.teamcode.library.IsaacBot;
 import org.firstinspires.ftc.teamcode.library.component.Component;
 
 import java.util.ArrayList;
@@ -10,20 +9,22 @@ public class CommandQueue {
 
     private Component component;
 
-    private List<Command> queue;
+    private List<ICommand> queue;
+
+    private boolean debug = false;
 
 
     public CommandQueue (Component component) {
         this.component = component;
 
-        this.queue = new ArrayList<Command>();
+        this.queue = new ArrayList<ICommand>();
     }
 
     /**
      *
      * @param command
      */
-    public void add (Command command) {
+    public void add (ICommand command) {
         this.queue.add(command);
     }
 
@@ -39,12 +40,17 @@ public class CommandQueue {
      */
     public void run ()
     {
-        List<Command> completedCommands = new ArrayList<Command>();
+        List<ICommand> completedCommands = new ArrayList<ICommand>();
         int runningCommandCount = 0;
 
-        for (Command command : this.queue)
+        if (debug) this.component.telemetry.addData("Command queue size: ", "%2d", this.queue.size());
+
+        for (ICommand command : this.queue)
         {
+            if (debug) this.component.telemetry.addLine("Running command: " + command.getClass().toString());
+
             if (command.isBlocker() && runningCommandCount > 0) {
+                if (debug) this.component.telemetry.addLine("Breaking for loop on blocking command");
                 break;
             }
 
@@ -61,13 +67,24 @@ public class CommandQueue {
             }
 
             if (!command.isCompleted() && command.isSynchronous()) {
+                if (debug) this.component.telemetry.addLine("Breaking for loop on synchronous command");
                 break;
             }
         }
 
-        for (Command command : completedCommands) {
+        for (ICommand command : completedCommands) {
             this.queue.remove(command);
         }
+
+        if (debug) this.component.telemetry.update();
+    }
+
+    /**
+     *
+     * @param debug
+     */
+    public void setDebug (boolean debug) {
+        this.debug = debug;
     }
 
     /**
