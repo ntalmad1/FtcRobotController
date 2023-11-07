@@ -3,10 +3,10 @@ package org.firstinspires.ftc.tests;
 import static org.junit.Assert.assertEquals;
 import org.junit.Test;
 
-import org.firstinspires.ftc.teamcode.library.utility.GridUtils;
+import org.firstinspires.ftc.library.utility.GridUtils;
 
 
-import org.firstinspires.ftc.teamcode.library.utility.Point;
+import org.firstinspires.ftc.library.utility.Point;
 
 public class GridUtilsTests
 {
