@@ -5,6 +5,10 @@ import org.firstinspires.ftc.library.component.command.CommandQueue;
 import org.firstinspires.ftc.library.component.command.ICommand;
 import org.firstinspires.ftc.library.component.event.EventBus;
 import org.firstinspires.ftc.library.component.event.HandlerRegistration;
+import org.firstinspires.ftc.library.component.event.gp1_left_trigger_down.Gp1_Left_Trigger_DownEvent;
+import org.firstinspires.ftc.library.component.event.gp1_left_trigger_down.Gp1_Left_Trigger_DownHandler;
+import org.firstinspires.ftc.library.component.event.gp1_right_trigger_down.Gp1_Right_Trigger_DownEvent;
+import org.firstinspires.ftc.library.component.event.gp1_right_trigger_down.Gp1_Right_Trigger_DownHandler;
 import org.firstinspires.ftc.library.component.event.gp2_a_press.Gp2_A_PressEvent;
 import org.firstinspires.ftc.library.component.event.gp2_a_press.Gp2_A_PressHandler;
 import org.firstinspires.ftc.library.component.event.gp2_dpad_down_down.Gp2_Dpad_Down_DownEvent;
@@ -71,6 +75,24 @@ public abstract class Component implements IComponent {
      */
     public void addCommand (ICommand command) {
         this.commandQueue.add(command);
+    }
+
+    /**
+     *
+     * @param handler
+     * @return
+     */
+    public HandlerRegistration addGp1_Left_Trigger_DownHandler (Gp1_Left_Trigger_DownHandler handler) {
+        return EventBus.getInstance().addHandler(Gp1_Left_Trigger_DownEvent.TYPE, handler);
+    }
+
+    /**
+     *
+     * @param handler
+     * @return
+     */
+    public HandlerRegistration addGp1_Right_Trigger_DownHandler (Gp1_Right_Trigger_DownHandler handler) {
+        return EventBus.getInstance().addHandler(Gp1_Right_Trigger_DownEvent.TYPE, handler);
     }
 
     //region Gamepad 2 A, B, X, Y Handlers

@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.library.pixelcatcher;
 
 import org.firstinspires.ftc.library.Control;
+import org.firstinspires.ftc.library.IsaacBot;
 
 /**
  *
@@ -10,17 +11,32 @@ public class PixelCatcherConfig {
     /**
      *
      */
-    public double leftArmOpenedPos;
+    public IsaacBot robot;
 
     /**
      *
      */
-    public double leftArmClosedPos;
+    public String leftArmServoName;
 
     /**
      *
      */
-    public double leftArmInitPos;
+    public double leftArmServoOpenedPos;
+
+    /**
+     *
+     */
+    public double leftArmServoClosedPos;
+
+    /**
+     *
+     */
+    public double leftArmServoInitPos;
+
+    /**
+     *
+     */
+    public PixelCatcher.ArmPosition leftArmIntiPos = PixelCatcher.ArmPosition.CLOSED;
 
     /**
      */
@@ -29,18 +45,27 @@ public class PixelCatcherConfig {
     /**
      *
      */
-    public double rightArmOpenedPos;
+    public String rightArmServoName;
 
     /**
      *
      */
-    public double rightArmClosedPos;
+    public double rightArmServoOpenedPos;
 
     /**
      *
      */
-    public double rightArmInitPos;
+    public double rightArmServoClosedPos;
 
+    /**
+     *
+     */
+    public double rightArmServoInitPos;
+
+    /**
+     *
+     */
+    public PixelCatcher.ArmPosition rightArmIntiPos = PixelCatcher.ArmPosition.CLOSED;
 
     /**
      */

@@ -1,6 +1,8 @@
 package org.firstinspires.ftc.library.component.event;
 
 import org.firstinspires.ftc.library.IsaacBot;
+import org.firstinspires.ftc.library.component.event.gp1_left_trigger_down.Gp1_Left_Trigger_DownEvent;
+import org.firstinspires.ftc.library.component.event.gp1_right_trigger_down.Gp1_Right_Trigger_DownEvent;
 import org.firstinspires.ftc.library.component.event.gp2_a_press.Gp2_A_PressEvent;
 import org.firstinspires.ftc.library.component.event.gp2_dpad_down_down.Gp2_Dpad_Down_DownEvent;
 import org.firstinspires.ftc.library.component.event.gp2_dpad_left_down.Gp2_Dpad_Left_DownEvent;
@@ -42,6 +44,14 @@ public class EventBus extends HandlerManager {
         instance = new EventBus();
     }
 
+
+    /**
+     *
+     */
+    private boolean gp1_left_trigger_down;
+    private boolean gp1_right_trigger_down;
+
+
     /**
      *
      */
@@ -60,6 +70,7 @@ public class EventBus extends HandlerManager {
     private boolean gp2_left_bumper_down;
     private boolean gp2_right_bumper_down;
 
+
     /**
      * Hidden Constructor
      *
@@ -73,6 +84,26 @@ public class EventBus extends HandlerManager {
      */
     public void run ()
     {
+        float current_gp1_left_trigger = this.robot.gamepad1.left_trigger;
+        if (current_gp1_left_trigger >= 0.5 && !this.gp1_left_trigger_down) {
+            this.fireEvent(new Gp1_Left_Trigger_DownEvent());
+            this.gp1_left_trigger_down = true;
+        }
+        else if (current_gp1_left_trigger < 0.5) {
+            this.gp1_left_trigger_down = false;
+        }
+
+        float current_gp1_right_trigger = this.robot.gamepad1.right_trigger;
+        if (current_gp1_right_trigger >= 0.5 && !this.gp1_right_trigger_down) {
+            this.fireEvent(new Gp1_Right_Trigger_DownEvent());
+            this.gp1_right_trigger_down = true;
+        }
+        else if (current_gp1_right_trigger < 0.5) {
+            this.gp1_right_trigger_down = false;
+        }
+
+        //--------------------------------------------------------
+
         double current_gp2_leftStickX = this.robot.gamepad2.left_stick_x;
         if (current_gp2_leftStickX > 0
          || current_gp2_leftStickX < 0
