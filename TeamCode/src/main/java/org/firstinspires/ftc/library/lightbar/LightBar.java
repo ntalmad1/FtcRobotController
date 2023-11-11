@@ -1,6 +1,18 @@
 package org.firstinspires.ftc.library.lightbar;
 
 import org.firstinspires.ftc.library.LEDIndicator;
+import org.firstinspires.ftc.library.claw.events.leftpincherclose.ClawLeftPincherCloseEvent;
+import org.firstinspires.ftc.library.claw.events.leftpincherclose.ClawLeftPincherCloseHandler;
+import org.firstinspires.ftc.library.claw.events.leftpincheropen.ClawLeftPincherOpenEvent;
+import org.firstinspires.ftc.library.claw.events.leftpincheropen.ClawLeftPincherOpenHandler;
+import org.firstinspires.ftc.library.claw.events.leftpixelping.LeftPixelPingEvent;
+import org.firstinspires.ftc.library.claw.events.leftpixelping.LeftPixelPingHandler;
+import org.firstinspires.ftc.library.claw.events.rightpincherclose.ClawRightPincherCloseEvent;
+import org.firstinspires.ftc.library.claw.events.rightpincherclose.ClawRightPincherCloseHandler;
+import org.firstinspires.ftc.library.claw.events.rightpincheropen.ClawRightPincherOpenEvent;
+import org.firstinspires.ftc.library.claw.events.rightpincheropen.ClawRightPincherOpenHandler;
+import org.firstinspires.ftc.library.claw.events.rightpixelping.RightPixelPingEvent;
+import org.firstinspires.ftc.library.claw.events.rightpixelping.RightPixelPingHandler;
 import org.firstinspires.ftc.library.component.Component;
 import org.firstinspires.ftc.library.pixelcatcher.events.leftarmopen.PixelCatcherLeftArmOpenEvent;
 import org.firstinspires.ftc.library.pixelcatcher.events.leftarmopen.PixelCatcherLeftArmOpenHandler;
@@ -97,7 +109,7 @@ public class LightBar extends Component {
         });
 
         this.addHandler(LeftPixelPingEvent.TYPE, new LeftPixelPingHandler(){
-            public void onPing (LeftPixelPingEvent event) {
+            public void onLeftPixelPing (LeftPixelPingEvent event) {
                 if (event.getDistance() < LightBar.this.config.leftPixelCapturedTolerance) {
                     LightBar.this.leftPixelLED.green();
                 }
@@ -111,7 +123,7 @@ public class LightBar extends Component {
         });
 
         this.addHandler(RightPixelPingEvent.TYPE, new RightPixelPingHandler(){
-            public void onPing (RightPixelPingEvent event) {
+            public void onRightPixelPing (RightPixelPingEvent event) {
                 if (event.getDistance() < LightBar.this.config.rightPixelCapturedTolerance) {
                     LightBar.this.rightPixelLED.green();
                 }
@@ -124,7 +136,7 @@ public class LightBar extends Component {
             }
         });
 
-        this.addHandler(ClawLeftPincherOpenEvent.TYPE, new ClawPincherPincherOpenHandler(){
+        this.addHandler(ClawLeftPincherOpenEvent.TYPE, new ClawLeftPincherOpenHandler(){
             public void onLeftPincherOpen (ClawLeftPincherOpenEvent event) {
                 LightBar.this.leftClawPincherLED.red();
             }

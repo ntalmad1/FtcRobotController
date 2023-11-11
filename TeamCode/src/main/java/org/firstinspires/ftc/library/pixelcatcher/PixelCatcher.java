@@ -1,14 +1,17 @@
 package org.firstinspires.ftc.library.pixelcatcher;
 
+import com.qualcomm.robotcore.hardware.DistanceSensor;
 import com.qualcomm.robotcore.hardware.Servo;
 
 import org.firstinspires.ftc.library.Control;
-import org.firstinspires.ftc.library.IsaacBot;
+import org.firstinspires.ftc.library.claw.events.leftpixelping.LeftPixelPingEvent;
+import org.firstinspires.ftc.library.claw.events.rightpixelping.RightPixelPingEvent;
 import org.firstinspires.ftc.library.component.Component;
-import org.firstinspires.ftc.library.component.event.gp1_left_trigger_down.Gp1_Left_Trigger_DownEvent;
-import org.firstinspires.ftc.library.component.event.gp1_left_trigger_down.Gp1_Left_Trigger_DownHandler;
-import org.firstinspires.ftc.library.component.event.gp1_right_trigger_down.Gp1_Right_Trigger_DownEvent;
-import org.firstinspires.ftc.library.component.event.gp1_right_trigger_down.Gp1_Right_Trigger_DownHandler;
+import org.firstinspires.ftc.library.pixelcatcher.events.leftarmclose.PixelCatcherLeftArmCloseEvent;
+import org.firstinspires.ftc.library.pixelcatcher.events.leftarmopen.PixelCatcherLeftArmOpenEvent;
+import org.firstinspires.ftc.library.pixelcatcher.events.rightarmclose.PixelCatcherRightArmCloseEvent;
+import org.firstinspires.ftc.library.pixelcatcher.events.rightarmopen.PixelCatcherRightArmOpenEvent;
+import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 
 /**
  *
@@ -46,6 +49,15 @@ public class PixelCatcher extends Component {
     private ArmPosition rightArmPos;
 
     /**
+     */
+    private DistanceSensor leftPixelSensor;
+
+    /**
+     *
+     */
+    private DistanceSensor rightPixelSensor;
+
+    /**
      * Constructor
      *
      * @param config
@@ -81,6 +93,9 @@ public class PixelCatcher extends Component {
         if (this.config.rightArmToggle == Control.Gp1_RightTrigger_Down) {
             this.addGp1_Right_Trigger_DownHandler(event -> PixelCatcher.this.toggleRightArm());
         }
+
+        this.leftPixelSensor = this.robot.hardwareMap.get(DistanceSensor.class, this.config.leftPixelSensorName);
+        this.rightPixelSensor = this.robot.hardwareMap.get(DistanceSensor.class, this.config.rightPixelSensorName);
     }
 
     /**
@@ -88,6 +103,12 @@ public class PixelCatcher extends Component {
      */
     public void run () {
         super.run();
+
+        LeftPixelPingEvent leftPixelPingEvent = new LeftPixelPingEvent(leftPixelSensor.getDistance(DistanceUnit.MM), this.getLeftArmPosition());
+        RightPixelPingEvent rightPixelPingEvent = new RightPixelPingEvent(rightPixelSensor.getDistance(DistanceUnit.MM), this.getRightArmPosition());
+
+        this.fireEvent(leftPixelPingEvent);
+        this.fireEvent(rightPixelPingEvent);
     }
 
     /**
@@ -98,10 +119,12 @@ public class PixelCatcher extends Component {
             case CLOSED:
                 this.leftServo.setPosition(this.config.leftArmServoOpenedPos);
                 this.leftArmPos = ArmPosition.OPENED;
+                this.fireEvent(new PixelCatcherLeftArmOpenEvent());
                 break;
             case OPENED:
                 this.leftServo.setPosition(this.config.leftArmServoClosedPos);
                 this.leftArmPos = ArmPosition.CLOSED;
+                this.fireEvent(new PixelCatcherLeftArmCloseEvent());
                 break;
         }
     }
@@ -114,12 +137,30 @@ public class PixelCatcher extends Component {
             case CLOSED:
                 this.rightServo.setPosition(this.config.rightArmServoOpenedPos);
                 this.rightArmPos = ArmPosition.OPENED;
+                this.fireEvent(new PixelCatcherRightArmOpenEvent());
                 break;
             case OPENED:
                 this.rightServo.setPosition(this.config.rightArmServoClosedPos);
                 this.rightArmPos = ArmPosition.CLOSED;
+                this.fireEvent(new PixelCatcherRightArmCloseEvent());
                 break;
         }
 
+    }
+
+    /**
+     *
+     * @return
+     */
+    public ArmPosition getLeftArmPosition () {
+        return this.leftArmPos;
+    }
+
+    /**
+     *
+     * @return
+     */
+    public ArmPosition getRightArmPosition () {
+        return this.rightArmPos;
     }
 }

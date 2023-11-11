@@ -2,6 +2,10 @@ package org.firstinspires.ftc.library.claw;
 
 import com.qualcomm.robotcore.hardware.Servo;
 
+import org.firstinspires.ftc.library.claw.events.leftpincherclose.ClawLeftPincherCloseEvent;
+import org.firstinspires.ftc.library.claw.events.leftpincheropen.ClawLeftPincherOpenEvent;
+import org.firstinspires.ftc.library.claw.events.rightpincherclose.ClawRightPincherCloseEvent;
+import org.firstinspires.ftc.library.claw.events.rightpincheropen.ClawRightPincherOpenEvent;
 import org.firstinspires.ftc.library.rotator.Rotator;
 import org.firstinspires.ftc.library.boom.Boom;
 import org.firstinspires.ftc.library.component.Component;
@@ -145,8 +149,12 @@ public class Claw extends Component {
      */
     public void toggleLeftClaw () {
         this.isLeftOpen = !this.isLeftOpen;
-        double pos = this.isLeftOpen ? this.config.leftClawMaxPosition : this.config.leftClawMinPosition;
-        this.leftClaw.setPosition(pos);
+        if (this.isLeftOpen) {
+            this.openLeft();
+        }
+        else {
+            this.closeLeft();
+        }
     }
 
     /**
@@ -154,28 +162,51 @@ public class Claw extends Component {
      */
     public void toggleRightClaw () {
         this.isRightOpen = !this.isRightOpen;
-        double pos = this.isRightOpen ? this.config.rightClawMaxPosition : this.config.rightClawMinPosition;
-        this.rightClaw.setPosition(pos);
-
+        if (this.isRightOpen) {
+            this.openRight();
+        }
+        else {
+            this.closeRight();
+        }
     }
 
+    /**
+     *
+     */
     public void closeLeft () {
         this.leftClaw.setPosition(this.config.leftClawMinPosition);
         this.isLeftOpen = false;
+
+        this.fireEvent(new ClawLeftPincherCloseEvent());
     }
 
+    /**
+     *
+     */
     public void closeRight () {
         this.rightClaw.setPosition(this.config.rightClawMinPosition);
         this.isRightOpen = false;
+
+        this.fireEvent(new ClawRightPincherCloseEvent());
     }
 
+    /**
+     *
+     */
     public void openLeft () {
         this.leftClaw.setPosition(this.config.leftClawMaxPosition);
         this.isLeftOpen = true;
+
+        this.fireEvent(new ClawLeftPincherOpenEvent());
     }
 
+    /**
+     *
+     */
     public void openRight () {
         this.rightClaw.setPosition(this.config.rightClawMaxPosition);
         this.isRightOpen = true;
+
+        this.fireEvent(new ClawRightPincherOpenEvent());
     }
 }

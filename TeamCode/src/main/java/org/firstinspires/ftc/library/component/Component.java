@@ -3,6 +3,7 @@ package org.firstinspires.ftc.library.component;
 import org.firstinspires.ftc.library.IsaacBot;
 import org.firstinspires.ftc.library.component.command.CommandQueue;
 import org.firstinspires.ftc.library.component.command.ICommand;
+import org.firstinspires.ftc.library.component.event.Event;
 import org.firstinspires.ftc.library.component.event.EventBus;
 import org.firstinspires.ftc.library.component.event.EventHandler;
 import org.firstinspires.ftc.library.component.event.EventType;
@@ -197,6 +198,14 @@ public abstract class Component implements IComponent {
      */
     public IsaacBot getRobot () {
         return this.robot;
+    }
+
+    /**
+     *
+     * @param event
+     */
+    public void fireEvent (Event<?> event) {
+        EventBus.getInstance().fireEvent(event);
     }
 
     /**

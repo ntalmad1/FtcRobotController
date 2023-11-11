@@ -70,4 +70,12 @@ public class PixelCatcherConfig {
     /**
      */
     public Control rightArmToggle = Control.Gp1_RightTrigger_Down;
+
+    /**
+     */
+    public String leftPixelSensorName;
+
+    /**
+     */
+    public String rightPixelSensorName;
 }

@@ -22,4 +22,10 @@ public class LightBarConfig {
     public String rightClawPincherLED;
 
     public String driveTrainModeLED;
+
+    public double leftPixelCapturedTolerance;
+    public double leftPixelInRangeTolerance;
+
+    public double rightPixelCapturedTolerance;
+    public double rightPixelInRangeTolerance;
 }
