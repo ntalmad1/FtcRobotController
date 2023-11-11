@@ -6,7 +6,7 @@ import org.firstinspires.ftc.library.Control;
 import org.firstinspires.ftc.library.IsaacBot;
 import org.firstinspires.ftc.library.boom.BoomConfig;
 import org.firstinspires.ftc.library.claw.ClawConfig;
-import org.firstinspires.ftc.library.rotator.RotatorConfiguration;
+import org.firstinspires.ftc.library.rotator.RotatorConfig;
 
 /**
  *
@@ -39,7 +39,7 @@ public class ClawCompConfig extends ClawConfig {
         clawBoomConfig.homePosition = 0.85;
         clawBoomConfig.maxIncrement = 0.003;
 
-        RotatorConfiguration clawRotatorConfig = new RotatorConfiguration();
+        RotatorConfig clawRotatorConfig = new RotatorConfig();
         clawRotatorConfig.robot = robot;
         clawRotatorConfig.servoName = "rotateClawServo";
         clawRotatorConfig.direction = Servo.Direction.FORWARD;

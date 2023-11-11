@@ -13,7 +13,7 @@ public class Boom extends Component {
     /**
      *
      */
-    private BoomConfig config;
+    private final BoomConfig config;
 
     /**
      *
@@ -26,13 +26,16 @@ public class Boom extends Component {
     private Servo secondaryServo;
 
     /**
+     * Reverse forwards vs backwards for calculating position in degrees
      */
     private boolean inverted = false;
 
     /**
-     * @param config
+     * Constructor
+     *
+     * @param config The configuration values of the boom
      */
-    public Boom(BoomConfig config) {
+    public Boom (BoomConfig config) {
         super(config.robot);
 
         this.config = config;
@@ -91,7 +94,7 @@ public class Boom extends Component {
         if (config.controllerInputMethod.equals(Control.Gp2_Dpad_Up)
                 || (config.controllerInputMethod2 != null && config.controllerInputMethod2.equals(Control.Gp2_Dpad_Up))) {
             this.addGp2_Dpad_Up_DownHandler(event -> {
-                double position = (double) 1;
+                double position = 1;
                 if (Boom.this.config.invertInput) {
                     position = -position;
                 }
@@ -102,7 +105,7 @@ public class Boom extends Component {
         if (config.controllerInputMethod.equals(Control.Gp2_Dpad_Right)
                 || (config.controllerInputMethod2 != null && config.controllerInputMethod2.equals(Control.Gp2_Dpad_Right))) {
             this.addGp2_Dpad_Right_DownHandler(event -> {
-                double position = (double) 1;
+                double position = 1;
                 if (Boom.this.config.invertInput) {
                     position = -position;
                 }
@@ -113,7 +116,7 @@ public class Boom extends Component {
         if (config.controllerInputMethod.equals(Control.Gp2_Dpad_Down)
                 || (config.controllerInputMethod2 != null && config.controllerInputMethod2.equals(Control.Gp2_Dpad_Down))) {
             this.addGp2_Dpad_Down_DownHandler(event -> {
-                double position = (double) -1;
+                double position = -1;
                 if (Boom.this.config.invertInput) {
                     position = -position;
                 }
@@ -128,7 +131,7 @@ public class Boom extends Component {
         if (config.controllerInputMethod.equals(Control.Gp2_Dpad_Left)
                 || (config.controllerInputMethod2 != null && config.controllerInputMethod2.equals(Control.Gp2_Dpad_Left))) {
             this.addGp2_Dpad_Left_DownHandler(event -> {
-                double position = (double) -1;
+                double position = -1;
                 if (Boom.this.config.invertInput) {
                     position = -position;
                 }
@@ -161,7 +164,7 @@ public class Boom extends Component {
 
     /**
      *
-     * @return
+     * @return The max amount to set the servo position to each cycle
      */
     public double getMaxIncrement() {
         return this.config.maxIncrement;
@@ -169,7 +172,7 @@ public class Boom extends Component {
 
     /**
      *
-     * @return
+     * @return The max position for the servo
      */
     public double getMaxPosition() {
         return this.config.maxPosition;
@@ -177,7 +180,7 @@ public class Boom extends Component {
 
     /**
      *
-     * @return
+     * @return The min position for the servo
      */
     public double getMinPosition() {
         return this.config.minPosition;
@@ -193,15 +196,9 @@ public class Boom extends Component {
 
     /**
      *
-     * @return
-     */
-    public double getServoPosition() {
-        return this.servo.getPosition();
-    }
-
-    /**
-     *
-     * @return
+     * @return The position of the boom in degrees, degrees from the 0 degree position
+     * forwards 0 +
+     * backwards 0 -
      */
     public double getPositionDegrees () {
         double servoPosition = this.servo.getPosition();
@@ -219,7 +216,9 @@ public class Boom extends Component {
 
     /**
      *
-     * @param degrees
+     * @param degrees Move the boom to degrees, degrees from the 0 degree position
+     * forwards 0 +
+     * backwards 0 -
      */
     public void gotoDegrees (double degrees)
     {
@@ -231,7 +230,21 @@ public class Boom extends Component {
 
     /**
      *
-     * @param input
+     * @param targetPosition Move the boom to servo position
+     */
+    public void gotoPosition (double targetPosition)
+    {
+        double startPosition = this.servo.getPosition();
+        this.addCommand(new GoToPositionCommand(this, this.getMaxIncrement(), startPosition, targetPosition));
+    }
+
+    /**
+     *
+     * @param input the value of the game pad stick
+     * @param maxIncrement the amount to increment or decrement the servo position by each cycle
+     * @param minPosition the min position of the servo
+     * @param maxPosition the max position of the servo
+     * @return true if the boom is at its min or max position
      */
     public boolean move (double input, double maxIncrement, double minPosition, double maxPosition)
     {
@@ -264,8 +277,7 @@ public class Boom extends Component {
 
     /**
      *
-     * @param inverted
-     * @return
+     * @param inverted True to invert forwards vs backwards for calculation position in degrees
      */
     public void setInverted (boolean inverted)
     {
@@ -274,7 +286,7 @@ public class Boom extends Component {
 
     /**
      *
-     * @param position
+     * @param position the position to set the servo to
      */
     private void setServoPosition (double position) {
         this.servo.setPosition(position);
@@ -285,10 +297,10 @@ public class Boom extends Component {
 
     /**
      *
-     * @param degrees
-     * @return
+     * @param degrees Convert degrees to servo position
+     * @return the servo position
      */
-    double calculateTargetPosition(double degrees)
+    protected double calculateTargetPosition(double degrees)
     {
         if (this.inverted) {
             degrees = degrees * (double)-1;

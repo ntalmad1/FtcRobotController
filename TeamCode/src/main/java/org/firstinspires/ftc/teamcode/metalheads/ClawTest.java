@@ -9,7 +9,7 @@ import org.firstinspires.ftc.library.IsaacBot;
 import org.firstinspires.ftc.library.claw.Claw;
 import org.firstinspires.ftc.library.claw.ClawConfig;
 import org.firstinspires.ftc.library.boom.BoomConfig;
-import org.firstinspires.ftc.library.rotator.RotatorConfiguration;
+import org.firstinspires.ftc.library.rotator.RotatorConfig;
 import org.firstinspires.ftc.library.component.event.EventBus;
 
 @TeleOp(name="ClawTest", group="Linear OpMode")
@@ -41,7 +41,7 @@ public class ClawTest extends IsaacBot {
         clawBoomConfig.homePosition = 0.5;
         clawBoomConfig.maxIncrement = 0.001;
 
-        RotatorConfiguration clawRotatorConfig = new RotatorConfiguration();
+        RotatorConfig clawRotatorConfig = new RotatorConfig();
         clawRotatorConfig.robot = this;
         clawRotatorConfig.servoName = "rotateClawServo";
         clawRotatorConfig.direction = Servo.Direction.FORWARD;

@@ -4,6 +4,8 @@ import org.firstinspires.ftc.library.IsaacBot;
 import org.firstinspires.ftc.library.component.command.CommandQueue;
 import org.firstinspires.ftc.library.component.command.ICommand;
 import org.firstinspires.ftc.library.component.event.EventBus;
+import org.firstinspires.ftc.library.component.event.EventHandler;
+import org.firstinspires.ftc.library.component.event.EventType;
 import org.firstinspires.ftc.library.component.event.HandlerRegistration;
 import org.firstinspires.ftc.library.component.event.gp1_left_trigger_down.Gp1_Left_Trigger_DownEvent;
 import org.firstinspires.ftc.library.component.event.gp1_left_trigger_down.Gp1_Left_Trigger_DownHandler;
@@ -75,6 +77,14 @@ public abstract class Component implements IComponent {
      */
     public void addCommand (ICommand command) {
         this.commandQueue.add(command);
+    }
+
+    /**
+     *
+     * @return HandlerRegistration
+     */
+    public <H extends EventHandler> HandlerRegistration addHandler (EventType<H> type, H handler) {
+        return EventBus.getInstance().addHandler(type, handler);
     }
 
     /**
