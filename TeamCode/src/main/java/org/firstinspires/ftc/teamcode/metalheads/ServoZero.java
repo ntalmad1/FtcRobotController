@@ -8,32 +8,39 @@ import com.qualcomm.robotcore.hardware.Servo;
 import org.firstinspires.ftc.library.IsaacBot;
 
 @TeleOp(name="Servo Zero", group="Linear OpMode")
-@Disabled
+//@Disabled
 public class ServoZero extends IsaacBot {
 
     @Override
     public void runOpMode() throws InterruptedException {
 
+        double increment = 0.01;
+
         waitForStart();
 
-        Servo left = this.hardwareMap.get(Servo.class, "middleLeftServo");
-        left.resetDeviceConfigurationForOpMode();
+        Servo launcher = this.hardwareMap.get(Servo.class, "droneBase");
+        launcher.resetDeviceConfigurationForOpMode();
 
-        Servo right = this.hardwareMap.get(Servo.class, "middleRightServo");
-        right.resetDeviceConfigurationForOpMode();
-
-        left.setDirection(Servo.Direction.REVERSE);
-        right.setDirection(Servo.Direction.REVERSE);
-
-        left.setPosition(0.48);
-        right.setPosition((double)1 - 0.48);
-
-            telemetry.addData("servo left: ", "%2f", left.getPosition());
-            telemetry.addData("servo right: ", "%2f", right.getPosition());
-            telemetry.update();
+        launcher.setDirection(Servo.Direction.FORWARD);
+        launcher.setPosition(0);
 
         while (this.opModeIsActive()) {
 
+            if (launcher.getPosition()>0) {
+                if (gamepad1.dpad_down == true) {
+                    launcher.setPosition(launcher.getPosition()-increment);
+                    while (gamepad1.dpad_down == true) {}
+                }
+            }
+            if (launcher.getPosition()<1) {
+                if (gamepad1.dpad_up == true) {
+                    launcher.setPosition(launcher.getPosition()+increment);
+                    while (gamepad1.dpad_up == true) {}
+                }
+            }
+
+            telemetry.addData("servo left: ", "%2f", launcher.getPosition());
+            telemetry.update();
         }
     }
 }
