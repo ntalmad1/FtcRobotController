@@ -80,11 +80,11 @@ public class CompAutoBot extends CompBot {
      */
     public void go () {
 
-        // TODO: don't forget to disable
-        this.addGp2_A_PressHandler(event -> {
-            telemetry.addData("Distance: ", "%2f", CompAutoBot.this.sonar.getDistance(DistanceUnit.CM));
-            telemetry.update();
-        });
+//        // TODO: don't forget to disable
+//        this.addGp2_A_PressHandler(event -> {
+//            telemetry.addData("Distance: ", "%2f", CompAutoBot.this.sonar.getDistance(DistanceUnit.CM));
+//            telemetry.update();
+//        });
 
         this.bumpForwardCommand = new OneTimeCommand() {
             public void runOnce(ICommand command) {
@@ -246,7 +246,7 @@ public class CompAutoBot extends CompBot {
         // move arm to travel mode
         this.addCommand(new OneTimeCommand() {
             public void runOnce(ICommand command) {
-                CompAutoBot.this.moveArm_toPixelTravel();
+                //CompAutoBot.this.moveArm_toPixelTravel();
                 CompAutoBot.this.arm.wait(0, new CommandCallbackAdapter(this){
                     public void onSuccess(CommandSuccessEvent successEvent) {
                         this.command.markAsCompleted();
@@ -369,7 +369,7 @@ public class CompAutoBot extends CompBot {
         this.addCommand(new OneTimeCommand() {
             public void runOnce(ICommand command) {
                 CompAutoBot.this.arm.wait(1000);
-                CompAutoBot.this.moveArm_toPixelTravel();
+                //CompAutoBot.this.moveArm_toPixelTravel();
                 CompAutoBot.this.arm.wait(0, new CommandCallbackAdapter(this){
                     public void onSuccess(CommandSuccessEvent successEvent) {
                         this.command.markAsCompleted();
@@ -450,7 +450,7 @@ public class CompAutoBot extends CompBot {
         this.addCommand(new OneTimeCommand() {
             public void runOnce(ICommand command) {
                 CompAutoBot.this.arm.wait(1000);
-                CompAutoBot.this.moveArm_toPixelTravel();
+               // CompAutoBot.this.moveArm_toPixelTravel();
                 CompAutoBot.this.arm.wait(0, new CommandCallbackAdapter(this){
                     public void onSuccess(CommandSuccessEvent successEvent) {
                         this.command.markAsCompleted();

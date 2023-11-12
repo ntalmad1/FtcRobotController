@@ -16,8 +16,8 @@ public class ClawCompConfig extends ClawConfig {
     public ClawCompConfig(IsaacBot robot) {
         this.robot = robot;
 
-        this.leftClawName = "leftClawServo";
-        this.rightClawName = "rightClawServo";
+        this.leftClawName = "rightClawServo";
+        this.rightClawName = "leftClawServo";
         this.leftClawMinPosition = 0;
         this.leftClawMaxPosition = 0.35;
         this.rightClawMinPosition = 0;
@@ -35,9 +35,9 @@ public class ClawCompConfig extends ClawConfig {
         clawBoomConfig.minPosition = 0;
         clawBoomConfig.maxPosition = 1;
         clawBoomConfig.zeroDegreePosition = .5;
-        //clawBoomConfig.homePosition = 1;
+        clawBoomConfig.homePosition = 0.918;
         clawBoomConfig.homePosition = 0.85;
-        clawBoomConfig.maxIncrement = 0.003;
+        clawBoomConfig.maxIncrement = 0.020;
 
         RotatorConfig clawRotatorConfig = new RotatorConfig();
         clawRotatorConfig.robot = robot;
@@ -50,7 +50,7 @@ public class ClawCompConfig extends ClawConfig {
         clawRotatorConfig.maxPosition = 1.00;
         clawRotatorConfig.zeroDegreePosition = 0.307;
         clawRotatorConfig.homePosition = 0.307;
-        clawRotatorConfig.maxIncrement = 0.0015;
+        clawRotatorConfig.maxIncrement = 0.025;
 
         this.clawBoomConfig = clawBoomConfig;
         this.clawRotatorConfig = clawRotatorConfig;

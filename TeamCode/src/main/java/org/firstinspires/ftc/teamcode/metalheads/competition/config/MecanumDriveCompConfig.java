@@ -24,7 +24,7 @@ public class MecanumDriveCompConfig  extends MecanumDriveTrainConfig {
         this.accelerationIncrement = 0.02;
         this.maxPower = 0.65;
         this.yawOffset = -90;
-        this.incrementalDeceleration = true;
+        this.incrementalDeceleration = false;
         this.leftFrontMotorDirection  = DcMotorSimple.Direction.REVERSE;
         this.rightFrontMotorDirection = DcMotorSimple.Direction.FORWARD;
         this.leftRearMotorDirection  =  DcMotorSimple.Direction.REVERSE;

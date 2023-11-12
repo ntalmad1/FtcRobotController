@@ -45,7 +45,10 @@ public class LEDIndicator {
      */
     public LEDIndicator (String ledIndicatorName) {
         this.greenState = IsaacBot.getInstance().hardwareMap.get(DigitalChannel.class, ledIndicatorName + "Green");
-        this.redState = IsaacBot.getInstance().hardwareMap.get(DigitalChannel.class, ledIndicatorName + "red");
+        this.redState = IsaacBot.getInstance().hardwareMap.get(DigitalChannel.class, ledIndicatorName + "Red");
+
+        this.greenState.setMode(DigitalChannel.Mode.OUTPUT);
+        this.redState.setMode(DigitalChannel.Mode.OUTPUT);
     }
 
     /**
@@ -68,7 +71,7 @@ public class LEDIndicator {
                 break;
             case OFF:
                 this.greenState.setState(true);
-                this.greenState.setState(true);
+                this.redState.setState(true);
                 break;
         }
     }

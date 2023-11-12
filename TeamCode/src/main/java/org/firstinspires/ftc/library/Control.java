@@ -46,7 +46,17 @@ public enum Control {
 
     /**
      */
-    Gp2_Dpad_Right
+    Gp2_Dpad_Right,
 
+    /**
+     */
+    Gp2_LeftTrigger_Down,
 
+    /**
+     */
+    Gp2_RightTrigger_Down,
+
+    /**
+     */
+    NONE
 }

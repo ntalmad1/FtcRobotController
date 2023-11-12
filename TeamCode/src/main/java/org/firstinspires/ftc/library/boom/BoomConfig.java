@@ -32,9 +32,9 @@ public class BoomConfig {
 
     /**
      */
-    public Control controllerInputMethod;
+    public Control controllerInputMethod = Control.NONE;
 
-    public Control controllerInputMethod2;
+    public Control controllerInputMethod2 = Control.NONE;
 
     /**
      */

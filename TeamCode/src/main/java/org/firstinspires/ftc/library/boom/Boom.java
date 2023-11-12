@@ -234,8 +234,12 @@ public class Boom extends Component {
      */
     public void gotoPosition (double targetPosition)
     {
+        this.gotoPosition(targetPosition, this.getMaxIncrement());
+    }
+
+    public void gotoPosition (double targetPosition, double maxIncrement) {
         double startPosition = this.servo.getPosition();
-        this.addCommand(new GoToPositionCommand(this, this.getMaxIncrement(), startPosition, targetPosition));
+        this.addCommand(new GoToPositionCommand(this, maxIncrement, startPosition, targetPosition));
     }
 
     /**

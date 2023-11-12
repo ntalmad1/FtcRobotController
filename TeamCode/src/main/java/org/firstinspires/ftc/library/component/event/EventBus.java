@@ -11,9 +11,11 @@ import org.firstinspires.ftc.library.component.event.gp2_dpad_up_down.Gp2_Dpad_U
 import org.firstinspires.ftc.library.component.event.gp2_left_bumper_press.Gp2_Left_Bumper_PressEvent;
 import org.firstinspires.ftc.library.component.event.gp2_left_stick_x.Gp2_LeftStickXEvent;
 import org.firstinspires.ftc.library.component.event.gp2_left_stick_y.Gp2_LeftStickYEvent;
+import org.firstinspires.ftc.library.component.event.gp2_left_trigger_down.Gp2_Left_Trigger_DownEvent;
 import org.firstinspires.ftc.library.component.event.gp2_right_bumper_press.Gp2_Right_Bumper_PressEvent;
 import org.firstinspires.ftc.library.component.event.gp2_right_stick_x.Gp2_RightStickXEvent;
 import org.firstinspires.ftc.library.component.event.gp2_right_stick_y.Gp2_RightStickYEvent;
+import org.firstinspires.ftc.library.component.event.gp2_right_trigger_down.Gp2_Right_Trigger_DownEvent;
 import org.firstinspires.ftc.library.component.event.gp2_y_press.Gp2_Y_PressEvent;
 import org.firstinspires.ftc.library.component.event.gp2_b_press.Gp2_B_PressEvent;
 import org.firstinspires.ftc.library.component.event.gp2_x_press.Gp2_X_PressEvent;
@@ -51,6 +53,8 @@ public class EventBus extends HandlerManager {
     private boolean gp1_left_trigger_down;
     private boolean gp1_right_trigger_down;
 
+    private boolean gp2_left_trigger_down;
+    private boolean gp2_right_trigger_down;
 
     /**
      *
@@ -100,6 +104,24 @@ public class EventBus extends HandlerManager {
         }
         else if (current_gp1_right_trigger < 0.5) {
             this.gp1_right_trigger_down = false;
+        }
+
+        float current_gp2_left_trigger = this.robot.gamepad2.left_trigger;
+        if (current_gp2_left_trigger >= 0.5 && !this.gp2_left_trigger_down) {
+            this.fireEvent(new Gp2_Left_Trigger_DownEvent());
+            this.gp2_left_trigger_down = true;
+        }
+        else if (current_gp2_left_trigger < 0.5) {
+            this.gp2_left_trigger_down = false;
+        }
+
+        float current_gp2_right_trigger = this.robot.gamepad2.right_trigger;
+        if (current_gp2_right_trigger >= 0.5 && !this.gp2_right_trigger_down) {
+            this.fireEvent(new Gp2_Right_Trigger_DownEvent());
+            this.gp2_right_trigger_down = true;
+        }
+        else if (current_gp2_right_trigger < 0.5) {
+            this.gp2_right_trigger_down = false;
         }
 
         //--------------------------------------------------------

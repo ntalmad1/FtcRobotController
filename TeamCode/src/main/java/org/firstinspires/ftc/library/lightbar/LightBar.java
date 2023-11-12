@@ -86,25 +86,25 @@ public class LightBar extends Component {
 
         this.addHandler(PixelCatcherLeftArmOpenEvent.TYPE, new PixelCatcherLeftArmOpenHandler(){
             public void onLeftArmOpen (PixelCatcherLeftArmOpenEvent event) {
-                LightBar.this.leftPixelCatcherArmLED.red();
+                LightBar.this.leftPixelCatcherArmLED.green();
             }
         });
 
         this.addHandler(PixelCatcherLeftArmCloseEvent.TYPE, new PixelCatcherLeftArmCloseHandler(){
             public void onLeftArmClose (PixelCatcherLeftArmCloseEvent event) {
-                LightBar.this.leftPixelCatcherArmLED.green();
+                LightBar.this.leftPixelCatcherArmLED.red();
             }
         });
 
         this.addHandler(PixelCatcherRightArmOpenEvent.TYPE, new PixelCatcherRightArmOpenHandler(){
             public void onRightArmOpen (PixelCatcherRightArmOpenEvent event) {
-                LightBar.this.rightPixelCatcherArmLED.red();
+                LightBar.this.rightPixelCatcherArmLED.green();
             }
         });
 
         this.addHandler(PixelCatcherRightArmCloseEvent.TYPE, new PixelCatcherRightArmCloseHandler(){
             public void onRightArmClose (PixelCatcherRightArmCloseEvent event) {
-                LightBar.this.rightPixelCatcherArmLED.green();
+                LightBar.this.rightPixelCatcherArmLED.red();
             }
         });
 
@@ -161,6 +161,12 @@ public class LightBar extends Component {
         });
 
         this.driveTrainModeLED.green();
+        this.leftClawPincherLED.green();
+        this.rightClawPincherLED.green();
+        this.leftPixelLED.red();
+        this.rightPixelLED.red();
+        this.leftPixelCatcherArmLED.green();
+        this.rightPixelCatcherArmLED.green();
     }
 
     /**

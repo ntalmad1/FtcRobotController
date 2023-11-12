@@ -19,14 +19,17 @@ public class DistanceSensorTest extends IsaacBot {
     @Override
     public void runOpMode() throws InterruptedException {
 
-        DistanceSensor distanceSensor = hardwareMap.get(DistanceSensor.class, "testDistanceSensor");
+        DistanceSensor pixelLeftSensor = hardwareMap.get(DistanceSensor.class, "leftPixelSensor");
+        DistanceSensor pixelRightSensor = hardwareMap.get(DistanceSensor.class, "rightPixelSensor");
 
         waitForStart();
 
         while (this.opModeIsActive()) {
-            double distance = distanceSensor.getDistance(DistanceUnit.CM);
+            double distanceLeft = pixelLeftSensor.getDistance(DistanceUnit.MM);
+            double distanceRight = pixelRightSensor.getDistance(DistanceUnit.MM);
 
-            this.telemetry.addData("Distance: ", "%2f", distance);
+            this.telemetry.addData("Left: ", "%2f", distanceLeft);
+            this.telemetry.addData("Right: ", "%2f", distanceRight);
             this.telemetry.update();
         }
     }

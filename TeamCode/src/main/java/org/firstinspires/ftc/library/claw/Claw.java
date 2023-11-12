@@ -53,6 +53,14 @@ public class Claw extends Component {
     private boolean isRightOpen = false;
 
     /**
+     */
+    private boolean rotatedRight = false;
+
+    /**
+     */
+    private boolean rotatedLeft = false;
+
+    /**
      * Constructor
      *
      */
@@ -99,6 +107,28 @@ public class Claw extends Component {
 
         this.addGp2_Right_Bumper_PressHandler(event -> {
             Claw.this.toggleRightClaw();
+        });
+
+        this.addGp2_Left_Trigger_DownHandler(event -> {
+            if (Claw.this.rotatedLeft) {
+                Claw.this.rotatedLeft = false;
+                Claw.this.clawRotator.gotoPosition(Claw.this.config.clawRotatorConfig.homePosition, 1);
+            }
+            else {
+                Claw.this.rotatedLeft = true;
+                Claw.this.clawRotator.gotoPosition(0.65, 1);
+            }
+        });
+
+        this.addGp2_Right_Trigger_DownHandler(event -> {
+            if (Claw.this.rotatedRight) {
+                Claw.this.rotatedRight = false;
+                Claw.this.clawRotator.gotoPosition(Claw.this.config.clawRotatorConfig.homePosition, 1);
+            }
+            else {
+                Claw.this.rotatedRight = true;
+                Claw.this.clawRotator.gotoPosition(0, 1);
+            }
         });
     }
 

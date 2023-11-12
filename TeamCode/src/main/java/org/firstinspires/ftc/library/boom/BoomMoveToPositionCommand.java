@@ -42,7 +42,7 @@ public class BoomMoveToPositionCommand extends AbstractCommand {
     }
 
     public void init () {
-        this.command = new GoToPositionCommand(boom, power, this.boom.getServoPosition(), targetPosition);
+        this.command = new GoToPositionCommand(boom, power, this.boom.getPosition(), targetPosition);
         command.addCallbackHandler(new CommandCallbackAdapter() {
             public void onSuccess(CommandSuccessEvent successEvent) {
                 BoomMoveToPositionCommand.this.markAsCompleted();

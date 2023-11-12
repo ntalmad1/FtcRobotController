@@ -20,10 +20,11 @@ public class ArmCompConfig extends ArmConfig {
         midBoomConfig.direction = Servo.Direction.REVERSE;
         midBoomConfig.controllerInputMethod = Control.Gp2_RightStickX;
         midBoomConfig.invertInput = false;
-        midBoomConfig.maxIncrement = 0.001;
+        midBoomConfig.maxIncrement = 0.012;
         midBoomConfig.degree = 0.000556;
         midBoomConfig.zeroDegreePosition = 0.48;
         midBoomConfig.gearRatio = 5;
+        midBoomConfig.homePosition = 0.014;
 
         BoomConfig bottomBoomConfig = new BoomConfig();
         bottomBoomConfig.robot = robot;
@@ -33,10 +34,11 @@ public class ArmCompConfig extends ArmConfig {
         bottomBoomConfig.direction = Servo.Direction.FORWARD;
         bottomBoomConfig.controllerInputMethod = Control.Gp2_LeftStickX;
         bottomBoomConfig.invertInput = true;
-        bottomBoomConfig.maxIncrement = 0.001;
+        bottomBoomConfig.maxIncrement = 0.009;
         bottomBoomConfig.zeroDegreePosition = 0.28;
         bottomBoomConfig.degree = 0.000556;
         bottomBoomConfig.gearRatio = 5;
+        bottomBoomConfig.homePosition = 0.010;
 
         this.clawConfig = new ClawCompConfig(robot);
         this.midBoomConfig = midBoomConfig;
