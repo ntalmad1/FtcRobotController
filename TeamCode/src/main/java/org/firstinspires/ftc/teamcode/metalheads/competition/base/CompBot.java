@@ -481,7 +481,7 @@ public class CompBot extends IsaacBot{
                     .openLeftClaw()
                     .openRightClaw()
                     .wait(250)
-                    .moveBottomToPosition(0.166, 1)
+                    .moveBottomToPosition(this.robotConfig.pixelReady_bottomBoom, 1)
                     .wait(0)
             ;
     }
