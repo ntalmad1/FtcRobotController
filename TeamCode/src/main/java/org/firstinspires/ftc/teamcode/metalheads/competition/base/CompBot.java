@@ -16,6 +16,7 @@ import org.firstinspires.ftc.library.component.event.command_callback.CommandCal
 import org.firstinspires.ftc.teamcode.metalheads.competition.config.DroneLauncherCompConfig;
 import org.firstinspires.ftc.teamcode.metalheads.competition.config.LightBarCompConfig;
 import org.firstinspires.ftc.teamcode.metalheads.competition.config.PixelCatcherCompConfig;
+import org.firstinspires.ftc.teamcode.metalheads.competition.config.RobotConfig;
 
 /**
  *
@@ -24,13 +25,17 @@ import org.firstinspires.ftc.teamcode.metalheads.competition.config.PixelCatcher
 @Disabled
 public class CompBot extends IsaacBot{
 
+    /*I*
+
+     */
+    protected RobotConfig robotConfig;
+
     /**
      */
     public enum ArmPosition {
         INIT,
         HOME,
         PIXEL_READY,
-        PIXEL_PICK,
         PIXEL_PLACE_LOW,
         PIXEL_PLACE_HIGH,
         TRAVEL
@@ -46,7 +51,7 @@ public class CompBot extends IsaacBot{
 
     /**
      */
-    private ArmPosition armPosition = ArmPosition.HOME;
+    private ArmPosition armPosition = ArmPosition.INIT;
 
     /**
      */
@@ -79,6 +84,8 @@ public class CompBot extends IsaacBot{
     public CompBot() {
         super();
 
+        this.robotConfig = new RobotConfig();
+
         this.armConfig = new ArmCompConfig(this);
         this.armConfig.debug = true;
 
@@ -88,67 +95,114 @@ public class CompBot extends IsaacBot{
 
         this.lightBarConfig = new LightBarCompConfig(this);
 
+        //-------------------------------------------------
+        // A Button
+        //-------------------------------------------------
         this.addGp2_A_PressHandler(event -> {
             CompBot.this.arm.cancelAllCommands();
 
             if (this.armPosition.equals(ArmPosition.INIT)) {
-
+                CompBot.this.armPosition = ArmPosition.PIXEL_READY;
+                CompBot.this.moveArm_fromInit_toPixelReady();
             }
-//
-//            if (this.armPosition.equals(ArmPosition.HOME)) {
-//                CompBot.this.armPosition = ArmPosition.PIXEL_READY;
-//                CompBot.this.moveArm_fromHome_toPixelReady();
-//            }
-//            else if (this.armPosition.equals(ArmPosition.PIXEL_READY) || this.armPosition.equals(ArmPosition.PIXEL_PICKED)) {
-//                CompBot.this.armPosition = ArmPosition.PIXEL_PICKED;
-//                CompBot.this.moveArm_pickPixels();
-//            }
-//            else if (this.armPosition.equals(ArmPosition.PIXEL_TRAVEL)) {
-//                CompBot.this.armPosition = ArmPosition.PIXEL_READY;
-//                CompBot.this.moveArm_fromPixelTravel_toPixelReady();
-//            }
+            else if (this.armPosition.equals(ArmPosition.PIXEL_PLACE_LOW) ||
+                    this.armPosition.equals(ArmPosition.PIXEL_PLACE_HIGH)) {
+                CompBot.this.armPosition = ArmPosition.PIXEL_READY;
+                CompBot.this.moveArm_fromPixelPlace_toPixelReady();
+            }
+            else if (this.armPosition.equals(ArmPosition.TRAVEL)) {
+                CompBot.this.armPosition = ArmPosition.PIXEL_READY;
+                CompBot.this.moveArm_fromTravel_toPixelReady();
+            }
+            else if (this.armPosition.equals(ArmPosition.PIXEL_READY) ||
+                    this.armPosition.equals(ArmPosition.HOME)) {
+                CompBot.this.armPosition = ArmPosition.PIXEL_READY;
+                CompBot.this.moveArm_fromPixelReady_doPixelPick();
+            }
 
         });
 
+        //-------------------------------------------------
+        // B Button - Travel
+        //-------------------------------------------------
         this.addGp2_B_PressHandler(event -> {
             CompBot.this.arm.cancelAllCommands();
-//
-//            if (this.armPosition.equals(ArmPosition.PIXEL_READY)
-//             || this.armPosition.equals(ArmPosition.PIXEL_PICKED)) {
-//                CompBot.this.armPosition = ArmPosition.PIXEL_TRAVEL;
-//                CompBot.this.moveArm_toPixelTravel();
-//            }
-//            else if (this.armPosition.equals(ArmPosition.PIXEL_PLACE_LOW)
-//                    || this.armPosition.equals(ArmPosition.PIXEL_PLACE_MID)
-//                    || this.armPosition.equals(ArmPosition.PIXEL_PLACE_HIGH)) {
-//                CompBot.this.armPosition = ArmPosition.PIXEL_TRAVEL;
-//                CompBot.this.moveArm_fromPixelPlace_toPixelTravel();
-//            }
+
+            if (this.armPosition.equals(ArmPosition.INIT)) {
+                CompBot.this.armPosition = ArmPosition.TRAVEL;
+                CompBot.this.moveArm_fromInit_toTravel();
+            }
+            else if (this.armPosition.equals(ArmPosition.PIXEL_READY)) {
+                CompBot.this.armPosition = ArmPosition.TRAVEL;
+                CompBot.this.moveArm_fromPixelReady_toTravel();
+            }
+            else if (this.armPosition.equals(ArmPosition.HOME)) {
+                CompBot.this.armPosition = ArmPosition.TRAVEL;
+                CompBot.this.moveArm_fromHome_toTravel();
+            }
+            else if (this.armPosition.equals(ArmPosition.PIXEL_PLACE_LOW) ||
+                     this.armPosition.equals(ArmPosition.PIXEL_PLACE_HIGH)) {
+                CompBot.this.armPosition = ArmPosition.TRAVEL;
+                CompBot.this.moveArm_fromPixelPlace_toTravel();
+            }
+
         });
 
+        //-------------------------------------------------------
+        // X Button
+        //-------------------------------------------------------
         this.addGp2_X_PressHandler(event -> {
             CompBot.this.arm.cancelAllCommands();
 
-//            if (this.armPosition.equals(ArmPosition.PIXEL_PLACE_HIGH)) {
-//                CompBot.this.armPosition = ArmPosition.PIXEL_PLACE_LOW;
-//                CompBot.this.moveArm_placePixelLow();
-//            }
-//            else if (this.armPosition.equals(ArmPosition.PIXEL_PLACE_MID)) {
-//                CompBot.this.armPosition = ArmPosition.PIXEL_PLACE_HIGH;
-//                CompBot.this.moveArm_placePixelHigh();
-//            }
-//            else if (this.armPosition.equals(ArmPosition.PIXEL_PLACE_LOW)) {
-//                CompBot.this.armPosition = ArmPosition.PIXEL_PLACE_MID;
-//                CompBot.this.moveArm_placePixelMid();
-//            }
-//            else {
-//                CompBot.this.armPosition = ArmPosition.PIXEL_PLACE_LOW;
-//                CompBot.this.moveArm_placePixelLow();
-//            }
+            if (this.armPosition.equals(ArmPosition.INIT)) {
+                CompBot.this.armPosition = ArmPosition.PIXEL_PLACE_LOW;
+                CompBot.this.moveArm_fromInit_toPixelPlace();
+            }
+            else if (this.armPosition.equals(ArmPosition.PIXEL_PLACE_LOW)) {
+                CompBot.this.armPosition = ArmPosition.PIXEL_PLACE_HIGH;
+                CompBot.this.moveArm_fromPixelPlace_toPixelPlaceHigh();
+            }
+            else if (this.armPosition.equals(ArmPosition.PIXEL_PLACE_HIGH)) {
+                CompBot.this.armPosition = ArmPosition.PIXEL_PLACE_LOW;
+                CompBot.this.moveArm_fromPixelPlaceHigh_toPixelPlace();
+            }
+            else if (this.armPosition.equals(ArmPosition.PIXEL_READY)) {
+                CompBot.this.armPosition = ArmPosition.PIXEL_PLACE_LOW;
+                CompBot.this.moveArm_fromPixelReady_toPixelPlace();
+            }
+            else if (this.armPosition.equals(ArmPosition.HOME)) {
+                CompBot.this.armPosition = ArmPosition.PIXEL_PLACE_LOW;
+                CompBot.this.moveArm_fromHome_toPixelPlace();
+            }
+            else if (this.armPosition.equals(ArmPosition.TRAVEL)) {
+                CompBot.this.armPosition = ArmPosition.PIXEL_PLACE_LOW;
+                CompBot.this.moveArm_fromTravel_toPixelPlace();
+            }
         });
 
+        //-----------------------------------------------------
+        // Y Button - Home
+        //-----------------------------------------------------
         this.addGp2_Y_PressHandler(event -> {
             CompBot.this.arm.cancelAllCommands();
+
+            if (this.armPosition.equals(ArmPosition.INIT)) {
+                CompBot.this.armPosition = ArmPosition.HOME;
+                CompBot.this.moveArm_fromInit_toHome();
+            }
+            else if (this.armPosition.equals(ArmPosition.PIXEL_PLACE_LOW) ||
+                     this.armPosition.equals(ArmPosition.PIXEL_PLACE_HIGH)) {
+                CompBot.this.armPosition = ArmPosition.HOME;
+                CompBot.this.moveArm_fromPixelPlace_toHome();
+            }
+            else if (this.armPosition.equals(ArmPosition.PIXEL_READY)) {
+                CompBot.this.armPosition = ArmPosition.HOME;
+                CompBot.this.moveArm_fromPixelReady_toHome();
+            }
+            else if (this.armPosition.equals(ArmPosition.TRAVEL)) {
+                CompBot.this.armPosition = ArmPosition.HOME;
+                CompBot.this.moveArm_fromTravel_toHome();
+            }
         });
     }
 
@@ -183,144 +237,254 @@ public class CompBot extends IsaacBot{
      */
     public void run () {
         super.run();
-//        this.arm.run();
-//        this.droneLauncher.run();
-//        this.pixelCatcher.run();
-//        this.lightBar.run();
     }
 
-    public void moveArm_fromInit_toPixelReady() {}
-    public void moveArm_fromInit_toPixelPlace() {}
-    public void moveArm_fromInit_toTravel() {}
-    public void moveArm_fromInit_toHome () {}
+    public void moveArm_fromInit_toPixelReady() { _moveArm_fromInit_toPixelReady(); }
+    public void moveArm_fromInit_toPixelPlace() { _moveArm_fromInit_toPixelPlace(); }
+    public void moveArm_fromInit_toTravel() { _moveArm_fromInit_toTravel(); }
+    public void moveArm_fromInit_toHome () { _moveArm_fromInit_toHome();}
 
-    public void moveArm_fromPixelReady_toPixelPlace () {}
-    public void moveArm_fromPixelReady_toTravel () {}
-    public void moveArm_fromPixelReady_toHome () {}
-    public void moveArm_fromPixelReady_doPixelPick () {}
+    public void moveArm_fromPixelReady_toPixelPlace () { _moveArm_fromPixelReady_toPixelPlace(); }
+    public void moveArm_fromPixelReady_toTravel () { _moveArm_fromPixelReady_toTravel(); }
+    public void moveArm_fromPixelReady_toHome () { _moveArm_fromPixelReady_toHome(); }
 
+    public void moveArm_fromPixelReady_doPixelPick () { _moveArm_fromPixelReady_doPickPixels(); }
 
+    public void moveArm_fromHome_toPixelPlace () { _moveArm_fromHome_toPixelPlace(); }
+    public void moveArm_fromHome_toTravel () { _moveArm_fromHome_toTravel(); }
 
-//    /**
-//     *
-//     */
-//    public void moveArm_fromHome_toPixelReady () {
-//
-//            this.arm.moveMiddleDegreesFromCurrentPosition(15)
-//                    .wait(0)
-//                    .moveMiddleToDegrees(-90, 1)
-//                    .moveBottomDegreesFromCurrentPosition(-30)
-//                    .wait(0)
-//                    .moveBottomToPosition(0.166, 1)
-//                    .moveMiddleToPosition(0.824,1)
-//                    .moveClawToPosition(0.636, 1)
-//                    .rotateClawToPosition(0.307, 1)
-//                    .wait(0)
-//            ;
-//
-//    }
-//
-//    /**
-//     *
-//     */
-//    public void moveArm_fromPixelTravel_toPixelReady() {
-//
-//        this.arm.moveBottomToPosition(0.183, 1)
-//                .moveMiddleToPosition(0.793,1)
-//                .moveClawToPosition(0.636, 1)
-//                .rotateClawToPosition(0.477, 1)
-//                .wait(0)
-//        ;
-//    }
-//
-//    /**
-//     *
-//     */
-//    public void moveArm_pickPixels () {
-//
-//            this.arm.closeLeftClaw()
-//                    .closeRightClaw()
-//                    .wait(250)
-//                    .moveBottomToPosition(0.165)
-//                    .wait(500)
-//                    .openLeftClaw()
-//                    .openRightClaw()
-//                    .wait(250)
-//                    .moveBottomToPosition(0.183, 1)
-//                    .wait(0)
-//            ;
-//    }
-//
-//    /**
-//     *
-//     */
-//    public void moveArm_toPixelTravel () {
-//
-//            this.arm.rotateClawToDegrees(0, 1)
-//                    .moveClawToDegrees(60, 1)
-//                    .moveMiddleToDegrees(60, 1)
-//                    .wait(1000)
-//                    .moveBottomToDegrees(-10, 1)
-//                    .wait(1000)
-//                    .moveBottomToPosition(0.568, 1)
-//                    .moveMiddleToPosition(0.994, 1)
-//                    .wait(2000)
-//                    .moveClawToDegrees(-5, 1)
-//                    .wait(0)
-//            ;
-//
-//    }
-//
-//    /**
-//     *
-//     */
-//    public void moveArm_fromPixelPlace_toPixelTravel () {
-//
-//        this.arm.moveMiddleToPosition(0.994, 1)
-//                .wait(2000)
-//                .moveBottomToPosition(0.568, 1)
-//                .moveClawToPosition(0.562, 1)
-//                .wait(0)
-//        ;
-//    }
-//
-//    /**
-//     *
-//     */
-//    public void moveArm_placePixelLow() {
-//
-//        this.arm.moveBottomToPosition(0.406, 1)
-//                .moveMiddleToPosition(0.318, 1)
-//                .moveClawToPosition(0.4, 1)
-//                .rotateClawToPosition(0.486)
-//                .wait(0);
-//    }
-//
-//    /**
-//     *
-//     */
-//    public void moveArm_placePixelMid() {
-//
-//        this.arm.moveBottomToPosition(0.322, 1)
-//                .moveMiddleToPosition(0.2938, 1)
-//                .moveClawToPosition(0.3472, 1)
-//                .rotateClawToPosition(0.492)
-//                .wait(0);
-//
-//    }
-//
-//    /**
-//     *
-//     */
-//    public void moveArm_placePixelHigh () {
-//
-//        this.arm.moveBottomToPosition(0.345, 1)
-//                .moveMiddleToPosition(0.431, 1)
-//                .moveClawToPosition(0.217, 1)
-//                .rotateClawToPosition(0.491)
-//                .wait(0);
-//
-//    }
+    public void moveArm_fromPixelPlace_toPixelPlaceHigh () { _moveArm_fromPixelPlace_toPixelPlaceHigh(); }
+    public void moveArm_fromPixelPlace_toPixelReady () { _moveArm_fromPixelPlace_toPixelReady(); }
+    public void moveArm_fromPixelPlace_toHome () { _moveArm_fromPixelPlace_toHome(); }
+    public void moveArm_fromPixelPlace_toTravel () { _moveArm_fromPixelPlace_toTravel(); }
+    public void moveArm_fromPixelPlaceHigh_toPixelPlace ( ) { _moveArm_fromPixelPlaceHigh_toPixelPlace(); }
+
+    public void moveArm_fromTravel_toPixelReady () { _moveArm_fromTravel_toPixelReady(); }
+    public void moveArm_fromTravel_toHome () { _moveArm_fromTravel_toHome(); }
+    public void moveArm_fromTravel_toPixelPlace () { _moveArm_fromTravel_toPixelPlace(); }
+
+    private void _moveArm_fromInit_toPixelReady () {
+            this.arm.rotateClawToPosition(0.307, 1)
+                    .moveMiddleDegreesFromCurrentPosition(15)
+                    .wait(0)
+                    .moveMiddleToDegrees(-90, 1)
+                    .moveBottomDegreesFromCurrentPosition(-30)
+                    .wait(0)
+                    .moveBottomToPosition(this.robotConfig.pixelReady_bottomBoom, 1)
+                    .moveMiddleToPosition(this.robotConfig.pixelReady_midBoom,1)
+                    .moveClawToPosition(this.robotConfig.pixelReady_clawBoom, 1)
+                    .rotateClawToPosition(this.robotConfig.pixelReady_clawRotator, 1)
+                    .wait(0);
+    }
+
+    private void _moveArm_fromInit_toPixelPlace () {
+        this.arm.rotateClawToPosition(0.307, 1)
+                .moveMiddleDegreesFromCurrentPosition(15)
+                .wait(0)
+                .moveMiddleToDegrees(-90, 1)
+                .moveBottomDegreesFromCurrentPosition(-30)
+                .wait(0)
+                .moveBottomToPosition(0.180, 1)
+                .moveMiddleToPosition(0.731,1)
+                .moveClawToPosition(0.507, 1)
+                .rotateClawToPosition(0.307, 1)
+                .wait(0);
+    }
+
+    private void _moveArm_fromInit_toTravel () {
+        this.arm.rotateClawToPosition(0.307, 1)
+                .moveMiddleDegreesFromCurrentPosition(15)
+                .wait(0)
+                .moveMiddleToDegrees(-90, 1)
+                .moveBottomDegreesFromCurrentPosition(-30)
+                .wait(0)
+                .moveBottomToPosition(0.047, 1)
+                .moveMiddleToPosition(0.527,1)
+                .moveClawToPosition(0.828, 1)
+                .rotateClawToPosition(0.307, 1)
+                .wait(0);
+    }
+
+    private void _moveArm_fromInit_toHome () {
+        this.arm.rotateClawToPosition(0.307, 1)
+                .moveMiddleDegreesFromCurrentPosition(15)
+                .wait(0)
+                .moveMiddleToDegrees(-90, 1)
+                .moveBottomDegreesFromCurrentPosition(-30)
+                .wait(0)
+                .moveBottomToPosition(this.robotConfig.pixelReady_bottomBoom, 1)
+                .moveMiddleToPosition(this.robotConfig.pixelReady_midBoom,1)
+                .moveClawToPosition(this.robotConfig.pixelReady_clawBoom, 1)
+                .rotateClawToPosition(this.robotConfig.pixelReady_clawRotator, 1)
+                .wait(0);
+    }
+
+    private void _moveArm_fromPixelPlace_toPixelPlaceHigh () {
+        this.arm.rotateClawToPosition(0.307, 1)
+                .moveBottomToPosition(0.135, 1)
+                .moveMiddleToPosition(0.606, 1)
+                .moveClawToPosition(0.593, 1)
+                .rotateClawToPosition(0.307, 1)
+                .wait(0);
+    }
+
+    private void _moveArm_fromPixelPlace_toHome() {
+        this.arm.rotateClawToPosition(0.307, 1)
+                .moveBottomToPosition(0.200, 1)
+                .wait(500)
+                .moveBottomToPosition(this.robotConfig.pixelReady_bottomBoom, 1)
+                .moveMiddleToPosition(this.robotConfig.pixelReady_midBoom,1)
+                .moveClawToPosition(this.robotConfig.pixelReady_clawBoom, 1)
+                .rotateClawToPosition(this.robotConfig.pixelReady_clawRotator, 1)
+                .wait(0);
+    }
+
+    private void _moveArm_fromPixelPlace_toPixelReady() {
+        this.arm.rotateClawToPosition(0.307, 1)
+                .moveBottomToPosition(0.200, 1)
+                .wait(500)
+                .moveBottomToPosition(this.robotConfig.pixelReady_bottomBoom, 1)
+                .moveMiddleToPosition(this.robotConfig.pixelReady_midBoom,1)
+                .moveClawToPosition(this.robotConfig.pixelReady_clawBoom, 1)
+                .rotateClawToPosition(this.robotConfig.pixelReady_clawRotator, 1)
+                .wait(0);
+    }
+
+    private void _moveArm_fromPixelPlace_toTravel () {
+        this.arm.rotateClawToPosition(0.307, 1)
+                .moveMiddleToPosition(0.527,1)
+                .wait(500)
+                .moveBottomToPosition(0.075, 0.015)
+                .wait(500)
+                .moveBottomToPosition(0.047, 0.015)
+                .moveClawToPosition(0.828, 1)
+                .rotateClawToPosition(0.307, 1)
+                .wait(0);
+    }
+
+    private void _moveArm_fromPixelReady_toPixelPlace () {
+        this.arm.rotateClawToPosition(0.307, 1)
+                .moveBottomToPosition(0.200, 1)
+                .wait(500)
+                .moveBottomToPosition(0.180, 1)
+                .moveMiddleToPosition(0.731, 1)
+                .moveClawToPosition(0.507, 1)
+                .rotateClawToPosition(0.307, 1)
+                .wait(0);
+    }
+
+    private void _moveArm_fromPixelReady_toTravel () {
+        this.arm.rotateClawToPosition(0.307, 1)
+                .moveMiddleToPosition(0.689,1)
+                .moveBottomToPosition(0.150, 1)
+                .wait(500)
+                .moveMiddleToPosition(0.527,1)
+                .wait(500)
+                .moveBottomToPosition(0.075, 0.015)
+                .wait(500)
+                .moveBottomToPosition(0.047, 0.015)
+                .moveClawToPosition(0.828, 1)
+                .rotateClawToPosition(0.307, 1)
+                .wait(0);
+    }
+
+    private void _moveArm_fromPixelReady_toHome () {
+
+    }
+
+    private void _moveArm_fromPixelPlaceHigh_toPixelPlace () {
+        this.arm.rotateClawToPosition(0.307, 1)
+                .moveBottomToPosition(0.180, 1)
+                .moveMiddleToPosition(0.731, 1)
+                .moveClawToPosition(0.507, 1)
+                .rotateClawToPosition(0.307, 1)
+                .wait(0);
+    }
+
+    private void _moveArm_fromHome_toTravel () {
+        this.arm.rotateClawToPosition(0.307, 1)
+                .moveMiddleToPosition(0.689,1)
+                .moveBottomToPosition(0.150, 1)
+                .wait(500)
+                .moveMiddleToPosition(0.527,1)
+                .wait(500)
+                .moveBottomToPosition(0.075, 0.015)
+                .wait(500)
+                .moveBottomToPosition(0.047, 0.015)
+                .moveClawToPosition(0.828, 1)
+                .rotateClawToPosition(0.307, 1)
+                .wait(0);
+    }
+
+    private void _moveArm_fromHome_toPixelPlace () {
+        this.arm.rotateClawToPosition(0.307, 1)
+                .moveBottomToPosition(0.200, 1)
+                .wait(500)
+                .moveBottomToPosition(0.180, 1)
+                .moveMiddleToPosition(0.731, 1)
+                .moveClawToPosition(0.507, 1)
+                .rotateClawToPosition(0.307, 1)
+                .wait(0);
+    }
+
+    private void _moveArm_fromHome_toPixelReady () {
+
+    }
+
+    private void _moveArm_fromTravel_toPixelReady() {
+        this.arm.rotateClawToPosition(0.307, 1)
+                .moveBottomToPosition(0.180, 1)
+                .moveMiddleToPosition(0.731, 1)
+                .moveClawToPosition(0.507, 1)
+                .wait(1000)
+                .moveBottomToPosition(this.robotConfig.pixelReady_bottomBoom, 1)
+                .moveMiddleToPosition(this.robotConfig.pixelReady_midBoom,1)
+                .moveClawToPosition(this.robotConfig.pixelReady_clawBoom, 1)
+                .rotateClawToPosition(this.robotConfig.pixelReady_clawRotator, 1)
+                .wait(0);
+    }
+
+    private void _moveArm_fromTravel_toHome() {
+        this.arm.rotateClawToPosition(0.307, 1)
+                .moveBottomToPosition(0.180, 1)
+                .moveMiddleToPosition(0.731, 1)
+                .moveClawToPosition(0.507, 1)
+                .wait(1000)
+                .moveBottomToPosition(this.robotConfig.pixelReady_bottomBoom, 1)
+                .moveMiddleToPosition(this.robotConfig.pixelReady_midBoom,1)
+                .moveClawToPosition(this.robotConfig.pixelReady_clawBoom, 1)
+                .rotateClawToPosition(this.robotConfig.pixelReady_clawRotator, 1)
+                .wait(0);
+    }
+
+    private void _moveArm_fromTravel_toPixelPlace () {
+        this.arm.rotateClawToPosition(0.307, 1)
+                .moveBottomToPosition(0.200, 1)
+                .wait(500)
+                .moveBottomToPosition(0.180, 1)
+                .moveMiddleToPosition(0.731, 1)
+                .moveClawToPosition(0.507, 1)
+                .rotateClawToPosition(0.307, 1)
+                .wait(0);
+    }
+
+    /**
+     *
+     */
+    public void _moveArm_fromPixelReady_doPickPixels () {
+
+            this.arm.closeLeftClaw()
+                    .closeRightClaw()
+                    .wait(350)
+                    .moveBottomToPosition(0.153)
+                    .wait(500)
+                    .openLeftClaw()
+                    .openRightClaw()
+                    .wait(250)
+                    .moveBottomToPosition(0.166, 1)
+                    .wait(0)
+            ;
+    }
 
     /**
      *
