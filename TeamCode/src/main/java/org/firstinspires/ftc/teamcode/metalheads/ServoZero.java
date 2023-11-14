@@ -39,7 +39,7 @@ public class ServoZero extends IsaacBot {
                 }
             }
 
-            telemetry.addData("servo left: ", "%2f", launcher.getPosition());
+            telemetry.addData("drone base: ", "%2f", launcher.getPosition());
             telemetry.update();
         }
     }
