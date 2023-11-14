@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.library.drivetrain;
 
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DistanceSensor;
 
 import org.firstinspires.ftc.library.drivetrain.commands.DriveTrainBackwardsCommand;
 import org.firstinspires.ftc.library.drivetrain.commands.DriveTrainDiagFrontLeftCommand;
@@ -12,6 +13,8 @@ import org.firstinspires.ftc.library.drivetrain.commands.DriveTrainGyroFrontAxle
 import org.firstinspires.ftc.library.drivetrain.commands.DriveTrainGyroFrontAxlePivotRightCommand;
 import org.firstinspires.ftc.library.drivetrain.commands.DriveTrainGyroRearAxlePivotLeftCommand;
 import org.firstinspires.ftc.library.drivetrain.commands.DriveTrainGyroRearAxlePivotRightCommand;
+import org.firstinspires.ftc.library.drivetrain.commands.DriveTrainScanSidewaysLeftCommand;
+import org.firstinspires.ftc.library.drivetrain.commands.DriveTrainScanSidewaysRightCommand;
 import org.firstinspires.ftc.library.drivetrain.commands.DriveTrainSidewaysLeftCommand;
 import org.firstinspires.ftc.library.drivetrain.commands.DriveTrainSidewaysRightCommand;
 import org.firstinspires.ftc.library.component.event.command_callback.CommandCallbackHandler;
@@ -297,6 +300,28 @@ public class SimpleDriveTrain extends AbstractDriveTrain
 
     /**
      *
+     * @param direction
+     * @param startPower
+     * @param maxPower
+     * @param distance
+     * @param units
+     * @param sensor
+     * @param threshold
+     * @return
+     */
+    public SimpleDriveTrain scanSideways (Direction direction, double startPower, double maxPower, double distance, Units units, DistanceSensor sensor, double threshold) {
+        switch (direction) {
+            case Right:
+                return this.scanSidewaysRight(startPower, maxPower, distance, units, sensor, threshold);
+            case LEFT:
+                return this.scanSidewaysLeft(startPower, maxPower, distance, units, sensor, threshold);
+        }
+
+        return this;
+    }
+
+    /**
+     *
      * @param startPower
      * @param maxPower
      * @param distance
@@ -315,11 +340,43 @@ public class SimpleDriveTrain extends AbstractDriveTrain
      * @param maxPower
      * @param distance
      * @param units
+     * @param sensor
+     * @param threshold
+     * @return
+     */
+    public SimpleDriveTrain scanSidewaysLeft (double startPower, double maxPower, double distance, Units units, DistanceSensor sensor, double threshold)
+    {
+        this.addCommand(new DriveTrainScanSidewaysLeftCommand(this, startPower, maxPower, distance, units, sensor, threshold));
+        return this;
+    }
+
+    /**
+     *
+     * @param startPower
+     * @param maxPower
+     * @param distance
+     * @param units
      * @return
      */
     public SimpleDriveTrain sidewaysRight (double startPower, double maxPower, double distance, Units units)
     {
         this.addCommand(new DriveTrainSidewaysRightCommand(this, startPower, maxPower, distance, units));
+        return this;
+    }
+
+    /**
+     *
+     * @param startPower
+     * @param maxPower
+     * @param distance
+     * @param units
+     * @param sensor
+     * @param threshold
+     * @return
+     */
+    public SimpleDriveTrain scanSidewaysRight (double startPower, double maxPower, double distance, Units units, DistanceSensor sensor, double threshold)
+    {
+        this.addCommand(new DriveTrainScanSidewaysRightCommand(this, startPower, maxPower, distance, units, sensor, threshold));
         return this;
     }
 
