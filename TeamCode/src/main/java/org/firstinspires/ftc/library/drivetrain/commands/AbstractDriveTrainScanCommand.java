@@ -13,7 +13,7 @@ import java.util.List;
 /**
  *
  */
-public abstract class AbstractDriveTrainScanCommand extends AbstractDriveTrainLineCommand {
+public abstract class AbstractDriveTrainScanCommand extends AbstractDriveTrainLineCommand implements IScanCommand {
 
     /**
      *
@@ -44,6 +44,15 @@ public abstract class AbstractDriveTrainScanCommand extends AbstractDriveTrainLi
         this.sensor = sensor;
         this.threshold = threshold;
     }
+
+    /**
+     *
+     * @return
+     */
+    public double getDistance () {
+        return this.distance;
+    }
+
 
     /**
      *

@@ -66,6 +66,15 @@ public abstract class CommandCallbackEvent extends Event<CommandCallbackHandler>
      *
      * @return
      */
+    public ICommand getCommand () {
+        return this.command;
+    }
+
+
+    /**
+     *
+     * @return
+     */
     public boolean isSuccess () {
         return this.commandCallbackType.equals(Type.SUCCESS);
     }
