@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode.metalheads.competition.base;
 import com.qualcomm.hardware.rev.Rev2mDistanceSensor;
 import com.qualcomm.robotcore.hardware.DistanceSensor;
 
+import org.firstinspires.ftc.library.utility.Direction;
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 import org.firstinspires.ftc.teamcode.metalheads.competition.config.RobotAutoConfig;
 import org.firstinspires.ftc.teamcode.metalheads.competition.config.SimpleDriveCompConfig;
@@ -17,6 +18,9 @@ import org.firstinspires.ftc.library.component.event.ping.PingEvent;
 import org.firstinspires.ftc.library.component.event.ping.PingHandler;
 import org.firstinspires.ftc.library.drivetrain.SimpleDriveTrain;
 import org.firstinspires.ftc.library.utility.Units;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
@@ -38,6 +42,10 @@ public class CompAutoBot extends CompBot {
     /**
      */
     protected RobotAutoConfig robotAutoConfig;
+
+    /**
+     */
+    private List<Double> backdropPingResults = new ArrayList<Double>();
 
     /**
      * Constructor
@@ -91,6 +99,9 @@ public class CompAutoBot extends CompBot {
                 CompAutoBot.this.driveTrain.forward(0.2, 0.1, 18.5, Units.Centimeters);
                 CompAutoBot.this.driveTrain.wait(0, new CommandCallbackAdapter(this){
                     public void onAfter(CommandAfterEvent event){
+
+
+
                         this.command.markAsCompleted();
 
                         if (CompAutoBot.this.deployArmCommand.isCompleted()) {
@@ -107,13 +118,17 @@ public class CompAutoBot extends CompBot {
                         .wait(0)
                         .moveMiddleToDegrees(-90, 1)
                         .moveBottomDegreesFromCurrentPosition(-30)
-                        .wait(1000)
-                        .moveBottomToPosition(0.147, 1)
-                        .moveMiddleToPosition(0.678,1)
-                        .moveClawToPosition(0.700, 1)
+                        .wait(1000, new CommandCallbackAdapter(this){
+                            public void onAfter(CommandAfterEvent event){
+                                CompAutoBot.this.pixelCatcher.toggleLeftArm();
+                                CompAutoBot.this.pixelCatcher.toggleRightArm();
+                            }                        })
+                        .moveBottomToPosition(0.135, 1)
+                        .moveMiddleToPosition(0.718,1)
+                        .moveClawToPosition(0.715, 1)
                         .rotateClawToPosition(0.307, 1)
                         .wait(2500)
-                        .moveBottomToPosition(0.130, 1)
+                        .moveBottomToPosition(0.121, 1)
                         .wait(100, new CommandCallbackAdapter(this){
                             public void onAfter(CommandAfterEvent event){
                                 this.command.markAsCompleted();
@@ -125,7 +140,6 @@ public class CompAutoBot extends CompBot {
                         });
             }
         };
-
 
         // move forward 18.5 cm to scan for token
         this.addCommand(this.bumpForwardCommand);
@@ -139,7 +153,10 @@ public class CompAutoBot extends CompBot {
      */
     public void run () {
         super.run();
-        driveTrain.run();
+        this.driveTrain.run();
+        this.arm.run();
+        this.lightBar.run();
+        this.pixelCatcher.run();
     }
 
     /**
@@ -222,7 +239,7 @@ public class CompAutoBot extends CompBot {
                         CompAutoBot.this.robotAutoConfig.startingTrussDirection.invert(),
                         0.1, 0.1, 16, Units.Centimeters)
                         .wait(0)
-                        .forward(0.2, 0.1, 21, Units.Centimeters)
+                        .forward(0.2, 0.1, 22, Units.Centimeters)
                         .wait(0, new CommandCallbackAdapter(this){
                             public void onAfter(CommandAfterEvent afterEvent) {
                                 command.markAsCompleted();
@@ -234,24 +251,12 @@ public class CompAutoBot extends CompBot {
         this.addCommand(new OneTimeSynchronousCommand() {
             public void runOnce(ICommand command) {
                 CompAutoBot.this.arm.moveBottomToPosition(0.145,1)
-                        .closeRightClaw()
+                        .closeLeftClaw()
                         .wait(100, new CommandCallbackAdapter(this){
                             public void onSuccess(CommandSuccessEvent successEvent) {
                                 this.command.markAsCompleted();
                             }
                         });
-            }
-        });
-
-        // move arm to travel mode
-        this.addCommand(new OneTimeCommand() {
-            public void runOnce(ICommand command) {
-                //CompAutoBot.this.moveArm_toPixelTravel();
-                CompAutoBot.this.arm.wait(0, new CommandCallbackAdapter(this){
-                    public void onSuccess(CommandSuccessEvent successEvent) {
-                        this.command.markAsCompleted();
-                    }
-                });
             }
         });
 
@@ -262,7 +267,7 @@ public class CompAutoBot extends CompBot {
                 CompAutoBot.this.driveTrain.wait(0, new CommandCallbackAdapter(this){
                     public void onSuccess(CommandSuccessEvent successEvent) {
                         this.command.markAsCompleted();
-                        CompAutoBot.this.autoRoutine_beginStepTwo(93);
+                        CompAutoBot.this.autoRoutine_beginStepTwo(91);
                     }
                 });
             }
@@ -355,7 +360,7 @@ public class CompAutoBot extends CompBot {
         this.addCommand(new OneTimeSynchronousCommand() {
             public void runOnce(ICommand command) {
                 CompAutoBot.this.arm.moveBottomToPosition(0.145,1)
-                        .closeRightClaw()
+                        .closeLeftClaw()
                         .wait(100, new CommandCallbackAdapter(this){
                             public void onSuccess(CommandSuccessEvent successEvent) {
                                 this.command.markAsCompleted();
@@ -422,7 +427,7 @@ public class CompAutoBot extends CompBot {
         this.addCommand(new OneTimeSynchronousCommand() {
             public void runOnce(ICommand command) {
                 CompAutoBot.this.arm.moveBottomToPosition(0.145,1)
-                        .closeRightClaw()
+                        .closeLeftClaw()
                         .wait(100, new CommandCallbackAdapter(this){
                             public void onSuccess(CommandSuccessEvent successEvent) {
                                 this.command.markAsCompleted();
@@ -484,14 +489,156 @@ public class CompAutoBot extends CompBot {
         this.addCommand(new OneTimeSynchronousCommand() {
             public void runOnce(ICommand command) {
                 CompAutoBot.this.driveTrain.forward(0.1, 0.4, distance, Units.Centimeters)
-                        .sideways( CompAutoBot.this.robotAutoConfig.startingTrussDirection,
-                                0.1, 0.2, 25, Units.Centimeters)
-                        .gyroTurn(CompAutoBot.this.robotAutoConfig.startingTrussDirection.invert(), 0.1, 0.3, 90)
+                        .sideways(CompAutoBot.this.robotAutoConfig.startingTrussDirection, 0.1, 0.3, 20, Units.Centimeters)
                         .wait(0, new CommandCallbackAdapter(this){
                             public void onSuccess(CommandSuccessEvent successEvent) {
                                 this.command.markAsCompleted();
                             }
                         });
+            }
+        });
+
+
+        this.addCommand(new OneTimeSynchronousCommand() {
+            public void runOnce(ICommand command) {
+                CompAutoBot.this.driveTrain
+                .gyroTurn(CompAutoBot.this.robotAutoConfig.startingTrussDirection, 0.1, 0.3, 45)
+                .wait(0, new CommandCallbackAdapter(this){
+                    public void onSuccess(CommandSuccessEvent successEvent) {
+                        this.command.markAsCompleted();
+                    }
+                });
+
+            }
+        });
+
+        this.addCommand(new OneTimeCommand() {
+            public void runOnce(ICommand command) {
+                CompAutoBot.this.driveTrain
+                        .gyroTurn(CompAutoBot.this.robotAutoConfig.startingTrussDirection, 0.1, 0.3, 45)
+                        .wait(0, new CommandCallbackAdapter(this){
+                            public void onSuccess(CommandSuccessEvent successEvent) {
+                                this.command.markAsCompleted();
+                            }
+                        });
+
+            }
+        });
+
+        this.addCommand(new OneTimeCommand() {
+            public void runOnce(ICommand command) {
+                CompAutoBot.this.moveArm_fromPixelReady_toTravel();
+                CompAutoBot.this.arm.wait(0, new CommandCallbackAdapter(this){
+                    public void onSuccess(CommandSuccessEvent successEvent) {
+                        this.command.markAsCompleted();
+                    }
+                });
+            }
+        });
+
+        this.addCommand(new OneTimeSynchronousCommand() {
+            public void runOnce(ICommand command) {
+                CompAutoBot.this.driveTrain.forward(0.1, 0.4, 130, Units.Centimeters)
+                        .wait(0, new CommandCallbackAdapter(this){
+                            public void onSuccess(CommandSuccessEvent successEvent) {
+                                this.command.markAsCompleted();
+                            }
+                        });
+
+            }
+        });
+
+        this.addCommand(new OneTimeCommand() {
+            public void runOnce(ICommand command) {
+                CompAutoBot.this.moveArm_fromTravel_toPixelPlace();
+                CompAutoBot.this.arm.wait(0, new CommandCallbackAdapter(this){
+                    public void onSuccess(CommandSuccessEvent successEvent) {
+                        this.command.markAsCompleted();
+                    }
+                });
+            }
+        });
+
+        this.addCommand(new OneTimeSynchronousCommand() {
+            public void runOnce(ICommand command) {
+                CompAutoBot.this.driveTrain.forward(0.1, 0.4, 84, Units.Centimeters)
+                        .wait(0, new CommandCallbackAdapter(this){
+                            public void onSuccess(CommandSuccessEvent successEvent) {
+                                this.command.markAsCompleted();
+                            }
+                        });
+
+            }
+        });
+
+        this.addCommand(new OneTimeSynchronousCommand() {
+            public void runOnce(ICommand command) {
+        CompAutoBot.this.scanForBackdrop(0, 100, CompAutoBot.this.robotAutoConfig.startingTrussDirection, 30, new PingHandler() {
+                    public void onPing(PingEvent event) {
+                        if (event.getDistance() > -1) {
+                            CompAutoBot.this.telemetry.addData("Distance: ", "%2f", event.getDistance());
+                            CompAutoBot.this.telemetry.update();
+                        }
+                    }
+                });
+            }
+        });
+    }
+
+    /**
+     *
+     *
+     * @param targetDistance
+     * @param handler
+     */
+    protected void scanForBackdrop (double startDistanceCM, double endDistanceCM, Direction direction, double targetDistance, PingHandler handler) {
+        if (startDistanceCM > endDistanceCM) {
+            handler.onPing(new PingEvent(startDistanceCM, -1, null));
+            return;
+        }
+
+        this.driveTrain.sideways(direction, 0.2, 0.2, 1, Units.Centimeters);
+        this.driveTrain.wait(0, new CommandCallbackAdapter(){
+            public void onSuccess(CommandSuccessEvent successEvent) {
+                CompAutoBot.this.telemetry.addLine("Pinging...");
+
+                double distance = CompAutoBot.this.backdropSensor.getDistance(DistanceUnit.CM);
+
+                CompAutoBot.this.telemetry.addData("Distance: ", "%2f", distance);
+                CompAutoBot.this.telemetry.update();
+
+                if (distance <= targetDistance) {
+
+                    if (CompAutoBot.this.backdropPingResults.isEmpty()) {
+                        CompAutoBot.this.backdropPingResults.add(distance);
+                        double nextStart = startDistanceCM + (double)1;
+                        CompAutoBot.this.scanForBackdrop(nextStart, endDistanceCM, direction, targetDistance, handler);
+                    }
+                    else {
+                        double lastPing = CompAutoBot.this.backdropPingResults.get(CompAutoBot.this.backdropPingResults.size() - 1);
+
+                        if (Math.abs(distance - lastPing) < 1) {
+                            CompAutoBot.this.backdropPingResults.add(distance);
+
+                            if (CompAutoBot.this.backdropPingResults.size() >= 10) {
+                                handler.onPing(new PingEvent(startDistanceCM, distance, DistanceUnit.CM));
+                            }
+                            else {
+                                double nextStart = startDistanceCM + (double)1;
+                                CompAutoBot.this.scanForBackdrop(nextStart, endDistanceCM, direction, targetDistance, handler);
+                            }
+                        }
+                        else {
+                            CompAutoBot.this.backdropPingResults.clear();
+                            double nextStart = startDistanceCM + (double)1;
+                            CompAutoBot.this.scanForBackdrop(nextStart, endDistanceCM, direction, targetDistance, handler);
+                        }
+                    }
+                }
+                else {
+                    double nextStart = startDistanceCM + (double)1;
+                    CompAutoBot.this.scanForBackdrop(nextStart, endDistanceCM, direction, targetDistance, handler);
+                }
 
             }
         });

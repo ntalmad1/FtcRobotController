@@ -2,13 +2,20 @@ package org.firstinspires.ftc.teamcode.metalheads.competition.base;
 
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.qualcomm.robotcore.hardware.DistanceSensor;
 
+import org.firstinspires.ftc.library.component.event.command_callback.CommandCallbackAdapter;
+import org.firstinspires.ftc.library.component.event.command_callback.CommandSuccessEvent;
+import org.firstinspires.ftc.library.component.event.ping.PingEvent;
+import org.firstinspires.ftc.library.component.event.ping.PingHandler;
 import org.firstinspires.ftc.library.dronelauncher.DroneLauncher;
 import org.firstinspires.ftc.library.dronelauncher.DroneLauncherConfig;
 import org.firstinspires.ftc.library.lightbar.LightBarConfig;
 import org.firstinspires.ftc.library.lightbar.LightBar;
 import org.firstinspires.ftc.library.pixelcatcher.PixelCatcher;
 import org.firstinspires.ftc.library.pixelcatcher.PixelCatcherConfig;
+import org.firstinspires.ftc.library.utility.Direction;
+import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 import org.firstinspires.ftc.teamcode.metalheads.competition.config.ArmCompConfig;
 import org.firstinspires.ftc.library.IsaacBot;
 import org.firstinspires.ftc.library.arm.Arm;
@@ -78,6 +85,10 @@ public class CompBot extends IsaacBot{
     protected LightBar lightBar;
 
     /**
+     */
+    protected DistanceSensor backdropSensor;
+
+    /**
      * Constructor
      *
      */
@@ -87,7 +98,7 @@ public class CompBot extends IsaacBot{
         this.robotConfig = new RobotConfig();
 
         this.armConfig = new ArmCompConfig(this);
-        this.armConfig.debug = true;
+        this.armConfig.debug = false;
 
         this.droneLauncherConfig = new DroneLauncherCompConfig(this);
 
@@ -98,28 +109,37 @@ public class CompBot extends IsaacBot{
         //-------------------------------------------------
         // A Button
         //-------------------------------------------------
+//        this.addGp2_A_PressHandler(event -> {
+//            CompBot.this.arm.cancelAllCommands();
+//
+//            if (this.armPosition.equals(ArmPosition.INIT)) {
+//                CompBot.this.armPosition = ArmPosition.PIXEL_READY;
+//                CompBot.this.moveArm_fromInit_toPixelReady();
+//            }
+//            else if (this.armPosition.equals(ArmPosition.PIXEL_PLACE_LOW) ||
+//                    this.armPosition.equals(ArmPosition.PIXEL_PLACE_HIGH)) {
+//                CompBot.this.armPosition = ArmPosition.PIXEL_READY;
+//                CompBot.this.moveArm_fromPixelPlace_toPixelReady();
+//            }
+//            else if (this.armPosition.equals(ArmPosition.TRAVEL)) {
+//                CompBot.this.armPosition = ArmPosition.PIXEL_READY;
+//                CompBot.this.moveArm_fromTravel_toPixelReady();
+//            }
+//            else if (this.armPosition.equals(ArmPosition.PIXEL_READY) ||
+//                    this.armPosition.equals(ArmPosition.HOME)) {
+//                CompBot.this.armPosition = ArmPosition.PIXEL_READY;
+//                CompBot.this.moveArm_fromPixelReady_doPixelPick();
+//            }
+//
+//        });
         this.addGp2_A_PressHandler(event -> {
-            CompBot.this.arm.cancelAllCommands();
-
-            if (this.armPosition.equals(ArmPosition.INIT)) {
-                CompBot.this.armPosition = ArmPosition.PIXEL_READY;
-                CompBot.this.moveArm_fromInit_toPixelReady();
-            }
-            else if (this.armPosition.equals(ArmPosition.PIXEL_PLACE_LOW) ||
-                    this.armPosition.equals(ArmPosition.PIXEL_PLACE_HIGH)) {
-                CompBot.this.armPosition = ArmPosition.PIXEL_READY;
-                CompBot.this.moveArm_fromPixelPlace_toPixelReady();
-            }
-            else if (this.armPosition.equals(ArmPosition.TRAVEL)) {
-                CompBot.this.armPosition = ArmPosition.PIXEL_READY;
-                CompBot.this.moveArm_fromTravel_toPixelReady();
-            }
-            else if (this.armPosition.equals(ArmPosition.PIXEL_READY) ||
-                    this.armPosition.equals(ArmPosition.HOME)) {
-                CompBot.this.armPosition = ArmPosition.PIXEL_READY;
-                CompBot.this.moveArm_fromPixelReady_doPixelPick();
-            }
-
+            CompBot.this.pingBackdrop(new PingHandler() {
+                @Override
+                public void onPing(PingEvent event) {
+                    CompBot.this.telemetry.addData("Ping Backdrop: ", "%2f", event.getDistance());
+                    CompBot.this.telemetry.update();
+                }
+            });
         });
 
         //-------------------------------------------------
@@ -211,6 +231,8 @@ public class CompBot extends IsaacBot{
      */
     public void initBot () {
         super.initBot();
+
+        this.backdropSensor = this.hardwareMap.get(DistanceSensor.class, "backdropSensor");
 
         this.lightBar = new LightBar(this.lightBarConfig);
         this.lightBar.init();
@@ -484,6 +506,15 @@ public class CompBot extends IsaacBot{
                     .moveBottomToPosition(this.robotConfig.pixelReady_bottomBoom, 1)
                     .wait(0)
             ;
+    }
+
+    /**
+     *
+     * @param handler
+     */
+    protected void pingBackdrop (PingHandler handler) {
+        PingEvent event = new PingEvent(0, this.backdropSensor.getDistance(DistanceUnit.CM), DistanceUnit.CM);
+        handler.onPing(event);
     }
 
     /**
