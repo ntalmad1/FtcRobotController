@@ -306,10 +306,10 @@ public class CompBot extends IsaacBot{
                 .moveMiddleToDegrees(-90, 1)
                 .moveBottomDegreesFromCurrentPosition(-30)
                 .wait(0)
-                .moveBottomToPosition(0.180, 1)
-                .moveMiddleToPosition(0.731,1)
-                .moveClawToPosition(0.507, 1)
-                .rotateClawToPosition(0.307, 1)
+                .moveBottomToPosition(this.robotConfig.pixelPlace_bottomBoom, 1)
+                .moveMiddleToPosition(this.robotConfig.pixelPlace_midBoom,1)
+                .moveClawToPosition(this.robotConfig.pixelPlace_clawBoom, 1)
+                .rotateClawToPosition(this.robotConfig.pixelPlace_clawRotator, 1)
                 .wait(0);
     }
 
@@ -388,10 +388,10 @@ public class CompBot extends IsaacBot{
         this.arm.rotateClawToPosition(0.307, 1)
                 .moveBottomToPosition(0.200, 1)
                 .wait(500)
-                .moveBottomToPosition(0.180, 1)
-                .moveMiddleToPosition(0.731, 1)
-                .moveClawToPosition(0.507, 1)
-                .rotateClawToPosition(0.307, 1)
+                .moveBottomToPosition(this.robotConfig.pixelPlace_bottomBoom, 1)
+                .moveMiddleToPosition(this.robotConfig.pixelPlace_midBoom,1)
+                .moveClawToPosition(this.robotConfig.pixelPlace_clawBoom, 1)
+                .rotateClawToPosition(this.robotConfig.pixelPlace_clawRotator, 1)
                 .wait(0);
     }
 
@@ -416,10 +416,10 @@ public class CompBot extends IsaacBot{
 
     private void _moveArm_fromPixelPlaceHigh_toPixelPlace () {
         this.arm.rotateClawToPosition(0.307, 1)
-                .moveBottomToPosition(0.180, 1)
-                .moveMiddleToPosition(0.731, 1)
-                .moveClawToPosition(0.507, 1)
-                .rotateClawToPosition(0.307, 1)
+                .moveBottomToPosition(this.robotConfig.pixelPlace_bottomBoom, 1)
+                .moveMiddleToPosition(this.robotConfig.pixelPlace_midBoom,1)
+                .moveClawToPosition(this.robotConfig.pixelPlace_clawBoom, 1)
+                .rotateClawToPosition(this.robotConfig.pixelPlace_clawRotator, 1)
                 .wait(0);
     }
 
@@ -442,10 +442,10 @@ public class CompBot extends IsaacBot{
         this.arm.rotateClawToPosition(0.307, 1)
                 .moveBottomToPosition(0.200, 1)
                 .wait(500)
-                .moveBottomToPosition(0.180, 1)
-                .moveMiddleToPosition(0.731, 1)
-                .moveClawToPosition(0.507, 1)
-                .rotateClawToPosition(0.307, 1)
+                .moveBottomToPosition(this.robotConfig.pixelPlace_bottomBoom, 1)
+                .moveMiddleToPosition(this.robotConfig.pixelPlace_midBoom,1)
+                .moveClawToPosition(this.robotConfig.pixelPlace_clawBoom, 1)
+                .rotateClawToPosition(this.robotConfig.pixelPlace_clawRotator, 1)
                 .wait(0);
     }
 
@@ -483,10 +483,10 @@ public class CompBot extends IsaacBot{
         this.arm.rotateClawToPosition(0.307, 1)
                 .moveBottomToPosition(0.200, 1)
                 .wait(500)
-                .moveBottomToPosition(0.180, 1)
-                .moveMiddleToPosition(0.731, 1)
-                .moveClawToPosition(0.507, 1)
-                .rotateClawToPosition(0.307, 1)
+                .moveBottomToPosition(this.robotConfig.pixelPlace_bottomBoom, 1)
+                .moveMiddleToPosition(this.robotConfig.pixelPlace_midBoom,1)
+                .moveClawToPosition(this.robotConfig.pixelPlace_clawBoom, 1)
+                .rotateClawToPosition(this.robotConfig.pixelPlace_clawRotator, 1)
                 .wait(0);
     }
 
