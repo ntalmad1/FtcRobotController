@@ -1,6 +1,8 @@
 package org.firstinspires.ftc.library.component.event;
 
 import org.firstinspires.ftc.library.IsaacBot;
+import org.firstinspires.ftc.library.component.event.gp1_dpad_down_down.Gp1_Dpad_Down_DownEvent;
+import org.firstinspires.ftc.library.component.event.gp1_dpad_down_press.Gp1_Dpad_Down_PressEvent;
 import org.firstinspires.ftc.library.component.event.gp1_left_trigger_down.Gp1_Left_Trigger_DownEvent;
 import org.firstinspires.ftc.library.component.event.gp1_right_trigger_down.Gp1_Right_Trigger_DownEvent;
 import org.firstinspires.ftc.library.component.event.gp2_a_press.Gp2_A_PressEvent;
@@ -73,6 +75,11 @@ public class EventBus extends HandlerManager {
     private boolean gp2_y_down;
     private boolean gp2_left_bumper_down;
     private boolean gp2_right_bumper_down;
+
+    /**
+     *
+     */
+    private boolean g1_dpad_down_down;
 
 
     /**
@@ -167,6 +174,16 @@ public class EventBus extends HandlerManager {
         }
 
         //------------------------------------------------------------------------------------
+        boolean current_gp1_dpad_down = this.robot.gamepad1.dpad_down;
+        if (this.g1_dpad_down_down && !current_gp1_dpad_down) {
+            this.g1_dpad_down_down = false;
+            this.fireEvent(new Gp1_Dpad_Down_PressEvent());
+        }
+        else if (current_gp1_dpad_down) {
+            this.g1_dpad_down_down = true;
+            this.fireEvent(new Gp1_Dpad_Down_DownEvent());
+        }
+
 
         // Gamepad 2 Dpad Down Events
         boolean current_gp2_dpad_left = this.robot.gamepad2.dpad_left;

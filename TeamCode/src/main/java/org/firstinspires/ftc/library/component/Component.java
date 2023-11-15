@@ -8,6 +8,10 @@ import org.firstinspires.ftc.library.component.event.EventBus;
 import org.firstinspires.ftc.library.component.event.EventHandler;
 import org.firstinspires.ftc.library.component.event.EventType;
 import org.firstinspires.ftc.library.component.event.HandlerRegistration;
+import org.firstinspires.ftc.library.component.event.gp1_dpad_down_down.Gp1_Dpad_Down_DownEvent;
+import org.firstinspires.ftc.library.component.event.gp1_dpad_down_down.Gp1_Dpad_Down_DownHandler;
+import org.firstinspires.ftc.library.component.event.gp1_dpad_down_press.Gp1_Dpad_Down_PressEvent;
+import org.firstinspires.ftc.library.component.event.gp1_dpad_down_press.Gp1_Dpad_Down_PressHandler;
 import org.firstinspires.ftc.library.component.event.gp1_left_trigger_down.Gp1_Left_Trigger_DownEvent;
 import org.firstinspires.ftc.library.component.event.gp1_left_trigger_down.Gp1_Left_Trigger_DownHandler;
 import org.firstinspires.ftc.library.component.event.gp1_right_trigger_down.Gp1_Right_Trigger_DownEvent;
@@ -159,8 +163,16 @@ public abstract class Component implements IComponent {
         return EventBus.getInstance().addHandler(Gp2_Right_Bumper_PressEvent.TYPE, handler);
     }
 
-
     //-----------------------------------------------------------------------------------------
+    // Dpad
+    //-----------------------------------------------------------------------------------------
+    public HandlerRegistration addGp1_Dpad_Down_DownHandler (Gp1_Dpad_Down_DownHandler handler) {
+        return EventBus.getInstance().addHandler(Gp1_Dpad_Down_DownEvent.TYPE, handler);
+    }
+
+    public HandlerRegistration addGp1_Dpad_Down_PressHandler (Gp1_Dpad_Down_PressHandler handler) {
+        return EventBus.getInstance().addHandler(Gp1_Dpad_Down_PressEvent.TYPE, handler);
+    }
 
     public HandlerRegistration addGp2_Dpad_Left_DownHandler (Gp2_Dpad_Left_DownHandler handler) {
         return EventBus.getInstance().addHandler(Gp2_Dpad_Left_DownEvent.TYPE, handler);
@@ -177,6 +189,7 @@ public abstract class Component implements IComponent {
     public HandlerRegistration addGp2_Dpad_Down_DownHandler (Gp2_Dpad_Down_DownHandler handler) {
         return EventBus.getInstance().addHandler(Gp2_Dpad_Down_DownEvent.TYPE, handler);
     }
+
 
     /**
      *
