@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode.metalheads;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 
 import org.firstinspires.ftc.library.IsaacBot;
 import org.firstinspires.ftc.library.drivetrain.SimpleDriveTrain;
@@ -11,7 +12,7 @@ import org.firstinspires.ftc.library.utility.Units;
  * 
  */
 @Autonomous(name="Robot: SelfDrive", group="Robot")
-//@Disabled
+@Disabled
 public class SelfDrive extends IsaacBot
 {
     /**
