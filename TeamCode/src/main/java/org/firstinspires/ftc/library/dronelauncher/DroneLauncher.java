@@ -66,6 +66,14 @@ public class DroneLauncher extends Component {
 
     /**
      *
+     */
+    public void launchDrone () {
+
+
+    }
+
+    /**
+     *
      * @param position The position to rotate the launcher to
      * @return DroneLauncher - fluid interface
      */

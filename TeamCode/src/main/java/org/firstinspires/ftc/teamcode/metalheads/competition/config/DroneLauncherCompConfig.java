@@ -32,8 +32,6 @@ public class DroneLauncherCompConfig extends DroneLauncherConfig {
         this.rotatorConfig.servoName = "droneBase";
         this.rotatorConfig.direction = Servo.Direction.FORWARD;
 
-        //this.rotatorConfig.controllerInputMethod = ;
-
         this.rotatorConfig.invertInput = false;
 
         this.rotatorConfig.minPosition = 0;
@@ -47,5 +45,7 @@ public class DroneLauncherCompConfig extends DroneLauncherConfig {
         this.rotatorConfig.maxIncrement = 0.001;
 
         this.rotatorConfig.debug = false;
+
+        this.launchPosition = 0.15;
     }
 }
