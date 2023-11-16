@@ -109,37 +109,27 @@ public class CompBot extends IsaacBot{
         //-------------------------------------------------
         // A Button
         //-------------------------------------------------
-//        this.addGp2_A_PressHandler(event -> {
-//            CompBot.this.arm.cancelAllCommands();
-//
-//            if (this.armPosition.equals(ArmPosition.INIT)) {
-//                CompBot.this.armPosition = ArmPosition.PIXEL_READY;
-//                CompBot.this.moveArm_fromInit_toPixelReady();
-//            }
-//            else if (this.armPosition.equals(ArmPosition.PIXEL_PLACE_LOW) ||
-//                    this.armPosition.equals(ArmPosition.PIXEL_PLACE_HIGH)) {
-//                CompBot.this.armPosition = ArmPosition.PIXEL_READY;
-//                CompBot.this.moveArm_fromPixelPlace_toPixelReady();
-//            }
-//            else if (this.armPosition.equals(ArmPosition.TRAVEL)) {
-//                CompBot.this.armPosition = ArmPosition.PIXEL_READY;
-//                CompBot.this.moveArm_fromTravel_toPixelReady();
-//            }
-//            else if (this.armPosition.equals(ArmPosition.PIXEL_READY) ||
-//                    this.armPosition.equals(ArmPosition.HOME)) {
-//                CompBot.this.armPosition = ArmPosition.PIXEL_READY;
-//                CompBot.this.moveArm_fromPixelReady_doPixelPick();
-//            }
-//
-//        });
         this.addGp2_A_PressHandler(event -> {
-            CompBot.this.pingBackdrop(new PingHandler() {
-                @Override
-                public void onPing(PingEvent event) {
-                    CompBot.this.telemetry.addData("Ping Backdrop: ", "%2f", event.getDistance());
-                    CompBot.this.telemetry.update();
-                }
-            });
+            CompBot.this.arm.cancelAllCommands();
+
+            if (this.armPosition.equals(ArmPosition.INIT)) {
+                CompBot.this.armPosition = ArmPosition.PIXEL_READY;
+                CompBot.this.moveArm_fromInit_toPixelReady();
+            }
+            else if (this.armPosition.equals(ArmPosition.PIXEL_PLACE_LOW) ||
+                    this.armPosition.equals(ArmPosition.PIXEL_PLACE_HIGH)) {
+                CompBot.this.armPosition = ArmPosition.PIXEL_READY;
+                CompBot.this.moveArm_fromPixelPlace_toPixelReady();
+            }
+            else if (this.armPosition.equals(ArmPosition.TRAVEL)) {
+                CompBot.this.armPosition = ArmPosition.PIXEL_READY;
+                CompBot.this.moveArm_fromTravel_toPixelReady();
+            }
+            else if (this.armPosition.equals(ArmPosition.PIXEL_READY) ||
+                    this.armPosition.equals(ArmPosition.HOME)) {
+                CompBot.this.armPosition = ArmPosition.PIXEL_READY;
+                CompBot.this.moveArm_fromPixelReady_doPixelPick();
+            }
         });
 
         //-------------------------------------------------

@@ -1,8 +1,8 @@
 package org.firstinspires.ftc.library.arm;
 
-import org.firstinspires.ftc.library.boom.Boom;
-import org.firstinspires.ftc.library.boom.BoomMoveToDegreesCommand;
-import org.firstinspires.ftc.library.boom.BoomMoveToPositionCommand;
+import org.firstinspires.ftc.teamcode.metalheads.competition.boom.Boom;
+import org.firstinspires.ftc.teamcode.metalheads.competition.boom.BoomMoveToDegreesCommand;
+import org.firstinspires.ftc.teamcode.metalheads.competition.boom.BoomMoveToPositionCommand;
 import org.firstinspires.ftc.library.claw.Claw;
 import org.firstinspires.ftc.library.claw.ClawCloseCommand;
 import org.firstinspires.ftc.library.claw.ClawOpenCommand;

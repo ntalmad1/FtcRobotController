@@ -9,7 +9,7 @@ import org.firstinspires.ftc.library.Control;
 import org.firstinspires.ftc.library.IsaacBot;
 import org.firstinspires.ftc.library.arm.Arm;
 import org.firstinspires.ftc.library.arm.ArmConfig;
-import org.firstinspires.ftc.library.boom.BoomConfig;
+import org.firstinspires.ftc.teamcode.metalheads.competition.boom.BoomConfig;
 import org.firstinspires.ftc.library.drivetrain.MecanumDriveTrain;
 import org.firstinspires.ftc.library.drivetrain.MecanumDriveTrainConfig;
 

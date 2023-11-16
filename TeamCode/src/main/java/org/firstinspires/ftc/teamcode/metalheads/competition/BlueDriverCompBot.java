@@ -21,6 +21,7 @@ public class BlueDriverCompBot extends CompDriverBot {
      */
     public void initBot () {
         this.armConfig.debug = true;
+        this.driveTrainConfig.yawOffset = -90;
 
         super.initBot();
 

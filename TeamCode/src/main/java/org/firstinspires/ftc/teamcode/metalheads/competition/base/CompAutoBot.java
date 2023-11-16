@@ -511,6 +511,7 @@ public class CompAutoBot extends CompBot {
             public void runOnce(ICommand command) {
                 CompAutoBot.this.driveTrain
                 .gotoDegrees(CompAutoBot.this.robotAutoConfig.startingTrussDirection, 0.3, 0.3, 90)
+                .wait(350)
                 .gotoDegrees(CompAutoBot.this.robotAutoConfig.startingTrussDirection, 0.2, 0.2, 90)
                 .wait(0, new CommandCallbackAdapter(this){
                     public void onSuccess(CommandSuccessEvent successEvent) {
@@ -523,8 +524,11 @@ public class CompAutoBot extends CompBot {
 
         this.addCommand(new OneTimeSynchronousCommand() {
             public void runOnce(ICommand command) {
-                CompAutoBot.this.driveTrain.forward(0.3, 0.4, distanceUnderTruss, Units.Centimeters)
-                        .wait(500)
+                CompAutoBot.this.driveTrain.forward(0.3, 0.4, 40, Units.Centimeters)
+                        .wait(300)
+                        .gotoDegrees(CompAutoBot.this.robotAutoConfig.startingTrussDirection, 0.2, 0.2, 90)
+                        .forward(0.3, 0.4, distanceUnderTruss - 40, Units.Centimeters)
+                        .wait(300)
                         .gotoDegrees(CompAutoBot.this.robotAutoConfig.startingTrussDirection, 0.2, 0.2, 90)
                         .wait(0, new CommandCallbackAdapter(this){
                             public void onSuccess(CommandSuccessEvent successEvent) {
@@ -581,13 +585,13 @@ public class CompAutoBot extends CompBot {
             public void runOnce(ICommand command) {
 
                     if (CompAutoBot.this.propLocation.equals(CompAutoBot.this.robotAutoConfig.startingTrussDirection.invert())) {
-                        CompAutoBot.this.autoRoutine_placeYellowPixel(67);
+                        CompAutoBot.this.autoRoutine_placeYellowPixel(CompAutoBot.this.robotAutoConfig.placeYellowPixelDistance_near);
                     }
                     else if (CompAutoBot.this.propLocation.equals(Direction.FORWARD)) {
-                        CompAutoBot.this.autoRoutine_placeYellowPixel(88);
+                        CompAutoBot.this.autoRoutine_placeYellowPixel(CompAutoBot.this.robotAutoConfig.placeYellowPixelDistance_middle);
                     }
                     else {
-                        CompAutoBot.this.autoRoutine_placeYellowPixel(108);
+                        CompAutoBot.this.autoRoutine_placeYellowPixel(CompAutoBot.this.robotAutoConfig.placeYellowPixelDistance_far);
                     }
                     command.markAsCompleted();
             }

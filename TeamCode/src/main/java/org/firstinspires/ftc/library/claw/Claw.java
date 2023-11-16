@@ -7,7 +7,7 @@ import org.firstinspires.ftc.library.claw.events.leftpincheropen.ClawLeftPincher
 import org.firstinspires.ftc.library.claw.events.rightpincherclose.ClawRightPincherCloseEvent;
 import org.firstinspires.ftc.library.claw.events.rightpincheropen.ClawRightPincherOpenEvent;
 import org.firstinspires.ftc.library.rotator.Rotator;
-import org.firstinspires.ftc.library.boom.Boom;
+import org.firstinspires.ftc.teamcode.metalheads.competition.boom.Boom;
 import org.firstinspires.ftc.library.component.Component;
 
 /**
