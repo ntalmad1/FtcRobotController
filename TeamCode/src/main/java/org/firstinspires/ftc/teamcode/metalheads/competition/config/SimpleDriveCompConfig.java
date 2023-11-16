@@ -23,8 +23,8 @@ public class SimpleDriveCompConfig extends SimpleDriveTrainConfig {
 
         this.motorTicsPerRev = 537.7;
         this.wheelDiameterCm = 9.6;
-        this.rampUpDistanceCm = 50;
-        this.rampDownDistanceCm = 50;
+        this.rampUpDistanceCm = 10;
+        this.rampDownDistanceCm = 10;
     }
 
 }

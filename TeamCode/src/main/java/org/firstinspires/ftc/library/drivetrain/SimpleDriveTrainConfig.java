@@ -30,4 +30,6 @@ public class SimpleDriveTrainConfig extends AbstractDriveTrainConfig
     /**
      */
     public Units defaultUnits = Units.Centimeters;
+
+    public double yawOffset = 90;
 }

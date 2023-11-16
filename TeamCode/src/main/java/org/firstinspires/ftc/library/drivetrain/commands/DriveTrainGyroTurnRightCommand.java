@@ -16,7 +16,7 @@ public class DriveTrainGyroTurnRightCommand extends AbstractDriveTrainGyroTurnCo
      * @param degrees
      */
     public DriveTrainGyroTurnRightCommand(SimpleDriveTrain driveTrain, double startPower, double maxPower, double degrees) {
-        super(driveTrain, startPower, maxPower, degrees);
+        super(driveTrain, startPower, maxPower, -degrees);
     }
 
     /**

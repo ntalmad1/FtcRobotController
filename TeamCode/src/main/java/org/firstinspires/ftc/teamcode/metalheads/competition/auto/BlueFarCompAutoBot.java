@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode.metalheads.competition.auto;
 
+import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import org.firstinspires.ftc.teamcode.metalheads.competition.base.CompAutoBot;
@@ -8,7 +9,7 @@ import org.firstinspires.ftc.library.utility.Direction;
 /**
  *
  */
-@TeleOp(name="BlueFarCompAutoBot", group="Competition")
+@Autonomous(name="BlueFarCompAutoBot", group="Competition")
 //@Disabled
 public class BlueFarCompAutoBot extends CompAutoBot {
 
@@ -30,6 +31,11 @@ public class BlueFarCompAutoBot extends CompAutoBot {
 
         telemetry.addLine("Blue Far Auto Initialized...");
         telemetry.addLine("READY!");
+
+        telemetry.addLine();
+
+        telemetry.addData("Yaw: ","%2f", this.getYaw());
+
         telemetry.update();
     }
 

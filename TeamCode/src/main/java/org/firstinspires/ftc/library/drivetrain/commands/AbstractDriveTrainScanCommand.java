@@ -74,7 +74,7 @@ public abstract class AbstractDriveTrainScanCommand extends AbstractDriveTrainLi
                     this.pingResults.add(distance);
                 }
 
-                if (this.pingResults.size() > 18) {
+                if (this.pingResults.size() > 10) {
 
                     this.distance = distance;
                     this.driveTrain.getMotorGroup().setPower(0);

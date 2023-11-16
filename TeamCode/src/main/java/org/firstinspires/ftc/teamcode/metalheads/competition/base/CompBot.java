@@ -285,6 +285,8 @@ public class CompBot extends IsaacBot{
     public void moveArm_fromTravel_toHome () { _moveArm_fromTravel_toHome(); }
     public void moveArm_fromTravel_toPixelPlace () { _moveArm_fromTravel_toPixelPlace(); }
 
+    public void moveArm_fromTravel_toBackdropScan () { _moveArm_fromTravel_toBackdropScan(); }
+
     private void _moveArm_fromInit_toPixelReady () {
             this.arm.rotateClawToPosition(0.307, 1)
                     .moveMiddleDegreesFromCurrentPosition(15)
@@ -487,6 +489,17 @@ public class CompBot extends IsaacBot{
                 .moveMiddleToPosition(this.robotConfig.pixelPlace_midBoom,1)
                 .moveClawToPosition(this.robotConfig.pixelPlace_clawBoom, 1)
                 .rotateClawToPosition(this.robotConfig.pixelPlace_clawRotator, 1)
+                .wait(0);
+    }
+
+    private void _moveArm_fromTravel_toBackdropScan () {
+        this.arm.rotateClawToPosition(0.307, 1)
+                .moveBottomToPosition(0.200, 1)
+                .wait(500)
+                .moveBottomToPosition(0.180, 1)
+                .moveMiddleToPosition(0.731,1)
+                .moveClawToPosition(0.507, 1)
+                .rotateClawToPosition(0.307, 1)
                 .wait(0);
     }
 

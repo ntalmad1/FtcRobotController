@@ -23,7 +23,7 @@ public enum Direction {
     /**
      *
      */
-    Right;
+    RIGHT;
 
     public Direction invert () {
 
@@ -33,8 +33,8 @@ public enum Direction {
             case REVERSE:
                 return FORWARD;
             case LEFT:
-                return Right;
-            case Right:
+                return RIGHT;
+            case RIGHT:
                 return LEFT;
         }
 

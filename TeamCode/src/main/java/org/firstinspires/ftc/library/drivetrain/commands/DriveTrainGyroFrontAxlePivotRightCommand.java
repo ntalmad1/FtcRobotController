@@ -16,7 +16,11 @@ public class DriveTrainGyroFrontAxlePivotRightCommand extends AbstractDriveTrain
      * @param degrees
      */
     public DriveTrainGyroFrontAxlePivotRightCommand(SimpleDriveTrain driveTrain, double startPower, double maxPower, double degrees) {
-        super(driveTrain, startPower, maxPower, degrees);
+        super(driveTrain, startPower, maxPower, -degrees);
+
+        this.driveTrain.telemetry.addLine("DriveTrainGyroFrontAxlePivotRightCommand");
+        this.driveTrain.telemetry.addData("Degrees: ", "%2f", -degrees);
+        this.driveTrain.telemetry.update();
     }
 
     /**
