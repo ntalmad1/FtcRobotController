@@ -581,7 +581,7 @@ public class CompAutoBot extends CompBot {
             public void runOnce(ICommand command) {
 
                     if (CompAutoBot.this.propLocation.equals(CompAutoBot.this.robotAutoConfig.startingTrussDirection.invert())) {
-                        CompAutoBot.this.autoRoutine_placeYellowPixel(65);
+                        CompAutoBot.this.autoRoutine_placeYellowPixel(67);
                     }
                     else if (CompAutoBot.this.propLocation.equals(Direction.FORWARD)) {
                         CompAutoBot.this.autoRoutine_placeYellowPixel(88);
