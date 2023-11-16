@@ -461,7 +461,7 @@ public class CompAutoBot extends CompBot {
                         .wait(0, new CommandCallbackAdapter(this){
                             public void onAfter(CommandAfterEvent afterEvent) {
                                 command.markAsCompleted();
-                                CompAutoBot.this.autoRoutine_beginStepTwo(105, 95, 0);
+                                CompAutoBot.this.autoRoutine_beginStepTwo(105, 90, 0);
                             }
                         });
             }
@@ -587,7 +587,7 @@ public class CompAutoBot extends CompBot {
                         CompAutoBot.this.autoRoutine_placeYellowPixel(88);
                     }
                     else {
-                        CompAutoBot.this.autoRoutine_placeYellowPixel(110);
+                        CompAutoBot.this.autoRoutine_placeYellowPixel(108);
                     }
                     command.markAsCompleted();
             }
