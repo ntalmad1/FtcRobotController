@@ -21,6 +21,11 @@ public class DroneLauncherConfig {
     /**
      *
      */
+    public double launchPosition;
+
+    /**
+     *
+     */
     public String triggerServoName;
 
     /**

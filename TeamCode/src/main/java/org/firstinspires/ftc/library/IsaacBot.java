@@ -7,6 +7,7 @@ import org.firstinspires.ftc.library.component.event.g1_a_press.Gp1_A_PressHandl
 import org.firstinspires.ftc.library.component.event.g1_b_press.Gp1_B_PressHandler;
 import org.firstinspires.ftc.library.component.event.g2_x_press.Gp1_X_PressHandler;
 import org.firstinspires.ftc.library.component.event.g2_y_press.Gp1_Y_PressHandler;
+import org.firstinspires.ftc.library.component.event.gp1_dpad_down_press.Gp1_Dpad_Down_PressHandler;
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.YawPitchRollAngles;
 import org.firstinspires.ftc.library.component.IComponent;
@@ -210,6 +211,12 @@ public abstract class  IsaacBot extends LinearOpMode implements IComponent
 
     public HandlerRegistration addGp2_Dpad_Down_DownHandler (Gp2_Dpad_Down_DownHandler handler) {
         return this.robotComponent.addGp2_Dpad_Down_DownHandler(handler);
+    }
+
+    //-----------------------------------------------------------------------------------------
+
+    public HandlerRegistration addGp1_Dpad_Down_PressHandler (Gp1_Dpad_Down_PressHandler handler) {
+        return this.robotComponent.addGp1_Dpad_Down_PressHandler(handler);
     }
 
     /**

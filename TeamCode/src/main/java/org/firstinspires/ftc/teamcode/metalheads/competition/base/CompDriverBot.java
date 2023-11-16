@@ -27,6 +27,11 @@ public class CompDriverBot extends CompBot {
 
         this.driveTrain = new MecanumDriveTrain(driveTrainConfig);
         this.driveTrain.init();
+
+        // launch the drone
+        this.addGp1_Dpad_Down_PressHandler(event -> {
+            CompDriverBot.this.droneLauncher.launchDrone();
+        });
     }
 
     /**
