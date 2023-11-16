@@ -78,23 +78,23 @@ public class Arm extends Component {
 
         if (this.config.debug) {
 
-            this.telemetry.addData("Bottom boom degrees: ", "%2f", this.bottomBoom.getPositionDegrees());
-            this.telemetry.addData("Bottom boom position: ", "%2f", this.bottomBoom.getPosition());
-            this.telemetry.addLine();
-
-            this.telemetry.addData("Middle boom degrees: ", "%2f", this.midBoom.getPositionDegrees());
-            this.telemetry.addData("Middle boom position: ", "%2f", this.midBoom.getPosition());
-            this.telemetry.addLine();
-
-            this.telemetry.addData("Claw boom degrees: ", "%2f", this.claw.getBase().getPositionDegrees());
-            this.telemetry.addData("Claw boom position: ", "%2f", this.claw.getBase().getPosition());
-            this.telemetry.addLine();
-
-            this.telemetry.addData("Claw rotator degrees: ", "%2f", this.claw.getRotator().getPositionDegrees());
-            this.telemetry.addData("Claw rotator position: ", "%2f", this.claw.getRotator().getPosition());
-            this.telemetry.addLine();
-
-            this.telemetry.update();
+//            this.telemetry.addData("Bottom boom degrees: ", "%2f", this.bottomBoom.getPositionDegrees());
+//            this.telemetry.addData("Bottom boom position: ", "%2f", this.bottomBoom.getPosition());
+//            this.telemetry.addLine();
+//
+//            this.telemetry.addData("Middle boom degrees: ", "%2f", this.midBoom.getPositionDegrees());
+//            this.telemetry.addData("Middle boom position: ", "%2f", this.midBoom.getPosition());
+//            this.telemetry.addLine();
+//
+//            this.telemetry.addData("Claw boom degrees: ", "%2f", this.claw.getBase().getPositionDegrees());
+//            this.telemetry.addData("Claw boom position: ", "%2f", this.claw.getBase().getPosition());
+//            this.telemetry.addLine();
+//
+//            this.telemetry.addData("Claw rotator degrees: ", "%2f", this.claw.getRotator().getPositionDegrees());
+//            this.telemetry.addData("Claw rotator position: ", "%2f", this.claw.getRotator().getPosition());
+//            this.telemetry.addLine();
+//
+//            this.telemetry.update();
 
         }
     }

@@ -154,9 +154,20 @@ public class CompAutoBot extends CompBot {
      */
     public void run () {
         super.run();
+
         this.driveTrain.run();
+        this.driveTrain.run();
+
         this.arm.run();
+
+        this.driveTrain.run();
+        this.driveTrain.run();
+
         this.lightBar.run();
+
+        this.driveTrain.run();
+        this.driveTrain.run();
+
         this.pixelCatcher.run();
     }
 
@@ -611,7 +622,7 @@ public class CompAutoBot extends CompBot {
 //                    }
 //                });
                 CompAutoBot.this.driveTrain.scanSideways(CompAutoBot.this.robotAutoConfig.startingTrussDirection,
-                        0.2, 0.2, 100, Units.Centimeters, CompAutoBot.this.backdropSensor, 30, new CommandCallbackAdapter(){
+                        0.2, 0.2, 100, Units.Centimeters, CompAutoBot.this.backdropSensor, 20, new CommandCallbackAdapter(){
                             public void onSuccess(CommandSuccessEvent successEvent) {
                                 IScanCommand result = (IScanCommand) successEvent.getCommand();
                                 outerCommand.markAsCompleted();
@@ -622,7 +633,7 @@ public class CompAutoBot extends CompBot {
                                 CompAutoBot.this.propLocation = CompAutoBot.this.robotAutoConfig.startingTrussDirection;
 
                                 if (CompAutoBot.this.propLocation.equals(CompAutoBot.this.robotAutoConfig.startingTrussDirection.invert())) {
-                                    CompAutoBot.this.autoRoutine_placeYellowPixelClosest(result.getDistance());
+                                    CompAutoBot.this.autoRoutine_placeYellowPixel(result.getDistance());
                                 }
                                 else if (CompAutoBot.this.propLocation.equals(Direction.FORWARD)) {
                                     CompAutoBot.this.autoRoutine_placeYellowPixelMiddle();
@@ -638,7 +649,7 @@ public class CompAutoBot extends CompBot {
         });
     }
 
-    public void autoRoutine_placeYellowPixelClosest (double distance) {
+    public void autoRoutine_placeYellowPixel (double distance) {
 
         this.addCommand(new OneTimeSynchronousCommand() {
             public void runOnce(ICommand command) {
@@ -648,7 +659,7 @@ public class CompAutoBot extends CompBot {
                         .wait(0, new CommandCallbackAdapter(this){
                             public void onSuccess(CommandSuccessEvent successEvent) {
                                 this.command.markAsCompleted();
-                                CompAutoBot.this.autoROutine_dropYellowPixel();
+                                CompAutoBot.this.autoRoutine_dropYellowPixel();
                             }
                         });
             }
@@ -669,34 +680,56 @@ public class CompAutoBot extends CompBot {
                         .wait(0, new CommandCallbackAdapter(this){
                             public void onSuccess(CommandSuccessEvent successEvent) {
                                 this.command.markAsCompleted();
-                                CompAutoBot.this.autoROutine_dropYellowPixel();
                             }
                         });
 
             }
         });
 
+        this.addCommand(new OneTimeSynchronousCommand() {
+            public void runOnce(ICommand command) {
+
+                CompAutoBot.this.pingBackdrop(new PingHandler() {
+                    public void onPing(PingEvent event) {
+                        command.markAsCompleted();
+                        CompAutoBot.this.autoRoutine_placeYellowPixel(event.getDistance());
+                    }
+                });
+
+            }
+        });
     }
 
     public void autoRoutine_placeYellowPixelFar () {
         this.addCommand(new OneTimeSynchronousCommand() {
             public void runOnce(ICommand command) {
 
-                CompAutoBot.this.driveTrain.sideways(CompAutoBot.this.robotAutoConfig.startingTrussDirection,
-                                0.2, 0.2, 38.5, Units.Centimeters)
+                CompAutoBot.this.driveTrain.sideways(CompAutoBot.this.robotAutoConfig.startingTrussDirection, 0.2, 0.2, 38.5, Units.Centimeters)
                         .wait(0, new CommandCallbackAdapter(this){
                             public void onSuccess(CommandSuccessEvent successEvent) {
                                 this.command.markAsCompleted();
-                                CompAutoBot.this.autoROutine_dropYellowPixel();
                             }
                         });
 
             }
         });
 
+        this.addCommand(new OneTimeSynchronousCommand() {
+            public void runOnce(ICommand command) {
+
+                CompAutoBot.this.pingBackdrop(new PingHandler() {
+                    public void onPing(PingEvent event) {
+                        command.markAsCompleted();
+                        CompAutoBot.this.autoRoutine_placeYellowPixel(event.getDistance());
+                    }
+                });
+
+            }
+        });
+
     }
 
-    public void autoROutine_dropYellowPixel () {
+    public void autoRoutine_dropYellowPixel() {
 
         this.addCommand(new OneTimeSynchronousCommand() {
             public void runOnce(ICommand command) {
@@ -731,7 +764,7 @@ public class CompAutoBot extends CompBot {
                         .wait(250)
                         .moveClawToPosition(0.096)
                         .wait(250)
-                        .moveBottomToPosition(0.078)
+                        .moveBottomToPosition(0.078, 0.002)
                         .wait(0, new CommandCallbackAdapter(this){
                             public void onSuccess(CommandSuccessEvent successEvent) {
                                 this.command.markAsCompleted();

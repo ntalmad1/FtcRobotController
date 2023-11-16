@@ -70,14 +70,11 @@ public abstract class AbstractDriveTrainScanCommand extends AbstractDriveTrainLi
 
                 double prevDist = this.pingResults.get(pingResults.size() - 1);
 
-                if (Math.abs(distance - prevDist) < 1) {
+                if (Math.abs(distance - prevDist) < 3) {
                     this.pingResults.add(distance);
                 }
-                else {
-                    this.pingResults.clear();
-                }
 
-                if (this.pingResults.size() > 10) {
+                if (this.pingResults.size() > 18) {
 
                     this.distance = distance;
                     this.driveTrain.getMotorGroup().setPower(0);
