@@ -11,5 +11,5 @@ public interface Gp2_Y_PressHandler extends EventHandler
      *
      * @param event
      */
-    void onGp2_A_Press (Gp2_Y_PressEvent event);
+    void onGp2_Y_Press(Gp2_Y_PressEvent event);
 }

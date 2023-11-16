@@ -82,10 +82,10 @@ public abstract class AbstractDriveTrainLineCommand extends AbstractSynchronousC
             int currentPosition = this.driveTrain.getLeftFrontMotor().getCurrentPosition();
 
             if (this.driveTrain.getConfig().debug = true) {
-                this.driveTrain.getRobot().telemetry.addData("Running to",  " %7d", tics);
-                this.driveTrain.getRobot().telemetry.addData("Left Front Currently at",  " at %7d", this.driveTrain.getLeftFrontMotor().getCurrentPosition());
-                this.driveTrain.getRobot().telemetry.addData("Left Front  Motor Power: ", " %f", this.driveTrain.getLeftFrontMotor().getPower());
-                this.driveTrain.getRobot().telemetry.update();
+//                this.driveTrain.getRobot().telemetry.addData("Running to",  " %7d", tics);
+//                this.driveTrain.getRobot().telemetry.addData("Left Front Currently at",  " at %7d", this.driveTrain.getLeftFrontMotor().getCurrentPosition());
+//                this.driveTrain.getRobot().telemetry.addData("Left Front  Motor Power: ", " %f", this.driveTrain.getLeftFrontMotor().getPower());
+//                this.driveTrain.getRobot().telemetry.update();
             }
 
             if (currentPosition <= rampUpTicsEnd)

@@ -8,6 +8,14 @@ import org.firstinspires.ftc.library.component.event.EventBus;
 import org.firstinspires.ftc.library.component.event.EventHandler;
 import org.firstinspires.ftc.library.component.event.EventType;
 import org.firstinspires.ftc.library.component.event.HandlerRegistration;
+import org.firstinspires.ftc.library.component.event.g1_a_press.Gp1_A_PressEvent;
+import org.firstinspires.ftc.library.component.event.g1_a_press.Gp1_A_PressHandler;
+import org.firstinspires.ftc.library.component.event.g1_b_press.Gp1_B_PressEvent;
+import org.firstinspires.ftc.library.component.event.g1_b_press.Gp1_B_PressHandler;
+import org.firstinspires.ftc.library.component.event.g2_x_press.Gp1_X_PressEvent;
+import org.firstinspires.ftc.library.component.event.g2_x_press.Gp1_X_PressHandler;
+import org.firstinspires.ftc.library.component.event.g2_y_press.Gp1_Y_PressEvent;
+import org.firstinspires.ftc.library.component.event.g2_y_press.Gp1_Y_PressHandler;
 import org.firstinspires.ftc.library.component.event.gp1_dpad_down_down.Gp1_Dpad_Down_DownEvent;
 import org.firstinspires.ftc.library.component.event.gp1_dpad_down_down.Gp1_Dpad_Down_DownHandler;
 import org.firstinspires.ftc.library.component.event.gp1_dpad_down_press.Gp1_Dpad_Down_PressEvent;
@@ -152,6 +160,29 @@ public abstract class Component implements IComponent {
 
     public HandlerRegistration addGp2_Y_PressHandler (Gp2_Y_PressHandler handler) {
         return EventBus.getInstance().addHandler(Gp2_Y_PressEvent.TYPE, handler);
+    }
+    //endregion
+
+    //region Gamepad 1 A, B, X, Y Handlers
+    /**
+     *
+     * @param handler
+     * @return
+     */
+    public HandlerRegistration addGp1_A_PressHandler (Gp1_A_PressHandler handler) {
+        return EventBus.getInstance().addHandler(Gp1_A_PressEvent.TYPE, handler);
+    }
+
+    public HandlerRegistration addGp1_B_PressHandler (Gp1_B_PressHandler handler) {
+        return EventBus.getInstance().addHandler(Gp1_B_PressEvent.TYPE, handler);
+    }
+
+    public HandlerRegistration addGp1_X_PressHandler (Gp1_X_PressHandler handler) {
+        return EventBus.getInstance().addHandler(Gp1_X_PressEvent.TYPE, handler);
+    }
+
+    public HandlerRegistration addGp1_Y_PressHandler (Gp1_Y_PressHandler handler) {
+        return EventBus.getInstance().addHandler(Gp1_Y_PressEvent.TYPE, handler);
     }
     //endregion
 

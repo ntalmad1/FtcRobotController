@@ -1,6 +1,10 @@
 package org.firstinspires.ftc.library.component.event;
 
 import org.firstinspires.ftc.library.IsaacBot;
+import org.firstinspires.ftc.library.component.event.g1_a_press.Gp1_A_PressEvent;
+import org.firstinspires.ftc.library.component.event.g1_b_press.Gp1_B_PressEvent;
+import org.firstinspires.ftc.library.component.event.g2_x_press.Gp1_X_PressEvent;
+import org.firstinspires.ftc.library.component.event.g2_y_press.Gp1_Y_PressEvent;
 import org.firstinspires.ftc.library.component.event.gp1_dpad_down_down.Gp1_Dpad_Down_DownEvent;
 import org.firstinspires.ftc.library.component.event.gp1_dpad_down_press.Gp1_Dpad_Down_PressEvent;
 import org.firstinspires.ftc.library.component.event.gp1_left_trigger_down.Gp1_Left_Trigger_DownEvent;
@@ -65,6 +69,14 @@ public class EventBus extends HandlerManager {
     private double gp2_leftStickY;
     private double gp2_rightStickX;
     private double gp2_rightStickY;
+
+    /**
+     *
+     */
+    private boolean gp1_a_down;
+    private boolean gp1_b_down;
+    private boolean gp1_x_down;
+    private boolean gp1_y_down;
 
     /**
      *
@@ -235,6 +247,35 @@ public class EventBus extends HandlerManager {
             this.fireEvent(new Gp2_Y_PressEvent());
         }
         this.gp2_y_down = current_gp2_y;
+
+        //------------------------------------------------------------------------------------
+
+        boolean current_gp1_a = this.robot.gamepad1.a;
+        if (this.gp1_a_down && !current_gp1_a) {
+            this.fireEvent(new Gp1_A_PressEvent());
+        }
+        this.gp1_a_down = current_gp1_a;
+
+        boolean current_gp1_b = this.robot.gamepad1.b;
+        if (this.gp1_b_down && !current_gp1_b) {
+            this.fireEvent(new Gp1_B_PressEvent());
+        }
+        this.gp1_b_down = current_gp1_b;
+
+        boolean current_gp1_x = this.robot.gamepad1.x;
+        if (this.gp1_x_down && !current_gp1_x) {
+            this.fireEvent(new Gp1_X_PressEvent());
+        }
+        this.gp1_x_down = current_gp1_x;
+
+        boolean current_gp1_y = this.robot.gamepad1.y;
+        if (this.gp1_y_down && !current_gp1_y) {
+            this.fireEvent(new Gp1_Y_PressEvent());
+        }
+        this.gp1_y_down = current_gp1_y;
+
+
+        //--------------------------------------------------------------------------
 
         boolean current_gp2_left_bumper = this.robot.gamepad2.left_bumper;
         if (this.gp2_left_bumper_down && !current_gp2_left_bumper) {

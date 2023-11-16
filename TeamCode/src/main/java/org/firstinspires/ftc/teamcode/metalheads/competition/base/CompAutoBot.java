@@ -5,6 +5,7 @@ import com.qualcomm.robotcore.hardware.DistanceSensor;
 
 import org.firstinspires.ftc.library.drivetrain.commands.IScanCommand;
 import org.firstinspires.ftc.library.utility.Direction;
+import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 import org.firstinspires.ftc.teamcode.metalheads.competition.config.RobotAutoConfig;
 import org.firstinspires.ftc.teamcode.metalheads.competition.config.SimpleDriveCompConfig;
@@ -88,6 +89,8 @@ public class CompAutoBot extends CompBot {
     private OneTimeCommand bumpForwardCommand;
     private OneTimeCommand deployArmCommand;
 
+    double power = 0.1;
+
     /**
      *
      */
@@ -141,12 +144,32 @@ public class CompAutoBot extends CompBot {
         };
 
         // move forward 18.5 cm to scan for token
-        //this.addCommand(this.bumpForwardCommand);
+        // this.addCommand(this.bumpForwardCommand);
 
         // put arm into purple placing position
-        //this.addCommand(this.deployArmCommand);
+        // this.addCommand(this.deployArmCommand);
 
-        this.autoRoutine_beginStepTwo(0);
+        // this.autoRoutine_beginStepTwo(0);
+
+        this.addGp1_X_PressHandler(event -> {
+            double newPower = CompAutoBot.this.power + 0.1;
+
+            if (newPower > 1) {
+                newPower = 0.1;
+            }
+
+            CompAutoBot.this.power = newPower;
+
+            CompAutoBot.this.telemetry.addData("New Power: ", "%2f", CompAutoBot.this.power);
+            CompAutoBot.this.telemetry.update();
+        });
+
+        this.addGp1_Y_PressHandler(event -> {
+            CompAutoBot.this.telemetry.addData("Power: ", "%2f", CompAutoBot.this.power);
+            CompAutoBot.this.telemetry.update();
+
+            CompAutoBot.this.driveTrain.forward(CompAutoBot.this.power, CompAutoBot.this.power, 20, Units.Centimeters);
+        });
     }
 
     /**
@@ -223,8 +246,6 @@ public class CompAutoBot extends CompBot {
 
                     CompAutoBot.this.scan(nextDegrees, endDegrees, 50, targetDistance, handler);
                 }
-
-
             }
         });
 
@@ -293,7 +314,6 @@ public class CompAutoBot extends CompBot {
      *
      */
     protected void autoRoutine_scanForTokenForwards () {
-
 
         // scan for token straight ahead
         this.addCommand(new OneTimeSynchronousCommand() {

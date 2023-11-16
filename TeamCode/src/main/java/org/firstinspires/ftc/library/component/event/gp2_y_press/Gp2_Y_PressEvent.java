@@ -34,6 +34,6 @@ public class Gp2_Y_PressEvent extends Event<Gp2_Y_PressHandler> {
      */
     @Override
     public void handle(Gp2_Y_PressHandler handler) {
-        handler.onGp2_A_Press(this);
+        handler.onGp2_Y_Press(this);
     }
 }
