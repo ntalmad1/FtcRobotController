@@ -5,7 +5,7 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.Servo;
 
-import org.firstinspires.ftc.library.Control;
+import org.firstinspires.ftc.library.utility.Control;
 import org.firstinspires.ftc.library.IsaacBot;
 import org.firstinspires.ftc.library.arm.Arm;
 import org.firstinspires.ftc.library.arm.ArmConfig;

@@ -1,6 +1,8 @@
-package org.firstinspires.ftc.library;
+package org.firstinspires.ftc.library.component;
 
 import com.qualcomm.robotcore.hardware.DigitalChannel;
+
+import org.firstinspires.ftc.library.IsaacBot;
 
 /**
  *

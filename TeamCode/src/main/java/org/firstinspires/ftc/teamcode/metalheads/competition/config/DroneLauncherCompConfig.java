@@ -2,7 +2,6 @@ package org.firstinspires.ftc.teamcode.metalheads.competition.config;
 
 import com.qualcomm.robotcore.hardware.Servo;
 
-import org.firstinspires.ftc.library.Control;
 import org.firstinspires.ftc.library.IsaacBot;
 import org.firstinspires.ftc.library.dronelauncher.DroneLauncherConfig;
 import org.firstinspires.ftc.library.rotator.RotatorConfig;

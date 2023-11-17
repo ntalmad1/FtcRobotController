@@ -1,6 +1,6 @@
 package org.firstinspires.ftc.library.lightbar;
 
-import org.firstinspires.ftc.library.LEDIndicator;
+import org.firstinspires.ftc.library.component.LEDIndicator;
 import org.firstinspires.ftc.library.claw.events.leftpincherclose.ClawLeftPincherCloseEvent;
 import org.firstinspires.ftc.library.claw.events.leftpincherclose.ClawLeftPincherCloseHandler;
 import org.firstinspires.ftc.library.claw.events.leftpincheropen.ClawLeftPincherOpenEvent;

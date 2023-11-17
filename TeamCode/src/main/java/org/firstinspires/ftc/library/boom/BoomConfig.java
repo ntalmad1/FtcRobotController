@@ -3,7 +3,7 @@ package org.firstinspires.ftc.library.boom;
 import com.qualcomm.robotcore.hardware.Servo;
 
 import org.firstinspires.ftc.library.IsaacBot;
-import org.firstinspires.ftc.library.Control;
+import org.firstinspires.ftc.library.utility.Control;
 
 /**
  *

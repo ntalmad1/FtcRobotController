@@ -1,6 +1,6 @@
 package org.firstinspires.ftc.teamcode.metalheads.competition.config;
 
-import org.firstinspires.ftc.library.Control;
+import org.firstinspires.ftc.library.utility.Control;
 import org.firstinspires.ftc.library.IsaacBot;
 import org.firstinspires.ftc.library.pixelcatcher.PixelCatcher;
 import org.firstinspires.ftc.library.pixelcatcher.PixelCatcherConfig;

@@ -2,7 +2,7 @@ package org.firstinspires.ftc.teamcode.metalheads.competition.config;
 
 import com.qualcomm.robotcore.hardware.Servo;
 
-import org.firstinspires.ftc.library.Control;
+import org.firstinspires.ftc.library.utility.Control;
 import org.firstinspires.ftc.library.IsaacBot;
 import org.firstinspires.ftc.library.arm.ArmConfig;
 import org.firstinspires.ftc.library.boom.BoomConfig;
