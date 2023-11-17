@@ -37,7 +37,7 @@ public class PixelCatcherCompConfig extends PixelCatcherConfig {
 
         this.rightArmServoInitPos = 0;
 
-        this.rightArmIntiPos = PixelCatcher.ArmPosition.OPENED;
+        this.rightArmInitPos = PixelCatcher.ArmPosition.OPENED;
 
         this.rightArmToggle = Control.Gp1_RightTrigger_Down;
 

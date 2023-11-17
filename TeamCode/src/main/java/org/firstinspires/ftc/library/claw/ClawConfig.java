@@ -1,8 +1,9 @@
 package org.firstinspires.ftc.library.claw;
 
 import org.firstinspires.ftc.library.IsaacBot;
+import org.firstinspires.ftc.library.boom.BoomConfig;
 import org.firstinspires.ftc.library.rotator.RotatorConfig;
-import org.firstinspires.ftc.teamcode.metalheads.competition.boom.BoomConfig;
+
 
 public class ClawConfig {
 

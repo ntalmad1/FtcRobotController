@@ -4,7 +4,7 @@ import com.qualcomm.robotcore.hardware.Servo;
 
 import org.firstinspires.ftc.library.Control;
 import org.firstinspires.ftc.library.IsaacBot;
-import org.firstinspires.ftc.teamcode.metalheads.competition.boom.BoomConfig;
+import org.firstinspires.ftc.library.boom.BoomConfig;
 import org.firstinspires.ftc.library.claw.ClawConfig;
 import org.firstinspires.ftc.library.rotator.RotatorConfig;
 

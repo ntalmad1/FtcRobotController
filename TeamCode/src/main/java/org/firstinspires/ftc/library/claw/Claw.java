@@ -2,12 +2,12 @@ package org.firstinspires.ftc.library.claw;
 
 import com.qualcomm.robotcore.hardware.Servo;
 
+import org.firstinspires.ftc.library.boom.Boom;
 import org.firstinspires.ftc.library.claw.events.leftpincherclose.ClawLeftPincherCloseEvent;
 import org.firstinspires.ftc.library.claw.events.leftpincheropen.ClawLeftPincherOpenEvent;
 import org.firstinspires.ftc.library.claw.events.rightpincherclose.ClawRightPincherCloseEvent;
 import org.firstinspires.ftc.library.claw.events.rightpincheropen.ClawRightPincherOpenEvent;
 import org.firstinspires.ftc.library.rotator.Rotator;
-import org.firstinspires.ftc.teamcode.metalheads.competition.boom.Boom;
 import org.firstinspires.ftc.library.component.Component;
 
 /**
@@ -72,6 +72,8 @@ public class Claw extends Component {
         this.clawRotator = new Rotator(config.clawRotatorConfig);
     }
 
+    protected double stashedClawBoomPosition;
+
     /**
      *
      */
@@ -113,10 +115,13 @@ public class Claw extends Component {
             if (Claw.this.rotatedLeft) {
                 Claw.this.rotatedLeft = false;
                 Claw.this.clawRotator.gotoPosition(Claw.this.config.clawRotatorConfig.homePosition, 1);
+                Claw.this.clawBoom.gotoPosition(Claw.this.stashedClawBoomPosition, 1);
             }
             else {
                 Claw.this.rotatedLeft = true;
-                Claw.this.clawRotator.gotoPosition(0.65, 1);
+                Claw.this.stashedClawBoomPosition = Claw.this.clawRotator.getPosition();
+                Claw.this.clawRotator.gotoPosition(0.524, 1);
+                Claw.this.clawBoom.gotoPosition(0.540,1);
             }
         });
 
@@ -124,10 +129,13 @@ public class Claw extends Component {
             if (Claw.this.rotatedRight) {
                 Claw.this.rotatedRight = false;
                 Claw.this.clawRotator.gotoPosition(Claw.this.config.clawRotatorConfig.homePosition, 1);
+                Claw.this.clawBoom.gotoPosition(Claw.this.stashedClawBoomPosition, 1);
             }
             else {
                 Claw.this.rotatedRight = true;
-                Claw.this.clawRotator.gotoPosition(0, 1);
+                Claw.this.stashedClawBoomPosition = Claw.this.clawRotator.getPosition();
+                Claw.this.clawRotator.gotoPosition(0.82, 1);
+                Claw.this.clawBoom.gotoPosition(0.540, 1);
             }
         });
     }

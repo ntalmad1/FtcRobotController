@@ -84,7 +84,7 @@ public class PixelCatcher extends Component {
         this.rightServo.setPosition(this.config.rightArmServoInitPos);
 
         this.leftArmPos = this.config.leftArmInitPos;
-        this.rightArmPos = this.config.rightArmIntiPos;
+        this.rightArmPos = this.config.rightArmInitPos;
 
         if (this.config.leftArmToggle == Control.Gp1_LeftTrigger_Down) {
             this.addGp1_Left_Trigger_DownHandler(event -> PixelCatcher.this.toggleLeftArm());

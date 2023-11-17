@@ -65,7 +65,7 @@ public class PixelCatcherConfig {
     /**
      *
      */
-    public PixelCatcher.ArmPosition rightArmIntiPos = PixelCatcher.ArmPosition.CLOSED;
+    public PixelCatcher.ArmPosition rightArmInitPos = PixelCatcher.ArmPosition.CLOSED;
 
     /**
      */

@@ -71,14 +71,19 @@ public class DroneLauncher extends Component {
      */
     public void launchDrone () {
 
-        this.rotateToPosition(this.config.launchPosition, 0.005);
-        this.wait(500, new CommandCallbackAdapter(){
+        this.rotateToPosition(this.config.launchPosition, 0.005)
+            .wait(500, new CommandCallbackAdapter(){
+                public void onSuccess(CommandSuccessEvent successEvent) {
+                    DroneLauncher.this.trigger.setPosition(DroneLauncher.this.config.triggerServoUpPos);
+                }
+            })
+        .wait(1000, new CommandCallbackAdapter(){
             public void onSuccess(CommandSuccessEvent successEvent) {
-                DroneLauncher.this.trigger.setPosition(DroneLauncher.this.config.triggerServoUpPos);
+                DroneLauncher.this.trigger.setPosition(DroneLauncher.this.config.triggerServoDownPos);
+
             }
-        });
-
-
+        })
+        .rotateToPosition(DroneLauncher.this.config.rotatorConfig.homePosition, 0.01);
     }
 
     /**
