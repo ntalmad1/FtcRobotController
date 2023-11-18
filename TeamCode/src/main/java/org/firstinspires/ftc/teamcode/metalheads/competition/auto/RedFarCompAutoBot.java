@@ -24,6 +24,7 @@ public class RedFarCompAutoBot extends CompAutoBot {
         this.robotAutoConfig.routine = Routine.FAR;
 
         this.robotAutoConfig.distanceUnderTruss_middle = 110;
+        this.robotAutoConfig.distanceUnderTruss_oppositeTruss = 120;
 
         this.robotAutoConfig.placeYellowPixelDistance_middle = 82;
     }

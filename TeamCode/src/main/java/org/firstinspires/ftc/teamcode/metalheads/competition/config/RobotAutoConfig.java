@@ -11,7 +11,7 @@ public class RobotAutoConfig {
 
     public int distanceUnderTruss_truss = 90;
     public int distanceUnderTruss_middle = 120;
-    public int distanceUnderTruss_oppositeTruss = 130;
+    public int distanceUnderTruss_oppositeTruss = 120;
 
     public double placeYellowPixelDistance_near = 68;
     public double placeYellowPixelDistance_middle = 88;
