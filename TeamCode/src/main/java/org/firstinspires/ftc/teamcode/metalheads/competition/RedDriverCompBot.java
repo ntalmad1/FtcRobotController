@@ -24,7 +24,8 @@ public class RedDriverCompBot extends CompDriverBot {
         this.driveTrainConfig.yawOffset = -90;
         this.armConfig.debug = false;
         this.armConfig.bottomBoomConfig.invertInput = true;
-        this.armConfig.midBoomConfig.invertInput = true;
+        this.armConfig.midBoomConfig.invertInput = false;
+        this.armConfig.clawConfig.clawBoomConfig.invertInput = true;
 
         super.initBot();
 

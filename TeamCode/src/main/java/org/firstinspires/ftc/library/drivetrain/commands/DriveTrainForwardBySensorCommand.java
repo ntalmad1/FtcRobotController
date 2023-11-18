@@ -75,7 +75,7 @@ public class DriveTrainForwardBySensorCommand extends AbstractDriveTrainLineComm
         }
 
 
-        if (distance <= this.target) // || this.pings.size() > 5)
+        if (distance <= this.target || this.pings.size() > 15)
         {
             this.markAsCompleted();
 

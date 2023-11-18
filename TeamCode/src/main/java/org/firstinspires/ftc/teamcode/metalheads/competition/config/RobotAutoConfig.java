@@ -22,7 +22,7 @@ public class RobotAutoConfig {
     public double placePurplePixel_forwards_sideDistance = 16;
     public double placePurplePixel_oppositeTruss_sideDistance = 37;
 
-    public double backboardPlaceTarget = 6;
+    public double backboardPlaceTarget = 6.5;
 
     public boolean autoCorrectAtEnd = true;
 }
