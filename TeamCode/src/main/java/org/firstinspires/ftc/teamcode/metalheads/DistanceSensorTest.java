@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode.metalheads;
 
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
@@ -11,7 +12,7 @@ import org.firstinspires.ftc.library.IsaacBot;
  *
  */
 @TeleOp(name="Distance Sensor", group="Linear OpMode")
-//@Disabled
+@Disabled
 public class DistanceSensorTest extends IsaacBot {
 
 

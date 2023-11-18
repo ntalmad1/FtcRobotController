@@ -5,8 +5,8 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import org.firstinspires.ftc.teamcode.metalheads.competition.base.CompDriverBot;
 
-@TeleOp(name="RedDriverCompBot", group="Competition OpMode")
-@Disabled
+@TeleOp(name="RedDriverCompBot", group="Red")
+//@Disabled
 public class RedDriverCompBot extends CompDriverBot {
 
     /**
@@ -22,9 +22,9 @@ public class RedDriverCompBot extends CompDriverBot {
      */
     public void initBot () {
         this.driveTrainConfig.yawOffset = -90;
-        this.armConfig.debug = true;
-        this.armConfig.bottomBoomConfig.invertInput = false;
-        this.armConfig.midBoomConfig.invertInput = false;
+        this.armConfig.debug = false;
+        this.armConfig.bottomBoomConfig.invertInput = true;
+        this.armConfig.midBoomConfig.invertInput = true;
 
         super.initBot();
 

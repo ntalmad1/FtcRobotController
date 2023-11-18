@@ -48,7 +48,7 @@ public abstract class AbstractDriveTrainGyroTurnCommand extends AbstractSynchron
         this.powerBand = maxPower - startPower;
 
         //this.driveTrain.resetYaw();
-        this.driveTrain.getMotorGroup().setPower(startPower);
+        //this.driveTrain.getMotorGroup().setPower(startPower);
 
         this.currentDegrees = this.driveTrain.getYaw();
         this.targetDegrees = this.currentDegrees + this.degrees;

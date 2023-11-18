@@ -3,14 +3,15 @@ package org.firstinspires.ftc.teamcode.metalheads.competition.auto;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 
+import org.firstinspires.ftc.library.utility.Direction;
 import org.firstinspires.ftc.teamcode.metalheads.competition.base.CompAutoBot;
 import org.firstinspires.ftc.library.utility.Units;
 
 /**
  *
  */
-@Autonomous(name="RedFarCompAutoBot", group="Competition")
-@Disabled
+@Autonomous(name="RedFarCompAutoBot", group="Red")
+//@Disabled
 public class RedFarCompAutoBot extends CompAutoBot {
 
     /**
@@ -18,6 +19,11 @@ public class RedFarCompAutoBot extends CompAutoBot {
      */
     public RedFarCompAutoBot() {
         super();
+
+        this.robotAutoConfig.startingTrussDirection = Direction.RIGHT;
+        this.robotAutoConfig.routine = Routine.FAR;
+
+        this.robotAutoConfig.distanceUnderTruss_middle = 110;
     }
 
     /**
@@ -37,9 +43,14 @@ public class RedFarCompAutoBot extends CompAutoBot {
      */
     public void go () {
 
-        this.driveTrain.forward(0.1, 0.2, 8, Units.Centimeters);
-        this.driveTrain.gyroTurnRight(0.1, 0.5, 90);
-        this.driveTrain.forward(0.1, 0.5, 243, Units.Centimeters);
+        super.go();
+
     }
 
+    /**
+     *
+     */
+    public void run () {
+        super.run();
+    }
 }

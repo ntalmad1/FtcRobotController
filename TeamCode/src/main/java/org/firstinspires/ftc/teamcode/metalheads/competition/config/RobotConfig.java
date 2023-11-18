@@ -32,7 +32,9 @@ public class RobotConfig {
     public double hang_midBoom =  0.020;
 
     public double rest_midBoom = 0.733;
-    public double rest_clawBoom = 0.096;
+    public double rest_clawBoom = 0.256;
     public double rest_bottomBoom = 0.078;
+
+    public double bottomBoomTravelIncrement = 0.009;
 
 }

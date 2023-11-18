@@ -8,8 +8,8 @@ import org.firstinspires.ftc.library.boom.BoomConfig;
 import org.firstinspires.ftc.teamcode.metalheads.competition.config.ClawCompConfig;
 import org.firstinspires.ftc.library.utility.Control;
 import org.firstinspires.ftc.library.IsaacBot;
-import org.firstinspires.ftc.library.arm.Arm;
-import org.firstinspires.ftc.library.arm.ArmConfig;
+import org.firstinspires.ftc.library.boom.arm.Arm;
+import org.firstinspires.ftc.library.boom.arm.ArmConfig;
 import org.firstinspires.ftc.library.claw.ClawConfig;
 
 @TeleOp(name="ArmOpMode", group="Linear OpMode")

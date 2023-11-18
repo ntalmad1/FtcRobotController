@@ -1,11 +1,12 @@
 package org.firstinspires.ftc.teamcode.metalheads;
 
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import org.firstinspires.ftc.library.IsaacBot;
 
 @TeleOp(name="ControllerTest", group="Linear OpMode")
-//@Disabled
+@Disabled
 public class ControllerTest extends IsaacBot {
 
     public ControllerTest(){

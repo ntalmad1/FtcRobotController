@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.library.arm;
+package org.firstinspires.ftc.library.boom.arm;
 
 import org.firstinspires.ftc.library.boom.Boom;
 import org.firstinspires.ftc.library.boom.BoomMoveToDegreesCommand;

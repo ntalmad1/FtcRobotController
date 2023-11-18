@@ -119,9 +119,9 @@ public class Claw extends Component {
             }
             else {
                 Claw.this.rotatedLeft = true;
-                Claw.this.stashedClawBoomPosition = Claw.this.clawRotator.getPosition();
+                Claw.this.stashedClawBoomPosition = Claw.this.clawBoom.getPosition();
                 Claw.this.clawRotator.gotoPosition(0.524, 1);
-                Claw.this.clawBoom.gotoPosition(0.540,1);
+                Claw.this.clawBoom.gotoPosition(0.616,1);
             }
         });
 
@@ -133,9 +133,9 @@ public class Claw extends Component {
             }
             else {
                 Claw.this.rotatedRight = true;
-                Claw.this.stashedClawBoomPosition = Claw.this.clawRotator.getPosition();
+                Claw.this.stashedClawBoomPosition = Claw.this.clawBoom.getPosition();
                 Claw.this.clawRotator.gotoPosition(0.82, 1);
-                Claw.this.clawBoom.gotoPosition(0.540, 1);
+                Claw.this.clawBoom.gotoPosition(0.616, 1);
             }
         });
     }

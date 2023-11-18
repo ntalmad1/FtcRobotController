@@ -8,6 +8,7 @@ import org.firstinspires.ftc.library.drivetrain.commands.DriveTrainDiagFrontLeft
 import org.firstinspires.ftc.library.drivetrain.commands.DriveTrainDiagFrontRightCommand;
 import org.firstinspires.ftc.library.drivetrain.commands.DriveTrainDiagRearLeftCommand;
 import org.firstinspires.ftc.library.drivetrain.commands.DriveTrainDiagRearRightCommand;
+import org.firstinspires.ftc.library.drivetrain.commands.DriveTrainForwardBySensorCommand;
 import org.firstinspires.ftc.library.drivetrain.commands.DriveTrainForwardsCommand;
 import org.firstinspires.ftc.library.drivetrain.commands.DriveTrainGyroFrontAxlePivotLeftCommand;
 import org.firstinspires.ftc.library.drivetrain.commands.DriveTrainGyroFrontAxlePivotRightCommand;
@@ -153,11 +154,17 @@ public class SimpleDriveTrain extends AbstractDriveTrain
 
     /**
      *
-     * @param startPower Between 0.01 and 1
-     * @param maxPower Between 0.01 and 1
-     * @param distance The distance to travel
-     * @param units The unit type for distance
+     * @param power
+     * @param sensor
+     * @param target
+     * @return
      */
+    public SimpleDriveTrain forwardBySensor (double power, DistanceSensor sensor, double target)
+    {
+        this.addCommand(new DriveTrainForwardBySensorCommand(this, power, sensor, target));
+        return this;
+    }
+
     public SimpleDriveTrain forward (double startPower, double maxPower, double distance, Units units)
     {
         this.addCommand(new DriveTrainForwardsCommand(this, startPower, maxPower, distance, units));

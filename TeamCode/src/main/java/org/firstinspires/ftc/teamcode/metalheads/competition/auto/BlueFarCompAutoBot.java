@@ -9,7 +9,7 @@ import org.firstinspires.ftc.library.utility.Direction;
 /**
  *
  */
-@Autonomous(name="BlueFarCompAutoBot", group="Competition")
+@Autonomous(name="BlueFarCompAutoBot", group="Blue")
 //@Disabled
 public class BlueFarCompAutoBot extends CompAutoBot {
 
@@ -20,6 +20,7 @@ public class BlueFarCompAutoBot extends CompAutoBot {
         super();
 
         this.robotAutoConfig.startingTrussDirection = Direction.LEFT;
+        this.robotAutoConfig.routine = Routine.FAR;
     }
 
     /**
@@ -31,11 +32,6 @@ public class BlueFarCompAutoBot extends CompAutoBot {
 
         telemetry.addLine("Blue Far Auto Initialized...");
         telemetry.addLine("READY!");
-
-        telemetry.addLine();
-
-        telemetry.addData("Yaw: ","%2f", this.getYaw());
-
         telemetry.update();
     }
 
@@ -48,8 +44,10 @@ public class BlueFarCompAutoBot extends CompAutoBot {
 
     }
 
+    /**
+     *
+     */
     public void run () {
         super.run();
     }
-
 }

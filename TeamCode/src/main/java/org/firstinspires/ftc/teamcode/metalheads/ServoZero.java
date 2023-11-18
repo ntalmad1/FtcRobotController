@@ -18,11 +18,11 @@ public class ServoZero extends IsaacBot {
 
         waitForStart();
 
-        Servo launcher = this.hardwareMap.get(Servo.class, "droneBase");
+        Servo launcher = this.hardwareMap.get(Servo.class, "baseClawServo");
         launcher.resetDeviceConfigurationForOpMode();
 
         launcher.setDirection(Servo.Direction.FORWARD);
-        launcher.setPosition(0);
+        launcher.setPosition(0.5);
 
         while (this.opModeIsActive()) {
 
@@ -39,7 +39,7 @@ public class ServoZero extends IsaacBot {
                 }
             }
 
-            telemetry.addData("drone base: ", "%2f", launcher.getPosition());
+            telemetry.addData("servo: ", "%2f", launcher.getPosition());
             telemetry.update();
         }
     }

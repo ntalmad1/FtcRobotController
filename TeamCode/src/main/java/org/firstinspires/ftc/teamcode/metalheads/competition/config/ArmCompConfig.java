@@ -4,7 +4,7 @@ import com.qualcomm.robotcore.hardware.Servo;
 
 import org.firstinspires.ftc.library.utility.Control;
 import org.firstinspires.ftc.library.IsaacBot;
-import org.firstinspires.ftc.library.arm.ArmConfig;
+import org.firstinspires.ftc.library.boom.arm.ArmConfig;
 import org.firstinspires.ftc.library.boom.BoomConfig;
 
 public class ArmCompConfig extends ArmConfig {
@@ -20,7 +20,7 @@ public class ArmCompConfig extends ArmConfig {
         midBoomConfig.direction = Servo.Direction.REVERSE;
         midBoomConfig.controllerInputMethod = Control.Gp2_RightStickX;
         midBoomConfig.invertInput = false;
-        midBoomConfig.maxIncrement = 0.012;
+        midBoomConfig.maxIncrement = 0.009;
         midBoomConfig.degree = 0.000556;
         midBoomConfig.zeroDegreePosition = 0.48;
         midBoomConfig.gearRatio = 5;
@@ -34,7 +34,7 @@ public class ArmCompConfig extends ArmConfig {
         bottomBoomConfig.direction = Servo.Direction.FORWARD;
         bottomBoomConfig.controllerInputMethod = Control.Gp2_LeftStickX;
         bottomBoomConfig.invertInput = true;
-        bottomBoomConfig.maxIncrement = 0.009;
+        bottomBoomConfig.maxIncrement = 0.006;
         bottomBoomConfig.zeroDegreePosition = 0.28;
         bottomBoomConfig.degree = 0.000556;
         bottomBoomConfig.gearRatio = 5;
