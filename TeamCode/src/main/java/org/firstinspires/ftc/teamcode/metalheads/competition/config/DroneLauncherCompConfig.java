@@ -21,9 +21,9 @@ public class DroneLauncherCompConfig extends DroneLauncherConfig {
 
         this.triggerServoName = "droneTrigger";
 
-        this.triggerServoDownPos = 0.250;
+        this.triggerServoDownPos = 0.58;
 
-        this.triggerServoUpPos = 0.500;
+        this.triggerServoUpPos = 0.43;
 
 
         this.rotatorConfig = new RotatorConfig();
@@ -39,12 +39,12 @@ public class DroneLauncherCompConfig extends DroneLauncherConfig {
 
         this.rotatorConfig.zeroDegreePosition =0.5;
 
-        this.rotatorConfig.homePosition = 0.038;
+        this.rotatorConfig.homePosition = 0.44;
 
         this.rotatorConfig.maxIncrement = 0.001;
 
         this.rotatorConfig.debug = false;
 
-        this.launchPosition = 0.16;
+        this.launchPosition = 0.3;
     }
 }
