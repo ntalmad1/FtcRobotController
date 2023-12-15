@@ -19,7 +19,7 @@ public class SimpleDriveCompConfig extends SimpleDriveTrainConfig {
         this.rightFrontDeviceName = "rightFrontDrive";
         this.rightRearDeviceName  = "rightRearDrive";
         this.leftRearDeviceName   = "leftRearDrive";
-        this.imuName = "imu";
+        this.imuName = "imu2";
 
         this.motorTicsPerRev = 537.7;
         this.wheelDiameterCm = 9.6;
