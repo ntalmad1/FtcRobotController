@@ -115,24 +115,7 @@ public class CompBot extends IsaacBot{
         //-------------------------------------------------
         this.addGp2_A_PressHandler(event -> {
             CompBot.this.arm.cancelAllCommands();
-
-            if (this.pickingPixel) {
-                this.addCommand(new OneTimeSynchronousCommand() {
-                    public void runOnce(ICommand command) {
-                        CompBot.this.arm.moveBottomToPosition(CompBot.this.robotConfig.pixelReady_bottomBoom, 1)
-                                .wait(250, new CommandCallbackAdapter(){
-                                    public void onSuccess(CommandSuccessEvent successEvent) {
-                                        CompBot.this.pickingPixel = false;
-                                        CompBot.this.onAPress();
-                                    }
-                                });
-                    }
-                });
-            }
-            else {
-                this.onAPress();
-            }
-
+            this.onAPress();
 
         });
 

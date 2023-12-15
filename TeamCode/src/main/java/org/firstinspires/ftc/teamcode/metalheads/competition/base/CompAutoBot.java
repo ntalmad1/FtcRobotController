@@ -136,7 +136,7 @@ public class CompAutoBot extends CompBot {
                             }                        })
                         .moveBottomToPosition(0.135, 1)
                         .moveMiddleToPosition(0.718,1)
-                        .moveClawToPosition(0.715, 1)
+                        .moveClawToPosition(0.710, 1)
                         .rotateClawToPosition(0.307, 1)
                         .wait(2500)
                         .moveBottomToPosition(0.121, 1)

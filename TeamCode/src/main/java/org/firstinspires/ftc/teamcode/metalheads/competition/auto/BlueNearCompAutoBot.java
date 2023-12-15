@@ -27,6 +27,8 @@ public class BlueNearCompAutoBot extends CompAutoBot {
         this.robotAutoConfig.placeYellowPixelDistance_middle = 79;
         this.robotAutoConfig.placeYellowPixelDistance_far = 100;
         this.robotAutoConfig.placePurplePixel_forwards_sideDistance = 18;
+        this.robotAutoConfig.placePurplePixel_oppositeTruss_sideDistance = 39;
+
 
         this.robotAutoConfig.rotateTrussSide = 42;
 
