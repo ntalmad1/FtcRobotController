@@ -10,7 +10,7 @@ import org.firstinspires.ftc.library.IsaacBot;
  *
  */
 @TeleOp(name="Servo Test", group="Linear OpMode")
-@Disabled
+//@Disabled
 public class ServoTest extends IsaacBot {
 
 
@@ -18,12 +18,15 @@ public class ServoTest extends IsaacBot {
     public void runOpMode() throws InterruptedException {
 
 
-        Servo servo = this.hardwareMap.get(Servo.class, "droneTrigger");
+        Servo servo = this.hardwareMap.get(Servo.class, "droneBase");
+        Servo trigger = this.hardwareMap.get(Servo.class, "droneTrigger");
         servo.resetDeviceConfigurationForOpMode();
+        trigger.resetDeviceConfigurationForOpMode();
 
         waitForStart();
 
-        servo.setPosition(0.0);
+        servo.setPosition(0.5);
+        trigger.setPosition(0.58);
 
         while (this.opModeIsActive()) {
 
@@ -37,6 +40,16 @@ public class ServoTest extends IsaacBot {
                 if (newPos > 1) newPos = 1;
 
                 servo.setPosition(newPos);
+            }
+
+            if(this.gamepad1.dpad_up) {
+                while(gamepad1.dpad_up) {}
+                trigger.setPosition(0.43);
+            }
+
+            if(this.gamepad1.dpad_down) {
+                while(gamepad1.dpad_down) {}
+                trigger.setPosition(0.58);
             }
 
             telemetry.addData("Servo position: ", "%2f", servo.getPosition());
