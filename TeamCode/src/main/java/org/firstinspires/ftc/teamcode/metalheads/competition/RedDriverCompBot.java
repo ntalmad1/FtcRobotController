@@ -21,7 +21,8 @@ public class RedDriverCompBot extends CompDriverBot {
      *
      */
     public void initBot () {
-        this.driveTrainConfig.yawOffset = -90;
+        //if always forwards is of yawoffset = -90 else it's 0
+        this.driveTrainConfig.yawOffset = 0;
         this.armConfig.debug = false;
         this.armConfig.bottomBoomConfig.invertInput = true;
         this.armConfig.midBoomConfig.invertInput = false;

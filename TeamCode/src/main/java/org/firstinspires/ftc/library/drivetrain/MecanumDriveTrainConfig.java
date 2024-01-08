@@ -31,4 +31,8 @@ public class MecanumDriveTrainConfig extends AbstractDriveTrainConfig
      */
     public boolean incrementalDeceleration = false;
 
+    /**
+     */
+    public boolean alwaysForwards = false;
+
 }
