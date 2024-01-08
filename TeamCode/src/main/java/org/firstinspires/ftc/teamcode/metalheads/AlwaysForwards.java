@@ -41,7 +41,7 @@ public class AlwaysForwards extends IsaacBot
         driveTrainConfig.rightFrontMotorDirection = DcMotorSimple.Direction.FORWARD;
         driveTrainConfig.leftRearMotorDirection  =  DcMotorSimple.Direction.REVERSE;
         driveTrainConfig.rightRearMotorDirection  = DcMotorSimple.Direction.FORWARD;
-        driveTrainConfig.imuName = "imu";
+        driveTrainConfig.imuName = "imu2";
         driveTrainConfig.debug = true;
 
         this.driveTrain = new MecanumDriveTrain(driveTrainConfig);

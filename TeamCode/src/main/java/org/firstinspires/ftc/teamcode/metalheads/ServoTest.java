@@ -25,7 +25,7 @@ public class ServoTest extends IsaacBot {
 
         waitForStart();
 
-        servo.setPosition(0.5);
+        servo.setPosition(0.342);
         trigger.setPosition(0.58);
 
         while (this.opModeIsActive()) {
@@ -34,7 +34,7 @@ public class ServoTest extends IsaacBot {
 
                 double lx = this.gamepad1.left_stick_x;
 
-                double newPos = servo.getPosition() + (lx > 0 ? 0.001 : -0.001);
+                double newPos = servo.getPosition() + (lx > 0 ? 0.0002 : -0.0002);
 
                 if (newPos < 0) newPos = 0;
                 if (newPos > 1) newPos = 1;
