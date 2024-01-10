@@ -625,7 +625,7 @@ public class CompAutoBot extends CompBot {
 
         this.addCommand(new OneTimeCommand() {
             public void runOnce(ICommand command) {
-                CompAutoBot.this.moveArm_fromPixelReady_toTravel();
+                CompAutoBot.this.moveArm_fromPixelPlace_toPixelReady();
                 CompAutoBot.this.arm.wait(0, new CommandCallbackAdapter(this){
                     public void onSuccess(CommandSuccessEvent successEvent) {
                         this.command.markAsCompleted();
@@ -686,7 +686,7 @@ public class CompAutoBot extends CompBot {
 
         this.addCommand(new OneTimeCommand() {
             public void runOnce(ICommand command) {
-                CompAutoBot.this.moveArm_fromTravel_toPixelPlace();
+                CompAutoBot.this.moveArm_fromPixelReady_toPixelPlace();
                 CompAutoBot.this.arm.wait(0, new CommandCallbackAdapter(this){
                     public void onSuccess(CommandSuccessEvent successEvent) {
                         this.command.markAsCompleted();
@@ -697,7 +697,7 @@ public class CompAutoBot extends CompBot {
 
         this.addCommand(new OneTimeSynchronousCommand() {
             public void runOnce(ICommand command) {
-                CompAutoBot.this.driveTrain.forward(0.3, 0.4, 84, Units.Centimeters)
+                CompAutoBot.this.driveTrain.forward(0.3, 0.4, 76, Units.Centimeters)
                         .wait(250)
                         .gotoDegrees(CompAutoBot.this.robotAutoConfig.startingTrussDirection,0.2, 0.2, 90)
                         .wait(0, new CommandCallbackAdapter(this){
