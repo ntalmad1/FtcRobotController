@@ -41,7 +41,7 @@ public class DroneLauncherCompConfig extends DroneLauncherConfig {
 
         this.rotatorConfig.homePosition = 0.44;
 
-        this.rotatorConfig.maxIncrement = 0.001;
+        this.rotatorConfig.maxIncrement = 0.01;
 
         this.rotatorConfig.debug = false;
 
