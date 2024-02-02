@@ -33,6 +33,6 @@ public class MecanumDriveTrainConfig extends AbstractDriveTrainConfig
 
     /**
      */
-    public boolean alwaysForwards = false;
+    public boolean alwaysForwards = true;
 
 }

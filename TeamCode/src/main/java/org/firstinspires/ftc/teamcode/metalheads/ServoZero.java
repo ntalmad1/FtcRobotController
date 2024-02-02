@@ -18,11 +18,11 @@ public class ServoZero extends IsaacBot {
 
         waitForStart();
 
-        Servo launcher = this.hardwareMap.get(Servo.class, "droneTrigger");
+        Servo launcher = this.hardwareMap.get(Servo.class, "servoWheel");
         launcher.resetDeviceConfigurationForOpMode();
 
         launcher.setDirection(Servo.Direction.FORWARD);
-        launcher.setPosition(0.0);
+        launcher.setPosition(0.5);
 
         while (this.opModeIsActive()) {
 

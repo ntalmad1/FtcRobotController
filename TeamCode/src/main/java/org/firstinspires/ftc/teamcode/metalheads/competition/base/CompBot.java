@@ -102,7 +102,7 @@ public class CompBot extends IsaacBot{
         this.robotConfig = new RobotConfig();
 
         this.armConfig = new ArmCompConfig(this);
-        this.armConfig.debug = false;
+        this.armConfig.debug = true;
 
         this.droneLauncherConfig = new DroneLauncherCompConfig(this);
 
@@ -414,6 +414,7 @@ public class CompBot extends IsaacBot{
     private void _moveArm_fromTravel_toPixelReady() {
         this.arm.rotateClawToPosition(0.307, 1)
                 .moveBottomToPosition(0.180, 1)
+                .wait(500)
                 .moveMiddleToPosition(0.731, 1)
                 .moveClawToPosition(0.507, 1)
                 .wait(1000)
@@ -450,7 +451,7 @@ public class CompBot extends IsaacBot{
                     .closeLeftClaw()
                     .closeRightClaw()
                     .wait(350)
-                    .moveBottomToPosition(0.153)
+                    .moveBottomToPosition(0.150)
                     .wait(500)
                     .openLeftClaw()
                     .openRightClaw()
