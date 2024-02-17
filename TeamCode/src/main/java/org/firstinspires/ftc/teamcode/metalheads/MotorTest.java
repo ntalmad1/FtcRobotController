@@ -20,11 +20,12 @@ public class MotorTest extends IsaacBot {
     @Override
     public void runOpMode() throws InterruptedException {
 
-        motor = hardwareMap.get(DcMotor.class, "actuatorMotor");
+        motor = hardwareMap.get(DcMotor.class, "winchMotor");
         motor.setDirection(DcMotor.Direction.FORWARD);
         motor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         motor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
+        int targetPositition = 0;
 
         waitForStart();
 
@@ -33,22 +34,27 @@ public class MotorTest extends IsaacBot {
             //soft
 
             if (gamepad1.right_stick_x > 0) {
+                targetPositition = motor.getCurrentPosition() + 20;
 
-                motor.setTargetPosition(this.motor.getCurrentPosition() + 80);
+                motor.setTargetPosition(targetPositition);
 
                 motor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
-                motor.setPower(1*gamepad1.right_stick_x);
+                motor.setPower(gamepad1.right_stick_x);
             }
-
-            if (gamepad1.right_stick_x < 0) {
-
-                motor.setTargetPosition(this.motor.getCurrentPosition() - 80);
+            else if (gamepad1.right_stick_x < 0) {
+                targetPositition = motor.getCurrentPosition() - 20;
+                motor.setTargetPosition(targetPositition);
                 motor.setDirection(DcMotor.Direction.REVERSE);
                 motor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
 
-                motor.setPower(Math.abs(1*gamepad1.right_stick_x));
+                motor.setPower(Math.abs(gamepad1.right_stick_x));
+            }
+            else {
+                motor.setTargetPosition(targetPositition);
+                motor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+                motor.setPower(1);
             }
 
 

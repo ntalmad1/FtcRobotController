@@ -23,7 +23,7 @@ public class LinearActuatorTest extends LinearOpMode {
         linearActMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         linearActMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
-        //linearActMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        linearActMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
         int targetPosition = 0;
         double power = 0;
@@ -38,7 +38,7 @@ public class LinearActuatorTest extends LinearOpMode {
 
             int ticIncrements = 200;
             int softMax = 3400;
-            int softMin = 1500;
+            int softMin = 500;
 
             if (gamepad1.right_stick_x > 0) {
                 targetPosition = linearActMotor.getCurrentPosition() + ticIncrements;
@@ -54,7 +54,7 @@ public class LinearActuatorTest extends LinearOpMode {
 
                 linearActMotor.setPower(power);
             }
-            if (gamepad1.right_stick_x < 0) {
+            else if (gamepad1.right_stick_x < 0) {
                 targetPosition = linearActMotor.getCurrentPosition() - ticIncrements;
                 if (targetPosition < softMin) {
                     targetPosition = softMin;
@@ -70,7 +70,6 @@ public class LinearActuatorTest extends LinearOpMode {
             }
             else {
                 linearActMotor.setPower(0);
-                linearActMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
             }
 
             telemetry.addData("Power: ", "%2f", power);
