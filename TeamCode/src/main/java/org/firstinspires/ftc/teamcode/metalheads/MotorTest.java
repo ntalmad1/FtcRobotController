@@ -20,7 +20,7 @@ public class MotorTest extends IsaacBot {
     @Override
     public void runOpMode() throws InterruptedException {
 
-        motor = hardwareMap.get(DcMotor.class, "actuatorMotor");
+        motor = hardwareMap.get(DcMotor.class, "winchMotor");
         motor.setDirection(DcMotor.Direction.FORWARD);
         motor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         motor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
@@ -30,11 +30,12 @@ public class MotorTest extends IsaacBot {
 
         while (this.opModeIsActive()) {
 
-            //soft
+            int softMax = 10000;
+            int softMin = -10000;
 
             if (gamepad1.right_stick_x > 0) {
 
-                motor.setTargetPosition(this.motor.getCurrentPosition() + 80);
+                motor.setTargetPosition(softMax);
 
                 motor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
@@ -43,7 +44,7 @@ public class MotorTest extends IsaacBot {
 
             if (gamepad1.right_stick_x < 0) {
 
-                motor.setTargetPosition(this.motor.getCurrentPosition() - 80);
+                motor.setTargetPosition(softMin);
                 motor.setDirection(DcMotor.Direction.REVERSE);
                 motor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
@@ -53,6 +54,7 @@ public class MotorTest extends IsaacBot {
 
 
             telemetry.addData("Current Position",  "%7d", motor.getCurrentPosition());
+            telemetry.addData("Target Position",  "%7d", motor.getCurrentPosition());
             telemetry.update();
         }
     }
