@@ -14,49 +14,48 @@ public class ServoZero extends IsaacBot {
     @Override
     public void runOpMode() throws InterruptedException {
 
-        double increment = 0.01;
+        double increment = 0.02;
 
         waitForStart();
 
-        Servo launcher = this.hardwareMap.get(Servo.class, "droneBase");
-        Servo trigger = this.hardwareMap.get(Servo.class, "drone");
-        launcher.resetDeviceConfigurationForOpMode();
-        trigger.resetDeviceConfigurationForOpMode();
+        Servo servo = this.hardwareMap.get(Servo.class, "catcherWinchServo");
+        servo.resetDeviceConfigurationForOpMode();
 
-        launcher.setDirection(Servo.Direction.FORWARD);
-        trigger.setDirection(Servo.Direction.FORWARD);
-        launcher.setPosition(0.5);
-        trigger.setPosition(0.0);
+        servo.setDirection(Servo.Direction.FORWARD);
+        servo.setPosition(1.0);
+        double maxpos = 0.903;
+        double minpos = 0.2966;
 
         boolean active = true;
 
         while (this.opModeIsActive()) {
 
-            if (gamepad1.a) {
-                while (gamepad1.a) {}
-                if (active) {
-                    trigger.setPosition(0.2);
-                    active = false;
-                } else {
-                    trigger.setPosition(0.0);
-                    active = true;
-                }
-            }
-
-            if (launcher.getPosition()>0) {
+            if (servo.getPosition()>0) {
                 if (gamepad1.dpad_down == true) {
-                    launcher.setPosition(launcher.getPosition()-increment);
+                    servo.setPosition(servo.getPosition()-increment);
                     while (gamepad1.dpad_down == true) {}
                 }
             }
-            if (launcher.getPosition()<1) {
+            if (servo.getPosition()<1) {
                 if (gamepad1.dpad_up == true) {
-                    launcher.setPosition(launcher.getPosition()+increment);
+                    servo.setPosition(servo.getPosition()+increment);
                     while (gamepad1.dpad_up == true) {}
                 }
             }
 
-            telemetry.addData("servo: ", "%2f", launcher.getPosition());
+            if (this.gamepad1.left_stick_x != 0) {
+
+                double lx = this.gamepad1.left_stick_x;
+
+                double newPos = servo.getPosition() + (lx * 0.002);
+
+                if (newPos < minpos) newPos = minpos;
+                if (newPos > maxpos) newPos = maxpos;
+
+                servo.setPosition(newPos);
+            }
+
+            telemetry.addData("servo: ", "%2f", servo.getPosition());
             telemetry.update();
         }
     }
