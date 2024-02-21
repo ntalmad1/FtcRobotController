@@ -31,8 +31,6 @@ public class MotorTest extends IsaacBot {
 
         while (this.opModeIsActive()) {
 
-            //soft
-
             if (gamepad1.right_stick_x > 0) {
                 targetPositition = motor.getCurrentPosition() + 20;
 
@@ -59,6 +57,8 @@ public class MotorTest extends IsaacBot {
 
 
             telemetry.addData("Current Position",  "%7d", motor.getCurrentPosition());
+            telemetry.addData("Target Position",  "%7d", targetPositition);
+            telemetry.addData("Power",  "%7d", motor.getPower());
             telemetry.update();
         }
     }
