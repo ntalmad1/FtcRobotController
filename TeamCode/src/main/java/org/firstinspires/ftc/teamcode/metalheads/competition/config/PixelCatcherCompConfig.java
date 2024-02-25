@@ -21,9 +21,9 @@ public class PixelCatcherCompConfig extends PixelCatcherConfig {
 
         this.leftArmServoClosedPos = 1;
 
-        this.leftArmServoInitPos = 0;
+        this.leftArmServoInitPos = 1;
 
-        this.leftArmInitPos = PixelCatcher.ArmPosition.OPENED;
+        this.leftArmInitPos = PixelCatcher.ArmPosition.CLOSED;
 
         this.leftArmToggle = Control.Gp1_LeftTrigger_Down;
 
@@ -35,15 +35,25 @@ public class PixelCatcherCompConfig extends PixelCatcherConfig {
 
         this.rightArmServoClosedPos = 1;
 
-        this.rightArmServoInitPos = 0;
+        this.rightArmServoInitPos = 1;
 
-        this.rightArmInitPos = PixelCatcher.ArmPosition.OPENED;
+        this.rightArmInitPos = PixelCatcher.ArmPosition.CLOSED;
 
         this.rightArmToggle = Control.Gp1_RightTrigger_Down;
 
-        this.leftPixelSensorName = "leftPixelSensor";
+        //--------------------------------------------------
 
-        this.rightPixelSensorName = "rightPixelSensor";
+        this.winchServoName = "catcherWinchServo";
+
+        this.winchToggle1 = Control.Gp1_RightBumper_Down;
+
+        this.winchToggle2 = Control.Gp1_LeftBumper_Down;
+
+        this.winchUpPosition = 0.645;
+
+        this.winchDownPosition = 0.95;
+
+        this.winchServoInitPos = 0.645;
     }
 
 }

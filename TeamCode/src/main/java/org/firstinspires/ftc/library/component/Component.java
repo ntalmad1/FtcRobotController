@@ -20,8 +20,12 @@ import org.firstinspires.ftc.library.component.event.gp1_dpad_down_down.Gp1_Dpad
 import org.firstinspires.ftc.library.component.event.gp1_dpad_down_down.Gp1_Dpad_Down_DownHandler;
 import org.firstinspires.ftc.library.component.event.gp1_dpad_down_press.Gp1_Dpad_Down_PressEvent;
 import org.firstinspires.ftc.library.component.event.gp1_dpad_down_press.Gp1_Dpad_Down_PressHandler;
+import org.firstinspires.ftc.library.component.event.gp1_left_bumper_down.Gp1_Left_Bumper_DownEvent;
+import org.firstinspires.ftc.library.component.event.gp1_left_bumper_down.Gp1_Left_Bumper_DownHandler;
 import org.firstinspires.ftc.library.component.event.gp1_left_trigger_down.Gp1_Left_Trigger_DownEvent;
 import org.firstinspires.ftc.library.component.event.gp1_left_trigger_down.Gp1_Left_Trigger_DownHandler;
+import org.firstinspires.ftc.library.component.event.gp1_right_bumper_down.Gp1_Right_Bumper_DownEvent;
+import org.firstinspires.ftc.library.component.event.gp1_right_bumper_down.Gp1_Right_Bumper_DownHandler;
 import org.firstinspires.ftc.library.component.event.gp1_right_trigger_down.Gp1_Right_Trigger_DownEvent;
 import org.firstinspires.ftc.library.component.event.gp1_right_trigger_down.Gp1_Right_Trigger_DownHandler;
 import org.firstinspires.ftc.library.component.event.gp2_a_press.Gp2_A_PressEvent;
@@ -111,6 +115,14 @@ public abstract class Component implements IComponent {
      */
     public HandlerRegistration addGp1_Left_Trigger_DownHandler (Gp1_Left_Trigger_DownHandler handler) {
         return EventBus.getInstance().addHandler(Gp1_Left_Trigger_DownEvent.TYPE, handler);
+    }
+
+    public HandlerRegistration addGp1_Left_Bumper_DownHandler (Gp1_Left_Bumper_DownHandler handler) {
+        return EventBus.getInstance().addHandler(Gp1_Left_Bumper_DownEvent.TYPE, handler);
+    }
+
+    public HandlerRegistration addGp1_Right_Bumper_DownHandler (Gp1_Right_Bumper_DownHandler handler) {
+        return EventBus.getInstance().addHandler(Gp1_Right_Bumper_DownEvent.TYPE, handler);
     }
 
     /**

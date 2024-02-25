@@ -106,14 +106,14 @@ public abstract class  IsaacBot extends LinearOpMode implements IComponent
     }
 
     /**
-     *
+     * This code gets ran at the start of runOpMode before start is pressed
      */
     public void initBot () {
        this.robotComponent.init();
     }
 
     /**
-     *
+     * This code gets ran right after start pressed and is only ran once
      */
     public void go () {
 
@@ -121,7 +121,7 @@ public abstract class  IsaacBot extends LinearOpMode implements IComponent
 
 
     /**
-     *
+     * This code gets ran after start pressed and "whileOpIsActive" in a loop
      */
     public void run () {
         this.getEventBus().run();
@@ -260,6 +260,31 @@ public abstract class  IsaacBot extends LinearOpMode implements IComponent
      */
     public void setImuName (String imuName) {
         this.imuName = imuName;
+    }
+
+    /**
+     *
+     * @param message
+     */
+    public void voiceLog (String message) {
+        this.voiceLog(message, 0);
+    }
+
+    /**
+     *
+     * @param message
+     * @param milliseconds
+     */
+    public void voiceLog (String message, long milliseconds) {
+        try {
+            this.sleep(milliseconds);
+        } catch (Exception e) {
+            // do nothing
+        }
+
+
+        this.telemetry.speak(message);
+        this.telemetry.log().add(message);
     }
 
 }
