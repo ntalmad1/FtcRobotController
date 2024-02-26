@@ -1,5 +1,7 @@
 package org.firstinspires.ftc.library.boom.arm;
 
+import com.qualcomm.robotcore.hardware.Servo;
+
 import org.firstinspires.ftc.library.boom.Boom;
 import org.firstinspires.ftc.library.boom.BoomMoveToDegreesCommand;
 import org.firstinspires.ftc.library.boom.BoomMoveToPositionCommand;
@@ -23,11 +25,14 @@ public class Arm extends Component {
 
     /**
      */
-    private final Boom midBoom;
+//    private final Boom midBoom;
 
     /**
      */
     private final Boom bottomBoom;
+
+    private Servo rightRelay;
+    private Servo leftRelay;
 
     /**
      * Constructor
@@ -40,8 +45,8 @@ public class Arm extends Component {
         this.config = configuration;
 
         this.claw = new Claw(this.config.clawConfig);
-        this.midBoom = new Boom(this.config.midBoomConfig);
-        this.midBoom.setInverted(true);
+//        this.midBoom = new Boom(this.config.midBoomConfig);
+//        this.midBoom.setInverted(true);
 
         this.bottomBoom = new Boom(this.config.bottomBoomConfig);
 
@@ -59,11 +64,15 @@ public class Arm extends Component {
     public void init () {
         super.init();
 
+        this.rightRelay = this.robot.hardwareMap.get(Servo.class, "rightBoomRelay");
+        this.leftRelay = this.robot.hardwareMap.get(Servo.class, "leftBoomRelay");
+
+        rightRelay.setPosition(1);
+        leftRelay.setPosition(1);
+
         this.claw.init();
 
         this.bottomBoom.init();
-        this.midBoom.init();
-
     }
 
     /**
@@ -73,7 +82,7 @@ public class Arm extends Component {
         super.run();
 
         this.bottomBoom.run();
-        this.midBoom.run();
+       // this.midBoom.run();
         this.claw.run();
 
         if (this.config.debug) {
@@ -81,17 +90,17 @@ public class Arm extends Component {
             this.telemetry.addData("Bottom boom position: ", "%2f", this.bottomBoom.getPosition());
             this.telemetry.addLine();
 
-            this.telemetry.addData("Middle boom degrees: ", "%2f", this.midBoom.getPositionDegrees());
-            this.telemetry.addData("Middle boom position: ", "%2f", this.midBoom.getPosition());
-            this.telemetry.addLine();
+//            this.telemetry.addData("Middle boom degrees: ", "%2f", this.midBoom.getPositionDegrees());
+//            this.telemetry.addData("Middle boom position: ", "%2f", this.midBoom.getPosition());
+//            this.telemetry.addLine();
 
             this.telemetry.addData("Claw boom degrees: ", "%2f", this.claw.getBase().getPositionDegrees());
             this.telemetry.addData("Claw boom position: ", "%2f", this.claw.getBase().getPosition());
             this.telemetry.addLine();
 
-            this.telemetry.addData("Claw rotator degrees: ", "%2f", this.claw.getRotator().getPositionDegrees());
-            this.telemetry.addData("Claw rotator position: ", "%2f", this.claw.getRotator().getPosition());
-            this.telemetry.addLine();
+//            this.telemetry.addData("Claw rotator degrees: ", "%2f", this.claw.getRotator().getPositionDegrees());
+//            this.telemetry.addData("Claw rotator position: ", "%2f", this.claw.getRotator().getPosition());
+//            this.telemetry.addLine();
 
             this.telemetry.update();
         }
@@ -163,9 +172,9 @@ public class Arm extends Component {
      * @param degrees Rotates the claw to the given degrees position
      * @return "this" for a fluid interface
      */
-    public Arm rotateClawToDegrees (double degrees) {
-        return this.rotateClawToDegrees(degrees, this.claw.getRotator().getMaxIncrement());
-    }
+//    public Arm rotateClawToDegrees (double degrees) {
+//        return this.rotateClawToDegrees(degrees, this.claw.getRotator().getMaxIncrement());
+//    }
 
     /**
      *
@@ -173,19 +182,19 @@ public class Arm extends Component {
      * @param power The increment to rotate by each cycle ( 0 -1 )
      * @return "this" for a fluid interface
      */
-    public Arm rotateClawToDegrees (double degrees, double power) {
-        this.addCommand(new BoomMoveToDegreesCommand(this.claw.getRotator(), degrees, power));
-        return this;
-    }
+//    public Arm rotateClawToDegrees (double degrees, double power) {
+//        this.addCommand(new BoomMoveToDegreesCommand(this.claw.getRotator(), degrees, power));
+//        return this;
+//    }
 
     /**
      *
      * @param position The position to rotate the claw to ( 0 - 1 )
      * @return "this" for a fluid interface
      */
-    public Arm rotateClawToPosition (double position) {
-        return this.rotateClawToPosition(position, this.claw.getRotator().getMaxIncrement());
-    }
+//    public Arm rotateClawToPosition (double position) {
+//        return this.rotateClawToPosition(position, this.claw.getRotator().getMaxIncrement());
+//    }
 
     /**
      *
@@ -193,10 +202,10 @@ public class Arm extends Component {
      * @param power
      * @return "this" for a fluid interface
      */
-    public Arm rotateClawToPosition (double position, double power) {
-        this.addCommand(new BoomMoveToPositionCommand(this.claw.getRotator(), position, power));
-        return this;
-    }
+//    public Arm rotateClawToPosition (double position, double power) {
+//        this.addCommand(new BoomMoveToPositionCommand(this.claw.getRotator(), position, power));
+//        return this;
+//    }
 
 
     /**
@@ -204,9 +213,9 @@ public class Arm extends Component {
      * @param degrees
      * @return "this" for a fluid interface
      */
-    public Arm moveMiddleToDegrees (double degrees) {
-        return this.moveMiddleToDegrees(degrees, this.midBoom.getMaxIncrement());
-    }
+//    public Arm moveMiddleToDegrees (double degrees) {
+//        return this.moveMiddleToDegrees(degrees, this.midBoom.getMaxIncrement());
+//    }
 
     /**
      *
@@ -214,19 +223,19 @@ public class Arm extends Component {
      * @param power
      * @return "this" for a fluid interface
      */
-    public Arm moveMiddleToDegrees (double degrees, double power) {
-        this.addCommand(new BoomMoveToDegreesCommand(this.midBoom, degrees, power));
-        return this;
-    }
+//    public Arm moveMiddleToDegrees (double degrees, double power) {
+//        this.addCommand(new BoomMoveToDegreesCommand(this.midBoom, degrees, power));
+//        return this;
+//    }
 
     /**
      *
      * @param position
      * @return "this" for a fluid interface
      */
-    public Arm moveMiddleToPosition (double position) {
-        return this.moveMiddleToPosition(position, this.midBoom.getMaxIncrement());
-    }
+//    public Arm moveMiddleToPosition (double position) {
+//        return this.moveMiddleToPosition(position, this.midBoom.getMaxIncrement());
+//    }
 
     /**
      *
@@ -234,10 +243,10 @@ public class Arm extends Component {
      * @param power
      * @return "this" for a fluid interface
      */
-    public Arm moveMiddleToPosition (double position, double power) {
-        this.addCommand(new BoomMoveToPositionCommand(this.midBoom, position, power));
-        return this;
-    }
+//    public Arm moveMiddleToPosition (double position, double power) {
+//        this.addCommand(new BoomMoveToPositionCommand(this.midBoom, position, power));
+//        return this;
+//    }
 
     /**
      *
@@ -294,10 +303,10 @@ public class Arm extends Component {
      * @param degrees Number of degrees to move the middle boom by
      * @return "this" for a fluid interface
      */
-    public Arm moveMiddleDegreesFromCurrentPosition (double degrees) {
-        double targetDegrees = this.midBoom.getPositionDegrees() + degrees;
-        return this.moveMiddleToDegrees(targetDegrees);
-    }
+//    public Arm moveMiddleDegreesFromCurrentPosition (double degrees) {
+//        double targetDegrees = this.midBoom.getPositionDegrees() + degrees;
+//        return this.moveMiddleToDegrees(targetDegrees);
+//    }
 
     /**
      *

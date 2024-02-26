@@ -71,11 +71,17 @@ public class PixelCatcherConfig {
      */
     public Control rightArmToggle = Control.Gp1_RightTrigger_Down;
 
-    /**
-     */
-    public String leftPixelSensorName;
+    public String winchServoName;
 
-    /**
-     */
-    public String rightPixelSensorName;
+    public Control winchToggle1 = Control.Gp1_RightBumper_Down;
+
+    public Control winchToggle2 = Control.Gp1_LeftBumper_Down;
+
+    public double winchUpPosition;
+
+    public double winchDownPosition;
+
+    public double winchServoInitPos;
+
+    public PixelCatcher.WinchPosition winchInitPosition = PixelCatcher.WinchPosition.UP;
 }

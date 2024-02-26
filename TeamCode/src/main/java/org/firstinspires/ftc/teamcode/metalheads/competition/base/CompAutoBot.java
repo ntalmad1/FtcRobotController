@@ -125,9 +125,9 @@ public class CompAutoBot extends CompBot {
 
         this.deployArmCommand = new OneTimeCommand(){
             public void runOnce(ICommand command ) {
-                CompAutoBot.this.arm.moveMiddleDegreesFromCurrentPosition(15)
-                        .wait(0)
-                        .moveMiddleToDegrees(-90, 1)
+                CompAutoBot.this.arm//.moveMiddleDegreesFromCurrentPosition(15)
+                        //.wait(0)
+                        //.moveMiddleToDegrees(-90, 1)
                         .moveBottomDegreesFromCurrentPosition(-30)
                         .wait(750, new CommandCallbackAdapter(this){
                             public void onAfter(CommandAfterEvent event){
@@ -135,9 +135,9 @@ public class CompAutoBot extends CompBot {
                                 CompAutoBot.this.pixelCatcher.toggleRightArm();
                             }                        })
                         .moveBottomToPosition(0.135, 1)
-                        .moveMiddleToPosition(0.718,1)
+                        //.moveMiddleToPosition(0.718,1)
                         .moveClawToPosition(0.710, 1)
-                        .rotateClawToPosition(0.307, 1)
+                        //.rotateClawToPosition(0.307, 1)
                         .wait(2500)
                         .moveBottomToPosition(0.121, 1)
                         .wait(100, new CommandCallbackAdapter(this){
@@ -191,7 +191,7 @@ public class CompAutoBot extends CompBot {
      * @param handler
      */
     protected void ping (double degrees, int delayMillis, PingHandler handler) {
-        this.arm.rotateClawToDegrees(degrees);
+        //this.arm.rotateClawToDegrees(degrees);
         this.arm.wait(delayMillis, new CommandCallbackAdapter() {
             public void onSuccess (CommandSuccessEvent event) {
                 handler.onPing(new PingEvent(degrees, CompAutoBot.this.sonar.getDistance(DistanceUnit.CM), DistanceUnit.CM));
@@ -213,7 +213,7 @@ public class CompAutoBot extends CompBot {
             return;
         }
 
-        this.arm.rotateClawToDegrees(startDegrees);
+        //this.arm.rotateClawToDegrees(startDegrees);
         this.arm.wait(delayMillis, new CommandCallbackAdapter(){
             public void onSuccess(CommandSuccessEvent successEvent) {
 
@@ -244,7 +244,7 @@ public class CompAutoBot extends CompBot {
             return;
         }
 
-        this.arm.rotateClawToDegrees(startDegrees);
+        //this.arm.rotateClawToDegrees(startDegrees);
         this.arm.wait(delayMillis, new CommandCallbackAdapter(){
             public void onSuccess(CommandSuccessEvent successEvent) {
 
@@ -361,16 +361,16 @@ public class CompAutoBot extends CompBot {
 
         this.propLocation = Direction.FORWARD;
 
-        this.addCommand(new OneTimeCommand() {
-            public void runOnce(ICommand command) {
-                CompAutoBot.this.arm.rotateClawToDegrees(CompAutoBot.this.getDegrees(70))
-                        .wait(0, new CommandCallbackAdapter(this){
-                            public void onAfter(CommandAfterEvent afterEvent) {
-                                command.markAsCompleted();
-                            }
-                        });
-            }
-        });
+//        this.addCommand(new OneTimeCommand() {
+//            public void runOnce(ICommand command) {
+//                CompAutoBot.this.arm.rotateClawToDegrees(CompAutoBot.this.getDegrees(70))
+//                        .wait(0, new CommandCallbackAdapter(this){
+//                            public void onAfter(CommandAfterEvent afterEvent) {
+//                                command.markAsCompleted();
+//                            }
+//                        });
+//            }
+//        });
 
         this.addCommand(new OneTimeSynchronousCommand() {
             public void runOnce(ICommand command) {
@@ -428,16 +428,16 @@ public class CompAutoBot extends CompBot {
         this.propLocation = this.robotAutoConfig.startingTrussDirection.invert();
 
 
-        this.addCommand(new OneTimeCommand() {
-            public void runOnce(ICommand command) {
-                CompAutoBot.this.arm.rotateClawToDegrees(0)
-                        .wait(0, new CommandCallbackAdapter(this){
-                            public void onAfter(CommandAfterEvent afterEvent) {
-                                command.markAsCompleted();
-                            }
-                        });
-            }
-        });
+//        this.addCommand(new OneTimeCommand() {
+//            public void runOnce(ICommand command) {
+//                CompAutoBot.this.arm.rotateClawToDegrees(0)
+//                        .wait(0, new CommandCallbackAdapter(this){
+//                            public void onAfter(CommandAfterEvent afterEvent) {
+//                                command.markAsCompleted();
+//                            }
+//                        });
+//            }
+//        });
 
         this.addCommand(new OneTimeSynchronousCommand() {
             public void runOnce(ICommand command) {
@@ -811,7 +811,7 @@ public class CompAutoBot extends CompBot {
         this.addCommand(new OneTimeSynchronousCommand() {
             public void runOnce(ICommand command) {
 
-                CompAutoBot.this.arm.moveMiddleToPosition(0.733, 1)
+                CompAutoBot.this.arm//.moveMiddleToPosition(0.733, 1)
                         .wait(250)
                         .moveClawToPosition(0.250)
                         .wait(250)

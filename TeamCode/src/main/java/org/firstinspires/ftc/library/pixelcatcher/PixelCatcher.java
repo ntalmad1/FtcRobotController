@@ -26,6 +26,11 @@ public class PixelCatcher extends Component {
         CLOSED
     }
 
+    public enum WinchPosition {
+        UP,
+        DOWN
+    }
+
     /**
      */
     protected PixelCatcherConfig config;
@@ -49,13 +54,13 @@ public class PixelCatcher extends Component {
     private ArmPosition rightArmPos;
 
     /**
-     */
-    private DistanceSensor leftPixelSensor;
-
-    /**
      *
      */
-    private DistanceSensor rightPixelSensor;
+    private WinchPosition winchPosition;
+
+    /**
+     */
+    private Servo winchServo;
 
     /**
      * Constructor
@@ -74,17 +79,23 @@ public class PixelCatcher extends Component {
     public void init () {
         super.init();
 
-        leftServo = this.robot.hardwareMap.get(Servo.class, config.leftArmServoName);
-        rightServo = this.robot.hardwareMap.get(Servo.class, config.rightArmServoName);
+        this.leftServo = this.robot.hardwareMap.get(Servo.class, config.leftArmServoName);
+        this.rightServo = this.robot.hardwareMap.get(Servo.class, config.rightArmServoName);
 
-        leftServo.resetDeviceConfigurationForOpMode();
-        rightServo.resetDeviceConfigurationForOpMode();
+        this.leftServo.resetDeviceConfigurationForOpMode();
+        this.rightServo.resetDeviceConfigurationForOpMode();
 
         this.leftServo.setPosition(this.config.leftArmServoInitPos);
         this.rightServo.setPosition(this.config.rightArmServoInitPos);
 
         this.leftArmPos = this.config.leftArmInitPos;
         this.rightArmPos = this.config.rightArmInitPos;
+        this.winchPosition = this.config.winchInitPosition;
+
+        this.winchServo = this.robot.hardwareMap.get(Servo.class, config.winchServoName);
+        this.winchServo.resetDeviceConfigurationForOpMode();
+
+        this.winchServo.setPosition(this.config.winchServoInitPos);
 
         if (this.config.leftArmToggle == Control.Gp1_LeftTrigger_Down) {
             this.addGp1_Left_Trigger_DownHandler(event -> PixelCatcher.this.toggleLeftArm());
@@ -94,8 +105,13 @@ public class PixelCatcher extends Component {
             this.addGp1_Right_Trigger_DownHandler(event -> PixelCatcher.this.toggleRightArm());
         }
 
-        this.leftPixelSensor = this.robot.hardwareMap.get(DistanceSensor.class, this.config.leftPixelSensorName);
-        this.rightPixelSensor = this.robot.hardwareMap.get(DistanceSensor.class, this.config.rightPixelSensorName);
+        if (this.config.winchToggle1 == Control.Gp1_RightBumper_Down || this.config.winchToggle2 == Control.Gp1_RightBumper_Down) {
+            this.addGp1_Right_Bumper_DownHandler(event -> PixelCatcher.this.toggleWinch());
+        }
+
+        if (this.config.winchToggle1 == Control.Gp1_LeftBumper_Down || this.config.winchToggle2 == Control.Gp1_LeftBumper_Down) {
+            this.addGp1_Left_Bumper_DownHandler(event -> PixelCatcher.this.toggleWinch());
+        }
     }
 
     /**
@@ -103,12 +119,6 @@ public class PixelCatcher extends Component {
      */
     public void run () {
         super.run();
-
-        LeftPixelPingEvent leftPixelPingEvent = new LeftPixelPingEvent(leftPixelSensor.getDistance(DistanceUnit.MM), this.getLeftArmPosition());
-        RightPixelPingEvent rightPixelPingEvent = new RightPixelPingEvent(rightPixelSensor.getDistance(DistanceUnit.MM), this.getRightArmPosition());
-
-        this.fireEvent(leftPixelPingEvent);
-        this.fireEvent(rightPixelPingEvent);
     }
 
     /**
@@ -150,6 +160,25 @@ public class PixelCatcher extends Component {
 
     /**
      *
+     */
+    public void toggleWinch () {
+
+        this.robot.telemetry.log().add("toggle winch: " + this.winchPosition);
+
+        switch (this.winchPosition) {
+            case DOWN:
+                this.winchServo.setPosition(this.config.winchUpPosition);
+                this.winchPosition = WinchPosition.UP;
+                break;
+            case UP:
+                this.winchServo.setPosition(this.config.winchDownPosition);
+                this.winchPosition = WinchPosition.DOWN;
+                break;
+        }
+    }
+
+    /**
+     *
      * @return
      */
     public ArmPosition getLeftArmPosition () {
@@ -162,5 +191,13 @@ public class PixelCatcher extends Component {
      */
     public ArmPosition getRightArmPosition () {
         return this.rightArmPos;
+    }
+
+    /**
+     *
+     * @return
+     */
+    public WinchPosition getWinchPosition () {
+        return this.winchPosition;
     }
 }

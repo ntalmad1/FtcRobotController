@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.library.drivetrain;
 
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.DistanceSensor;
 
 import org.firstinspires.ftc.library.drivetrain.commands.DriveTrainBackwardsCommand;
@@ -21,6 +22,7 @@ import org.firstinspires.ftc.library.drivetrain.commands.DriveTrainSidewaysRight
 import org.firstinspires.ftc.library.component.event.command_callback.CommandCallbackHandler;
 import org.firstinspires.ftc.library.drivetrain.commands.DriveTrainGyroTurnLeftCommand;
 import org.firstinspires.ftc.library.drivetrain.commands.DriveTrainGyroTurnRightCommand;
+import org.firstinspires.ftc.library.drivetrain.commands.DriveTrainSpinMotorCommand;
 import org.firstinspires.ftc.library.drivetrain.commands.GotoDegreesCommand;
 import org.firstinspires.ftc.library.utility.Direction;
 import org.firstinspires.ftc.library.utility.Units;
@@ -168,6 +170,98 @@ public class SimpleDriveTrain extends AbstractDriveTrain
     public SimpleDriveTrain forward (double startPower, double maxPower, double distance, Units units)
     {
         this.addCommand(new DriveTrainForwardsCommand(this, startPower, maxPower, distance, units));
+        return this;
+    }
+
+    /**
+     *
+     * @param direction
+     * @param startPower
+     * @param maxPower
+     * @param distance
+     * @return
+     */
+    public SimpleDriveTrain spinLeftFront (Direction direction, double startPower, double maxPower, double distance)
+    {
+        if (!direction.equals(Direction.FORWARD) && !direction.equals(Direction.REVERSE)) {
+            direction = Direction.FORWARD;
+        }
+
+        DcMotorSimple.Direction translatedDirection = direction.equals(Direction.FORWARD) ? DcMotorSimple.Direction.FORWARD : DcMotorSimple.Direction.REVERSE;
+
+        this.addCommand(new DriveTrainSpinMotorCommand(
+                this,
+                1, 0, 0, 0,
+                translatedDirection, startPower, maxPower, distance, Units.Centimeters));
+        return this;
+    }
+
+    /**
+     *
+     * @param direction
+     * @param startPower
+     * @param maxPower
+     * @param distance
+     * @return
+     */
+    public SimpleDriveTrain spinRightFront (Direction direction, double startPower, double maxPower, double distance)
+    {
+        if (!direction.equals(Direction.FORWARD) && !direction.equals(Direction.REVERSE)) {
+            direction = Direction.FORWARD;
+        }
+
+        DcMotorSimple.Direction translatedDirection = direction.equals(Direction.FORWARD) ? DcMotorSimple.Direction.FORWARD : DcMotorSimple.Direction.REVERSE;
+
+        this.addCommand(new DriveTrainSpinMotorCommand(
+                this,
+                0, 1, 0, 0,
+                translatedDirection, startPower, maxPower, distance, Units.Centimeters));
+        return this;
+    }
+
+    /**
+     *
+     * @param direction
+     * @param startPower
+     * @param maxPower
+     * @param distance
+     * @return
+     */
+    public SimpleDriveTrain spinRightRear (Direction direction, double startPower, double maxPower, double distance)
+    {
+        if (!direction.equals(Direction.FORWARD) && !direction.equals(Direction.REVERSE)) {
+            direction = Direction.FORWARD;
+        }
+
+        DcMotorSimple.Direction translatedDirection = direction.equals(Direction.FORWARD) ? DcMotorSimple.Direction.FORWARD : DcMotorSimple.Direction.REVERSE;
+
+        this.addCommand(new DriveTrainSpinMotorCommand(
+                this,
+                0, 0, 1, 0,
+                translatedDirection, startPower, maxPower, distance, Units.Centimeters));
+        return this;
+    }
+
+    /**
+     *
+     * @param direction
+     * @param startPower
+     * @param maxPower
+     * @param distance
+     * @return
+     */
+    public SimpleDriveTrain spinLeftRear (Direction direction, double startPower, double maxPower, double distance)
+    {
+        if (!direction.equals(Direction.FORWARD) && !direction.equals(Direction.REVERSE)) {
+            direction = Direction.FORWARD;
+        }
+
+        DcMotorSimple.Direction translatedDirection = direction.equals(Direction.FORWARD) ? DcMotorSimple.Direction.FORWARD : DcMotorSimple.Direction.REVERSE;
+
+        this.addCommand(new DriveTrainSpinMotorCommand(
+                this,
+                0, 0, 0, 1,
+                translatedDirection, startPower, maxPower, distance, Units.Centimeters));
         return this;
     }
 

@@ -7,7 +7,9 @@ import org.firstinspires.ftc.library.component.event.g2_x_press.Gp1_X_PressEvent
 import org.firstinspires.ftc.library.component.event.g2_y_press.Gp1_Y_PressEvent;
 import org.firstinspires.ftc.library.component.event.gp1_dpad_down_down.Gp1_Dpad_Down_DownEvent;
 import org.firstinspires.ftc.library.component.event.gp1_dpad_down_press.Gp1_Dpad_Down_PressEvent;
+import org.firstinspires.ftc.library.component.event.gp1_left_bumper_down.Gp1_Left_Bumper_DownEvent;
 import org.firstinspires.ftc.library.component.event.gp1_left_trigger_down.Gp1_Left_Trigger_DownEvent;
+import org.firstinspires.ftc.library.component.event.gp1_right_bumper_down.Gp1_Right_Bumper_DownEvent;
 import org.firstinspires.ftc.library.component.event.gp1_right_trigger_down.Gp1_Right_Trigger_DownEvent;
 import org.firstinspires.ftc.library.component.event.gp2_a_press.Gp2_A_PressEvent;
 import org.firstinspires.ftc.library.component.event.gp2_dpad_down_down.Gp2_Dpad_Down_DownEvent;
@@ -52,6 +54,11 @@ public class EventBus extends HandlerManager {
         instance = new EventBus();
     }
 
+    /**
+     *
+     */
+    private boolean gp1_left_bumper_down;
+    private boolean gp1_right_bumper_down;
 
     /**
      *
@@ -107,6 +114,26 @@ public class EventBus extends HandlerManager {
      */
     public void run ()
     {
+        boolean current_gp1_right_bumper_down = this.robot.gamepad1.right_bumper;
+        if (this.gp1_right_bumper_down && !current_gp1_right_bumper_down) {
+            this.gp1_right_bumper_down = false;
+            //this.fireEvent(new Gp1_Right_Bumper_PressEvent());
+        }
+        else if (current_gp1_right_bumper_down && !this.gp1_right_bumper_down) {
+            this.gp1_right_bumper_down = true;
+            this.fireEvent(new Gp1_Right_Bumper_DownEvent());
+        }
+
+        boolean current_gp1_left_bumper_down = this.robot.gamepad1.left_bumper;
+        if (this.gp1_left_bumper_down && !current_gp1_left_bumper_down) {
+            this.gp1_left_bumper_down = false;
+            //this.fireEvent(new Gp1_Left_Bumper_PressEvent());
+        }
+        else if (current_gp1_left_bumper_down && !this.gp1_left_bumper_down) {
+            this.gp1_left_bumper_down = true;
+            this.fireEvent(new Gp1_Left_Bumper_DownEvent());
+        }
+
         float current_gp1_left_trigger = this.robot.gamepad1.left_trigger;
         if (current_gp1_left_trigger >= 0.5 && !this.gp1_left_trigger_down) {
             this.fireEvent(new Gp1_Left_Trigger_DownEvent());

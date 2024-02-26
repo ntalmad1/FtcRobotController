@@ -15,12 +15,12 @@ public class MecanumDriveTrain extends AbstractDriveTrain
      */
     private double maxPower;
 
-    private boolean leftBumperFlag;
-    private boolean rightBumperFlag;
+    //private boolean leftBumperFlag;
+    //private boolean rightBumperFlag;
 
-    private ElapsedTime leftBumperRuntime = new ElapsedTime();
-    private ElapsedTime rightBumperRuntime = new ElapsedTime();
-    private int bumperTimeout = 250;
+    //private ElapsedTime leftBumperRuntime = new ElapsedTime();
+    //private ElapsedTime rightBumperRuntime = new ElapsedTime();
+    //private int bumperTimeout = 250;
 
     /**
      *
@@ -96,43 +96,43 @@ public class MecanumDriveTrain extends AbstractDriveTrain
             this.robot.initImu(this.getConfig().imuName);
         }
 
-        if (!robot.gamepad1.left_bumper || this.leftBumperRuntime.milliseconds() > this.bumperTimeout)
-        {
-            this.leftBumperFlag = false;
-        }
+//        if (!robot.gamepad1.left_bumper || this.leftBumperRuntime.milliseconds() > this.bumperTimeout)
+//        {
+//            this.leftBumperFlag = false;
+//        }
 
-        if (robot.gamepad1.left_bumper)
-        {
-            if (!this.leftBumperFlag) {
-                leftBumperRuntime.reset();
+//        if (robot.gamepad1.left_bumper)
+//        {
+//            if (!this.leftBumperFlag) {
+//                leftBumperRuntime.reset();
+//
+//                double power = this.maxPower - 0.1;
+//                if (power < 0.1) {
+//                    power = 0.1;
+//                }
+//                this.maxPower = power;
+//            }
+//            this.leftBumperFlag = true;
+//        }
 
-                double power = this.maxPower - 0.1;
-                if (power < 0.1) {
-                    power = 0.1;
-                }
-                this.maxPower = power;
-            }
-            this.leftBumperFlag = true;
-        }
-
-        if (!robot.gamepad1.right_bumper || rightBumperRuntime.milliseconds() > this.bumperTimeout)
-        {
-            this.rightBumperFlag = false;
-        }
-
-        if (robot.gamepad1.right_bumper)
-        {
-            if (!this.rightBumperFlag) {
-                rightBumperRuntime.reset();
-
-                double power = this.maxPower + 0.1;
-                if (power > 1) {
-                    power = 1;
-                }
-                this.maxPower = power;
-            }
-            this.rightBumperFlag = true;
-        }
+//        if (!robot.gamepad1.right_bumper || rightBumperRuntime.milliseconds() > this.bumperTimeout)
+//        {
+//            this.rightBumperFlag = false;
+//        }
+//
+//        if (robot.gamepad1.right_bumper)
+//        {
+//            if (!this.rightBumperFlag) {
+//                rightBumperRuntime.reset();
+//
+//                double power = this.maxPower + 0.1;
+//                if (power > 1) {
+//                    power = 1;
+//                }
+//                this.maxPower = power;
+//            }
+//            this.rightBumperFlag = true;
+//        }
 
         frontLeftPower  = accelerate(frontLeftPower, this.leftFrontMotor);
         frontRightPower = accelerate(frontRightPower, this.rightFrontMotor);
@@ -155,7 +155,7 @@ public class MecanumDriveTrain extends AbstractDriveTrain
             this.robot.telemetry.addData("frontRightPower: ", "%.2f", frontRightPower);
             this.robot.telemetry.addData("backRightPower: ", "%.2f", backRightPower);
             this.robot.telemetry.addData("Max Power: ", "%.2f", this.maxPower);
-            this.robot.telemetry.addData("Left Bumper Timer: ", "%.2f", this.leftBumperRuntime.milliseconds());
+            //this.robot.telemetry.addData("Left Bumper Timer: ", "%.2f", this.leftBumperRuntime.milliseconds());
             this.robot.telemetry.update();
         }
     }

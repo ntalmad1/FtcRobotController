@@ -37,14 +37,14 @@ public class ArmWithDriveTrain extends IsaacBot{
         topBoomConfig.zeroDegreePosition = 0.586;
         topBoomConfig.maxIncrement = 0.005;
 
-        BoomConfig midBoomConfig = new BoomConfig();
-        midBoomConfig.robot = this;
-        midBoomConfig.servoName = "middleServo";
-        midBoomConfig.direction = Servo.Direction.REVERSE;
-        midBoomConfig.controllerInputMethod = Control.Gp2_RightStickX;
-        midBoomConfig.invertInput = false;
-        midBoomConfig.maxIncrement = 0.002;
-        midBoomConfig.zeroDegreePosition = 0.575;
+//        BoomConfig midBoomConfig = new BoomConfig();
+//        midBoomConfig.robot = this;
+//        midBoomConfig.servoName = "middleServo";
+//        midBoomConfig.direction = Servo.Direction.REVERSE;
+//        midBoomConfig.controllerInputMethod = Control.Gp2_RightStickX;
+//        midBoomConfig.invertInput = false;
+//        midBoomConfig.maxIncrement = 0.002;
+//        midBoomConfig.zeroDegreePosition = 0.575;
 
         BoomConfig bottomBoomConfig = new BoomConfig();
         bottomBoomConfig.robot = this;
@@ -59,7 +59,7 @@ public class ArmWithDriveTrain extends IsaacBot{
 
         ArmConfig armConfig = new ArmConfig();
         armConfig.robot = this;
-        armConfig.midBoomConfig = midBoomConfig;
+//        armConfig.midBoomConfig = midBoomConfig;
         armConfig.bottomBoomConfig = bottomBoomConfig;
 
         this.arm = new Arm(armConfig);

@@ -10,7 +10,7 @@ public class ArmConfig {
 
     public ClawConfig clawConfig;
 
-    public BoomConfig midBoomConfig;
+//    public BoomConfig midBoomConfig;
 
     public BoomConfig bottomBoomConfig;
 
