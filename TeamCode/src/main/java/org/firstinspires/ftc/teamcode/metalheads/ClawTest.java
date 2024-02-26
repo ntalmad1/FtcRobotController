@@ -41,22 +41,22 @@ public class ClawTest extends IsaacBot {
         clawBoomConfig.homePosition = 0.5;
         clawBoomConfig.maxIncrement = 0.001;
 
-        RotatorConfig clawRotatorConfig = new RotatorConfig();
-        clawRotatorConfig.robot = this;
-        clawRotatorConfig.servoName = "rotateClawServo";
-        clawRotatorConfig.direction = Servo.Direction.FORWARD;
-        clawRotatorConfig.controllerInputMethod = Control.Gp2_Dpad_Left;
-        clawRotatorConfig.controllerInputMethod2 = Control.Gp2_Dpad_Right;
-        clawRotatorConfig.invertInput = true;
-        clawRotatorConfig.minPosition = 0;
-        clawRotatorConfig.maxPosition = 1;
-        clawRotatorConfig.zeroDegreePosition = .5;
-        clawRotatorConfig.homePosition = 0.5;
-        clawRotatorConfig.maxIncrement = 0.001;
-        clawRotatorConfig.debug = true;
+//        RotatorConfig clawRotatorConfig = new RotatorConfig();
+//        clawRotatorConfig.robot = this;
+//        clawRotatorConfig.servoName = "rotateClawServo";
+//        clawRotatorConfig.direction = Servo.Direction.FORWARD;
+//        clawRotatorConfig.controllerInputMethod = Control.Gp2_Dpad_Left;
+//        clawRotatorConfig.controllerInputMethod2 = Control.Gp2_Dpad_Right;
+//        clawRotatorConfig.invertInput = true;
+//        clawRotatorConfig.minPosition = 0;
+//        clawRotatorConfig.maxPosition = 1;
+//        clawRotatorConfig.zeroDegreePosition = .5;
+//        clawRotatorConfig.homePosition = 0.5;
+//        clawRotatorConfig.maxIncrement = 0.001;
+//        clawRotatorConfig.debug = true;
 
         clawConfig.clawBoomConfig = clawBoomConfig;
-        clawConfig.clawRotatorConfig = clawRotatorConfig;
+        //clawConfig.clawRotatorConfig = clawRotatorConfig;
 
         this.claw = new Claw(clawConfig);
     }

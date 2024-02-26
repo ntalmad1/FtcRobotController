@@ -30,10 +30,6 @@ public class Claw extends Component {
 
     /**
      */
-    private Rotator clawRotator;
-
-    /**
-     */
     private ClawConfig config;
 
     /**
@@ -53,14 +49,6 @@ public class Claw extends Component {
     private boolean isRightOpen = false;
 
     /**
-     */
-    private boolean rotatedRight = false;
-
-    /**
-     */
-    private boolean rotatedLeft = false;
-
-    /**
      * Constructor
      *
      */
@@ -69,10 +57,7 @@ public class Claw extends Component {
         this.config = config;
 
         this.clawBoom = new Boom(config.clawBoomConfig);
-        this.clawRotator = new Rotator(config.clawRotatorConfig);
     }
-
-    protected double stashedClawBoomPosition;
 
     /**
      *
@@ -97,11 +82,7 @@ public class Claw extends Component {
             this.isRightOpen = true;
         }
 
-
         this.clawBoom.init();
-        this.clawRotator.init();
-
-
 
         this.addGp2_Left_Bumper_PressHandler(event -> {
             Claw.this.toggleLeftClaw();
@@ -109,34 +90,6 @@ public class Claw extends Component {
 
         this.addGp2_Right_Bumper_PressHandler(event -> {
             Claw.this.toggleRightClaw();
-        });
-
-        this.addGp2_Left_Trigger_DownHandler(event -> {
-            if (Claw.this.rotatedLeft) {
-                Claw.this.rotatedLeft = false;
-                Claw.this.clawRotator.gotoPosition(Claw.this.config.clawRotatorConfig.homePosition, 1);
-                Claw.this.clawBoom.gotoPosition(Claw.this.stashedClawBoomPosition, 1);
-            }
-            else {
-                Claw.this.rotatedLeft = true;
-                Claw.this.stashedClawBoomPosition = Claw.this.clawBoom.getPosition();
-                Claw.this.clawRotator.gotoPosition(0.524, 1);
-                Claw.this.clawBoom.gotoPosition(0.616,1);
-            }
-        });
-
-        this.addGp2_Right_Trigger_DownHandler(event -> {
-            if (Claw.this.rotatedRight) {
-                Claw.this.rotatedRight = false;
-                Claw.this.clawRotator.gotoPosition(Claw.this.config.clawRotatorConfig.homePosition, 1);
-                Claw.this.clawBoom.gotoPosition(Claw.this.stashedClawBoomPosition, 1);
-            }
-            else {
-                Claw.this.rotatedRight = true;
-                Claw.this.stashedClawBoomPosition = Claw.this.clawBoom.getPosition();
-                Claw.this.clawRotator.gotoPosition(0.82, 1);
-                Claw.this.clawBoom.gotoPosition(0.616, 1);
-            }
         });
     }
 
@@ -152,8 +105,8 @@ public class Claw extends Component {
      *
      * @return
      */
-    public Rotator getRotator () {
-        return this.clawRotator;
+    public ClawConfig getConfig () {
+        return this.config;
     }
 
     /**
@@ -179,7 +132,6 @@ public class Claw extends Component {
         super.run();
 
         this.clawBoom.run();
-        this.clawRotator.run();
     }
 
     /**
@@ -214,8 +166,6 @@ public class Claw extends Component {
     public void closeLeft () {
         this.leftClaw.setPosition(this.config.leftClawMinPosition);
         this.isLeftOpen = false;
-
-        this.fireEvent(new ClawLeftPincherCloseEvent());
     }
 
     /**
@@ -224,8 +174,6 @@ public class Claw extends Component {
     public void closeRight () {
         this.rightClaw.setPosition(this.config.rightClawMinPosition);
         this.isRightOpen = false;
-
-        this.fireEvent(new ClawRightPincherCloseEvent());
     }
 
     /**
@@ -234,8 +182,6 @@ public class Claw extends Component {
     public void openLeft () {
         this.leftClaw.setPosition(this.config.leftClawMaxPosition);
         this.isLeftOpen = true;
-
-        this.fireEvent(new ClawLeftPincherOpenEvent());
     }
 
     /**
@@ -244,7 +190,5 @@ public class Claw extends Component {
     public void openRight () {
         this.rightClaw.setPosition(this.config.rightClawMaxPosition);
         this.isRightOpen = true;
-
-        this.fireEvent(new ClawRightPincherOpenEvent());
     }
 }

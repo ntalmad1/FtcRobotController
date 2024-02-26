@@ -11,8 +11,6 @@ public class ClawConfig {
 
     public BoomConfig clawBoomConfig;
 
-    public RotatorConfig clawRotatorConfig;
-
     public double rightClawMaxPosition;
     public double rightClawMinPosition;
     public double leftClawMaxPosition;

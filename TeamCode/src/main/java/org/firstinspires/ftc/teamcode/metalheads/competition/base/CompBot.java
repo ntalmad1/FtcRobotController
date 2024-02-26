@@ -293,146 +293,146 @@ public class CompBot extends IsaacBot{
     public void moveArm_fromTravel_toPixelPlace () { _moveArm_fromTravel_toPixelPlace(); }
 
     private void _moveArm_fromInit_toPixelReady () {
-            this.arm.rotateClawToPosition(0.307, 1)
-                    .moveMiddleDegreesFromCurrentPosition(15)
-                    .wait(0)
-                    .moveMiddleToDegrees(-90, 1)
-                    .moveBottomDegreesFromCurrentPosition(-30)
+            //this.arm.rotateClawToPosition(0.307, 1)
+//            moveMiddleDegreesFromCurrentPosition(15)
+//                    .wait(0)
+//        this.arm.moveMiddleToDegrees(-90, 1)
+        this.arm.moveBottomDegreesFromCurrentPosition(-30)
                     .wait(0)
                     .moveBottomToPosition(this.robotConfig.pixelReady_bottomBoom, 1)
-                    .moveMiddleToPosition(this.robotConfig.pixelReady_midBoom,1)
+                   // .moveMiddleToPosition(this.robotConfig.pixelReady_midBoom,1)
                     .moveClawToPosition(this.robotConfig.pixelReady_clawBoom, 1)
-                    .rotateClawToPosition(this.robotConfig.pixelReady_clawRotator, 1)
+                    //.rotateClawToPosition(this.robotConfig.pixelReady_clawRotator, 1)
                     .wait(0);
     }
 
     private void _moveArm_fromInit_toPixelPlace () {
-        this.arm.rotateClawToPosition(0.307, 1)
-                .moveMiddleDegreesFromCurrentPosition(15)
-                .wait(0)
-                .moveMiddleToDegrees(-90, 1)
-                .moveBottomDegreesFromCurrentPosition(-30)
+        //this.arm.rotateClawToPosition(0.307, 1)
+//        moveMiddleDegreesFromCurrentPosition(15)
+//                .wait(0)
+//                .moveMiddleToDegrees(-90, 1)
+        this.arm.moveBottomDegreesFromCurrentPosition(-30)
                 .wait(0)
                 .moveBottomToPosition(this.robotConfig.pixelPlace_bottomBoom, 1)
-                .moveMiddleToPosition(this.robotConfig.pixelPlace_midBoom,1)
+               // .moveMiddleToPosition(this.robotConfig.pixelPlace_midBoom,1)
                 .moveClawToPosition(this.robotConfig.pixelPlace_clawBoom, 1)
-                .rotateClawToPosition(this.robotConfig.pixelPlace_clawRotator, 1)
+               // .rotateClawToPosition(this.robotConfig.pixelPlace_clawRotator, 1)
                 .wait(0);
     }
 
     private void _moveArm_fromInit_toTravel () {
-        this.arm.rotateClawToPosition(0.307, 1)
-                .moveMiddleDegreesFromCurrentPosition(15)
-                .wait(0)
-                .moveMiddleToDegrees(-90, 1)
-                .moveBottomDegreesFromCurrentPosition(-30)
+        //this.arm.rotateClawToPosition(0.307, 1)
+//        this.arm.moveMiddleDegreesFromCurrentPosition(15)
+//                .wait(0)
+//                .moveMiddleToDegrees(-90, 1)
+        this.arm.moveBottomDegreesFromCurrentPosition(-30)
                 .wait(0)
                 .moveBottomToPosition(0.047, 1)
-                .moveMiddleToPosition(0.527,1)
+                //.moveMiddleToPosition(0.527,1)
                 .moveClawToPosition(0.828, 1)
-                .rotateClawToPosition(0.307, 1)
+                //.rotateClawToPosition(0.307, 1)
                 .wait(0);
     }
 
     private void _moveArm_fromPixelPlace_toPixelPlaceRow2 () {
-        this.arm.rotateClawToPosition(0.307, 1)
-                .moveBottomToPosition(this.robotConfig.pixelPlaceRow2_bottomBoom, 1)
-                .moveMiddleToPosition(this.robotConfig.pixelPlaceRow2_midBoom, 1)
+        //this.arm.rotateClawToPosition(0.307, 1)
+        this.arm.moveBottomToPosition(this.robotConfig.pixelPlaceRow2_bottomBoom, 1)
+                //.moveMiddleToPosition(this.robotConfig.pixelPlaceRow2_midBoom, 1)
                 .moveClawToPosition(this.robotConfig.pixelPlaceRow2_clawBoom, 1)
-                .rotateClawToPosition(this.robotConfig.pixelPlaceRow2_clawRotator, 1)
+                //.rotateClawToPosition(this.robotConfig.pixelPlaceRow2_clawRotator, 1)
                 .wait(0);
     }
 
     private void _moveArm_fromPixelPlaceRow2_toPixelPlaceRow3 () {
-        this.arm.rotateClawToPosition(0.307, 1)
-                .moveBottomToPosition(this.robotConfig.pixelPlaceRow3_bottomBoom, 1)
-                .moveMiddleToPosition(this.robotConfig.pixelPlaceRow3_midBoom, 1)
+        //this.arm.rotateClawToPosition(0.307, 1)
+        this.arm.moveBottomToPosition(this.robotConfig.pixelPlaceRow3_bottomBoom, 1)
+                //.moveMiddleToPosition(this.robotConfig.pixelPlaceRow3_midBoom, 1)
                 .moveClawToPosition(this.robotConfig.pixelPlaceRow3_clawBoom, 1)
-                .rotateClawToPosition(this.robotConfig.pixelPlaceRow3_clawRotator, 1)
+                //.rotateClawToPosition(this.robotConfig.pixelPlaceRow3_clawRotator, 1)
                 .wait(0);
     }
 
     private void _moveArm_fromPixelPlace_toPixelReady() {
-        this.arm.rotateClawToPosition(0.307, 1)
-                .moveBottomToPosition(0.200, 1)
+        //this.arm.rotateClawToPosition(0.307, 1)
+        this.arm.moveBottomToPosition(0.200, 1)
                 .wait(500)
                 .moveBottomToPosition(this.robotConfig.pixelReady_bottomBoom, 1)
-                .moveMiddleToPosition(this.robotConfig.pixelReady_midBoom,1)
+                //.moveMiddleToPosition(this.robotConfig.pixelReady_midBoom,1)
                 .moveClawToPosition(this.robotConfig.pixelReady_clawBoom, 1)
-                .rotateClawToPosition(this.robotConfig.pixelReady_clawRotator, 1)
+                //.rotateClawToPosition(this.robotConfig.pixelReady_clawRotator, 1)
                 .wait(0);
     }
 
     private void _moveArm_fromPixelPlace_toTravel () {
-        this.arm.rotateClawToPosition(0.307, 1)
-                .moveMiddleToPosition(0.527,1)
-                .wait(500)
-                .moveBottomToPosition(0.075, CompBot.this.robotConfig.bottomBoomTravelIncrement)
+        //this.arm.rotateClawToPosition(0.307, 1)
+//        this.arm.moveMiddleToPosition(0.527,1)
+//                .wait(500)
+        this.arm.moveBottomToPosition(0.075, CompBot.this.robotConfig.bottomBoomTravelIncrement)
                 .wait(500)
                 .moveBottomToPosition(0.047, CompBot.this.robotConfig.bottomBoomTravelIncrement)
                 .moveClawToPosition(0.828, 1)
-                .rotateClawToPosition(0.307, 1)
+                //.rotateClawToPosition(0.307, 1)
                 .wait(0);
     }
 
     private void _moveArm_fromPixelReady_toPixelPlace () {
-        this.arm.rotateClawToPosition(0.307, 1)
-                .moveBottomToPosition(0.200, 1)
+        //this.arm.rotateClawToPosition(0.307, 1)
+        this.arm.moveBottomToPosition(0.200, 1)
                 .wait(500)
                 .moveBottomToPosition(this.robotConfig.pixelPlace_bottomBoom, 1)
-                .moveMiddleToPosition(this.robotConfig.pixelPlace_midBoom,1)
+                //.moveMiddleToPosition(this.robotConfig.pixelPlace_midBoom,1)
                 .moveClawToPosition(this.robotConfig.pixelPlace_clawBoom, 1)
-                .rotateClawToPosition(this.robotConfig.pixelPlace_clawRotator, 1)
+                //.rotateClawToPosition(this.robotConfig.pixelPlace_clawRotator, 1)
                 .wait(0);
     }
 
     private void _moveArm_fromPixelReady_toTravel () {
-        this.arm.rotateClawToPosition(0.307, 1)
-                .moveBottomToPosition(0.200, 1)
+        //this.arm.rotateClawToPosition(0.307, 1)
+        this.arm.moveBottomToPosition(0.200, 1)
                 .wait(500)
-                .moveMiddleToPosition(0.689,1)
+                //.moveMiddleToPosition(0.689,1)
                 .wait(500)
-                .moveMiddleToPosition(0.527,1)
+               // .moveMiddleToPosition(0.527,1)
                 .wait(500)
                 .moveBottomToPosition(0.075, CompBot.this.robotConfig.bottomBoomTravelIncrement)
                 .wait(500)
                 .moveBottomToPosition(0.047, CompBot.this.robotConfig.bottomBoomTravelIncrement)
                 .moveClawToPosition(0.828, 1)
-                .rotateClawToPosition(0.307, 1)
+                //this.arm..rotateClawToPosition(0.307, 1)
                 .wait(0);
     }
 
     private void _moveArm_fromPixelPlaceHigh_toPixelPlace () {
-        this.arm.rotateClawToPosition(0.307, 1)
-                .moveBottomToPosition(this.robotConfig.pixelPlace_bottomBoom, 1)
-                .moveMiddleToPosition(this.robotConfig.pixelPlace_midBoom,1)
+        //this.arm.rotateClawToPosition(0.307, 1)
+        this.arm.moveBottomToPosition(this.robotConfig.pixelPlace_bottomBoom, 1)
+                //.moveMiddleToPosition(this.robotConfig.pixelPlace_midBoom,1)
                 .moveClawToPosition(this.robotConfig.pixelPlace_clawBoom, 1)
-                .rotateClawToPosition(this.robotConfig.pixelPlace_clawRotator, 1)
+                //.rotateClawToPosition(this.robotConfig.pixelPlace_clawRotator, 1)
                 .wait(0);
     }
 
     private void _moveArm_fromTravel_toPixelReady() {
-        this.arm.rotateClawToPosition(0.307, 1)
-                .moveBottomToPosition(0.180, 1)
+        //this.arm.rotateClawToPosition(0.307, 1)
+        this.arm.moveBottomToPosition(0.180, 1)
                 .wait(500)
-                .moveMiddleToPosition(0.731, 1)
+                //.moveMiddleToPosition(0.731, 1)
                 .moveClawToPosition(0.507, 1)
                 .wait(1000)
                 .moveBottomToPosition(this.robotConfig.pixelReady_bottomBoom, 1)
-                .moveMiddleToPosition(this.robotConfig.pixelReady_midBoom,1)
+                //.moveMiddleToPosition(this.robotConfig.pixelReady_midBoom,1)
                 .moveClawToPosition(this.robotConfig.pixelReady_clawBoom, 1)
-                .rotateClawToPosition(this.robotConfig.pixelReady_clawRotator, 1)
+               // .rotateClawToPosition(this.robotConfig.pixelReady_clawRotator, 1)
                 .wait(0);
     }
 
     private void _moveArm_fromTravel_toPixelPlace () {
-        this.arm.rotateClawToPosition(0.307, 1)
-                .moveBottomToPosition(0.200, 1)
+        //this.arm.rotateClawToPosition(0.307, 1)
+        this.arm.moveBottomToPosition(0.200, 1)
                 .wait(500)
                 .moveBottomToPosition(this.robotConfig.pixelPlace_bottomBoom, 1)
-                .moveMiddleToPosition(this.robotConfig.pixelPlace_midBoom,1)
+               // .moveMiddleToPosition(this.robotConfig.pixelPlace_midBoom,1)
                 .moveClawToPosition(this.robotConfig.pixelPlace_clawBoom, 1)
-                .rotateClawToPosition(this.robotConfig.pixelPlace_clawRotator, 1)
+                //.rotateClawToPosition(this.robotConfig.pixelPlace_clawRotator, 1)
                 .wait(0);
     }
 
@@ -466,18 +466,18 @@ public class CompBot extends IsaacBot{
     }
 
     public void moveArm_toHangReady () {
-        this.arm.rotateClawToPosition(0.307, 1)
-                .moveBottomToPosition(this.robotConfig.hangReady_bottomBoom, 1)
-                .moveMiddleToPosition(this.robotConfig.hangReady_midBoom, 1)
+        //this.arm.rotateClawToPosition(0.307, 1)
+        this.arm.moveBottomToPosition(this.robotConfig.hangReady_bottomBoom, 1)
+                //.moveMiddleToPosition(this.robotConfig.hangReady_midBoom, 1)
                 .moveClawToPosition(this.robotConfig.hangReady_clawBoom, 1)
-                .rotateClawToPosition(this.robotConfig.hangReady_clawRotator, 1)
+                //.rotateClawToPosition(this.robotConfig.hangReady_clawRotator, 1)
                 .wait(0);
     }
 
     public void moveArm_toHang () {
         this.arm.moveBottomToPosition(this.robotConfig.hang_bottomBoomPos1, 1)
                 .wait(500)
-                .moveMiddleToPosition(this.robotConfig.hang_midBoom, 1)
+               // .moveMiddleToPosition(this.robotConfig.hang_midBoom, 1)
                 .moveBottomToPosition(this.robotConfig.hang_bottomBoomPos2, 1)
                 .wait(0);
     }
@@ -487,9 +487,9 @@ public class CompBot extends IsaacBot{
         this.armPosition = ArmPosition.PIXEL_READY;
 
         this.arm.moveBottomToPosition(0.200, 1)
-                .rotateClawToPosition(this.robotConfig.pixelReady_clawRotator, 1)
+               // .rotateClawToPosition(this.robotConfig.pixelReady_clawRotator, 1)
                 .wait(500)
-                .moveMiddleToPosition(this.robotConfig.pixelReady_midBoom, 1)
+                //.moveMiddleToPosition(this.robotConfig.pixelReady_midBoom, 1)
                 .moveClawToPosition(this.robotConfig.pixelReady_clawBoom, 1)
                 .wait(500)
                 .moveBottomToPosition(this.robotConfig.pixelReady_bottomBoom, 1)

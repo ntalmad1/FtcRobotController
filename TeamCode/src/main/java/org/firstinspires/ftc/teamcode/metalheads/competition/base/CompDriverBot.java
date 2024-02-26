@@ -23,9 +23,8 @@ public class CompDriverBot extends CompBot {
         this.driveTrainConfig = new MecanumDriveCompConfig(this);
 
         this.armConfig.bottomBoomConfig.homePosition = this.robotConfig.rest_bottomBoom;
-        this.armConfig.midBoomConfig.homePosition = this.robotConfig.rest_midBoom;
+        //this.armConfig.midBoomConfig.homePosition = this.robotConfig.rest_midBoom;
         this.armConfig.clawConfig.clawBoomConfig.homePosition = this.robotConfig.rest_clawBoom;
-        this.armConfig.clawConfig.clawRotatorConfig.homePosition = this.robotConfig.pixelReady_clawRotator;
 
         this.pixelCatcherConfig.leftArmInitPos = PixelCatcher.ArmPosition.CLOSED;
         this.pixelCatcherConfig.rightArmInitPos = PixelCatcher.ArmPosition.CLOSED;

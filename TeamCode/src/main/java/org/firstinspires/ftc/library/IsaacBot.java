@@ -267,7 +267,7 @@ public abstract class  IsaacBot extends LinearOpMode implements IComponent
      * @param message
      */
     public void voiceLog (String message) {
-        this.voiceLog(message, 0);
+        this.voiceLog(message, 2000);
     }
 
     /**
@@ -276,15 +276,14 @@ public abstract class  IsaacBot extends LinearOpMode implements IComponent
      * @param milliseconds
      */
     public void voiceLog (String message, long milliseconds) {
+        this.telemetry.speak(message);
+        this.telemetry.log().add(message);
+
         try {
             this.sleep(milliseconds);
         } catch (Exception e) {
             // do nothing
         }
-
-
-        this.telemetry.speak(message);
-        this.telemetry.log().add(message);
     }
 
 }
