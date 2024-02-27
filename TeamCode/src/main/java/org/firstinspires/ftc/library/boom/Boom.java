@@ -164,6 +164,14 @@ public class Boom extends Component {
 
     /**
      *
+     * @return
+     */
+    public BoomConfig getConfig () {
+        return this.config;
+    }
+
+    /**
+     *
      * @return The max amount to set the servo position to each cycle
      */
     public double getMaxIncrement() {

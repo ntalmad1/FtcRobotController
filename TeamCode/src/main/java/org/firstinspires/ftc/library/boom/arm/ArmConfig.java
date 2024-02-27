@@ -3,6 +3,7 @@ package org.firstinspires.ftc.library.boom.arm;
 import org.firstinspires.ftc.library.IsaacBot;
 import org.firstinspires.ftc.library.boom.BoomConfig;
 import org.firstinspires.ftc.library.claw.ClawConfig;
+import org.firstinspires.ftc.library.motor.EncodedMotorConfig;
 
 public class ArmConfig {
 
@@ -10,7 +11,7 @@ public class ArmConfig {
 
     public ClawConfig clawConfig;
 
-//    public BoomConfig midBoomConfig;
+    public EncodedMotorConfig linActConfig;
 
     public BoomConfig bottomBoomConfig;
 

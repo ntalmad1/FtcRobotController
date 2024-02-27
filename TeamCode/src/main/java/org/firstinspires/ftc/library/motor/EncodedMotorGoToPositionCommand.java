@@ -7,7 +7,7 @@ import org.firstinspires.ftc.library.component.command.AbstractSynchronousComman
 /**
  *
  */
-public class EncodedMotorGoToPositionCommand extends AbstractSynchronousCommand { 
+public class EncodedMotorGoToPositionCommand extends AbstractSynchronousCommand {
 
     /**
      */

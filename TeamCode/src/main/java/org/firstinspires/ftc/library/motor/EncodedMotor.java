@@ -5,6 +5,9 @@ import com.qualcomm.robotcore.hardware.DcMotorSimple;
 
 import org.firstinspires.ftc.library.IsaacBot;
 import org.firstinspires.ftc.library.component.Component;
+import org.firstinspires.ftc.library.component.event.gp2_right_stick_x.Gp2_RightStickXEvent;
+import org.firstinspires.ftc.library.component.event.gp2_right_stick_x.Gp2_RightStickXHandler;
+import org.firstinspires.ftc.library.utility.Control;
 
 /**
  *
@@ -81,7 +84,16 @@ public class EncodedMotor extends Component {
         this.motor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         this.motor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
+        this.setBrake(this.config.brakeOn);
 
+        if (Control.Gp2_RightStickX.equals(this.config.control)) {
+            this.addGp2_RightStickXHandler(new Gp2_RightStickXHandler() {
+                @Override
+                public void onGp2_RightStickX(Gp2_RightStickXEvent event) {
+                    EncodedMotor.this.move(event.getPosition());
+                }
+            });
+        }
     }
 
     /**
@@ -90,6 +102,35 @@ public class EncodedMotor extends Component {
      */
     public boolean isBusy () {
         return this.motor.isBusy();
+    }
+
+    public void move (double power) {
+
+        int targetPosition = this.motor.getCurrentPosition() + this.config.increment * (power < 0 ? -1 : 1);
+
+        if (power > 0 && targetPosition > this.config.maxTics) {
+            targetPosition = this.config.maxTics;
+        }
+        else if (power < 0 && targetPosition < this.config.minTics) {
+            targetPosition = this.config.minTics;
+        }
+
+        this.motor.setTargetPosition(targetPosition);
+        this.motor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        this.motor.setPower(power);
+    }
+
+    /**
+     *
+     * @param brakeOn
+     */
+    public void setBrake (boolean brakeOn) {
+        if (brakeOn) {
+            this.motor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        }
+        else {
+            this.motor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
+        }
     }
 
     /**

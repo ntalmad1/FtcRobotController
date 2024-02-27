@@ -1,21 +1,24 @@
-package org.firstinspires.ftc.library.boom;
+package org.firstinspires.ftc.library.boom.arm;
 
+import org.firstinspires.ftc.library.boom.GoToPositionCommand;
 import org.firstinspires.ftc.library.component.command.AbstractCommand;
 import org.firstinspires.ftc.library.component.event.command_callback.CommandCallbackAdapter;
 import org.firstinspires.ftc.library.component.event.command_callback.CommandSuccessEvent;
+import org.firstinspires.ftc.library.motor.EncodedMotor;
+import org.firstinspires.ftc.library.motor.EncodedMotorGoToPositionCommand;
 
 /**
  *
  */
-public class BoomMoveToPositionCommand extends AbstractCommand {
+public class LinearActuatorMoveToPositionCommand extends AbstractCommand {
 
     /**
      */
-    private Boom boom;
+    private EncodedMotor motor;
 
     /**
      */
-    private GoToPositionCommand command;
+    private EncodedMotorGoToPositionCommand command;
 
     /**
      */
@@ -23,16 +26,16 @@ public class BoomMoveToPositionCommand extends AbstractCommand {
 
     /**
      */
-    private double targetPosition;
+    private int targetPosition;
 
     /**
      *
-     * @param boom
+     * @param motor
      * @param targetPosition
      * @param power
      */
-    public BoomMoveToPositionCommand(Boom boom, double targetPosition, double power) {
-        this.boom = boom;
+    public LinearActuatorMoveToPositionCommand(EncodedMotor motor, int targetPosition, double power) {
+        this.motor = motor;
 
         this.power = power;
 
@@ -40,15 +43,14 @@ public class BoomMoveToPositionCommand extends AbstractCommand {
     }
 
     public void init () {
-        this.command = new GoToPositionCommand(boom, power, this.boom.getPosition(), targetPosition);
+        this.command = new EncodedMotorGoToPositionCommand(motor, targetPosition, power);
         command.addCallbackHandler(new CommandCallbackAdapter() {
             public void onSuccess(CommandSuccessEvent successEvent) {
-                BoomMoveToPositionCommand.this.markAsCompleted();
+                LinearActuatorMoveToPositionCommand.this.markAsCompleted();
             }
         });
 
-        this.boom.addCommand(command);
-
+        this.motor.addCommand(command);
         this.setInitialized(true);
     }
 
