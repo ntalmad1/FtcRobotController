@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode.metalheads;
 
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
@@ -9,7 +10,7 @@ import com.qualcomm.robotcore.hardware.Servo;
 import org.firstinspires.ftc.library.IsaacBot;
 
 @TeleOp(name="Linear Actuator Test", group="Linear OpMode")
-//@Disabled
+@Disabled
 public class LinearActuatorTest extends LinearOpMode {
 
     private DcMotor linearActMotor;
