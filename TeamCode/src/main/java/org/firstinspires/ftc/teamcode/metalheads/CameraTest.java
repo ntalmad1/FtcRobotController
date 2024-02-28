@@ -126,21 +126,28 @@ public class CameraTest extends LinearOpMode {
 
     private void initDriveTrain() {
 
-        leftFrontMotor = hardwareMap.get(DcMotor.class, "leftFrontMotor");
-        rightFrontMotor = hardwareMap.get(DcMotor.class, "leftFrontMotor");
-        leftRearMotor = hardwareMap.get(DcMotor.class, "leftRearMotor");
-        rightRearMotor = hardwareMap.get(DcMotor.class, "rightRearMotor");
+        leftFrontMotor = hardwareMap.get(DcMotor.class, "leftFrontDrive");
+        rightFrontMotor = hardwareMap.get(DcMotor.class, "leftFrontDrive");
+        leftRearMotor = hardwareMap.get(DcMotor.class, "leftRearDrive");
+        rightRearMotor = hardwareMap.get(DcMotor.class, "rightRearDrive");
 
         leftFrontMotor.setDirection(DcMotor.Direction.REVERSE);
         rightFrontMotor.setDirection(DcMotor.Direction.FORWARD);
         leftRearMotor.setDirection(DcMotor.Direction.REVERSE);
         rightRearMotor.setDirection(DcMotor.Direction.FORWARD);
 
+        leftFrontMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        rightFrontMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        leftRearMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        rightRearMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+
+
+
     }
 
 
     private void keepDistance(double inches,int ID) {
-        double speed = .1;
+        double speed = .18;
         List<AprilTagDetection> currentDetections = aprilTag.getDetections();
         for (AprilTagDetection detection : currentDetections) {
             if (detection.id == ID) {
@@ -157,6 +164,9 @@ public class CameraTest extends LinearOpMode {
         leftFrontMotor.setPower(power);
         rightRearMotor.setPower(power);
         rightFrontMotor.setPower(power);
+
+        telemetry.addData("servo: ", "%2f", power);
+        telemetry.update();
 
     }
 
