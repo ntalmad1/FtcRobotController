@@ -5,19 +5,20 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import org.firstinspires.ftc.library.IsaacBot;
 import org.firstinspires.ftc.library.boom.arm.Arm;
 import org.firstinspires.ftc.library.boom.arm.ArmConfig;
-import org.firstinspires.ftc.library.claw.Claw;
-import org.firstinspires.ftc.library.claw.ClawConfig;
 import org.firstinspires.ftc.library.component.command.ICommand;
 import org.firstinspires.ftc.library.component.command.OneTimeCommand;
 import org.firstinspires.ftc.library.component.command.OneTimeSynchronousCommand;
 import org.firstinspires.ftc.library.component.command.WaitCommand;
 import org.firstinspires.ftc.library.drivetrain.SimpleDriveTrain;
 import org.firstinspires.ftc.library.drivetrain.SimpleDriveTrainConfig;
+import org.firstinspires.ftc.library.dronelauncher.DroneLauncher;
+import org.firstinspires.ftc.library.dronelauncher.DroneLauncherConfig;
 import org.firstinspires.ftc.library.pixelcatcher.PixelCatcher;
 import org.firstinspires.ftc.library.pixelcatcher.PixelCatcherConfig;
 import org.firstinspires.ftc.library.utility.Direction;
+import org.firstinspires.ftc.library.winch.Winch;
 import org.firstinspires.ftc.teamcode.metalheads.competition.config.ArmCompConfig;
-import org.firstinspires.ftc.teamcode.metalheads.competition.config.ClawCompConfig;
+import org.firstinspires.ftc.teamcode.metalheads.competition.config.DroneLauncherCompConfig;
 import org.firstinspires.ftc.teamcode.metalheads.competition.config.PixelCatcherCompConfig;
 import org.firstinspires.ftc.teamcode.metalheads.competition.config.SimpleDriveCompConfig;
 
@@ -39,9 +40,19 @@ public class SystemTests extends IsaacBot {
 
     /**
      */
-    private boolean runDriveTrainTests = false;
-    private boolean runPixelCatcherTests = false;
-    private boolean runClawTests = true;
+    private Winch winch;
+
+    /**
+     */
+    private DroneLauncher droneLauncher;
+
+    /**
+     */
+    private boolean runDriveTrainTests = true;
+    private boolean runPixelCatcherTests = true;
+    private boolean runArmTests = true;
+    private boolean runWinchTest = false;
+    private boolean runDroneLauncherTests = true;
 
     /**
      * Constructor
@@ -256,7 +267,7 @@ public class SystemTests extends IsaacBot {
             });
         }
 
-        if (this.runClawTests) {
+        if (this.runArmTests) {
 
             // arm
             this.addCommand(new OneTimeSynchronousCommand() {
@@ -273,84 +284,84 @@ public class SystemTests extends IsaacBot {
             });
 
             // left claw
-//            this.addCommand(new OneTimeSynchronousCommand() {
-//                public void runOnce(ICommand outerCommand) {
-//
-//                    SystemTests.this.voiceLog("Testing left claw pincher...", 1500);
-//                    SystemTests.this.arm.getClaw().toggleLeftClaw();
-//                    SystemTests.this.sleep(1000);
-//                    SystemTests.this.arm.getClaw().toggleLeftClaw();
-//                    SystemTests.this.sleep(1000);
-//                    SystemTests.this.arm.getClaw().addCommand(new OneTimeCommand() {
-//                        @Override
-//                        public void runOnce(ICommand command) {
-//                            SystemTests.this.voiceLog("Test complete");
-//                            outerCommand.markAsCompleted();
-//                        }
-//                    });
-//
-//                }
-//            });
+             this.addCommand(new OneTimeSynchronousCommand() {
+               public void runOnce(ICommand outerCommand) {
+
+                    SystemTests.this.voiceLog("Testing left claw pincher...", 1500);
+                    SystemTests.this.arm.getClaw().toggleLeftClaw();
+                    SystemTests.this.sleep(1000);
+                    SystemTests.this.arm.getClaw().toggleLeftClaw();
+                    SystemTests.this.sleep(1000);
+                    SystemTests.this.arm.getClaw().addCommand(new OneTimeCommand() {
+                        @Override
+                        public void runOnce(ICommand command) {
+                            SystemTests.this.voiceLog("Test complete");
+                            outerCommand.markAsCompleted();
+                        }
+                    });
+
+                }
+            });
 
             // right claw
-//            this.addCommand(new OneTimeSynchronousCommand() {
-//                public void runOnce(ICommand outerCommand) {
-//
-//                    SystemTests.this.voiceLog("Testing right claw pincher...", 1500);
-//                    SystemTests.this.arm.getClaw().toggleRightClaw();
-//                    SystemTests.this.sleep(1000);
-//                    SystemTests.this.arm.getClaw().toggleRightClaw();
-//                    SystemTests.this.sleep(1000);
-//                    SystemTests.this.arm.getClaw().addCommand(new OneTimeCommand() {
-//                        @Override
-//                        public void runOnce(ICommand command) {
-//                            SystemTests.this.voiceLog("Test complete");
-//                            outerCommand.markAsCompleted();
-//                        }
-//                    });
-//
-//                }
-//            });
+            this.addCommand(new OneTimeSynchronousCommand() {
+                public void runOnce(ICommand outerCommand) {
+
+                    SystemTests.this.voiceLog("Testing right claw pincher...", 1500);
+                    SystemTests.this.arm.getClaw().toggleRightClaw();
+                    SystemTests.this.sleep(1000);
+                    SystemTests.this.arm.getClaw().toggleRightClaw();
+                    SystemTests.this.sleep(1000);
+                    SystemTests.this.arm.getClaw().addCommand(new OneTimeCommand() {
+                        @Override
+                        public void runOnce(ICommand command) {
+                            SystemTests.this.voiceLog("Test complete");
+                            outerCommand.markAsCompleted();
+                        }
+                    });
+
+                }
+            });
 
             // claw base
-//            this.addCommand(new OneTimeSynchronousCommand() {
-//                public void runOnce(ICommand outerCommand) {
-//
-//                    SystemTests.this.voiceLog("Testing claw base...", 1000);
-//                    SystemTests.this.arm.getClaw().getBase().gotoPosition(SystemTests.this.arm.getClaw().getConfig().clawBoomConfig.zeroDegreePosition);
-//                    SystemTests.this.arm.getClaw().getBase().addCommand(new WaitCommand(1000));
-//                    SystemTests.this.arm.getClaw().getBase().gotoPosition(SystemTests.this.arm.getClaw().getConfig().clawBoomConfig.homePosition);
-//                    SystemTests.this.arm.getClaw().getBase().addCommand(new WaitCommand(1000));
-//                    SystemTests.this.arm.getClaw().getBase().addCommand(new OneTimeCommand() {
-//                        @Override
-//                        public void runOnce(ICommand command) {
-//                            SystemTests.this.voiceLog("Test complete");
-//                            outerCommand.markAsCompleted();
-//                        }
-//                    });
-//
-//                }
-//            });
+            this.addCommand(new OneTimeSynchronousCommand() {
+                public void runOnce(ICommand outerCommand) {
+
+                    SystemTests.this.voiceLog("Testing claw base...", 1000);
+                    SystemTests.this.arm.getClaw().getBase().gotoPosition(SystemTests.this.arm.getClaw().getConfig().clawBoomConfig.zeroDegreePosition);
+                    SystemTests.this.arm.getClaw().getBase().addCommand(new WaitCommand(1000));
+                    SystemTests.this.arm.getClaw().getBase().gotoPosition(SystemTests.this.arm.getClaw().getConfig().clawBoomConfig.homePosition);
+                    SystemTests.this.arm.getClaw().getBase().addCommand(new WaitCommand(1000));
+                    SystemTests.this.arm.getClaw().getBase().addCommand(new OneTimeCommand() {
+                        @Override
+                        public void runOnce(ICommand command) {
+                            SystemTests.this.voiceLog("Test complete");
+                            outerCommand.markAsCompleted();
+                        }
+                    });
+
+                }
+            });
 
             // bottom boom
-//            this.addCommand(new OneTimeSynchronousCommand() {
-//                public void runOnce(ICommand outerCommand) {
-//
-//                    SystemTests.this.voiceLog("Testing bottom boom...", 1000);
-//                    SystemTests.this.arm.getBottomBoom().gotoPosition(0.3);
-//                    SystemTests.this.arm.getBottomBoom().addCommand(new WaitCommand(1000));
-//                    SystemTests.this.arm.getBottomBoom().gotoPosition(SystemTests.this.arm.getBottomBoom().getConfig().homePosition);
-//                    SystemTests.this.arm.getBottomBoom().addCommand(new WaitCommand(1000));
-//                    SystemTests.this.arm.getBottomBoom().addCommand(new OneTimeCommand() {
-//                        @Override
-//                        public void runOnce(ICommand command) {
-//                            SystemTests.this.voiceLog("Test complete");
-//                            outerCommand.markAsCompleted();
-//                        }
-//                    });
-//
-//                }
-//            });
+            this.addCommand(new OneTimeSynchronousCommand() {
+                public void runOnce(ICommand outerCommand) {
+
+                    SystemTests.this.voiceLog("Testing bottom boom...", 1000);
+                    SystemTests.this.arm.getBottomBoom().gotoPosition(0.3);
+                    SystemTests.this.arm.getBottomBoom().addCommand(new WaitCommand(1000));
+                    SystemTests.this.arm.getBottomBoom().gotoPosition(SystemTests.this.arm.getBottomBoom().getConfig().homePosition);
+                    SystemTests.this.arm.getBottomBoom().addCommand(new WaitCommand(1000));
+                    SystemTests.this.arm.getBottomBoom().addCommand(new OneTimeCommand() {
+                        @Override
+                        public void runOnce(ICommand command) {
+                            SystemTests.this.voiceLog("Test complete");
+                            outerCommand.markAsCompleted();
+                        }
+                    });
+
+                }
+            });
 
             // linear actuator
             this.addCommand(new OneTimeSynchronousCommand() {
@@ -367,6 +378,39 @@ public class SystemTests extends IsaacBot {
                     SystemTests.this.arm.moveClawToPosition(SystemTests.this.arm.getClaw().getConfig().clawBoomConfig.homePosition);
                     SystemTests.this.arm.wait(1000);
                     SystemTests.this.arm.addCommand(new OneTimeCommand() {
+                        @Override
+                        public void runOnce(ICommand command) {
+                            SystemTests.this.voiceLog("Test complete");
+                            outerCommand.markAsCompleted();
+                        }
+                    });
+
+                }
+            });
+        }
+
+        if (this.runDroneLauncherTests) {
+
+            // drone launcher
+            this.addCommand(new OneTimeSynchronousCommand() {
+                @Override
+                public void runOnce(ICommand command) {
+                    DroneLauncherConfig config = new DroneLauncherCompConfig(SystemTests.this);
+                    SystemTests.this.voiceLog("Initializing drone launcher...");
+                    SystemTests.this.droneLauncher = new DroneLauncher(config);
+                    SystemTests.this.droneLauncher.init();
+                    SystemTests.this.voiceLog("Drone launcher initialized.");
+                    command.markAsCompleted();
+                }
+            });
+
+            this.addCommand(new OneTimeSynchronousCommand() {
+                public void runOnce(ICommand outerCommand) {
+
+                    SystemTests.this.voiceLog("Testing drone launcher...", 1500);
+                    SystemTests.this.droneLauncher.launchDrone();
+                    SystemTests.this.droneLauncher.addCommand(new WaitCommand(2000));
+                    SystemTests.this.droneLauncher.addCommand(new OneTimeCommand() {
                         @Override
                         public void runOnce(ICommand command) {
                             SystemTests.this.voiceLog("Test complete");
@@ -402,6 +446,14 @@ public class SystemTests extends IsaacBot {
 
         if (this.arm != null) {
             this.arm.run();
+        }
+
+        if (this.winch != null) {
+            this.winch.run();
+        }
+
+        if (this.droneLauncher != null) {
+            this.droneLauncher.run();
         }
 
     }

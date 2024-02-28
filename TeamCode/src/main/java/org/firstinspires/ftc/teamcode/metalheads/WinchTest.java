@@ -1,23 +1,23 @@
 package org.firstinspires.ftc.teamcode.metalheads;
 
-import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
-import org.firstinspires.ftc.teamcode.metalheads.competition.config.ArmCompConfig;
-import org.firstinspires.ftc.teamcode.metalheads.competition.config.ClawCompConfig;
 import org.firstinspires.ftc.library.IsaacBot;
 import org.firstinspires.ftc.library.boom.arm.Arm;
 import org.firstinspires.ftc.library.boom.arm.ArmConfig;
-import org.firstinspires.ftc.library.claw.ClawConfig;
+import org.firstinspires.ftc.library.winch.Winch;
+import org.firstinspires.ftc.library.winch.WinchConfig;
+import org.firstinspires.ftc.teamcode.metalheads.competition.config.ArmCompConfig;
+import org.firstinspires.ftc.teamcode.metalheads.competition.config.WinchCompConfig;
 
-@TeleOp(name="Arm Test", group="Linear OpMode")
+@TeleOp(name="Winch Test", group="Linear OpMode")
 //@Disabled
-public class ArmTest extends IsaacBot {
+public class WinchTest extends IsaacBot {
 
     //private Boom topBoom;
-    private Arm arm;
+    private Winch winch;
 
-    public ArmTest(){
+    public WinchTest(){
         super();
 
 //        ClawConfig clawConfig = new ClawCompConfig(this);
@@ -46,12 +46,12 @@ public class ArmTest extends IsaacBot {
 //        bottomBoomConfig.zeroDegreePosition = 0.28;
 //        bottomBoomConfig.degree = 0.000556;
 
-        ArmConfig armConfig = new ArmCompConfig(this);
+        WinchConfig winchConfig = new WinchCompConfig(this);
 //        armConfig.robot = this;
 //        armConfig.clawConfig = clawConfig;
 //        armConfig.bottomBoomConfig = bottomBoomConfig;
-        armConfig.debug = true;
-        this.arm = new Arm(armConfig);
+        winchConfig.debug = true;
+        this.winch = new Winch(winchConfig);
 
         // pickup pixel routine
 //        this.arm.addGp2_A_PressHandler(event -> {
@@ -82,7 +82,7 @@ public class ArmTest extends IsaacBot {
 
     @Override
     public void runOpMode() throws InterruptedException {
-        this.arm.init();
+        this.winch.init();
 
 
 //            ArmOpMode.this.arm.cancelAllCommands();
@@ -115,7 +115,7 @@ public class ArmTest extends IsaacBot {
         while (this.opModeIsActive()) {
 
             this.getEventBus().run();
-            this.arm.run();
+            this.winch.run();
 
 
 

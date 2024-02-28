@@ -129,6 +129,9 @@ public class EncodedMotor extends Component {
             this.motor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         }
         else {
+            this.motor.setPower(0);
+            this.motor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+
             this.motor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
         }
     }

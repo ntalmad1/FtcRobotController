@@ -42,6 +42,8 @@ public class EncodedMotorConfig {
      */
     public boolean brakeOn = false;
 
+    /**
+     */
     public Control control = Control.Gp2_RightStickX;
 
     /**
