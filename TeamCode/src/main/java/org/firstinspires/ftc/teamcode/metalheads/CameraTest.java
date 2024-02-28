@@ -27,11 +27,13 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package org.firstinspires.ftc.robotcontroller.external.samples;
+package org.firstinspires.ftc.teamcode.metalheads;
 
-import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
+
 import org.firstinspires.ftc.robotcore.external.hardware.camera.BuiltinCameraDirection;
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
 import org.firstinspires.ftc.vision.VisionPortal;
@@ -62,10 +64,17 @@ import java.util.List;
  * Remove or comment out the @Disabled line to add this OpMode to the Driver Station OpMode list.
  */
 @TeleOp(name = "Concept: AprilTag Easy", group = "Concept")
-@Disabled
-public class ConceptAprilTagEasy extends LinearOpMode {
+//@Disabled
+public class CameraTest extends LinearOpMode {
 
     private static final boolean USE_WEBCAM = true;  // true for webcam, false for phone camera
+
+    private DcMotor leftFrontMotor = null;
+    private DcMotor rightFrontMotor = null;
+    private DcMotor leftRearMotor = null;
+    private DcMotor rightRearMotor = null;
+    private double power = 0;
+
 
     /**
      * The variable to store our instance of the AprilTag processor.
@@ -80,6 +89,8 @@ public class ConceptAprilTagEasy extends LinearOpMode {
     @Override
     public void runOpMode() {
 
+        initDriveTrain();
+
         initAprilTag();
 
         // Wait for the DS start button to be touched.
@@ -92,8 +103,6 @@ public class ConceptAprilTagEasy extends LinearOpMode {
             while (opModeIsActive()) {
 
                 telemetryAprilTag();
-
-                // Push telemetry to the Driver Station.
                 telemetry.update();
 
                 // Save CPU resources; can resume streaming when needed.
@@ -102,6 +111,8 @@ public class ConceptAprilTagEasy extends LinearOpMode {
                 } else if (gamepad1.dpad_up) {
                     visionPortal.resumeStreaming();
                 }
+
+                keepDistance(12,1);
 
                 // Share the CPU.
                 sleep(20);
@@ -113,9 +124,46 @@ public class ConceptAprilTagEasy extends LinearOpMode {
 
     }   // end method runOpMode()
 
+    private void initDriveTrain() {
+
+        leftFrontMotor = hardwareMap.get(DcMotor.class, "leftFrontMotor");
+        rightFrontMotor = hardwareMap.get(DcMotor.class, "leftFrontMotor");
+        leftRearMotor = hardwareMap.get(DcMotor.class, "leftRearMotor");
+        rightRearMotor = hardwareMap.get(DcMotor.class, "rightRearMotor");
+
+        leftFrontMotor.setDirection(DcMotor.Direction.REVERSE);
+        rightFrontMotor.setDirection(DcMotor.Direction.FORWARD);
+        leftRearMotor.setDirection(DcMotor.Direction.REVERSE);
+        rightRearMotor.setDirection(DcMotor.Direction.FORWARD);
+
+    }
+
+
+    private void keepDistance(double inches,int ID) {
+        double speed = .1;
+        List<AprilTagDetection> currentDetections = aprilTag.getDetections();
+        for (AprilTagDetection detection : currentDetections) {
+            if (detection.id == ID) {
+
+                if (detection.ftcPose.y < inches) {
+                    power = -speed;
+                } else if (detection.ftcPose.y > inches) {
+                    power = speed;
+                }
+
+            }
+        }
+        leftRearMotor.setPower(power);
+        leftFrontMotor.setPower(power);
+        rightRearMotor.setPower(power);
+        rightFrontMotor.setPower(power);
+
+    }
+
     /**
      * Initialize the AprilTag processor.
      */
+
     private void initAprilTag() {
 
         // Create the AprilTag processor the easy way.
