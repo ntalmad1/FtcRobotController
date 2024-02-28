@@ -141,6 +141,23 @@ public class PixelCatcher extends Component {
 
     /**
      *
+     * @param pos
+     */
+    public void setLeftArmPosition (double pos) {
+        this.leftServo.setPosition(pos);
+    }
+
+    /**
+     *
+     * @param pos
+     */
+    public void setRightArmPosition (double pos) {
+        this.rightServo.setPosition(pos);
+    }
+
+
+    /**
+     *
      */
     public void toggleRightArm () {
         switch (this.rightArmPos) {
@@ -162,10 +179,7 @@ public class PixelCatcher extends Component {
      *
      */
     public void toggleWinch () {
-
-        this.robot.telemetry.log().add("toggle winch: " + this.winchPosition);
-
-        switch (this.winchPosition) {
+       switch (this.winchPosition) {
             case DOWN:
                 this.winchServo.setPosition(this.config.winchUpPosition);
                 this.winchPosition = WinchPosition.UP;

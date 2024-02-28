@@ -2,9 +2,11 @@ package org.firstinspires.ftc.teamcode.metalheads.competition.config;
 
 public class RobotConfig {
 
-    public double pixelReady_bottomBoom = 0.177;
-    //public double pixelReady_midBoom =  0.813;
-    public double pixelReady_clawBoom = 0.651;
+    public double pixelReady_bottomBoom = 0.240;
+    public int pixelReady_linAct =  2277;
+    public double pixelReady_clawBoom = 0.933;
+
+    public double pixelPick_bottomBoom = 0.223;
 
     public double pixelPlace_bottomBoom = 0.164;
     //public double pixelPlace_midBoom =  0.716;

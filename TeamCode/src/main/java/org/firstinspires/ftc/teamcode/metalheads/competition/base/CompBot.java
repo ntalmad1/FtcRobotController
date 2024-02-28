@@ -5,7 +5,9 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DistanceSensor;
 
 import org.firstinspires.ftc.library.component.command.ICommand;
+import org.firstinspires.ftc.library.component.command.OneTimeCommand;
 import org.firstinspires.ftc.library.component.command.OneTimeSynchronousCommand;
+import org.firstinspires.ftc.library.component.command.WaitCommand;
 import org.firstinspires.ftc.library.component.event.command_callback.CommandCallbackAdapter;
 import org.firstinspires.ftc.library.component.event.command_callback.CommandSuccessEvent;
 import org.firstinspires.ftc.library.component.event.ping.PingEvent;
@@ -46,8 +48,6 @@ public class CompBot extends IsaacBot{
         PIXEL_PLACE_ROW1,
         PIXEL_PLACE_ROW2,
         PIXEL_PLACE_ROW3,
-        TRAVEL,
-        REST
     }
 
     /**
@@ -80,14 +80,6 @@ public class CompBot extends IsaacBot{
 
     /**
      */
-    protected LightBarConfig lightBarConfig;
-
-    /**
-     */
-    protected LightBar lightBar;
-
-    /**
-     */
     protected DistanceSensor backdropSensor;
 
     private boolean pickingPixel = false;
@@ -108,41 +100,12 @@ public class CompBot extends IsaacBot{
 
         this.pixelCatcherConfig = new PixelCatcherCompConfig(this);
 
-        this.lightBarConfig = new LightBarCompConfig(this);
-
         //-------------------------------------------------
         // A Button
         //-------------------------------------------------
         this.addGp2_A_PressHandler(event -> {
             CompBot.this.arm.cancelAllCommands();
             this.onAPress();
-
-        });
-
-        //-------------------------------------------------
-        // B Button - Travel
-        //-------------------------------------------------
-        this.addGp2_B_PressHandler(event -> {
-            CompBot.this.arm.cancelAllCommands();
-
-            if (this.pickingPixel) {
-                this.addCommand(new OneTimeSynchronousCommand() {
-                    public void runOnce(ICommand command) {
-                        CompBot.this.arm.moveBottomToPosition(CompBot.this.robotConfig.pixelReady_bottomBoom, 1)
-                                .wait(250, new CommandCallbackAdapter(){
-                                    public void onSuccess(CommandSuccessEvent successEvent) {
-                                        CompBot.this.pickingPixel = false;
-                                        CompBot.this.onBPress();
-                                    }
-                                });
-                    }
-                });
-            }
-            else {
-                this.onBPress();
-            }
-
-
 
         });
 
@@ -184,30 +147,9 @@ public class CompBot extends IsaacBot{
             CompBot.this.armPosition = ArmPosition.PIXEL_READY;
             CompBot.this.moveArm_fromPixelPlace_toPixelReady();
         }
-        else if (this.armPosition.equals(ArmPosition.TRAVEL)) {
-            CompBot.this.armPosition = ArmPosition.PIXEL_READY;
-            CompBot.this.moveArm_fromTravel_toPixelReady();
-        }
         else if (this.armPosition.equals(ArmPosition.PIXEL_READY)) {
             CompBot.this.armPosition = ArmPosition.PIXEL_READY;
             CompBot.this.moveArm_fromPixelReady_doPixelPick();
-        }
-    }
-
-    private void onBPress () {
-        if (this.armPosition.equals(ArmPosition.INIT)) {
-            CompBot.this.armPosition = ArmPosition.TRAVEL;
-            CompBot.this.moveArm_fromInit_toTravel();
-        }
-        else if (this.armPosition.equals(ArmPosition.PIXEL_READY)) {
-            CompBot.this.armPosition = ArmPosition.TRAVEL;
-            CompBot.this.moveArm_fromPixelReady_toTravel();
-        }
-        else if (this.armPosition.equals(ArmPosition.PIXEL_PLACE_ROW1) ||
-                this.armPosition.equals(ArmPosition.PIXEL_PLACE_ROW2) ||
-                this.armPosition.equals(ArmPosition.PIXEL_PLACE_ROW3)) {
-            CompBot.this.armPosition = ArmPosition.TRAVEL;
-            CompBot.this.moveArm_fromPixelPlace_toTravel();
         }
     }
 
@@ -232,10 +174,6 @@ public class CompBot extends IsaacBot{
             CompBot.this.armPosition = ArmPosition.PIXEL_PLACE_ROW1;
             CompBot.this.moveArm_fromPixelReady_toPixelPlace();
         }
-        else if (this.armPosition.equals(ArmPosition.TRAVEL)) {
-            CompBot.this.armPosition = ArmPosition.PIXEL_PLACE_ROW1;
-            CompBot.this.moveArm_fromTravel_toPixelPlace();
-        }
     }
 
     /**
@@ -243,11 +181,6 @@ public class CompBot extends IsaacBot{
      */
     public void initBot () {
         super.initBot();
-
-        this.backdropSensor = this.hardwareMap.get(DistanceSensor.class, "backdropSensor");
-
-        this.lightBar = new LightBar(this.lightBarConfig);
-        this.lightBar.init();
 
         this.arm = new Arm(armConfig);
         this.arm.init();
@@ -264,6 +197,8 @@ public class CompBot extends IsaacBot{
      */
     public void go () {
         super.go();
+
+        this.backdropSensor = this.hardwareMap.get(DistanceSensor.class, "backdropSensor");
     }
 
     /**
@@ -273,37 +208,34 @@ public class CompBot extends IsaacBot{
         super.run();
     }
 
-    public void moveArm_fromInit_toPixelReady() { _moveArm_fromInit_toPixelReady(); }
+    public void moveArm_fromInit_toPixelReady() {
+        this.armPosition = ArmPosition.PIXEL_READY;
+        _moveArm_fromInit_toPixelReady();
+    }
     public void moveArm_fromInit_toPixelPlace() { _moveArm_fromInit_toPixelPlace(); }
-    public void moveArm_fromInit_toTravel() { _moveArm_fromInit_toTravel(); }
 
     public void moveArm_fromPixelReady_toPixelPlace () { _moveArm_fromPixelReady_toPixelPlace(); }
-    public void moveArm_fromPixelReady_toTravel () { _moveArm_fromPixelReady_toTravel(); }
 
     public void moveArm_fromPixelReady_doPixelPick () { _moveArm_fromPixelReady_doPickPixels(); }
 
     public void moveArm_fromPixelPlace_toPixelReady () { _moveArm_fromPixelPlace_toPixelReady(); }
-    public void moveArm_fromPixelPlace_toTravel () { _moveArm_fromPixelPlace_toTravel(); }
 
     public void moveArm_fromPixelPlace_toPixelPlaceRow2 () { _moveArm_fromPixelPlace_toPixelPlaceRow2(); }
     public void moveArm_fromPixelPlaceRow2_toPixelPlaceRow3 () { _moveArm_fromPixelPlaceRow2_toPixelPlaceRow3(); }
     public void moveArm_fromPixelPlaceHigh_toPixelPlace () { _moveArm_fromPixelPlaceHigh_toPixelPlace(); }
 
-    public void moveArm_fromTravel_toPixelReady () { _moveArm_fromTravel_toPixelReady(); }
-    public void moveArm_fromTravel_toPixelPlace () { _moveArm_fromTravel_toPixelPlace(); }
-
+    /**
+     *
+     */
     private void _moveArm_fromInit_toPixelReady () {
-            //this.arm.rotateClawToPosition(0.307, 1)
-//            moveMiddleDegreesFromCurrentPosition(15)
-//                    .wait(0)
-//        this.arm.moveMiddleToDegrees(-90, 1)
-        this.arm.moveBottomDegreesFromCurrentPosition(-30)
-                    .wait(0)
-                    .moveBottomToPosition(this.robotConfig.pixelReady_bottomBoom, 1)
-                   // .moveMiddleToPosition(this.robotConfig.pixelReady_midBoom,1)
-                    .moveClawToPosition(this.robotConfig.pixelReady_clawBoom, 1)
-                    //.rotateClawToPosition(this.robotConfig.pixelReady_clawRotator, 1)
-                    .wait(0);
+        if (this.pixelCatcher.getWinchPosition().equals(PixelCatcher.WinchPosition.UP)){
+            this.pixelCatcher.toggleWinch();
+        }
+        this.arm.moveBottomToPosition(0.3, 1)
+                .moveLinearActuatorToPosition(this.robotConfig.pixelReady_linAct)
+                .addCommand(new WaitCommand(250));
+        this.arm.moveClawToPosition(this.robotConfig.pixelReady_clawBoom, 1)
+                .moveBottomToPosition(this.robotConfig.pixelReady_bottomBoom, 1);
     }
 
     private void _moveArm_fromInit_toPixelPlace () {
@@ -317,20 +249,6 @@ public class CompBot extends IsaacBot{
                // .moveMiddleToPosition(this.robotConfig.pixelPlace_midBoom,1)
                 .moveClawToPosition(this.robotConfig.pixelPlace_clawBoom, 1)
                // .rotateClawToPosition(this.robotConfig.pixelPlace_clawRotator, 1)
-                .wait(0);
-    }
-
-    private void _moveArm_fromInit_toTravel () {
-        //this.arm.rotateClawToPosition(0.307, 1)
-//        this.arm.moveMiddleDegreesFromCurrentPosition(15)
-//                .wait(0)
-//                .moveMiddleToDegrees(-90, 1)
-        this.arm.moveBottomDegreesFromCurrentPosition(-30)
-                .wait(0)
-                .moveBottomToPosition(0.047, 1)
-                //.moveMiddleToPosition(0.527,1)
-                .moveClawToPosition(0.828, 1)
-                //.rotateClawToPosition(0.307, 1)
                 .wait(0);
     }
 
@@ -363,18 +281,6 @@ public class CompBot extends IsaacBot{
                 .wait(0);
     }
 
-    private void _moveArm_fromPixelPlace_toTravel () {
-        //this.arm.rotateClawToPosition(0.307, 1)
-//        this.arm.moveMiddleToPosition(0.527,1)
-//                .wait(500)
-        this.arm.moveBottomToPosition(0.075, CompBot.this.robotConfig.bottomBoomTravelIncrement)
-                .wait(500)
-                .moveBottomToPosition(0.047, CompBot.this.robotConfig.bottomBoomTravelIncrement)
-                .moveClawToPosition(0.828, 1)
-                //.rotateClawToPosition(0.307, 1)
-                .wait(0);
-    }
-
     private void _moveArm_fromPixelReady_toPixelPlace () {
         //this.arm.rotateClawToPosition(0.307, 1)
         this.arm.moveBottomToPosition(0.200, 1)
@@ -383,22 +289,6 @@ public class CompBot extends IsaacBot{
                 //.moveMiddleToPosition(this.robotConfig.pixelPlace_midBoom,1)
                 .moveClawToPosition(this.robotConfig.pixelPlace_clawBoom, 1)
                 //.rotateClawToPosition(this.robotConfig.pixelPlace_clawRotator, 1)
-                .wait(0);
-    }
-
-    private void _moveArm_fromPixelReady_toTravel () {
-        //this.arm.rotateClawToPosition(0.307, 1)
-        this.arm.moveBottomToPosition(0.200, 1)
-                .wait(500)
-                //.moveMiddleToPosition(0.689,1)
-                .wait(500)
-               // .moveMiddleToPosition(0.527,1)
-                .wait(500)
-                .moveBottomToPosition(0.075, CompBot.this.robotConfig.bottomBoomTravelIncrement)
-                .wait(500)
-                .moveBottomToPosition(0.047, CompBot.this.robotConfig.bottomBoomTravelIncrement)
-                .moveClawToPosition(0.828, 1)
-                //this.arm..rotateClawToPosition(0.307, 1)
                 .wait(0);
     }
 
@@ -411,37 +301,10 @@ public class CompBot extends IsaacBot{
                 .wait(0);
     }
 
-    private void _moveArm_fromTravel_toPixelReady() {
-        //this.arm.rotateClawToPosition(0.307, 1)
-        this.arm.moveBottomToPosition(0.180, 1)
-                .wait(500)
-                //.moveMiddleToPosition(0.731, 1)
-                .moveClawToPosition(0.507, 1)
-                .wait(1000)
-                .moveBottomToPosition(this.robotConfig.pixelReady_bottomBoom, 1)
-                //.moveMiddleToPosition(this.robotConfig.pixelReady_midBoom,1)
-                .moveClawToPosition(this.robotConfig.pixelReady_clawBoom, 1)
-               // .rotateClawToPosition(this.robotConfig.pixelReady_clawRotator, 1)
-                .wait(0);
-    }
-
-    private void _moveArm_fromTravel_toPixelPlace () {
-        //this.arm.rotateClawToPosition(0.307, 1)
-        this.arm.moveBottomToPosition(0.200, 1)
-                .wait(500)
-                .moveBottomToPosition(this.robotConfig.pixelPlace_bottomBoom, 1)
-               // .moveMiddleToPosition(this.robotConfig.pixelPlace_midBoom,1)
-                .moveClawToPosition(this.robotConfig.pixelPlace_clawBoom, 1)
-                //.rotateClawToPosition(this.robotConfig.pixelPlace_clawRotator, 1)
-                .wait(0);
-    }
-
     /**
      *
      */
     public void _moveArm_fromPixelReady_doPickPixels () {
-
-
 
             this.arm.wait(0, new CommandCallbackAdapter () {
                         public void onSuccess(CommandSuccessEvent successEvent) {
@@ -451,11 +314,27 @@ public class CompBot extends IsaacBot{
                     .closeLeftClaw()
                     .closeRightClaw()
                     .wait(350)
-                    .moveBottomToPosition(0.150)
+                    .moveBottomToPosition(this.robotConfig.pixelPick_bottomBoom, 1)
                     .wait(500)
                     .openLeftClaw()
-                    .openRightClaw()
-                    .wait(250)
+                    .openRightClaw();
+
+            this.arm.addCommand(new OneTimeCommand() {
+                        @Override
+                        public void runOnce(ICommand leftArmCommand) {
+                            CompBot.this.pixelCatcher.setLeftArmPosition(0.5);
+                            leftArmCommand.markAsCompleted();
+                        }
+                    });
+            this.arm.addCommand(new OneTimeCommand() {
+                        @Override
+                        public void runOnce(ICommand rightArmCommand) {
+                            CompBot.this.pixelCatcher.setRightArmPosition(0.5);
+                            rightArmCommand.markAsCompleted();
+                        }
+                    });
+
+            this.arm.wait(250)
                     .moveBottomToPosition(this.robotConfig.pixelReady_bottomBoom, 1)
                     .wait(500, new CommandCallbackAdapter () {
                         public void onSuccess(CommandSuccessEvent successEvent) {
@@ -479,20 +358,6 @@ public class CompBot extends IsaacBot{
                 .wait(500)
                // .moveMiddleToPosition(this.robotConfig.hang_midBoom, 1)
                 .moveBottomToPosition(this.robotConfig.hang_bottomBoomPos2, 1)
-                .wait(0);
-    }
-
-
-    public void moveArm_fromRest_toPixelReady () {
-        this.armPosition = ArmPosition.PIXEL_READY;
-
-        this.arm.moveBottomToPosition(0.200, 1)
-               // .rotateClawToPosition(this.robotConfig.pixelReady_clawRotator, 1)
-                .wait(500)
-                //.moveMiddleToPosition(this.robotConfig.pixelReady_midBoom, 1)
-                .moveClawToPosition(this.robotConfig.pixelReady_clawBoom, 1)
-                .wait(500)
-                .moveBottomToPosition(this.robotConfig.pixelReady_bottomBoom, 1)
                 .wait(0);
     }
 

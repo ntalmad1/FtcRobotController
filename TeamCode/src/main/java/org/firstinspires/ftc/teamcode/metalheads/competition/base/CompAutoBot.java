@@ -176,8 +176,6 @@ public class CompAutoBot extends CompBot {
         this.driveTrain.run();
         this.driveTrain.run();
 
-        this.lightBar.run();
-
         this.driveTrain.run();
         this.driveTrain.run();
 
