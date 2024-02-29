@@ -44,6 +44,8 @@ import org.firstinspires.ftc.library.component.event.gp2_left_stick_x.Gp2_LeftSt
 import org.firstinspires.ftc.library.component.event.gp2_left_stick_x.Gp2_LeftStickXHandler;
 import org.firstinspires.ftc.library.component.event.gp2_left_stick_y.Gp2_LeftStickYEvent;
 import org.firstinspires.ftc.library.component.event.gp2_left_stick_y.Gp2_LeftStickYHandler;
+import org.firstinspires.ftc.library.component.event.gp2_left_trigger.Gp2_Left_Trigger_Event;
+import org.firstinspires.ftc.library.component.event.gp2_left_trigger.Gp2_Left_Trigger_Handler;
 import org.firstinspires.ftc.library.component.event.gp2_left_trigger_down.Gp2_Left_Trigger_DownEvent;
 import org.firstinspires.ftc.library.component.event.gp2_left_trigger_down.Gp2_Left_Trigger_DownHandler;
 import org.firstinspires.ftc.library.component.event.gp2_right_bumper_press.Gp2_Right_Bumper_PressEvent;
@@ -52,6 +54,8 @@ import org.firstinspires.ftc.library.component.event.gp2_right_stick_x.Gp2_Right
 import org.firstinspires.ftc.library.component.event.gp2_right_stick_x.Gp2_RightStickXHandler;
 import org.firstinspires.ftc.library.component.event.gp2_right_stick_y.Gp2_RightStickYEvent;
 import org.firstinspires.ftc.library.component.event.gp2_right_stick_y.Gp2_RightStickYHandler;
+import org.firstinspires.ftc.library.component.event.gp2_right_trigger.Gp2_Right_Trigger_Event;
+import org.firstinspires.ftc.library.component.event.gp2_right_trigger.Gp2_Right_Trigger_Handler;
 import org.firstinspires.ftc.library.component.event.gp2_right_trigger_down.Gp2_Right_Trigger_DownEvent;
 import org.firstinspires.ftc.library.component.event.gp2_right_trigger_down.Gp2_Right_Trigger_DownHandler;
 import org.firstinspires.ftc.library.component.event.gp2_y_press.Gp2_Y_PressEvent;
@@ -150,6 +154,24 @@ public abstract class Component implements IComponent {
      */
     public HandlerRegistration addGp2_Right_Trigger_DownHandler (Gp2_Right_Trigger_DownHandler handler) {
         return EventBus.getInstance().addHandler(Gp2_Right_Trigger_DownEvent.TYPE, handler);
+    }
+
+    /**
+     *
+     * @param handler
+     * @return
+     */
+    public HandlerRegistration addGp2_Left_Trigger_Handler (Gp2_Left_Trigger_Handler handler) {
+        return EventBus.getInstance().addHandler(Gp2_Left_Trigger_Event.TYPE, handler);
+    }
+
+    /**
+     *
+     * @param handler
+     * @return
+     */
+    public HandlerRegistration addGp2_Right_Trigger_Handler (Gp2_Right_Trigger_Handler handler) {
+        return EventBus.getInstance().addHandler(Gp2_Right_Trigger_Event.TYPE, handler);
     }
 
     //region Gamepad 2 A, B, X, Y Handlers

@@ -21,7 +21,7 @@ public class Arm extends Component {
 
     /**
      */
-    private final ArmConfig config;
+    private final Boom bottomBoom;
 
     /**
      */
@@ -29,19 +29,19 @@ public class Arm extends Component {
 
     /**
      */
+    private final ArmConfig config;
+
+    /**
+     */
     private final EncodedMotor linAct;
 
     /**
      */
-    private final Boom bottomBoom;
+    private Servo leftRelay;
 
     /**
      */
     private Servo rightRelay;
-
-    /**
-     */
-    private Servo leftRelay;
 
     /**
      * Constructor
@@ -124,7 +124,7 @@ public class Arm extends Component {
 
     /**
      *
-     * @return
+     * @return Claw
      */
     public Claw getClaw () {
         return this.claw;
@@ -136,20 +136,30 @@ public class Arm extends Component {
 
     /**
      *
-     * @return
+     * @return EncodedMotor
      */
     public EncodedMotor getLinearActuator () {
         return this.linAct;
     }
 
-    public Arm openLeftClaw () {
-        this.addCommand(new ClawOpenCommand(this.claw, Claw.Side.LEFT));
-        return this;
-    }
 
+    /**
+     *
+     * @return Arm
+     */
     public Arm openRightClaw () {
         this.addCommand(new ClawOpenCommand(this.claw, Claw.Side.RIGHT));
         return this;
+    }
+
+    /**
+     *
+     * @param degrees Number of degrees to move the claw base by
+     * @return "this" for a fluid interface
+     */
+    public Arm moveClawDegreesFromCurrentPosition (double degrees) {
+        double targetDegrees = this.claw.getBase().getPositionDegrees() + degrees;
+        return this.moveClawToDegrees(targetDegrees);
     }
 
     /**
@@ -195,7 +205,7 @@ public class Arm extends Component {
     /**
      *
      * @param position
-     * @return
+     * @return Arm
      */
     public Arm moveLinearActuatorToPosition (int position) {
         return this.moveLinearActuatorToPosition(position, 1);
@@ -205,7 +215,7 @@ public class Arm extends Component {
      *
      * @param position
      * @param power
-     * @return
+     * @return Arm
      */
     public Arm moveLinearActuatorToPosition (int position, double power) {
         this.addCommand(new LinearActuatorMoveToPositionCommand(this.getLinearActuator(), position, power));
@@ -264,12 +274,27 @@ public class Arm extends Component {
 
     /**
      *
-     * @param degrees Number of degrees to move the claw base by
-     * @return "this" for a fluid interface
      */
-    public Arm moveClawDegreesFromCurrentPosition (double degrees) {
-        double targetDegrees = this.claw.getBase().getPositionDegrees() + degrees;
-        return this.moveClawToDegrees(targetDegrees);
+    public void off () {
+        this.rightRelay.setPosition(0);
+        this.leftRelay.setPosition(0);
+    }
+
+    /**
+     *
+     */
+    public void  on () {
+        this.rightRelay.setPosition(1);
+        this.leftRelay.setPosition(1);
+    }
+
+    /**
+     *
+     * @return Arm
+     */
+    public Arm openLeftClaw () {
+        this.addCommand(new ClawOpenCommand(this.claw, Claw.Side.LEFT));
+        return this;
     }
 
     /**

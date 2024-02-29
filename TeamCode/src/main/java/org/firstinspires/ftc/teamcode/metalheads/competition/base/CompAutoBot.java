@@ -67,8 +67,6 @@ public class CompAutoBot extends CompBot {
     public CompAutoBot() {
         super();
 
-        this.robotConfig.bottomBoomTravelIncrement = 0.015;
-
         RobotAutoConfig robotAutoConfig = new RobotAutoConfig();
         this.robotAutoConfig = robotAutoConfig;
 
@@ -175,8 +173,6 @@ public class CompAutoBot extends CompBot {
 
         this.driveTrain.run();
         this.driveTrain.run();
-
-        this.lightBar.run();
 
         this.driveTrain.run();
         this.driveTrain.run();

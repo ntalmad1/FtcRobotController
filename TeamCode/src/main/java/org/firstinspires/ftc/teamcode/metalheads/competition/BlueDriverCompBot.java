@@ -24,7 +24,6 @@ public class BlueDriverCompBot extends CompDriverBot {
         this.driveTrainConfig.yawOffset = 90;
         this.armConfig.debug = false;
         this.armConfig.bottomBoomConfig.invertInput = false;
-        //this.armConfig.midBoomConfig.invertInput = true;
         this.armConfig.clawConfig.clawBoomConfig.invertInput = false;
 
         super.initBot();

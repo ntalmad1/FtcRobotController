@@ -1,6 +1,5 @@
 package org.firstinspires.ftc.library.boom.arm;
 
-import org.firstinspires.ftc.library.boom.GoToPositionCommand;
 import org.firstinspires.ftc.library.component.command.AbstractCommand;
 import org.firstinspires.ftc.library.component.event.command_callback.CommandCallbackAdapter;
 import org.firstinspires.ftc.library.component.event.command_callback.CommandSuccessEvent;
@@ -13,22 +12,22 @@ import org.firstinspires.ftc.library.motor.EncodedMotorGoToPositionCommand;
 public class LinearActuatorMoveToPositionCommand extends AbstractCommand {
 
     /**
+     *
      */
-    private EncodedMotor motor;
+    private final EncodedMotor motor;
 
     /**
+     *
      */
-    private EncodedMotorGoToPositionCommand command;
+    private final double power;
 
     /**
+     *
      */
-    private double power;
+    private final int targetPosition;
 
     /**
-     */
-    private int targetPosition;
-
-    /**
+     * Constructor
      *
      * @param motor
      * @param targetPosition
@@ -42,8 +41,12 @@ public class LinearActuatorMoveToPositionCommand extends AbstractCommand {
         this.targetPosition = targetPosition;
     }
 
-    public void init () {
-        this.command = new EncodedMotorGoToPositionCommand(motor, targetPosition, power);
+    /**
+     *
+     */
+    public void init() {
+        EncodedMotorGoToPositionCommand command = new EncodedMotorGoToPositionCommand(motor, targetPosition, power);
+
         command.addCallbackHandler(new CommandCallbackAdapter() {
             public void onSuccess(CommandSuccessEvent successEvent) {
                 LinearActuatorMoveToPositionCommand.this.markAsCompleted();
@@ -54,10 +57,8 @@ public class LinearActuatorMoveToPositionCommand extends AbstractCommand {
         this.setInitialized(true);
     }
 
-    public void run () {
-        if (this.isCompleted()) {
-            return;
-        }
-    }
-
+    /**
+     *
+     */
+    public void run() {}
 }

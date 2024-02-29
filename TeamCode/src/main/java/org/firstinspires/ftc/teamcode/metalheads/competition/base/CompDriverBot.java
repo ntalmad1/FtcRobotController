@@ -22,16 +22,16 @@ public class CompDriverBot extends CompBot {
 
         this.driveTrainConfig = new MecanumDriveCompConfig(this);
 
-        this.armConfig.bottomBoomConfig.homePosition = this.robotConfig.rest_bottomBoom;
+        //this.armConfig.bottomBoomConfig.homePosition = this.robotConfig.rest_bottomBoom;
         //this.armConfig.midBoomConfig.homePosition = this.robotConfig.rest_midBoom;
-        this.armConfig.clawConfig.clawBoomConfig.homePosition = this.robotConfig.rest_clawBoom;
+        //this.armConfig.clawConfig.clawBoomConfig.homePosition = this.robotConfig.rest_clawBoom;
 
-        this.pixelCatcherConfig.leftArmInitPos = PixelCatcher.ArmPosition.CLOSED;
-        this.pixelCatcherConfig.rightArmInitPos = PixelCatcher.ArmPosition.CLOSED;
-        this.pixelCatcherConfig.leftArmServoInitPos = 1;
-        this.pixelCatcherConfig.rightArmServoInitPos = 1;
+//        this.pixelCatcherConfig.leftArmInitPos = PixelCatcher.ArmPosition.CLOSED;
+//        this.pixelCatcherConfig.rightArmInitPos = PixelCatcher.ArmPosition.CLOSED;
+//        this.pixelCatcherConfig.leftArmServoInitPos = 1;
+//        this.pixelCatcherConfig.rightArmServoInitPos = 1;
 
-        this.armPosition = ArmPosition.REST;
+        // this.armPosition = ArmPosition.REST;
     }
 
     public void initBot () {
@@ -39,8 +39,6 @@ public class CompDriverBot extends CompBot {
 
         this.driveTrain = new MecanumDriveTrain(driveTrainConfig);
         this.driveTrain.init();
-
-        this.moveArm_fromRest_toPixelReady();
 
         // launch the drone
         this.addGp1_Dpad_Down_PressHandler(event -> {
@@ -60,6 +58,15 @@ public class CompDriverBot extends CompBot {
     /**
      *
      */
+    public void go() {
+        super.go();
+
+        this.moveArm_fromInit_toPixelReady();
+    }
+
+    /**
+     *
+     */
     public void run () {
         super.run();
 
@@ -73,6 +80,5 @@ public class CompDriverBot extends CompBot {
         this.pixelCatcher.run();
 
         this.driveTrain.run();
-        this.lightBar.run();
     }
 }

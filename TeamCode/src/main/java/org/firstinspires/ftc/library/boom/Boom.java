@@ -16,6 +16,11 @@ public class Boom extends Component {
     private final BoomConfig config;
 
     /**
+     * Reverse forwards vs backwards for calculating position in degrees
+     */
+    private boolean inverted = false;
+
+    /**
      *
      */
     private Servo servo;
@@ -25,10 +30,6 @@ public class Boom extends Component {
      */
     private Servo secondaryServo;
 
-    /**
-     * Reverse forwards vs backwards for calculating position in degrees
-     */
-    private boolean inverted = false;
 
     /**
      * Constructor
@@ -39,6 +40,94 @@ public class Boom extends Component {
         super(config.robot);
 
         this.config = config;
+    }
+
+    /**
+     *
+     * @return
+     */
+    public BoomConfig getConfig () {
+        return this.config;
+    }
+
+    /**
+     *
+     * @return The max amount to set the servo position to each cycle
+     */
+    public double getMaxIncrement() {
+        return this.config.maxIncrement;
+    }
+
+    /**
+     *
+     * @return The max position for the servo
+     */
+    public double getMaxPosition() {
+        return this.config.maxPosition;
+    }
+
+    /**
+     *
+     * @return The min position for the servo
+     */
+    public double getMinPosition() {
+        return this.config.minPosition;
+    }
+
+    /**
+     *
+     * @return The position (0 - 1) of the primary servo
+     */
+    public double getPosition() {
+        return this.servo.getPosition();
+    }
+
+    /**
+     *
+     * @return The position of the boom in degrees, degrees from the 0 degree position
+     * forwards 0 +
+     * backwards 0 -
+     */
+    public double getPositionDegrees () {
+        double servoPosition = this.servo.getPosition();
+
+        double offset = this.config.zeroDegreePosition - servoPosition;
+
+        double degrees = (offset / this.config.degree) / this.config.gearRatio;
+
+        if (this.inverted) {
+            degrees = degrees * (double)-1;
+        }
+
+        return degrees;
+    }
+
+    /**
+     *
+     * @param degrees Move the boom to degrees, degrees from the 0 degree position
+     * forwards 0 +
+     * backwards 0 -
+     */
+    public void gotoDegrees (double degrees)
+    {
+        double startPosition = this.servo.getPosition();
+        double targetPosition = this.calculateTargetPosition(degrees);
+
+        this.addCommand(new GoToPositionCommand(this, this.getMaxIncrement(), startPosition, targetPosition));
+    }
+
+    /**
+     *
+     * @param targetPosition Move the boom to servo position
+     */
+    public void gotoPosition (double targetPosition)
+    {
+        this.gotoPosition(targetPosition, this.getMaxIncrement());
+    }
+
+    public void gotoPosition (double targetPosition, double maxIncrement) {
+        double startPosition = this.servo.getPosition();
+        this.addCommand(new GoToPositionCommand(this, maxIncrement, startPosition, targetPosition));
     }
 
     /**
@@ -144,114 +233,6 @@ public class Boom extends Component {
 
     /**
      *
-     */
-    public void run() {
-        super.run();
-
-        if (this.config.debug) {
-            this.telemetry.addData("servo position: ", "%2f", this.servo.getPosition());
-            this.telemetry.addData( "servo position degrees: ", "%2f", this.getPositionDegrees());
-            this.telemetry.addLine("servo direction: " + this.servo.getDirection().toString());
-
-            if (this.config.isDualServo) {
-                this.telemetry.addData("secondary servo position: ", "%2f", this.secondaryServo.getPosition());
-                this.telemetry.addLine("secondary servo direction: " + this.servo.getDirection().toString());
-            }
-
-            this.telemetry.update();
-        }
-    }
-
-    /**
-     *
-     * @return
-     */
-    public BoomConfig getConfig () {
-        return this.config;
-    }
-
-    /**
-     *
-     * @return The max amount to set the servo position to each cycle
-     */
-    public double getMaxIncrement() {
-        return this.config.maxIncrement;
-    }
-
-    /**
-     *
-     * @return The max position for the servo
-     */
-    public double getMaxPosition() {
-        return this.config.maxPosition;
-    }
-
-    /**
-     *
-     * @return The min position for the servo
-     */
-    public double getMinPosition() {
-        return this.config.minPosition;
-    }
-
-    /**
-     *
-     * @return The position (0 - 1) of the primary servo
-     */
-    public double getPosition() {
-        return this.servo.getPosition();
-    }
-
-    /**
-     *
-     * @return The position of the boom in degrees, degrees from the 0 degree position
-     * forwards 0 +
-     * backwards 0 -
-     */
-    public double getPositionDegrees () {
-        double servoPosition = this.servo.getPosition();
-
-        double offset = this.config.zeroDegreePosition - servoPosition;
-
-        double degrees = (offset / this.config.degree) / this.config.gearRatio;
-
-        if (this.inverted) {
-            degrees = degrees * (double)-1;
-        }
-
-        return degrees;
-    }
-
-    /**
-     *
-     * @param degrees Move the boom to degrees, degrees from the 0 degree position
-     * forwards 0 +
-     * backwards 0 -
-     */
-    public void gotoDegrees (double degrees)
-    {
-        double startPosition = this.servo.getPosition();
-        double targetPosition = this.calculateTargetPosition(degrees);
-
-        this.addCommand(new GoToPositionCommand(this, this.getMaxIncrement(), startPosition, targetPosition));
-    }
-
-    /**
-     *
-     * @param targetPosition Move the boom to servo position
-     */
-    public void gotoPosition (double targetPosition)
-    {
-        this.gotoPosition(targetPosition, this.getMaxIncrement());
-    }
-
-    public void gotoPosition (double targetPosition, double maxIncrement) {
-        double startPosition = this.servo.getPosition();
-        this.addCommand(new GoToPositionCommand(this, maxIncrement, startPosition, targetPosition));
-    }
-
-    /**
-     *
      * @param input the value of the game pad stick
      * @param maxIncrement the amount to increment or decrement the servo position by each cycle
      * @param minPosition the min position of the servo
@@ -285,6 +266,26 @@ public class Boom extends Component {
         }
 
         return isMin || isMax;
+    }
+
+    /**
+     *
+     */
+    public void run() {
+        super.run();
+
+        if (this.config.debug) {
+            this.telemetry.addData("servo position: ", "%2f", this.servo.getPosition());
+            this.telemetry.addData( "servo position degrees: ", "%2f", this.getPositionDegrees());
+            this.telemetry.addLine("servo direction: " + this.servo.getDirection().toString());
+
+            if (this.config.isDualServo) {
+                this.telemetry.addData("secondary servo position: ", "%2f", this.secondaryServo.getPosition());
+                this.telemetry.addLine("secondary servo direction: " + this.servo.getDirection().toString());
+            }
+
+            this.telemetry.update();
+        }
     }
 
     /**
