@@ -124,40 +124,30 @@ public class CameraTest extends LinearOpMode {
 
     }   // end method runOpMode()
 
-    private void initDriveTrain() {
-
-        leftFrontMotor = hardwareMap.get(DcMotor.class, "leftFrontDrive");
-        rightFrontMotor = hardwareMap.get(DcMotor.class, "leftFrontDrive");
-        leftRearMotor = hardwareMap.get(DcMotor.class, "leftRearDrive");
-        rightRearMotor = hardwareMap.get(DcMotor.class, "rightRearDrive");
-
-        leftFrontMotor.setDirection(DcMotor.Direction.REVERSE);
-        rightFrontMotor.setDirection(DcMotor.Direction.FORWARD);
-        leftRearMotor.setDirection(DcMotor.Direction.REVERSE);
-        rightRearMotor.setDirection(DcMotor.Direction.FORWARD);
-
-        leftFrontMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        rightFrontMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        leftRearMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        rightRearMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
 
 
-    }
-
-
+    /**
+     *
+     * @param inches
+     * @param ID
+     */
     private void keepDistance(double inches,int ID) {
-        double speed = .18;
+        double speed = .5;
+        boolean forward = true;
+        boolean reverse = false;
         List<AprilTagDetection> currentDetections = aprilTag.getDetections();
         for (AprilTagDetection detection : currentDetections) {
             if (detection.id == ID) {
 
                 if (detection.ftcPose.y < inches) {
-                    power = -speed;
+                    motorDirection(forward);
                 } else if (detection.ftcPose.y > inches) {
-                    power = speed;
+                    motorDirection(reverse);
                 }
 
+            } else if (detection.id != ID) {
+                power = 0;
             }
         }
         leftRearMotor.setPower(power);
@@ -165,11 +155,49 @@ public class CameraTest extends LinearOpMode {
         rightRearMotor.setPower(power);
         rightFrontMotor.setPower(power);
 
-        telemetry.addData("servo: ", "%2f", power);
-        telemetry.update();
+    }
+
+
+
+    /**
+     *
+     */
+    private void initDriveTrain() {
+
+        leftFrontMotor = hardwareMap.get(DcMotor.class, "leftFrontDrive");
+        rightFrontMotor = hardwareMap.get(DcMotor.class, "leftFrontDrive");
+        leftRearMotor = hardwareMap.get(DcMotor.class, "leftRearDrive");
+        rightRearMotor = hardwareMap.get(DcMotor.class, "rightRearDrive");
+
+        motorDirection(true);
+
+        leftFrontMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        rightFrontMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        leftRearMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        rightRearMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
     }
 
+    private void motorDirection(boolean direction) {
+        if (direction) {
+
+            leftFrontMotor.setDirection(DcMotor.Direction.REVERSE);
+            leftRearMotor.setDirection(DcMotor.Direction.REVERSE);
+            rightFrontMotor.setDirection(DcMotor.Direction.FORWARD);
+            rightRearMotor.setDirection(DcMotor.Direction.FORWARD);
+
+        } else {
+            leftFrontMotor.setDirection(DcMotor.Direction.FORWARD);
+            leftRearMotor.setDirection(DcMotor.Direction.FORWARD);
+            rightFrontMotor.setDirection(DcMotor.Direction.REVERSE);
+            rightRearMotor.setDirection(DcMotor.Direction.REVERSE);
+        }
+
+    }
+
+
+
+    
     /**
      * Initialize the AprilTag processor.
      */
