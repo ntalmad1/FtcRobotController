@@ -101,8 +101,8 @@ public class CameraTest extends LinearOpMode {
         if (opModeIsActive()) {
             while (opModeIsActive()) {
 
-                telemetryAprilTag();
-                telemetry.update();
+//                telemetryAprilTag();
+//                telemetry.update();
 
                 // Save CPU resources; can resume streaming when needed.
                 if (gamepad1.dpad_down) {
@@ -132,27 +132,51 @@ public class CameraTest extends LinearOpMode {
      * @param ID
      */
     private void keepDistance(double inches,int ID) {
-        double speed = .5;
+
+        //speed of motors
+        double speed = .15;
+        //tolerance for distance
+        double gap = 1.2;
+
+
+
         boolean forward = true;
         boolean reverse = false;
+        gap = (gap/2);
+
         List<AprilTagDetection> currentDetections = aprilTag.getDetections();
-        for (AprilTagDetection detection : currentDetections) {
-            if (detection.id == ID) {
 
-                if (detection.ftcPose.y < inches) {
-                    motorDirection(forward);
-                } else if (detection.ftcPose.y > inches) {
-                    motorDirection(reverse);
+        //check if any april tags are seen
+        if (currentDetections.isEmpty()) {
+            power = 0;
+        } else {
+            //find desired ID
+            for (AprilTagDetection detection : currentDetections) {
+                if (detection.id == ID) {
+
+                    power = speed;
+
+                    this.telemetry.addData("power: ", "%2f", power);
+                    this.telemetry.addData("gap: ", "%2f", gap);
+                    this.telemetry.addData("Distance: ", "%2f", detection.ftcPose.y);
+                    telemetry.update();
+
+                    //The .2 gives it a .4 inch gap for the target position
+                    //move towards desired position
+                    if (detection.ftcPose.y < (inches - gap)) {
+                        motorDirection(reverse);
+                    } else if (detection.ftcPose.y > (inches + gap)) {
+                        motorDirection(forward);
+                    }
+
                 }
-
-            } else if (detection.id != ID) {
-                power = 0;
             }
         }
         leftRearMotor.setPower(power);
         leftFrontMotor.setPower(power);
         rightRearMotor.setPower(power);
         rightFrontMotor.setPower(power);
+
 
     }
 
@@ -164,7 +188,7 @@ public class CameraTest extends LinearOpMode {
     private void initDriveTrain() {
 
         leftFrontMotor = hardwareMap.get(DcMotor.class, "leftFrontDrive");
-        rightFrontMotor = hardwareMap.get(DcMotor.class, "leftFrontDrive");
+        rightFrontMotor = hardwareMap.get(DcMotor.class, "rightFrontDrive");
         leftRearMotor = hardwareMap.get(DcMotor.class, "leftRearDrive");
         rightRearMotor = hardwareMap.get(DcMotor.class, "rightRearDrive");
 
