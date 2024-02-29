@@ -67,8 +67,6 @@ public class CompAutoBot extends CompBot {
     public CompAutoBot() {
         super();
 
-        this.robotConfig.bottomBoomTravelIncrement = 0.015;
-
         RobotAutoConfig robotAutoConfig = new RobotAutoConfig();
         this.robotAutoConfig = robotAutoConfig;
 

@@ -48,11 +48,11 @@ public class SystemTests extends IsaacBot {
 
     /**
      */
-    private boolean runDriveTrainTests = true;
+    private boolean runDriveTrainTests = false;
     private boolean runPixelCatcherTests = true;
-    private boolean runArmTests = true;
+    private boolean runArmTests = false;
     private boolean runWinchTest = false;
-    private boolean runDroneLauncherTests = true;
+    private boolean runDroneLauncherTests = false;
 
     /**
      * Constructor
