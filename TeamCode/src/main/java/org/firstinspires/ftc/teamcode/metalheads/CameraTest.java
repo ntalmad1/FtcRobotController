@@ -136,7 +136,7 @@ public class CameraTest extends LinearOpMode {
         //speed of motors
         double speed = .15;
         //tolerance for distance
-        double gap = 1.2;
+        double gap = 5;
 
 
 
@@ -165,7 +165,8 @@ public class CameraTest extends LinearOpMode {
                     //move towards desired position
                     if (detection.ftcPose.y < (inches - gap)) {
                         motorDirection(reverse);
-                    } else if (detection.ftcPose.y > (inches + gap)) {
+                    }
+                    if (detection.ftcPose.y > (inches + gap)) {
                         motorDirection(forward);
                     }
 
