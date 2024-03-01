@@ -148,12 +148,13 @@ public class CompBot extends IsaacBot{
 
             if (this.pickingPixel) {
                 this.addCommand(new OneTimeSynchronousCommand() {
-                    public void runOnce(ICommand command) {
+                    public void runOnce(ICommand outerCommand) {
                         CompBot.this.arm.moveBottomToPosition(CompBot.this.robotConfig.pixelReady_bottomBoom, 1)
                                 .wait(250, new CommandCallbackAdapter(){
                                     public void onSuccess(CommandSuccessEvent successEvent) {
                                         CompBot.this.pickingPixel = false;
                                         CompBot.this.onXPress();
+                                        outerCommand.markAsCompleted();
                                     }
                                 });
                     }
@@ -280,8 +281,9 @@ public class CompBot extends IsaacBot{
                     @Override
                     public void runOnce(ICommand command) {
                         CompBot.this.winch.setBrakeOn();
-                        CompBot.this.arm.setBottomBoomOff();
+                        //CompBot.this.arm.setBottomBoomOff();
                         command.markAsCompleted();
+                        CompBot.this.telemetry.log().add("Setting winch brake & bottom boom off");
                     }
                 });
 

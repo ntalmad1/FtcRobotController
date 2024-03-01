@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.library.component.command;
 
+import org.firstinspires.ftc.library.IsaacBot;
 import org.firstinspires.ftc.library.component.event.Event;
 import org.firstinspires.ftc.library.component.event.HandlerManager;
 import org.firstinspires.ftc.library.component.event.HandlerRegistration;
@@ -29,6 +30,8 @@ public abstract class AbstractCommand implements ICommand {
      */
     private boolean synchronous = false;
 
+    /**
+     */
     private HandlerManager handlerManager = new HandlerManager();
 
     /**

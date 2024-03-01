@@ -37,7 +37,7 @@ public class Winch extends Component {
         super(config.robot);
 
         this.config = config;
-        config.debug = true;
+        config.debug = false;
 
         this.motor = new EncodedMotor(this.config.encodedMotorConfig);
     }

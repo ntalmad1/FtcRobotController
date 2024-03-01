@@ -350,6 +350,12 @@ public class Arm extends Component {
         return this;
     }
 
+    /**
+     *
+     * @param milliseconds
+     * @param handler
+     * @return
+     */
     public Arm wait (int milliseconds, CommandCallbackHandler handler) {
         ICommand command = new WaitCommand(milliseconds);
         command.addCallbackHandler(handler);
