@@ -32,6 +32,7 @@ package org.firstinspires.ftc.teamcode.metalheads;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
 
 import org.firstinspires.ftc.robotcore.external.hardware.camera.BuiltinCameraDirection;
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
@@ -72,7 +73,16 @@ public class CameraTest extends LinearOpMode {
     private DcMotor rightFrontMotor = null;
     private DcMotor leftRearMotor = null;
     private DcMotor rightRearMotor = null;
+
     private double power = 0;
+
+    //place values for setting drivetrain to forwards and reverse
+    private int forward = 1;
+    private int reverse = 2;
+    private int left = 3;
+    private int right = 4;
+    private int rotleft = 5;
+    private int rotright = 6;
 
 
     /**
@@ -104,17 +114,16 @@ public class CameraTest extends LinearOpMode {
 //                telemetryAprilTag();
 //                telemetry.update();
 
-                // Save CPU resources; can resume streaming when needed.
-                if (gamepad1.dpad_down) {
-                    visionPortal.stopStreaming();
-                } else if (gamepad1.dpad_up) {
-                    visionPortal.resumeStreaming();
+                while (gamepad1.dpad_up) {
+                    keepDistanceY(12, .15, 3, 1);
                 }
-
-                keepDistance(12,1);
-
-                // Share the CPU.
-                sleep(20);
+                while (gamepad1.dpad_down) {
+                    keepDistanceX(0, .15, 3, 1);
+                }
+                while (gamepad1.dpad_left) {
+                    //gap is in degrees
+                    keepDistanceYAW(0, .15, 3, 1);
+                }
             }
         }
 
@@ -131,17 +140,9 @@ public class CameraTest extends LinearOpMode {
      * @param inches
      * @param ID
      */
-    private void keepDistance(double inches,int ID) {
+    private void keepDistanceY(double inches,double speed, double gap, int ID) {
 
-        //speed of motors
-        double speed = .15;
         //tolerance for distance
-        double gap = 5;
-
-
-
-        boolean forward = true;
-        boolean reverse = false;
         gap = (gap/2);
 
         List<AprilTagDetection> currentDetections = aprilTag.getDetections();
@@ -183,6 +184,90 @@ public class CameraTest extends LinearOpMode {
 
 
 
+
+    private void keepDistanceX(double offset,double speed, double gap, int ID) {
+
+        //tolerance for distance
+        gap = (gap/2);
+
+        List<AprilTagDetection> currentDetections = aprilTag.getDetections();
+
+        //check if any april tags are seen
+        if (currentDetections.isEmpty()) {
+            power = 0;
+        } else {
+            //find desired ID
+            for (AprilTagDetection detection : currentDetections) {
+                if (detection.id == ID) {
+
+                    power = speed;
+
+                    this.telemetry.addData("power: ", "%2f", power);
+                    this.telemetry.addData("gap: ", "%2f", gap);
+                    this.telemetry.addData("Distance: ", "%2f", detection.ftcPose.x);
+                    telemetry.update();
+
+                    //The .2 gives it a .4 inch gap for the target position
+                    //move towards desired position
+                    if (detection.ftcPose.x < (offset - gap)) {
+                        motorDirection(left);
+                    }
+                    if (detection.ftcPose.x > (offset + gap)) {
+                        motorDirection(right);
+                    }
+
+                }
+            }
+        }
+        leftRearMotor.setPower(power);
+        leftFrontMotor.setPower(power);
+        rightRearMotor.setPower(power);
+        rightFrontMotor.setPower(power);
+    }
+
+
+    private void keepDistanceYAW(double offset,double speed, double gap, int ID) {
+
+        //tolerance for distance
+        gap = (gap/2);
+
+        List<AprilTagDetection> currentDetections = aprilTag.getDetections();
+
+        //check if any april tags are seen
+        if (currentDetections.isEmpty()) {
+            power = 0;
+        } else {
+            //find desired ID
+            for (AprilTagDetection detection : currentDetections) {
+                if (detection.id == ID) {
+
+                    power = speed;
+
+                    this.telemetry.addData("power: ", "%2f", power);
+                    this.telemetry.addData("gap: ", "%2f", gap);
+                    this.telemetry.addData("Distance: ", "%2f", detection.ftcPose.yaw);
+                    telemetry.update();
+
+                    //The .2 gives it a .4 inch gap for the target position
+                    //move towards desired position
+                    if (detection.ftcPose.yaw < (offset - gap)) {
+                        motorDirection(rotright);
+                    }
+                    if (detection.ftcPose.yaw > (offset + gap)) {
+                        motorDirection(rotleft);
+                    }
+
+                }
+            }
+        }
+        leftRearMotor.setPower(power);
+        leftFrontMotor.setPower(power);
+        rightRearMotor.setPower(power);
+        rightFrontMotor.setPower(power);
+    }
+
+
+
     /**
      *
      */
@@ -193,7 +278,7 @@ public class CameraTest extends LinearOpMode {
         leftRearMotor = hardwareMap.get(DcMotor.class, "leftRearDrive");
         rightRearMotor = hardwareMap.get(DcMotor.class, "rightRearDrive");
 
-        motorDirection(true);
+        motorDirection(forward);
 
         leftFrontMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         rightFrontMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
@@ -202,15 +287,45 @@ public class CameraTest extends LinearOpMode {
 
     }
 
-    private void motorDirection(boolean direction) {
-        if (direction) {
+    private void motorDirection(int direction) {
+
+        if (direction == 1) {
 
             leftFrontMotor.setDirection(DcMotor.Direction.REVERSE);
             leftRearMotor.setDirection(DcMotor.Direction.REVERSE);
             rightFrontMotor.setDirection(DcMotor.Direction.FORWARD);
             rightRearMotor.setDirection(DcMotor.Direction.FORWARD);
 
-        } else {
+        } else if (direction == 2 ) {
+
+            leftFrontMotor.setDirection(DcMotor.Direction.FORWARD);
+            leftRearMotor.setDirection(DcMotor.Direction.FORWARD);
+            rightFrontMotor.setDirection(DcMotor.Direction.REVERSE);
+            rightRearMotor.setDirection(DcMotor.Direction.REVERSE);
+
+        } else if (direction == 3 ) {
+
+            leftFrontMotor.setDirection(DcMotor.Direction.REVERSE);
+            leftRearMotor.setDirection(DcMotor.Direction.FORWARD);
+            rightFrontMotor.setDirection(DcMotor.Direction.REVERSE);
+            rightRearMotor.setDirection(DcMotor.Direction.FORWARD);
+
+        } else if (direction == 4 ) {
+
+            leftFrontMotor.setDirection(DcMotor.Direction.FORWARD);
+            leftRearMotor.setDirection(DcMotor.Direction.REVERSE);
+            rightFrontMotor.setDirection(DcMotor.Direction.FORWARD);
+            rightRearMotor.setDirection(DcMotor.Direction.REVERSE);
+
+        } else if (direction == 5 ) {
+
+            leftFrontMotor.setDirection(DcMotor.Direction.REVERSE);
+            leftRearMotor.setDirection(DcMotor.Direction.REVERSE);
+            rightFrontMotor.setDirection(DcMotor.Direction.FORWARD);
+            rightRearMotor.setDirection(DcMotor.Direction.FORWARD);
+
+        } else if (direction == 6 ) {
+
             leftFrontMotor.setDirection(DcMotor.Direction.FORWARD);
             leftRearMotor.setDirection(DcMotor.Direction.FORWARD);
             rightFrontMotor.setDirection(DcMotor.Direction.REVERSE);
