@@ -7,6 +7,7 @@ import com.qualcomm.robotcore.hardware.TouchSensor;
 
 import org.firstinspires.ftc.library.IsaacBot;
 import org.firstinspires.ftc.library.boom.arm.Arm;
+import org.firstinspires.ftc.library.component.command.Command;
 import org.firstinspires.ftc.library.component.command.ICommand;
 import org.firstinspires.ftc.library.component.command.OneTimeCommand;
 import org.firstinspires.ftc.library.component.command.OneTimeSynchronousCommand;
@@ -275,9 +276,13 @@ public class CompBot extends IsaacBot{
                     @Override
                     public void runOnce(ICommand command) {
                         CompBot.this.winch.setBrakeOn();
+                        CompBot.this.arm.setBottomBoomOff();
                         command.markAsCompleted();
                     }
                 });
+
+//        final ICommand = new Command()
+//
 //                .moveLinearActuatorToPosition(1200)
 //                .addCommand(new OneTimeCommand() {
 //                    @Override

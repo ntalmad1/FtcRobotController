@@ -97,6 +97,13 @@ public class Winch extends Component {
 
     /**
      *
+     */
+    public void stop () {
+        this.onTriggerEvent(0);
+    }
+
+    /**
+     *
      * @param position
      */
     protected void onTriggerEvent (float position) {
