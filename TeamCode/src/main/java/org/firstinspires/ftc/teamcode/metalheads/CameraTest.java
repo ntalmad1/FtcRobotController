@@ -110,21 +110,27 @@ public class CameraTest extends LinearOpMode {
 
         if (opModeIsActive()) {
             while (opModeIsActive()) {
+                power = 0;
 
 //                telemetryAprilTag();
 //                telemetry.update();
 
                 while (gamepad1.dpad_up) {
-                    keepDistanceY(12, .15, 3, 1);
+                    keepDistanceY(12, .15, 0.8, 1);
                 }
                 while (gamepad1.dpad_down) {
-                    keepDistanceX(0, .15, 3, 1);
+                    keepDistanceX(0, .15, 0.8, 1);
                 }
                 while (gamepad1.dpad_left) {
                     //gap is in degrees
-                    keepDistanceYAW(0, .15, 3, 1);
+                    keepDistanceYAW(0, .15, 0.8, 1);
                 }
             }
+
+            leftRearMotor.setPower(power);
+            leftFrontMotor.setPower(power);
+            rightRearMotor.setPower(power);
+            rightFrontMotor.setPower(power);
         }
 
         // Save more CPU resources when camera is no longer needed.
@@ -305,29 +311,29 @@ public class CameraTest extends LinearOpMode {
 
         } else if (direction == 3 ) {
 
-            leftFrontMotor.setDirection(DcMotor.Direction.REVERSE);
-            leftRearMotor.setDirection(DcMotor.Direction.FORWARD);
+            leftFrontMotor.setDirection(DcMotor.Direction.FORWARD);
+            leftRearMotor.setDirection(DcMotor.Direction.REVERSE);
             rightFrontMotor.setDirection(DcMotor.Direction.REVERSE);
             rightRearMotor.setDirection(DcMotor.Direction.FORWARD);
 
         } else if (direction == 4 ) {
 
-            leftFrontMotor.setDirection(DcMotor.Direction.FORWARD);
-            leftRearMotor.setDirection(DcMotor.Direction.REVERSE);
+            leftFrontMotor.setDirection(DcMotor.Direction.REVERSE);
+            leftRearMotor.setDirection(DcMotor.Direction.FORWARD);
             rightFrontMotor.setDirection(DcMotor.Direction.FORWARD);
             rightRearMotor.setDirection(DcMotor.Direction.REVERSE);
 
         } else if (direction == 5 ) {
 
-            leftFrontMotor.setDirection(DcMotor.Direction.REVERSE);
-            leftRearMotor.setDirection(DcMotor.Direction.REVERSE);
+            leftFrontMotor.setDirection(DcMotor.Direction.FORWARD);
+            leftRearMotor.setDirection(DcMotor.Direction.FORWARD);
             rightFrontMotor.setDirection(DcMotor.Direction.FORWARD);
             rightRearMotor.setDirection(DcMotor.Direction.FORWARD);
 
         } else if (direction == 6 ) {
 
-            leftFrontMotor.setDirection(DcMotor.Direction.FORWARD);
-            leftRearMotor.setDirection(DcMotor.Direction.FORWARD);
+            leftFrontMotor.setDirection(DcMotor.Direction.REVERSE);
+            leftRearMotor.setDirection(DcMotor.Direction.REVERSE);
             rightFrontMotor.setDirection(DcMotor.Direction.REVERSE);
             rightRearMotor.setDirection(DcMotor.Direction.REVERSE);
         }
