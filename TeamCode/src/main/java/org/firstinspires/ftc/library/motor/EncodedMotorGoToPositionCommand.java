@@ -60,8 +60,14 @@ public class EncodedMotorGoToPositionCommand extends AbstractSynchronousCommand 
         else {
             this.markAsCompleted();
 
-            this.motor.setPower(0);
-            this.motor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+            if (this.motor.isBrakeOn()) {
+                this.motor.setPower(0);
+                this.motor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+            } else {
+                this.motor.setPower(1);
+            }
+
+
         }
 
     }

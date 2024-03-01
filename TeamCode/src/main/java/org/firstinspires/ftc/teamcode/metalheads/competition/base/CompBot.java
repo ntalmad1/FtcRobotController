@@ -3,31 +3,31 @@ package org.firstinspires.ftc.teamcode.metalheads.competition.base;
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DistanceSensor;
+import com.qualcomm.robotcore.hardware.TouchSensor;
 
-import org.firstinspires.ftc.library.component.command.Command;
+import org.firstinspires.ftc.library.IsaacBot;
+import org.firstinspires.ftc.library.boom.arm.Arm;
 import org.firstinspires.ftc.library.component.command.ICommand;
 import org.firstinspires.ftc.library.component.command.OneTimeCommand;
 import org.firstinspires.ftc.library.component.command.OneTimeSynchronousCommand;
 import org.firstinspires.ftc.library.component.command.WaitCommand;
 import org.firstinspires.ftc.library.component.event.command_callback.CommandCallbackAdapter;
+import org.firstinspires.ftc.library.component.event.command_callback.CommandCallbackHandler;
 import org.firstinspires.ftc.library.component.event.command_callback.CommandSuccessEvent;
 import org.firstinspires.ftc.library.component.event.ping.PingEvent;
 import org.firstinspires.ftc.library.component.event.ping.PingHandler;
 import org.firstinspires.ftc.library.dronelauncher.DroneLauncher;
 import org.firstinspires.ftc.library.dronelauncher.DroneLauncherConfig;
-import org.firstinspires.ftc.library.lightbar.LightBarConfig;
-import org.firstinspires.ftc.library.lightbar.LightBar;
 import org.firstinspires.ftc.library.pixelcatcher.PixelCatcher;
 import org.firstinspires.ftc.library.pixelcatcher.PixelCatcherConfig;
+import org.firstinspires.ftc.library.winch.Winch;
+import org.firstinspires.ftc.library.winch.WinchConfig;
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 import org.firstinspires.ftc.teamcode.metalheads.competition.config.ArmCompConfig;
-import org.firstinspires.ftc.library.IsaacBot;
-import org.firstinspires.ftc.library.boom.arm.Arm;
-import org.firstinspires.ftc.library.component.event.command_callback.CommandCallbackHandler;
 import org.firstinspires.ftc.teamcode.metalheads.competition.config.DroneLauncherCompConfig;
-import org.firstinspires.ftc.teamcode.metalheads.competition.config.LightBarCompConfig;
 import org.firstinspires.ftc.teamcode.metalheads.competition.config.PixelCatcherCompConfig;
 import org.firstinspires.ftc.teamcode.metalheads.competition.config.RobotConfig;
+import org.firstinspires.ftc.teamcode.metalheads.competition.config.WinchCompConfig;
 
 /**
  *
@@ -83,6 +83,20 @@ public class CompBot extends IsaacBot{
      */
     protected DistanceSensor backdropSensor;
 
+    /**
+     */
+    protected TouchSensor trolleySensor;
+
+    /**
+     */
+    protected WinchConfig winchConfig;
+
+    /**
+     */
+    protected Winch winch;
+
+    /**
+     */
     private boolean pickingPixel = false;
 
     /**
@@ -95,11 +109,14 @@ public class CompBot extends IsaacBot{
         this.robotConfig = new RobotConfig();
 
         this.armConfig = new ArmCompConfig(this);
-        this.armConfig.debug = true;
+        this.armConfig.debug = false;
 
         this.droneLauncherConfig = new DroneLauncherCompConfig(this);
 
         this.pixelCatcherConfig = new PixelCatcherCompConfig(this);
+
+        this.winchConfig = new WinchCompConfig(this);
+        this.winchConfig.debug = true;
 
         //-------------------------------------------------
         // A Button
@@ -226,6 +243,9 @@ public class CompBot extends IsaacBot{
 
         this.pixelCatcher = new PixelCatcher(this.pixelCatcherConfig);
         this.pixelCatcher.init();
+
+        this.winch = new Winch(this.winchConfig);
+        this.winch.init();
     }
 
     /**
@@ -235,6 +255,8 @@ public class CompBot extends IsaacBot{
         super.go();
 
         this.backdropSensor = this.hardwareMap.get(DistanceSensor.class, "backdropSensor");
+
+        this.trolleySensor = this.hardwareMap.get(TouchSensor.class, "trolleySensor");
     }
 
     /**
@@ -242,6 +264,46 @@ public class CompBot extends IsaacBot{
      */
     public void run () {
         super.run();
+    }
+
+    /**
+     *
+     */
+    public void doHang () {
+        //this.arm.bottomBoomOff();
+        this.arm.addCommand(new OneTimeCommand() {
+                    @Override
+                    public void runOnce(ICommand command) {
+                        CompBot.this.winch.setBrakeOn();
+                        command.markAsCompleted();
+                    }
+                });
+//                .moveLinearActuatorToPosition(1200)
+//                .addCommand(new OneTimeCommand() {
+//                    @Override
+//                    public void runOnce(ICommand command) {
+//                        CompBot.this.winch.goToPosition(-100, 1, new CommandCallbackAdapter(command){
+//                            @Override
+//                            public void onSuccess(CommandSuccessEvent successEvent) {
+//                                successEvent.getCommand().markAsCompleted();
+//                            }
+//                        });
+//                    }
+//                })
+//                .addCommand(new OneTimeCommand() {
+//                    @Override
+//                    public void runOnce(ICommand command) {
+//                        CompBot.this.arm.setBottomBoomOff();
+//                        command.markAsCompleted();
+//                    }
+//                })
+//                .moveLinearActuatorToPosition(0);
+    }
+
+    /**
+     */
+    public void doHangStop () {
+
     }
 
     /**
@@ -290,24 +352,28 @@ public class CompBot extends IsaacBot{
     /**
      *
      */
-    public void moveArm_toHang () {
-        this.arm.moveBottomToPosition(this.robotConfig.hang_bottomBoomPos1, 1)
-                .wait(500)
-                // .moveMiddleToPosition(this.robotConfig.hang_midBoom, 1)
-                .moveBottomToPosition(this.robotConfig.hang_bottomBoomPos2, 1)
-                .wait(0);
-    }
-
-    /**
-     *
-     */
     public void moveArm_toHangReady () {
-        //this.arm.rotateClawToPosition(0.307, 1)
-        this.arm.moveBottomToPosition(this.robotConfig.hangReady_bottomBoom, 1)
-                //.moveMiddleToPosition(this.robotConfig.hangReady_midBoom, 1)
+        this.arm.moveLinearActuatorToPosition(this.robotConfig.hangReady_linAct)
+                .wait(250)
+                .moveBottomToPosition(this.robotConfig.hangReady_bottomBoom, 0.01)
                 .moveClawToPosition(this.robotConfig.hangReady_clawBoom, 1)
-                //.rotateClawToPosition(this.robotConfig.hangReady_clawRotator, 1)
-                .wait(0);
+                .addCommand(new OneTimeCommand() {
+                    @Override
+                    public void runOnce(ICommand command) {
+                        if (CompBot.this.pixelCatcher.getWinchPosition().equals(PixelCatcher.WinchPosition.DOWN)) {
+                            CompBot.this.pixelCatcher.toggleWinch();
+                        }
+                        command.markAsCompleted();
+                    }
+                });
+
+//                .addCommand(new OneTimeCommand() {
+//                    @Override
+//                    public void runOnce(ICommand command) {
+//                        CompBot.this.winch.goToPosition(1400, 1);
+//                        command.markAsCompleted();
+//                    }
+//                });
     }
 
     /**
@@ -327,7 +393,7 @@ public class CompBot extends IsaacBot{
         if (this.pixelCatcher.getWinchPosition().equals(PixelCatcher.WinchPosition.UP)){
             this.pixelCatcher.toggleWinch();
         }
-        this.arm.moveBottomToPosition(0.3, 1)
+        this.arm.moveBottomToPosition(0.25, 0.001)
                 .moveLinearActuatorToPosition(this.robotConfig.pixelReady_linAct)
                 .addCommand(new WaitCommand(250));
         this.arm.moveClawToPosition(this.robotConfig.pixelReady_clawBoom, 1)
@@ -470,6 +536,7 @@ public class CompBot extends IsaacBot{
                 leftArmCommand.markAsCompleted();
             }
         });
+
         this.arm.addCommand(new OneTimeCommand() {
             @Override
             public void runOnce(ICommand rightArmCommand) {

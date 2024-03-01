@@ -3,6 +3,10 @@ package org.firstinspires.ftc.teamcode.metalheads;
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
+import org.firstinspires.ftc.library.component.event.gp2_dpad_down_down.Gp2_Dpad_Down_DownEvent;
+import org.firstinspires.ftc.library.component.event.gp2_dpad_down_down.Gp2_Dpad_Down_DownHandler;
+import org.firstinspires.ftc.library.component.event.gp2_dpad_up_down.Gp2_Dpad_Up_DownEvent;
+import org.firstinspires.ftc.library.component.event.gp2_dpad_up_down.Gp2_Dpad_Up_DownHandler;
 import org.firstinspires.ftc.teamcode.metalheads.competition.config.ArmCompConfig;
 import org.firstinspires.ftc.teamcode.metalheads.competition.config.ClawCompConfig;
 import org.firstinspires.ftc.library.IsaacBot;
@@ -83,6 +87,24 @@ public class ArmTest extends IsaacBot {
     @Override
     public void runOpMode() throws InterruptedException {
         this.arm.init();
+
+        this.addGp2_Dpad_Down_DownHandler(new Gp2_Dpad_Down_DownHandler() {
+            @Override
+            public void onGp2_Dpad_Down_Down(Gp2_Dpad_Down_DownEvent event) {
+                double increment = ArmTest.this.arm.getBottomBoomIncrement();
+                increment = increment - 0.005;
+                ArmTest.this.arm.setBottomBoomIncrement(increment);
+            }
+        });
+
+        this.addGp2_Dpad_Up_DownHandler(new Gp2_Dpad_Up_DownHandler() {
+            @Override
+            public void onGp2_Dpad_Up_Down(Gp2_Dpad_Up_DownEvent event) {
+                double increment = ArmTest.this.arm.getBottomBoomIncrement();
+                increment = increment + 0.005;
+                ArmTest.this.arm.setBottomBoomIncrement(increment);
+            }
+        });
 
 
 //            ArmOpMode.this.arm.cancelAllCommands();

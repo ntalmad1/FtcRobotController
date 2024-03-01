@@ -1,7 +1,10 @@
 package org.firstinspires.ftc.library.winch;
 
+import com.qualcomm.robotcore.hardware.DcMotor;
+
 import org.firstinspires.ftc.library.IsaacBot;
 import org.firstinspires.ftc.library.component.Component;
+import org.firstinspires.ftc.library.component.event.command_callback.CommandCallbackAdapter;
 import org.firstinspires.ftc.library.component.event.gp2_left_trigger.Gp2_Left_Trigger_Event;
 import org.firstinspires.ftc.library.component.event.gp2_left_trigger.Gp2_Left_Trigger_Handler;
 import org.firstinspires.ftc.library.component.event.gp2_left_trigger_down.Gp2_Left_Trigger_DownEvent;
@@ -42,9 +45,31 @@ public class Winch extends Component {
     /**
      *
      */
+    public void setBrakeOn () {
+        this.motor.setBrake(true);
+    }
+
+    /**
+     *
+     */
+    public void setBrakeOff () {
+        this.motor.setBrake(false);
+    }
+
+    /**
+     *
+     */
     public WinchConfig getConfig () {
         return this.config;
     }
+
+    /**
+     */
+    private  int lastPosition;
+
+    /**
+     */
+    private boolean holdFlag = false;
 
     /**
      *
@@ -57,35 +82,46 @@ public class Winch extends Component {
         this.addGp2_Left_Trigger_Handler(new Gp2_Left_Trigger_Handler() {
             @Override
             public void onGp2_Left_Trigger(Gp2_Left_Trigger_Event event) {
-//                Winch.this.telemetry.addData("Left Trigger Position: ", "%2f", event.getPosition());
-//                Winch.this.telemetry.update();
-
-                if (event.getPosition() == 0) {
-                    Winch.this.motor.setBrake(false);
-                }
-                else {
-                    Winch.this.motor.move(event.getPosition() * -1);
-                }
+                Winch.this.onTriggerEvent(event.getPosition() * -1);
             }
         });
 
         this.addGp2_Right_Trigger_Handler(new Gp2_Right_Trigger_Handler() {
             @Override
             public void onGp2_Right_Trigger(Gp2_Right_Trigger_Event event) {
-
-//                  Winch.this.telemetry.addData("Right Trigger Position: ", "%2f", event.getPosition());
-//                  Winch.this.telemetry.update();
-
-                if (event.getPosition() == 0) {
-                    Winch.this.motor.setBrake(false);
-                }
-                else {
-                    Winch.this.motor.move(event.getPosition());
-                }
+                Winch.this.onTriggerEvent(event.getPosition());
             }
         });
 
+    }
 
+    /**
+     *
+     * @param position
+     */
+    protected void onTriggerEvent (float position) {
+        if (position == 0) {
+
+            if (this.motor.isBrakeOn()) {
+
+                if (!this.holdFlag) {
+                    this.holdFlag = true;
+                    this.lastPosition = this.motor.getCurrentPosition();
+                }
+
+                this.motor.setTargetPosition(this.lastPosition);
+                this.motor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+                this.motor.setPower(1);
+            }
+            else {
+                this.motor.setPower(0);
+                this.motor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+            }
+        }
+        else {
+            this.holdFlag = false;
+            this.motor.move(position);
+        }
     }
 
     /**
@@ -98,7 +134,31 @@ public class Winch extends Component {
 
         if (this.config.debug) {
             this.telemetry.addData("Winch motor current position: ", "%7d", this.motor.getCurrentPosition());
+            this.telemetry.addLine("Brake: " + (this.motor.isBrakeOn() ? "ON" : "OFF"));
             this.telemetry.update();
         }
+    }
+
+    /**
+     *
+     * @param position
+     * @param power
+     */
+    public void goToPosition(int position, double power) {
+
+        this.motor.gotoPosition(position, power);
+
+    }
+
+    /**
+     *
+     * @param position
+     * @param power
+     * @param commandCallbackAdapter
+     */
+    public void goToPosition(int position, double power, CommandCallbackAdapter commandCallbackAdapter) {
+
+        this.motor.gotoPosition(position, power, commandCallbackAdapter);
+
     }
 }

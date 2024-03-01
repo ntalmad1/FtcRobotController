@@ -5,6 +5,8 @@ import com.qualcomm.robotcore.hardware.DcMotorSimple;
 
 import org.firstinspires.ftc.library.IsaacBot;
 import org.firstinspires.ftc.library.component.Component;
+import org.firstinspires.ftc.library.component.event.command_callback.CommandCallbackAdapter;
+import org.firstinspires.ftc.library.component.event.command_callback.CommandCallbackHandler;
 import org.firstinspires.ftc.library.component.event.gp2_right_stick_x.Gp2_RightStickXEvent;
 import org.firstinspires.ftc.library.component.event.gp2_right_stick_x.Gp2_RightStickXHandler;
 import org.firstinspires.ftc.library.utility.Control;
@@ -20,7 +22,12 @@ public class EncodedMotor extends Component {
 
     /**
      */
+    private boolean brakeOn;
+
+    /**
+     */
     private EncodedMotorConfig config;
+
 
     /**
      * @param config
@@ -45,6 +52,10 @@ public class EncodedMotor extends Component {
      */
     public int getCurrentPosition () {
         return this.motor.getCurrentPosition();
+    }
+
+    public int getTargetPosition () {
+        return this.motor.getTargetPosition();
     }
 
     /**
@@ -74,6 +85,18 @@ public class EncodedMotor extends Component {
 
     /**
      *
+     * @param position
+     * @param power
+     * @param handler
+     */
+    public void gotoPosition (int position, double power, CommandCallbackHandler handler) {
+        EncodedMotorGoToPositionCommand command = new EncodedMotorGoToPositionCommand(this, position, power);
+        command.addCallbackHandler(handler);
+        this.addCommand(command);
+    }
+
+    /**
+     *
      */
     public void init () {
         super.init();
@@ -94,6 +117,10 @@ public class EncodedMotor extends Component {
                 }
             });
         }
+    }
+
+    public boolean isBrakeOn () {
+        return this.brakeOn;
     }
 
     /**
@@ -126,12 +153,14 @@ public class EncodedMotor extends Component {
      */
     public void setBrake (boolean brakeOn) {
         if (brakeOn) {
+            this.brakeOn = true;
             this.motor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         }
         else {
+            this.brakeOn = false;
             this.motor.setPower(0);
-            this.motor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
+            this.motor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
             this.motor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
         }
     }
