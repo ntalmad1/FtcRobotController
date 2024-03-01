@@ -7,7 +7,7 @@ import org.firstinspires.ftc.library.component.command.Command;
 /**
  *
  */
-public class ConstantPressureWinchCommand extends Command {
+public class ConstantOutWinchCommand extends Command {
 
     /**
      */
@@ -29,7 +29,7 @@ public class ConstantPressureWinchCommand extends Command {
      * Constructor
      *
      */
-    public ConstantPressureWinchCommand (Winch winch, TouchSensor sensor, double power, int increment) {
+    public ConstantOutWinchCommand(Winch winch, TouchSensor sensor, double power, int increment) {
         this.winch = winch;
         this.sensor = sensor;
         this.power = power;
@@ -49,9 +49,9 @@ public class ConstantPressureWinchCommand extends Command {
     public void run() {
 
         if (this.sensor.isPressed()) {
-            this.winch.stop();
-        } else {
             this.winch.move(this.power, this.increment);
+        } else {
+            this.winch.stop();
         }
     }
 }

@@ -99,7 +99,17 @@ public class Winch extends Component {
      *
      */
     public void stop () {
-        this.onTriggerEvent(0);
+        if (this.motor.isBrakeOn()) {
+            this.lastPosition = this.motor.getCurrentPosition();
+
+            this.motor.setTargetPosition(this.lastPosition);
+            this.motor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            this.motor.setPower(1);
+        }
+        else {
+            this.motor.setPower(0);
+            this.motor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        }
     }
 
     /**
@@ -108,7 +118,6 @@ public class Winch extends Component {
      */
     protected void onTriggerEvent (float position) {
         if (position == 0) {
-
             if (this.motor.isBrakeOn()) {
 
                 if (!this.holdFlag) {
@@ -167,5 +176,14 @@ public class Winch extends Component {
 
         this.motor.gotoPosition(position, power, commandCallbackAdapter);
 
+    }
+
+    /**
+     *
+     * @param power
+     * @param increment
+     */
+    public void move (double power, int increment) {
+        this.motor.move(power, increment);
     }
 }

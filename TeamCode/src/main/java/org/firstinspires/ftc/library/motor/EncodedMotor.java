@@ -131,9 +131,21 @@ public class EncodedMotor extends Component {
         return this.motor.isBusy();
     }
 
+    /**
+     *
+     * @param power
+     */
     public void move (double power) {
+        this.move(power, this.config.increment);
+    }
 
-        int targetPosition = this.motor.getCurrentPosition() + this.config.increment * (power < 0 ? -1 : 1);
+    /**
+     *
+     * @param power
+     */
+    public void move (double power, int increment) {
+
+        int targetPosition = this.motor.getCurrentPosition() + increment * (power < 0 ? -1 : 1);
 
         if (power > 0 && targetPosition > this.config.maxTics) {
             targetPosition = this.config.maxTics;

@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode.metalheads.competition.base;
 
+import com.qualcomm.hardware.rev.RevTouchSensor;
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DistanceSensor;
@@ -21,6 +22,8 @@ import org.firstinspires.ftc.library.dronelauncher.DroneLauncher;
 import org.firstinspires.ftc.library.dronelauncher.DroneLauncherConfig;
 import org.firstinspires.ftc.library.pixelcatcher.PixelCatcher;
 import org.firstinspires.ftc.library.pixelcatcher.PixelCatcherConfig;
+import org.firstinspires.ftc.library.winch.ConstantOutWinchCommand;
+import org.firstinspires.ftc.library.winch.ConstantPressureWinchCommand;
 import org.firstinspires.ftc.library.winch.Winch;
 import org.firstinspires.ftc.library.winch.WinchConfig;
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
@@ -86,7 +89,7 @@ public class CompBot extends IsaacBot{
 
     /**
      */
-    protected TouchSensor trolleySensor;
+    protected RevTouchSensor trolleySensor;
 
     /**
      */
@@ -257,7 +260,8 @@ public class CompBot extends IsaacBot{
 
         this.backdropSensor = this.hardwareMap.get(DistanceSensor.class, "backdropSensor");
 
-        this.trolleySensor = this.hardwareMap.get(TouchSensor.class, "trolleySensor");
+        this.trolleySensor = this.hardwareMap.get(RevTouchSensor.class, "trolleySensor");
+        trolleySensor.resetDeviceConfigurationForOpMode();
     }
 
     /**
@@ -281,7 +285,16 @@ public class CompBot extends IsaacBot{
                     }
                 });
 
-//        final ICommand = new Command()
+        final Command constantPressureCommand = new ConstantPressureWinchCommand(this.winch, this.trolleySensor,-1, 200);
+
+        this.arm.addCommand(constantPressureCommand);
+
+        this.arm.moveLinearActuatorToPosition(0, new CommandCallbackAdapter(){
+            @Override
+            public void onSuccess(CommandSuccessEvent successEvent) {
+                constantPressureCommand.markAsCompleted();
+            }
+        });
 //
 //                .moveLinearActuatorToPosition(1200)
 //                .addCommand(new OneTimeCommand() {
@@ -358,9 +371,16 @@ public class CompBot extends IsaacBot{
      *
      */
     public void moveArm_toHangReady () {
-        this.arm.moveLinearActuatorToPosition(this.robotConfig.hangReady_linAct)
-                .wait(250)
-                .moveBottomToPosition(this.robotConfig.hangReady_bottomBoom, 0.01)
+        if (this.arm.getBottomBoom().getPosition() < this.robotConfig.pixelReady_bottomBoom) {
+            this.arm.moveBottomToPosition(this.robotConfig.hangReady_bottomBoom, 1);
+        }
+
+        final Command constantOutCommand = new ConstantOutWinchCommand(winch, this.trolleySensor, 1, 500);
+
+        this.arm.addCommand(constantOutCommand);
+
+        this.arm.moveBottomToPosition(this.robotConfig.hangReady_bottomBoom, 1)
+                .moveLinearActuatorToPosition(this.robotConfig.hangReady_linAct)
                 .moveClawToPosition(this.robotConfig.hangReady_clawBoom, 1)
                 .addCommand(new OneTimeCommand() {
                     @Override
@@ -369,6 +389,12 @@ public class CompBot extends IsaacBot{
                             CompBot.this.pixelCatcher.toggleWinch();
                         }
                         command.markAsCompleted();
+                    }
+                })
+                .wait(250, new CommandCallbackAdapter(){
+                    @Override
+                    public void onSuccess(CommandSuccessEvent successEvent) {
+                        constantOutCommand.markAsCompleted();
                     }
                 });
 
@@ -514,14 +540,14 @@ public class CompBot extends IsaacBot{
             this.arm.addCommand(new OneTimeCommand() {
                         @Override
                         public void runOnce(ICommand leftArmCommand) {
-                            CompBot.this.pixelCatcher.setLeftArmPosition(0.5);
+                            CompBot.this.pixelCatcher.setLeftArmPosition(0.6);
                             leftArmCommand.markAsCompleted();
                         }
                     });
             this.arm.addCommand(new OneTimeCommand() {
                         @Override
                         public void runOnce(ICommand rightArmCommand) {
-                            CompBot.this.pixelCatcher.setRightArmPosition(0.5);
+                            CompBot.this.pixelCatcher.setRightArmPosition(0.6);
                             rightArmCommand.markAsCompleted();
                         }
                     });
@@ -534,21 +560,21 @@ public class CompBot extends IsaacBot{
                         }
                     });
 
-        this.arm.addCommand(new OneTimeCommand() {
-            @Override
-            public void runOnce(ICommand leftArmCommand) {
-                CompBot.this.pixelCatcher.setLeftArmPosition(1);
-                leftArmCommand.markAsCompleted();
-            }
-        });
-
-        this.arm.addCommand(new OneTimeCommand() {
-            @Override
-            public void runOnce(ICommand rightArmCommand) {
-                CompBot.this.pixelCatcher.setRightArmPosition(1);
-                rightArmCommand.markAsCompleted();
-            }
-        });
+//        this.arm.addCommand(new OneTimeCommand() {
+//            @Override
+//            public void runOnce(ICommand leftArmCommand) {
+//                CompBot.this.pixelCatcher.setLeftArmPosition(1);
+//                leftArmCommand.markAsCompleted();
+//            }
+//        });
+//
+//        this.arm.addCommand(new OneTimeCommand() {
+//            @Override
+//            public void runOnce(ICommand rightArmCommand) {
+//                CompBot.this.pixelCatcher.setRightArmPosition(1);
+//                rightArmCommand.markAsCompleted();
+//            }
+//        });
     }
 
     /**

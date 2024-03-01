@@ -9,8 +9,10 @@ import org.firstinspires.ftc.library.claw.Claw;
 import org.firstinspires.ftc.library.claw.ClawCloseCommand;
 import org.firstinspires.ftc.library.claw.ClawOpenCommand;
 import org.firstinspires.ftc.library.component.Component;
+import org.firstinspires.ftc.library.component.command.Command;
 import org.firstinspires.ftc.library.component.command.ICommand;
 import org.firstinspires.ftc.library.component.command.WaitCommand;
+import org.firstinspires.ftc.library.component.event.command_callback.CommandCallbackAdapter;
 import org.firstinspires.ftc.library.component.event.command_callback.CommandCallbackHandler;
 import org.firstinspires.ftc.library.motor.EncodedMotor;
 
@@ -228,7 +230,17 @@ public class Arm extends Component {
      * @return Arm
      */
     public Arm moveLinearActuatorToPosition (int position) {
-        return this.moveLinearActuatorToPosition(position, 1);
+        return this.moveLinearActuatorToPosition(position, 1, new CommandCallbackAdapter());
+    }
+
+    /**
+     *
+     * @param position
+     * @param handler
+     * @return
+     */
+    public Arm moveLinearActuatorToPosition (int position, CommandCallbackHandler handler) {
+        return this.moveLinearActuatorToPosition(position, 1, handler);
     }
 
     /**
@@ -238,7 +250,13 @@ public class Arm extends Component {
      * @return Arm
      */
     public Arm moveLinearActuatorToPosition (int position, double power) {
-        this.addCommand(new LinearActuatorMoveToPositionCommand(this.getLinearActuator(), position, power));
+        return this.moveLinearActuatorToPosition(position, 1, new CommandCallbackAdapter());
+    }
+
+    public Arm moveLinearActuatorToPosition (int position, double power, CommandCallbackHandler handler) {
+        LinearActuatorMoveToPositionCommand command = new LinearActuatorMoveToPositionCommand(this.getLinearActuator(), position, power);
+        command.addCallbackHandler(handler);
+        this.addCommand(command);
         return this;
     }
 
