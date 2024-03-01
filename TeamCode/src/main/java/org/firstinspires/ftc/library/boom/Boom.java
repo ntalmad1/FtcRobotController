@@ -23,6 +23,11 @@ public class Boom extends Component {
     /**
      *
      */
+    private double maxIncrement;
+
+    /**
+     *
+     */
     private Servo servo;
 
     /**
@@ -40,6 +45,8 @@ public class Boom extends Component {
         super(config.robot);
 
         this.config = config;
+
+        this.maxIncrement = config.maxIncrement;
     }
 
     /**
@@ -55,7 +62,7 @@ public class Boom extends Component {
      * @return The max amount to set the servo position to each cycle
      */
     public double getMaxIncrement() {
-        return this.config.maxIncrement;
+        return this.maxIncrement;
     }
 
     /**
@@ -152,7 +159,7 @@ public class Boom extends Component {
                 if (Boom.this.config.invertInput) {
                     position = -position;
                 }
-                Boom.this.move(position, Boom.this.config.maxIncrement, Boom.this.config.minPosition, Boom.this.config.maxPosition);
+                Boom.this.move(position, Boom.this.maxIncrement, Boom.this.config.minPosition, Boom.this.config.maxPosition);
             });
         } else if (config.controllerInputMethod.equals(Control.Gp2_LeftStickY)) {
             this.addGp2_LeftStickYHandler(event -> {
@@ -160,7 +167,7 @@ public class Boom extends Component {
                 if (Boom.this.config.invertInput) {
                     position = -position;
                 }
-                Boom.this.move(position, Boom.this.config.maxIncrement, Boom.this.config.minPosition, Boom.this.config.maxPosition);
+                Boom.this.move(position, Boom.this.maxIncrement, Boom.this.config.minPosition, Boom.this.config.maxPosition);
             });
         } else if (config.controllerInputMethod.equals(Control.Gp2_RightStickX)) {
             this.addGp2_RightStickXHandler(event -> {
@@ -168,7 +175,7 @@ public class Boom extends Component {
                 if (Boom.this.config.invertInput) {
                     position = -position;
                 }
-                Boom.this.move(position, Boom.this.config.maxIncrement, Boom.this.config.minPosition, Boom.this.config.maxPosition);
+                Boom.this.move(position, Boom.this.maxIncrement, Boom.this.config.minPosition, Boom.this.config.maxPosition);
             });
         } else if (config.controllerInputMethod.equals(Control.Gp2_RightStickY)) {
             this.addGp2_RightStickYHandler(event -> {
@@ -176,7 +183,7 @@ public class Boom extends Component {
                 if (Boom.this.config.invertInput) {
                     position = -position;
                 }
-                Boom.this.move(position, Boom.this.config.maxIncrement, Boom.this.config.minPosition, Boom.this.config.maxPosition);
+                Boom.this.move(position, Boom.this.maxIncrement, Boom.this.config.minPosition, Boom.this.config.maxPosition);
             });
         }
 
@@ -187,7 +194,7 @@ public class Boom extends Component {
                 if (Boom.this.config.invertInput) {
                     position = -position;
                 }
-                Boom.this.move(position, Boom.this.config.maxIncrement, Boom.this.config.minPosition, Boom.this.config.maxPosition);
+                Boom.this.move(position, Boom.this.maxIncrement, Boom.this.config.minPosition, Boom.this.config.maxPosition);
             });
         }
 
@@ -198,7 +205,7 @@ public class Boom extends Component {
                 if (Boom.this.config.invertInput) {
                     position = -position;
                 }
-                Boom.this.move(position, Boom.this.config.maxIncrement, Boom.this.config.minPosition, Boom.this.config.maxPosition);
+                Boom.this.move(position, Boom.this.maxIncrement, Boom.this.config.minPosition, Boom.this.config.maxPosition);
             });
         }
 
@@ -209,7 +216,7 @@ public class Boom extends Component {
                 if (Boom.this.config.invertInput) {
                     position = -position;
                 }
-                Boom.this.move(position, Boom.this.config.maxIncrement, Boom.this.config.minPosition, Boom.this.config.maxPosition);
+                Boom.this.move(position, Boom.this.maxIncrement, Boom.this.config.minPosition, Boom.this.config.maxPosition);
 
                 this.telemetry.addLine("Dpad Down...");
                 this.telemetry.update();
@@ -224,7 +231,7 @@ public class Boom extends Component {
                 if (Boom.this.config.invertInput) {
                     position = -position;
                 }
-                Boom.this.move(position, Boom.this.config.maxIncrement, Boom.this.config.minPosition, Boom.this.config.maxPosition);
+                Boom.this.move(position, Boom.this.maxIncrement, Boom.this.config.minPosition, Boom.this.config.maxPosition);
             });
         }
 
@@ -333,5 +340,8 @@ public class Boom extends Component {
         }
 
         return targetPosition;
+    }
+
+    public void setMaxIncrement(double increment) {
     }
 }

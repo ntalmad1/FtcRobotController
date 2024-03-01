@@ -44,6 +44,10 @@ public class Arm extends Component {
     private Servo rightRelay;
 
     /**
+     */
+    private double bottomBoomIncrement;
+
+    /**
      * Constructor
      *
      * @param configuration The configuration values for the Arm
@@ -57,13 +61,12 @@ public class Arm extends Component {
         this.linAct = new EncodedMotor(this.config.linActConfig);
 
         this.bottomBoom = new Boom(this.config.bottomBoomConfig);
+        this.bottomBoomIncrement = this.config.bottomBoomConfig.maxIncrement;
 
         this.addGp2_LeftStickXHandler(event -> Arm.this.cancelAllCommands());
         this.addGp2_LeftStickYHandler(event -> Arm.this.cancelAllCommands());
         this.addGp2_RightStickXHandler(event -> Arm.this.cancelAllCommands());
         this.addGp2_RightStickYHandler(event -> Arm.this.cancelAllCommands());
-
-        // this.getCommandQueue().setDebug(true);
     }
 
     /**
@@ -96,6 +99,7 @@ public class Arm extends Component {
         this.claw.run();
 
         if (this.config.debug) {
+            this.telemetry.addData("Bottom boom increment: ", "%2f", this.bottomBoomIncrement);
             this.telemetry.addData("Bottom boom degrees: ", "%2f", this.bottomBoom.getPositionDegrees());
             this.telemetry.addData("Bottom boom position: ", "%2f", this.bottomBoom.getPosition());
             this.telemetry.addLine();
@@ -111,6 +115,14 @@ public class Arm extends Component {
         }
     }
 
+    /**
+     *
+     * @param command
+     */
+    public Arm addCommand (ICommand command) {
+        return (Arm) super.addCommand(command);
+    }
+
     public Arm closeLeftClaw () {
         this.addCommand(new ClawCloseCommand(this.claw, Claw.Side.LEFT));
 
@@ -120,6 +132,14 @@ public class Arm extends Component {
     public Arm closeRightClaw () {
         this.addCommand(new ClawCloseCommand(this.claw, Claw.Side.RIGHT));
         return this;
+    }
+
+    /**
+     *
+     * @return
+     */
+    public double getBottomBoomIncrement () {
+        return this.bottomBoomIncrement;
     }
 
     /**
@@ -275,7 +295,7 @@ public class Arm extends Component {
     /**
      *
      */
-    public void off () {
+    public void setBottomBoomOff() {
         this.rightRelay.setPosition(0);
         this.leftRelay.setPosition(0);
     }
@@ -283,9 +303,14 @@ public class Arm extends Component {
     /**
      *
      */
-    public void  on () {
+    public void setBottomBoomOn() {
         this.rightRelay.setPosition(1);
         this.leftRelay.setPosition(1);
+    }
+
+    public void setBottomBoomIncrement (double increment) {
+        this.bottomBoomIncrement = increment;
+        this.bottomBoom.setMaxIncrement(increment);
     }
 
     /**

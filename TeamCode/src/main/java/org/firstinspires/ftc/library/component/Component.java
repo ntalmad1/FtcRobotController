@@ -100,8 +100,9 @@ public abstract class Component implements IComponent {
      *
      * @param command
      */
-    public void addCommand (ICommand command) {
+    public Component addCommand (ICommand command) {
         this.commandQueue.add(command);
+        return this;
     }
 
     /**

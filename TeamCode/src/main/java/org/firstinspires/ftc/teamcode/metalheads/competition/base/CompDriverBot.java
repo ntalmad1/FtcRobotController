@@ -11,11 +11,37 @@ public class CompDriverBot extends CompBot {
 
     /**
      */
+    public enum HangPosition {
+
+        /**
+         */
+        NONE,
+
+        /**
+         */
+        READY,
+
+        /**
+         */
+        HANG,
+
+        /**
+         */
+        STOP
+
+    }
+
+    /**
+     */
     protected MecanumDriveCompConfig driveTrainConfig;
 
     /**
      */
     private MecanumDriveTrain driveTrain;
+
+    /**
+     */
+    private HangPosition hangPosition = HangPosition.NONE;
 
     public CompDriverBot () {
         super();
@@ -47,11 +73,11 @@ public class CompDriverBot extends CompBot {
 
         // hang ready
         this.addGp1_X_PressHandler(event -> {
-            CompDriverBot.this.moveArm_toHangReady();
+            CompDriverBot.this.toggleHangPosition();
         });
 
         this.addGp1_Y_PressHandler(event -> {
-            CompDriverBot.this.moveArm_toHang();
+            CompDriverBot.this.toggleHangPosition();
         });
     }
 
@@ -80,5 +106,24 @@ public class CompDriverBot extends CompBot {
         this.pixelCatcher.run();
 
         this.driveTrain.run();
+        this.winch.run();
+    }
+
+    /**
+     *
+     */
+    public void toggleHangPosition () {
+        if (this.hangPosition.equals(HangPosition.NONE)) {
+            this.hangPosition = HangPosition.READY;
+            this.moveArm_toHangReady();
+        }
+        else if (this.hangPosition.equals(HangPosition.READY)) {
+            this.hangPosition = HangPosition.HANG;
+            this.doHang();
+        }
+        else if (this.hangPosition.equals(HangPosition.HANG)) {
+            this.hangPosition = HangPosition.STOP;
+            this.doHangStop();
+        }
     }
 }

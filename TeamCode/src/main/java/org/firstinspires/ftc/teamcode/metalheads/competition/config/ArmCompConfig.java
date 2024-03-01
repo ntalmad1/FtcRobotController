@@ -30,7 +30,7 @@ public class ArmCompConfig extends ArmConfig {
         bottomBoomConfig.direction = Servo.Direction.FORWARD;
         bottomBoomConfig.controllerInputMethod = Control.Gp2_LeftStickX;
         bottomBoomConfig.invertInput = true;
-        bottomBoomConfig.maxIncrement = 0.0005;
+        bottomBoomConfig.maxIncrement = 0.001;
         bottomBoomConfig.zeroDegreePosition = 0.5;
         bottomBoomConfig.degree = 0.000556;
         bottomBoomConfig.gearRatio = 5;
