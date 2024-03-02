@@ -16,6 +16,7 @@ import org.firstinspires.ftc.library.component.command.WaitCommand;
 import org.firstinspires.ftc.library.component.event.command_callback.CommandCallbackAdapter;
 import org.firstinspires.ftc.library.component.event.command_callback.CommandCallbackHandler;
 import org.firstinspires.ftc.library.component.event.command_callback.CommandSuccessEvent;
+import org.firstinspires.ftc.library.component.event.gp2_left_trigger.Gp2_Left_Trigger_Event;
 import org.firstinspires.ftc.library.component.event.ping.PingEvent;
 import org.firstinspires.ftc.library.component.event.ping.PingHandler;
 import org.firstinspires.ftc.library.dronelauncher.DroneLauncher;
@@ -275,6 +276,11 @@ public class CompBot extends IsaacBot{
     /**
      *
      */
+    private float hangPower = (float)0.02;
+
+    /**
+     *
+     */
     public void doHang () {
         this.arm.addCommand(new OneTimeCommand() {
                     @Override
@@ -282,7 +288,6 @@ public class CompBot extends IsaacBot{
                         CompBot.this.winch.setBrakeOn();
                         CompBot.this.arm.setBottomBoomOff();
                         command.markAsCompleted();
-                        CompBot.this.telemetry.log().add("Setting winch brake & bottom boom off");
                     }
                 });
 
@@ -290,31 +295,33 @@ public class CompBot extends IsaacBot{
 
         this.arm.addCommand(constantPressureCommand);
 
-        this.arm.moveLinearActuatorToPosition(0);
-
-        this.arm.wait(1000, new CommandCallbackAdapter(){
+        this.arm.moveLinearActuatorToPosition(1024, new CommandCallbackAdapter(){
             @Override
             public void onSuccess(CommandSuccessEvent successEvent) {
                 constantPressureCommand.markAsCompleted();
             }
         });
 
-//        this.arm.addCommand(new OneTimeCommand() {
-//            @Override
-//            public void runOnce(ICommand command) {
-//                int ticsIn = 1365;
-//
-//                int target = CompBot.this.winch.getCurrentPosition() - ticsIn;
-//
-//                CompBot.this.winch.goToPosition(target, 1, new CommandCallbackAdapter(command){
-//                    @Override
-//                    public void onSuccess(CommandSuccessEvent successEvent) {
-//                        successEvent.getCommand().markAsCompleted();
-//                    }
-//                });
-//            }
-//        });
+        this.arm.moveClawToPosition(this.arm.getClaw().getConfig().clawBoomConfig.homePosition);
+        //this.arm.wait(250);
 
+        for (int i = 0; i < 450; ++i)
+        {
+            this.arm.addCommand(new OneTimeCommand() {
+                @Override
+                public void runOnce(ICommand command) {
+                    CompBot.this.getEventBus().fireEvent(new Gp2_Left_Trigger_Event(hangPower));
+                    command.markAsCompleted();
+                }
+            });
+            if (hangPower < 1) {
+                hangPower += 0.02;
+            }
+
+            if (hangPower > 1) {
+                hangPower = 1;
+            }
+        }
     }
 
     /**

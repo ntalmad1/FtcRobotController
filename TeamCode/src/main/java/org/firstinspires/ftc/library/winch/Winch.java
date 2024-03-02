@@ -28,6 +28,8 @@ public class Winch extends Component {
      */
     private EncodedMotor motor;
 
+    private static int eventCount;
+
     /**
      * Constructor
      *
@@ -90,6 +92,10 @@ public class Winch extends Component {
         this.addGp2_Left_Trigger_Handler(new Gp2_Left_Trigger_Handler() {
             @Override
             public void onGp2_Left_Trigger(Gp2_Left_Trigger_Event event) {
+                eventCount++;
+
+                Winch.this.telemetry.log().add("eventCount: " + eventCount);
+
                 Winch.this.onTriggerEvent(event.getPosition() * -1);
             }
         });
