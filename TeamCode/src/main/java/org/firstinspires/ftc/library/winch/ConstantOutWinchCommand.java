@@ -2,12 +2,13 @@ package org.firstinspires.ftc.library.winch;
 
 import com.qualcomm.robotcore.hardware.TouchSensor;
 
+import org.firstinspires.ftc.library.component.command.AbstractRepeatingCommand;
 import org.firstinspires.ftc.library.component.command.Command;
 
 /**
  *
  */
-public class ConstantOutWinchCommand extends Command {
+public class ConstantOutWinchCommand extends AbstractRepeatingCommand {
 
     /**
      */
@@ -30,6 +31,8 @@ public class ConstantOutWinchCommand extends Command {
      *
      */
     public ConstantOutWinchCommand(Winch winch, TouchSensor sensor, double power, int increment) {
+        super();
+
         this.winch = winch;
         this.sensor = sensor;
         this.power = power;

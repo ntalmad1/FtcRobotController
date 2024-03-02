@@ -41,7 +41,8 @@ public class CommandQueue {
     public void run ()
     {
         List<ICommand> completedCommands = new ArrayList<ICommand>();
-        int runningCommandCount = 0;
+
+        int runningNonRepeatingCommandCount = 0;
 
         if (debug) this.component.telemetry.addData("Command queue size: ", "%2d", this.queue.size());
 
@@ -49,7 +50,7 @@ public class CommandQueue {
         {
             if (debug) this.component.telemetry.addLine("Running command: " + command.getClass().toString());
 
-            if (command.isBlocker() && runningCommandCount > 0) {
+            if (command.isBlocker() && runningNonRepeatingCommandCount > 0) {
                 if (debug) this.component.telemetry.addLine("Breaking for loop on blocking command");
                 break;
             }
@@ -63,7 +64,9 @@ public class CommandQueue {
                 completedCommands.add(command);
             }
             else {
-                runningCommandCount++;
+                if (!command.isRepeating()) {
+                    runningNonRepeatingCommandCount++;
+                }
             }
 
             if (!command.isCompleted() && command.isSynchronous()) {

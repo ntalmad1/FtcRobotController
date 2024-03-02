@@ -276,48 +276,45 @@ public class CompBot extends IsaacBot{
      *
      */
     public void doHang () {
-        //this.arm.bottomBoomOff();
         this.arm.addCommand(new OneTimeCommand() {
                     @Override
                     public void runOnce(ICommand command) {
                         CompBot.this.winch.setBrakeOn();
-                        //CompBot.this.arm.setBottomBoomOff();
+                        CompBot.this.arm.setBottomBoomOff();
                         command.markAsCompleted();
                         CompBot.this.telemetry.log().add("Setting winch brake & bottom boom off");
                     }
                 });
 
-        final Command constantPressureCommand = new ConstantPressureWinchCommand(this.winch, this.trolleySensor,-1, 200);
+        final ICommand constantPressureCommand = new ConstantPressureWinchCommand(this.winch, this.trolleySensor,-1, 200);
 
         this.arm.addCommand(constantPressureCommand);
 
-        this.arm.moveLinearActuatorToPosition(0, new CommandCallbackAdapter(){
+        this.arm.moveLinearActuatorToPosition(0);
+
+        this.arm.wait(1000, new CommandCallbackAdapter(){
             @Override
             public void onSuccess(CommandSuccessEvent successEvent) {
                 constantPressureCommand.markAsCompleted();
             }
         });
+
+//        this.arm.addCommand(new OneTimeCommand() {
+//            @Override
+//            public void runOnce(ICommand command) {
+//                int ticsIn = 1365;
 //
-//                .moveLinearActuatorToPosition(1200)
-//                .addCommand(new OneTimeCommand() {
+//                int target = CompBot.this.winch.getCurrentPosition() - ticsIn;
+//
+//                CompBot.this.winch.goToPosition(target, 1, new CommandCallbackAdapter(command){
 //                    @Override
-//                    public void runOnce(ICommand command) {
-//                        CompBot.this.winch.goToPosition(-100, 1, new CommandCallbackAdapter(command){
-//                            @Override
-//                            public void onSuccess(CommandSuccessEvent successEvent) {
-//                                successEvent.getCommand().markAsCompleted();
-//                            }
-//                        });
+//                    public void onSuccess(CommandSuccessEvent successEvent) {
+//                        successEvent.getCommand().markAsCompleted();
 //                    }
-//                })
-//                .addCommand(new OneTimeCommand() {
-//                    @Override
-//                    public void runOnce(ICommand command) {
-//                        CompBot.this.arm.setBottomBoomOff();
-//                        command.markAsCompleted();
-//                    }
-//                })
-//                .moveLinearActuatorToPosition(0);
+//                });
+//            }
+//        });
+
     }
 
     /**
@@ -377,7 +374,7 @@ public class CompBot extends IsaacBot{
             this.arm.moveBottomToPosition(this.robotConfig.hangReady_bottomBoom, 1);
         }
 
-        final Command constantOutCommand = new ConstantOutWinchCommand(winch, this.trolleySensor, 1, 500);
+        final ICommand constantOutCommand = new ConstantOutWinchCommand(winch, this.trolleySensor, 1, 2100);
 
         this.arm.addCommand(constantOutCommand);
 
@@ -393,20 +390,13 @@ public class CompBot extends IsaacBot{
                         command.markAsCompleted();
                     }
                 })
-                .wait(250, new CommandCallbackAdapter(){
+                .wait(2000, new CommandCallbackAdapter(){
                     @Override
                     public void onSuccess(CommandSuccessEvent successEvent) {
                         constantOutCommand.markAsCompleted();
                     }
                 });
 
-//                .addCommand(new OneTimeCommand() {
-//                    @Override
-//                    public void runOnce(ICommand command) {
-//                        CompBot.this.winch.goToPosition(1400, 1);
-//                        command.markAsCompleted();
-//                    }
-//                });
     }
 
     /**
@@ -428,7 +418,7 @@ public class CompBot extends IsaacBot{
         }
         this.arm.moveBottomToPosition(0.25, 0.001)
                 .moveLinearActuatorToPosition(this.robotConfig.pixelReady_linAct)
-                .addCommand(new WaitCommand(250));
+                .addCommand(new WaitCommand(256));
         this.arm.moveClawToPosition(this.robotConfig.pixelReady_clawBoom, 1)
                 .moveBottomToPosition(this.robotConfig.pixelReady_bottomBoom, 1);
     }
@@ -535,7 +525,8 @@ public class CompBot extends IsaacBot{
                     .closeRightClaw()
                     .wait(350)
                     .moveBottomToPosition(this.robotConfig.pixelPick_bottomBoom, 1)
-                    .wait(500)
+                    .moveClawToPosition(this.robotConfig.pixelPick_clawBoom, 0.25)
+                    .wait(350)
                     .openLeftClaw()
                     .openRightClaw();
 
@@ -556,6 +547,7 @@ public class CompBot extends IsaacBot{
 
             this.arm.wait(250)
                     .moveBottomToPosition(this.robotConfig.pixelReady_bottomBoom, 1)
+                    .moveClawToPosition(this.robotConfig.pixelReady_clawBoom, 0.25)
                     .wait(500, new CommandCallbackAdapter () {
                         public void onSuccess(CommandSuccessEvent successEvent) {
                             CompBot.this.pickingPixel = false;

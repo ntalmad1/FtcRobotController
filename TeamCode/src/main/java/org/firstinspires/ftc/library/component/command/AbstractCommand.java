@@ -16,7 +16,7 @@ public abstract class AbstractCommand implements ICommand {
 
     /**
      */
-    protected boolean completed;
+    protected boolean completed = false;
 
     /**
      */
@@ -29,6 +29,10 @@ public abstract class AbstractCommand implements ICommand {
     /**
      */
     private boolean synchronous = false;
+
+    /**
+     */
+    private boolean repeating = false;
 
     /**
      */
@@ -90,6 +94,14 @@ public abstract class AbstractCommand implements ICommand {
      *
      * @return
      */
+    public boolean isRepeating () {
+        return this.repeating;
+    }
+
+    /**
+     *
+     * @return
+     */
     public boolean isSynchronous () {
         return this.synchronous;
     }
@@ -108,6 +120,14 @@ public abstract class AbstractCommand implements ICommand {
      */
     public void setInitialized(boolean initialized) {
         this.initialized = initialized;
+    }
+
+    /**
+     *
+     * @param repeating
+     */
+    public void setRepeating (boolean repeating) {
+        this.repeating = repeating;
     }
 
     /**

@@ -115,14 +115,23 @@ public class CompDriverBot extends CompBot {
     public void toggleHangPosition () {
         if (this.hangPosition.equals(HangPosition.NONE)) {
             this.hangPosition = HangPosition.READY;
+
+            this.telemetry.log().add("Doing hang 'READY'");
+
             this.moveArm_toHangReady();
         }
         else if (this.hangPosition.equals(HangPosition.READY)) {
             this.hangPosition = HangPosition.HANG;
+
+            this.telemetry.log().add("Doing hang 'HANG'");
+
             this.doHang();
         }
         else if (this.hangPosition.equals(HangPosition.HANG)) {
             this.hangPosition = HangPosition.STOP;
+
+            this.telemetry.log().add("Doing hang 'HANG STOP'");
+
             this.doHangStop();
         }
     }

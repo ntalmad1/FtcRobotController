@@ -58,6 +58,14 @@ public class Winch extends Component {
 
     /**
      *
+     * @return
+     */
+    public int getCurrentPosition () {
+        return this.motor.getCurrentPosition();
+    }
+
+    /**
+     *
      */
     public WinchConfig getConfig () {
         return this.config;

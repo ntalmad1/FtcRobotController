@@ -37,6 +37,12 @@ public interface ICommand {
      *
      * @return
      */
+    boolean isRepeating ();
+
+    /**
+     *
+     * @return
+     */
     boolean isSynchronous ();
 
     /**
