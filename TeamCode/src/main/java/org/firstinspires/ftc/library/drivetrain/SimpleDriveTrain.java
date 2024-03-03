@@ -4,6 +4,7 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.DistanceSensor;
 
+import org.firstinspires.ftc.library.drivetrain.commands.AbstractDriveTrainGyroTurnCommand;
 import org.firstinspires.ftc.library.drivetrain.commands.DriveTrainBackwardsCommand;
 import org.firstinspires.ftc.library.drivetrain.commands.DriveTrainDiagFrontLeftCommand;
 import org.firstinspires.ftc.library.drivetrain.commands.DriveTrainDiagFrontRightCommand;
@@ -51,6 +52,9 @@ public class SimpleDriveTrain extends AbstractDriveTrain
     public void init ()
     {
         super.init();
+        if (this.getConfig().brakeOn) {
+            this.motorGroup.setBrakeOn();
+        }
     }
 
     /**
@@ -61,8 +65,8 @@ public class SimpleDriveTrain extends AbstractDriveTrain
      * @param degrees
      * @return
      */
-    public SimpleDriveTrain gotoDegrees (Direction direction, double startPower, double maxPower, double degrees) {
-        this.addCommand(new GotoDegreesCommand(this, direction, startPower, maxPower, degrees));
+    public SimpleDriveTrain gotoDegrees (Direction direction, double startPower, double maxPower, double degrees, AbstractDriveTrainGyroTurnCommand.Orientation orientation) {
+        this.addCommand(new GotoDegreesCommand(this, direction, startPower, maxPower, degrees, orientation));
         return this;
     }
 
@@ -281,13 +285,13 @@ public class SimpleDriveTrain extends AbstractDriveTrain
      * @param degrees
      * @return
      */
-    public SimpleDriveTrain gyroTurn (Direction direction, double startPower, double maxPower, double degrees)
+    public SimpleDriveTrain gyroTurn (Direction direction, double startPower, double maxPower, double degrees, AbstractDriveTrainGyroTurnCommand.Orientation orientation)
     {
         switch (direction) {
             case RIGHT:
-                return this.gyroTurnRight(startPower, maxPower, degrees);
+                return this.gyroTurnRight(startPower, maxPower, degrees, orientation);
             case LEFT:
-                return this.gyroTurnLeft(startPower, maxPower, degrees);
+                return this.gyroTurnLeft(startPower, maxPower, degrees, orientation);
         }
 
        return this;
@@ -301,9 +305,9 @@ public class SimpleDriveTrain extends AbstractDriveTrain
      * @param degrees
      * @return
      */
-    public SimpleDriveTrain gyroTurnLeft (double startPower, double maxPower, double degrees)
+    public SimpleDriveTrain gyroTurnLeft (double startPower, double maxPower, double degrees, AbstractDriveTrainGyroTurnCommand.Orientation orientation)
     {
-        this.addCommand(new DriveTrainGyroTurnLeftCommand(this, startPower, maxPower, degrees));
+        this.addCommand(new DriveTrainGyroTurnLeftCommand(this, startPower, maxPower, degrees, orientation));
         return this;
     }
 
@@ -314,9 +318,10 @@ public class SimpleDriveTrain extends AbstractDriveTrain
      * @param degrees
      * @return
      */
-    public SimpleDriveTrain gyroTurnRight (double startPower, double maxPower, double degrees)
+    public SimpleDriveTrain gyroTurnRight (double startPower, double maxPower, double degrees,
+                                           AbstractDriveTrainGyroTurnCommand.Orientation orientation)
     {
-        this.addCommand(new DriveTrainGyroTurnRightCommand(this, startPower, maxPower, degrees));
+        this.addCommand(new DriveTrainGyroTurnRightCommand(this, startPower, maxPower, degrees, orientation));
         return this;
     }
 
@@ -328,13 +333,13 @@ public class SimpleDriveTrain extends AbstractDriveTrain
      * @param degrees
      * @return
      */
-    public SimpleDriveTrain frontAxelPivot (Direction direction, double startPower, double maxPower, double degrees)
+    public SimpleDriveTrain frontAxelPivot (Direction direction, double startPower, double maxPower, double degrees, AbstractDriveTrainGyroTurnCommand.Orientation orientation)
     {
         switch (direction) {
             case RIGHT:
-                return this.frontAxelPivotRight(startPower, maxPower, degrees);
+                return this.frontAxelPivotRight(startPower, maxPower, degrees, orientation);
             case LEFT:
-                return this.frontAxelPivotLeft(startPower, maxPower, degrees);
+                return this.frontAxelPivotLeft(startPower, maxPower, degrees, orientation);
         }
 
         return this;
@@ -347,9 +352,9 @@ public class SimpleDriveTrain extends AbstractDriveTrain
      * @param degrees
      * @return
      */
-    public SimpleDriveTrain frontAxelPivotLeft (double startPower, double maxPower, double degrees)
+    public SimpleDriveTrain frontAxelPivotLeft (double startPower, double maxPower, double degrees, AbstractDriveTrainGyroTurnCommand.Orientation orientation)
     {
-        this.addCommand(new DriveTrainGyroFrontAxlePivotLeftCommand(this, startPower, maxPower, degrees));
+        this.addCommand(new DriveTrainGyroFrontAxlePivotLeftCommand(this, startPower, maxPower, degrees, orientation));
         return this;
     }
 
@@ -360,9 +365,26 @@ public class SimpleDriveTrain extends AbstractDriveTrain
      * @param degrees
      * @return
      */
-    public SimpleDriveTrain frontAxelPivotRight (double startPower, double maxPower, double degrees)
+    public SimpleDriveTrain frontAxelPivotRight (double startPower, double maxPower, double degrees, AbstractDriveTrainGyroTurnCommand.Orientation orientation)
     {
-        this.addCommand(new DriveTrainGyroFrontAxlePivotRightCommand(this, startPower, maxPower, degrees));
+        this.addCommand(new DriveTrainGyroFrontAxlePivotRightCommand(this, startPower, maxPower, degrees, orientation));
+        return this;
+    }
+
+    public boolean isBrakeOn () {
+        return this.motorGroup.isBrakeOn();
+    }
+
+    /**
+     *
+     * @param startPower
+     * @param maxPower
+     * @param degrees
+     * @return
+     */
+    public SimpleDriveTrain rearAxelPivotLeft (double startPower, double maxPower, double degrees, AbstractDriveTrainGyroTurnCommand.Orientation orientation)
+    {
+        this.addCommand(new DriveTrainGyroRearAxlePivotLeftCommand(this, startPower, maxPower, degrees, orientation));
         return this;
     }
 
@@ -373,22 +395,9 @@ public class SimpleDriveTrain extends AbstractDriveTrain
      * @param degrees
      * @return
      */
-    public SimpleDriveTrain rearAxelPivotLeft (double startPower, double maxPower, double degrees)
+    public SimpleDriveTrain rearAxelPivotRight (double startPower, double maxPower, double degrees, AbstractDriveTrainGyroTurnCommand.Orientation orientation)
     {
-        this.addCommand(new DriveTrainGyroRearAxlePivotLeftCommand(this, startPower, maxPower, degrees));
-        return this;
-    }
-
-    /**
-     *
-     * @param startPower
-     * @param maxPower
-     * @param degrees
-     * @return
-     */
-    public SimpleDriveTrain rearAxelPivotRight (double startPower, double maxPower, double degrees)
-    {
-        this.addCommand(new DriveTrainGyroRearAxlePivotRightCommand(this, startPower, maxPower, degrees));
+        this.addCommand(new DriveTrainGyroRearAxlePivotRightCommand(this, startPower, maxPower, degrees, orientation));
         return this;
     }
 
@@ -575,15 +584,14 @@ public class SimpleDriveTrain extends AbstractDriveTrain
 
     /**
      *
-     * @param startPower Between 0.01 and 1
-     * @param maxPower Between 0.01 and 1
-     * @param distance The distance to travel
-     * @param units The units for distance, defaults to default units from configuration
      */
-//    protected void line (double startPower, double maxPower, double distance, Units units)
-//    {
-//
-//    }
+    public void setBrakeOn () {
+        this.motorGroup.setBrakeOn();
+    }
+
+    public void setBrakeOff() {
+        this.motorGroup.setBrakeOff();
+    }
 
     /**
      *
@@ -615,6 +623,7 @@ public class SimpleDriveTrain extends AbstractDriveTrain
      */
     public void resetMotorGroup ()
     {
+        this.motorGroup.setPower(0);
         this.motorGroup.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         this.motorGroup.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
     }

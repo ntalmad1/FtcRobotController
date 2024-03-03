@@ -175,7 +175,7 @@ public class CompBot extends IsaacBot{
     private void onAPress () {
         if (this.armPosition.equals(ArmPosition.INIT)) {
             CompBot.this.armPosition = ArmPosition.PIXEL_READY;
-            CompBot.this.moveArm_fromInit_toPixelReady();
+            CompBot.this.moveArm_fromInit_toPixelReady(PixelCatcher.WinchPosition.DOWN);
         }
         else if (this.armPosition.equals(ArmPosition.PIXEL_PLACE_ROW1) ||
                 this.armPosition.equals(ArmPosition.PIXEL_PLACE_ROW2) ||
@@ -195,7 +195,7 @@ public class CompBot extends IsaacBot{
     private void onBPress () {
         if (this.armPosition.equals(ArmPosition.INIT)) {
             CompBot.this.armPosition = ArmPosition.PIXEL_READY;
-            CompBot.this.moveArm_fromInit_toPixelReady();
+            CompBot.this.moveArm_fromInit_toPixelReady(PixelCatcher.WinchPosition.DOWN);
         }
         else if (this.armPosition.equals(ArmPosition.PIXEL_PLACE_ROW1) ||
                 this.armPosition.equals(ArmPosition.PIXEL_PLACE_ROW2) ||
@@ -325,6 +325,14 @@ public class CompBot extends IsaacBot{
     }
 
     /**
+     *
+     * @return
+     */
+    public RobotConfig getRobotConfig () {
+        return this.robotConfig;
+    }
+
+    /**
      */
     public void doHangStop () {
 
@@ -333,9 +341,23 @@ public class CompBot extends IsaacBot{
     /**
      *
      */
-    public void moveArm_fromInit_toPixelReady() {
+    public void moveArm_toHomePosition () {
+
+        this.armPosition = ArmPosition.INIT;
+
+        this.arm.moveBottomToPosition(0.3, 1);
+        this.arm.moveClawToPosition(0.5, 1);
+        this.arm.moveLinearActuatorToPosition(0);
+        this.arm.moveClawToPosition(this.arm.getClaw().getConfig().clawBoomConfig.homePosition, 1);
+        this.arm.moveBottomToPosition(this.arm.getBottomBoom().getConfig().homePosition, 1);
+    }
+
+    /**
+     *
+     */
+    public void moveArm_fromInit_toPixelReady(PixelCatcher.WinchPosition winchPosition) {
         this.armPosition = ArmPosition.PIXEL_READY;
-        _moveArm_fromInit_toPixelReady();
+        _moveArm_fromInit_toPixelReady(winchPosition);
     }
 
     /**
@@ -419,13 +441,15 @@ public class CompBot extends IsaacBot{
     /**
      *
      */
-    private void _moveArm_fromInit_toPixelReady () {
-        if (this.pixelCatcher.getWinchPosition().equals(PixelCatcher.WinchPosition.UP)){
+    private void _moveArm_fromInit_toPixelReady (PixelCatcher.WinchPosition winchPosition) {
+
+        if (!this.pixelCatcher.getWinchPosition().equals(winchPosition)){
             this.pixelCatcher.toggleWinch();
         }
+
         this.arm.moveBottomToPosition(0.25, 0.001)
                 .moveLinearActuatorToPosition(this.robotConfig.pixelReady_linAct)
-                .addCommand(new WaitCommand(256));
+                .addCommand(new WaitCommand(250));
         this.arm.moveClawToPosition(this.robotConfig.pixelReady_clawBoom, 1)
                 .moveBottomToPosition(this.robotConfig.pixelReady_bottomBoom, 1);
     }

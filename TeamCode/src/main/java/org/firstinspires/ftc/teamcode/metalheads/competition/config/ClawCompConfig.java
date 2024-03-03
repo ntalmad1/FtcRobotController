@@ -35,7 +35,7 @@ public class ClawCompConfig extends ClawConfig {
         clawBoomConfig.minPosition = 0.01;
         clawBoomConfig.maxPosition = 1;
         clawBoomConfig.zeroDegreePosition = 0.55;
-        clawBoomConfig.homePosition = 0.01;
+        clawBoomConfig.homePosition = 0.03;
         clawBoomConfig.maxIncrement = 0.01;
 
         this.clawBoomConfig = clawBoomConfig;

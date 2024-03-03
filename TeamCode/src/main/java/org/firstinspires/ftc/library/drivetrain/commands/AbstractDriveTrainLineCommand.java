@@ -81,11 +81,11 @@ public abstract class AbstractDriveTrainLineCommand extends AbstractSynchronousC
         {
             int currentPosition = this.driveTrain.getLeftFrontMotor().getCurrentPosition();
 
-            if (this.driveTrain.getConfig().debug = true) {
-//                this.driveTrain.getRobot().telemetry.addData("Running to",  " %7d", tics);
-//                this.driveTrain.getRobot().telemetry.addData("Left Front Currently at",  " at %7d", this.driveTrain.getLeftFrontMotor().getCurrentPosition());
-//                this.driveTrain.getRobot().telemetry.addData("Left Front  Motor Power: ", " %f", this.driveTrain.getLeftFrontMotor().getPower());
-//                this.driveTrain.getRobot().telemetry.update();
+            if (this.driveTrain.getConfig().debug) {
+                this.driveTrain.getRobot().telemetry.addData("Running to",  " %7d", tics);
+                this.driveTrain.getRobot().telemetry.addData("Left Front Currently at",  " at %7d", this.driveTrain.getLeftFrontMotor().getCurrentPosition());
+                this.driveTrain.getRobot().telemetry.addData("Left Front  Motor Power: ", " %f", this.driveTrain.getLeftFrontMotor().getPower());
+                this.driveTrain.getRobot().telemetry.update();
             }
 
             if (currentPosition <= rampUpTicsEnd)
@@ -102,9 +102,21 @@ public abstract class AbstractDriveTrainLineCommand extends AbstractSynchronousC
         else {
             this.markAsCompleted();
 
-            this.driveTrain.getMotorGroup().setPower(0);
-            this.driveTrain.getMotorGroup().enableAll();
-            this.driveTrain.getMotorGroup().setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+            if (this.driveTrain.isBrakeOn()) {
+                this.driveTrain.getMotorGroup().enableAll();
+                this.driveTrain.getMotorGroup().setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+                this.driveTrain.getMotorGroup().setMode(DcMotor.RunMode.RUN_TO_POSITION);
+
+                this.driveTrain.getMotorGroup().setTargetPosition(0);
+
+                this.driveTrain.getMotorGroup().setPower(1);
+            }
+            else {
+                this.driveTrain.getMotorGroup().setPower(0);
+                this.driveTrain.getMotorGroup().enableAll();
+                this.driveTrain.getMotorGroup().setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+            }
+
         }
 
     }

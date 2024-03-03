@@ -166,6 +166,10 @@ public abstract class AbstractDriveTrain extends Component
         private final List<DcMotor> lockedMotors = new ArrayList<>();
 
         /**
+         */
+        private boolean brakeOn = false;
+
+        /**
          * Adds a motor to the group
          *
          * @param motor The motor to add to the group
@@ -198,6 +202,28 @@ public abstract class AbstractDriveTrain extends Component
 
             this.disabledMotors.clear();
             this.lockedMotors.clear();
+        }
+
+        /**
+         *
+         * @return
+         */
+        public boolean isBrakeOn () {
+            return this.brakeOn;
+        }
+
+        /**
+         *
+         */
+        public void setBrakeOn () {
+            this.brakeOn = true;
+        }
+
+        /**
+         *
+         */
+        public void setBrakeOff () {
+            this.brakeOn = false;
         }
 
         /**

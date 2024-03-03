@@ -20,16 +20,16 @@ public class ServoZero extends IsaacBot {
         waitForStart();
 
 //        Servo rightRelay = this.hardwareMap.get(Servo.class, "rightBoomRelay");
-        Servo leftRelay = this.hardwareMap.get(Servo.class, "leftBoomRelay");
+//        Servo leftRelay = this.hardwareMap.get(Servo.class, "leftBoomRelay");
 
 //        rightRelay.setPosition(1);
-        leftRelay.setPosition(1);
+//        leftRelay.setPosition(1);
 
-        Servo servo = this.hardwareMap.get(Servo.class, "bottomLeftServo");
+        Servo servo = this.hardwareMap.get(Servo.class, "baseClawServo");
         servo.resetDeviceConfigurationForOpMode();
 
         servo.setDirection(Servo.Direction.FORWARD);
-        servo.setPosition(0.5);
+        servo.setPosition(0.01);
 
 //        Servo servo2 = this.hardwareMap.get(Servo.class, "bottomLeftServo");
 //        servo2.resetDeviceConfigurationForOpMode();

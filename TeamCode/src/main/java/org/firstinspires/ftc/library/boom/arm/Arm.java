@@ -77,7 +77,7 @@ public class Arm extends Component {
     public void init () {
         super.init();
 
-        this.getCommandQueue().setDebug(true);
+        //this.getCommandQueue().setDebug(true);
 
         this.rightRelay = this.robot.hardwareMap.get(Servo.class, "rightBoomRelay");
         this.leftRelay = this.robot.hardwareMap.get(Servo.class, "leftBoomRelay");

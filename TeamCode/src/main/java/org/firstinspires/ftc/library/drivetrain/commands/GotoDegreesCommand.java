@@ -27,8 +27,8 @@ public class GotoDegreesCommand extends AbstractDriveTrainGyroTurnCommand {
      * @param maxPower
      * @param degrees
      */
-    public GotoDegreesCommand (SimpleDriveTrain driveTrain, Direction direction, double startPower, double maxPower, double degrees) {
-        super(driveTrain, startPower, maxPower, degrees);
+    public GotoDegreesCommand (SimpleDriveTrain driveTrain, Direction direction, double startPower, double maxPower, double degrees, Orientation orientation) {
+        super(driveTrain, startPower, maxPower, degrees, orientation);
 
         this.direction = direction;
     }
@@ -37,20 +37,21 @@ public class GotoDegreesCommand extends AbstractDriveTrainGyroTurnCommand {
     @Override
     public void init () {
 
+        this.driveTrain.resetMotorGroup();
+
+
         double yaw = this.driveTrain.getRobot().getYaw();
 
         double targetDegrees = this.degrees - Math.abs(yaw);
+
+        if (this.getOrientation().equals(Orientation.ABSOLUTE)) {
+            targetDegrees = degrees;
+        }
 
         if (targetDegrees < 0) {
             targetDegrees = Math.abs(targetDegrees);
             direction = direction.invert();
         }
-
-        this.driveTrain.getRobot().telemetry.addData("Yaw: ", "%2f", yaw);
-        this.driveTrain.getRobot().telemetry.addData("Degrees: ", "%2f", degrees);
-        this.driveTrain.getRobot().telemetry.addData("Calculated degrees to turn: ", "%2f", targetDegrees);
-        this.driveTrain.getRobot().telemetry.update();
-
 
         if (direction.equals(Direction.RIGHT)) {
             this.degrees = -targetDegrees;

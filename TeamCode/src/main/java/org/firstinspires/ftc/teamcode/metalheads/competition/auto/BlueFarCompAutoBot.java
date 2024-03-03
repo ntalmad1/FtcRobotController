@@ -3,13 +3,14 @@ package org.firstinspires.ftc.teamcode.metalheads.competition.auto;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
+import org.firstinspires.ftc.library.utility.Units;
 import org.firstinspires.ftc.teamcode.metalheads.competition.base.CompAutoBot;
 import org.firstinspires.ftc.library.utility.Direction;
 
 /**
  *
  */
-@Autonomous(name="BlueFarCompAutoBot", group="Blue")
+@TeleOp(name="BlueFarCompAutoBot", group="Blue")
 //@Disabled
 public class BlueFarCompAutoBot extends CompAutoBot {
 
@@ -41,9 +42,7 @@ public class BlueFarCompAutoBot extends CompAutoBot {
      *
      */
     public void go () {
-
         super.go();
-
     }
 
     /**

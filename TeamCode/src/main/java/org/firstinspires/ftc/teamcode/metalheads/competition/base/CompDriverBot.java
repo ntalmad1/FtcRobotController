@@ -1,5 +1,7 @@
 package org.firstinspires.ftc.teamcode.metalheads.competition.base;
 
+import org.firstinspires.ftc.library.component.event.g1_a_press.Gp1_A_PressEvent;
+import org.firstinspires.ftc.library.component.event.g1_a_press.Gp1_A_PressHandler;
 import org.firstinspires.ftc.library.pixelcatcher.PixelCatcher;
 import org.firstinspires.ftc.teamcode.metalheads.competition.config.MecanumDriveCompConfig;
 import org.firstinspires.ftc.library.drivetrain.MecanumDriveTrain;
@@ -79,6 +81,13 @@ public class CompDriverBot extends CompBot {
         this.addGp1_Y_PressHandler(event -> {
             CompDriverBot.this.toggleHangPosition();
         });
+
+        this.addGp1_A_PressHandler(new Gp1_A_PressHandler() {
+            @Override
+            public void onGp1_A_Press(Gp1_A_PressEvent event) {
+                CompDriverBot.this.moveArm_toHomePosition();
+            }
+        });
     }
 
     /**
@@ -87,7 +96,7 @@ public class CompDriverBot extends CompBot {
     public void go() {
         super.go();
 
-        this.moveArm_fromInit_toPixelReady();
+        this.moveArm_fromInit_toPixelReady(PixelCatcher.WinchPosition.DOWN);
     }
 
     /**

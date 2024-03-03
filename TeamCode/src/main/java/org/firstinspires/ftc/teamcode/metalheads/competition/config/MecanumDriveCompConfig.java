@@ -29,7 +29,7 @@ public class MecanumDriveCompConfig  extends MecanumDriveTrainConfig {
         this.rightFrontMotorDirection = DcMotorSimple.Direction.FORWARD;
         this.leftRearMotorDirection  =  DcMotorSimple.Direction.REVERSE;
         this.rightRearMotorDirection  = DcMotorSimple.Direction.FORWARD;
-        this.imuName = "imu";
+        this.imuName = "externalImu";
         this.debug = false;
     }
 }

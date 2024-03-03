@@ -15,14 +15,16 @@ public class DriveTrainGyroRearAxlePivotRightCommand extends AbstractDriveTrainG
      * @param maxPower
      * @param degrees
      */
-    public DriveTrainGyroRearAxlePivotRightCommand(SimpleDriveTrain driveTrain, double startPower, double maxPower, double degrees) {
-        super(driveTrain, startPower, maxPower, degrees);
+    public DriveTrainGyroRearAxlePivotRightCommand(
+            SimpleDriveTrain driveTrain, double startPower, double maxPower, double degrees, Orientation orientation) {
+        super(driveTrain, startPower, maxPower, degrees, orientation);
     }
 
     /**
      *
      */
     public void init () {
+        this.driveTrain.resetMotorGroup();
 
         this.driveTrain.getLeftFrontMotor().setDirection(DcMotorSimple.Direction.REVERSE);
         //this.driveTrain.getLeftRearMotor().setDirection(DcMotorSimple.Direction.FORWARD);
