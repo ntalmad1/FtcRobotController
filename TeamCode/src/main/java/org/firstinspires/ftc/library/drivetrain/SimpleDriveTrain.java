@@ -5,6 +5,8 @@ import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.DistanceSensor;
 
 import org.firstinspires.ftc.library.drivetrain.commands.AbstractDriveTrainGyroTurnCommand;
+import org.firstinspires.ftc.library.drivetrain.commands.AprilTagStrafeLeftCommand;
+import org.firstinspires.ftc.library.drivetrain.commands.AprilTagStrafeRightCommand;
 import org.firstinspires.ftc.library.drivetrain.commands.DriveTrainBackwardsCommand;
 import org.firstinspires.ftc.library.drivetrain.commands.DriveTrainDiagFrontLeftCommand;
 import org.firstinspires.ftc.library.drivetrain.commands.DriveTrainDiagFrontRightCommand;
@@ -24,9 +26,9 @@ import org.firstinspires.ftc.library.component.event.command_callback.CommandCal
 import org.firstinspires.ftc.library.drivetrain.commands.DriveTrainGyroTurnLeftCommand;
 import org.firstinspires.ftc.library.drivetrain.commands.DriveTrainGyroTurnRightCommand;
 import org.firstinspires.ftc.library.drivetrain.commands.DriveTrainSpinMotorCommand;
-import org.firstinspires.ftc.library.drivetrain.commands.GotoDegreesCommand;
 import org.firstinspires.ftc.library.utility.Direction;
 import org.firstinspires.ftc.library.utility.Units;
+import org.firstinspires.ftc.vision.apriltag.AprilTagProcessor;
 
 /**
  *
@@ -59,19 +61,6 @@ public class SimpleDriveTrain extends AbstractDriveTrain
 
     /**
      *
-     * @param direction
-     * @param startPower
-     * @param maxPower
-     * @param degrees
-     * @return
-     */
-    public SimpleDriveTrain gotoDegrees (Direction direction, double startPower, double maxPower, double degrees, AbstractDriveTrainGyroTurnCommand.Orientation orientation) {
-        this.addCommand(new GotoDegreesCommand(this, direction, startPower, maxPower, degrees, orientation));
-        return this;
-    }
-
-    /**
-     *
      * @param startPower Between 0.01 and 1
      * @param maxPower Between 0.01 and 1
      * @param distance The distance to travel - Units will default to the default units defined int he
@@ -92,6 +81,39 @@ public class SimpleDriveTrain extends AbstractDriveTrain
     public SimpleDriveTrain back (double startPower, double maxPower, double distance, Units units)
     {
         this.addCommand(new DriveTrainBackwardsCommand(this, startPower, maxPower, distance, units));
+        return this;
+    }
+
+    /**
+     *
+     * 0 - straight forwards from when the imu was last initialized
+     * 180 - opposite of forwards from when the imu was last initialized
+     * 90 - left
+     * -90 - right
+     *
+     * @param startPower
+     * @param maxPower
+     * @param targetDegrees
+     * @return
+     */
+    public SimpleDriveTrain gotoDegrees (double startPower, double maxPower, double targetDegrees) {
+
+        double currentDegrees = this.robot.getYaw();
+
+        if (currentDegrees == targetDegrees) {
+            return this;
+        }
+
+        if (currentDegrees > targetDegrees)
+        {
+            this.addCommand(new DriveTrainGyroTurnLeftCommand(this, startPower, maxPower, targetDegrees, AbstractDriveTrainGyroTurnCommand.Orientation.ABSOLUTE));
+        }
+        else
+        {
+            this.addCommand(new DriveTrainGyroTurnRightCommand(this, startPower, maxPower, targetDegrees, AbstractDriveTrainGyroTurnCommand.Orientation.ABSOLUTE));
+        }
+
+
         return this;
     }
 
@@ -419,6 +441,66 @@ public class SimpleDriveTrain extends AbstractDriveTrain
                 return this.sidewaysLeft(startPower, maxPower, distance, units);
         }
 
+        return this;
+    }
+
+    /**
+     *
+     * @param aprilTagProcessor
+     * @param direction
+     * @param id
+     * @param power
+     * @param maxDistance
+     * @param units
+     * @return
+     */
+    public SimpleDriveTrain strafeForAprilTag (
+            AprilTagProcessor aprilTagProcessor,
+            Direction direction,
+            int id,
+            double power,
+            double maxDistance,
+            Units units) {
+
+        switch (direction) {
+            case RIGHT:
+                return this.strafeForAprilTagRight(aprilTagProcessor, id, power, maxDistance, units);
+            case LEFT:
+                return this.strafeForAprilTagLeft(aprilTagProcessor, id, power, maxDistance, units);
+        }
+
+        return this;
+    }
+
+    /**
+     *
+     * @param aprilTagProcessor
+     * @param id
+     * @param power
+     * @param maxDistance
+     * @param units
+     * @return
+     */
+    public SimpleDriveTrain strafeForAprilTagRight (
+            AprilTagProcessor aprilTagProcessor, int id, double power, double maxDistance, Units units) {
+
+        this.addCommand(new AprilTagStrafeRightCommand(
+                this, aprilTagProcessor, id, power, maxDistance, units));
+        return this;
+    }
+
+    /**
+     *
+     * @param aprilTagProcessor
+     * @param id
+     * @param power
+     * @param maxDistance
+     * @param units
+     * @return
+     */
+    public SimpleDriveTrain strafeForAprilTagLeft (
+            AprilTagProcessor aprilTagProcessor, int id, double power, double maxDistance, Units units) {
+        this.addCommand(new AprilTagStrafeLeftCommand(this, aprilTagProcessor, id, power, maxDistance, units));
         return this;
     }
 

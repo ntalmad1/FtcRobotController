@@ -348,8 +348,7 @@ public class Arm extends Component {
      * @return "this" for a fluid interface
      */
     public Arm wait (int milliseconds) {
-        this.addCommand(new WaitCommand(milliseconds));
-        return this;
+        return (Arm) super.wait(milliseconds);
     }
 
     /**

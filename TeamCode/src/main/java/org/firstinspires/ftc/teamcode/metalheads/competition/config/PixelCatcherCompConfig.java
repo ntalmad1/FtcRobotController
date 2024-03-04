@@ -49,9 +49,9 @@ public class PixelCatcherCompConfig extends PixelCatcherConfig {
 
         this.winchToggle2 = Control.Gp1_LeftBumper_Down;
 
-        this.winchUpPosition = 0.639;
+        this.winchUpPosition = 0.664;
 
-        this.winchDownPosition = 0.939;
+        this.winchDownPosition = 0.949;
 
         this.winchServoInitPos = 0.645;
     }

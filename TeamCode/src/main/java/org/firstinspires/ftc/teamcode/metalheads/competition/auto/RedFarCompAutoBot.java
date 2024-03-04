@@ -6,6 +6,7 @@ import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import org.firstinspires.ftc.library.utility.Direction;
 import org.firstinspires.ftc.teamcode.metalheads.competition.base.CompAutoBot;
 import org.firstinspires.ftc.library.utility.Units;
+import org.firstinspires.ftc.teamcode.metalheads.competition.config.RobotAutoConfig;
 
 /**
  *
@@ -21,12 +22,7 @@ public class RedFarCompAutoBot extends CompAutoBot {
         super();
 
         this.robotAutoConfig.startingTrussDirection = Direction.RIGHT;
-        this.robotAutoConfig.routine = Routine.FAR;
-
-        this.robotAutoConfig.distanceUnderTruss_middle = 110;
-        this.robotAutoConfig.distanceUnderTruss_oppositeTruss = 120;
-
-        this.robotAutoConfig.placeYellowPixelDistance_middle = 82;
+        this.robotAutoConfig.startPosition = RobotAutoConfig.StartPosition.FAR;
     }
 
     /**

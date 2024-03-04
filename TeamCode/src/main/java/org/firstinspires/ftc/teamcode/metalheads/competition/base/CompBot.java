@@ -347,7 +347,9 @@ public class CompBot extends IsaacBot{
 
         this.arm.moveBottomToPosition(0.3, 1);
         this.arm.moveClawToPosition(0.5, 1);
+        this.arm.wait(1000);
         this.arm.moveLinearActuatorToPosition(0);
+        this.arm.wait(1000);
         this.arm.moveClawToPosition(this.arm.getClaw().getConfig().clawBoomConfig.homePosition, 1);
         this.arm.moveBottomToPosition(this.arm.getBottomBoom().getConfig().homePosition, 1);
     }

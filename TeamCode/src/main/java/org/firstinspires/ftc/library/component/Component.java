@@ -3,6 +3,7 @@ package org.firstinspires.ftc.library.component;
 import org.firstinspires.ftc.library.IsaacBot;
 import org.firstinspires.ftc.library.component.command.CommandQueue;
 import org.firstinspires.ftc.library.component.command.ICommand;
+import org.firstinspires.ftc.library.component.command.WaitCommand;
 import org.firstinspires.ftc.library.component.event.Event;
 import org.firstinspires.ftc.library.component.event.EventBus;
 import org.firstinspires.ftc.library.component.event.EventHandler;
@@ -313,6 +314,16 @@ public abstract class Component implements IComponent {
      *
      */
     public void init (){}
+
+    /**
+     *
+     * @param milliseconds
+     */
+    public Component wait (int milliseconds) {
+        WaitCommand waitCommand = new WaitCommand(milliseconds);
+        this.addCommand(waitCommand);
+        return this;
+    }
 
     /**
      *
