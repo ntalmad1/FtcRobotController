@@ -22,7 +22,7 @@ public class BlueDriverCompBot extends CompDriverBot {
     public void initBot () {
         //if always forwards is of yawoffset = 90 else it's 0
         this.driveTrainConfig.yawOffset = 90;
-        //this.armConfig.debug = true;
+        this.armConfig.debug = true;
         this.armConfig.bottomBoomConfig.invertInput = false;
         this.armConfig.clawConfig.clawBoomConfig.invertInput = false;
 

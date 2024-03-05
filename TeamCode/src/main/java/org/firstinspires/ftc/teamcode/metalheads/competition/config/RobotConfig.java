@@ -4,10 +4,10 @@ public class RobotConfig {
 
     public double pixelReady_bottomBoom = 0.245;
     public int    pixelReady_linAct =  2235;
-    public double pixelReady_clawBoom = 0.936;
+    public double pixelReady_clawBoom = 0.959;
 
     public double pixelPick_bottomBoom = 0.228;
-    public double pixelPick_clawBoom = 0.926;
+    public double pixelPick_clawBoom = 0.941;
 
     public double pixelPlace_bottomBoom = 0.274;
     public int    pixelPlace_linAct =  3400;

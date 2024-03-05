@@ -120,11 +120,16 @@ public class Winch extends Component {
         }
     }
 
+    int count = 0;
+
     /**
      *
      * @param position
      */
     protected void onTriggerEvent (float position) {
+//        this.telemetry.log().add("OnTriggerEvent (" + count + ", " + position + ")");
+//        ++count;
+
         if (position == 0) {
             if (this.motor.isBrakeOn()) {
 

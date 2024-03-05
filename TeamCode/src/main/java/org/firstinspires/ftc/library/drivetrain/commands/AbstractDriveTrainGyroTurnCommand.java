@@ -36,6 +36,8 @@ public abstract class AbstractDriveTrainGyroTurnCommand extends AbstractSynchron
     double currentDegrees;
     double targetDegrees;
 
+    double startingDegrees;
+
     /**
      */
     private Orientation orientation;
@@ -81,6 +83,7 @@ public abstract class AbstractDriveTrainGyroTurnCommand extends AbstractSynchron
         this.powerBand = maxPower - startPower;
 
         this.currentDegrees = this.driveTrain.getYaw();
+        this.startingDegrees = this.currentDegrees;
 
         if (this.orientation.equals(Orientation.RELATIVE)) {
             this.targetDegrees = this.currentDegrees + this.degrees;
@@ -98,8 +101,15 @@ public abstract class AbstractDriveTrainGyroTurnCommand extends AbstractSynchron
 
     @Override
     public void run () {
+        currentDegrees = this.driveTrain.getYaw();
 
-        if (degrees >= 0 && (currentDegrees < targetDegrees))
+        if (degrees == 0 && (this.startingDegrees > 0) && (this.currentDegrees >= 0)) {
+            this.driveTrain.getMotorGroup().setPower(this.startPower);
+        }
+        else if (degrees == 0 && (this.startingDegrees < 0) && (this.currentDegrees <= 0)) {
+            this.driveTrain.getMotorGroup().setPower(this.startPower);
+        }
+        else if (degrees > 0 && (currentDegrees < targetDegrees))
         {
 //            if (currentDegrees <= rampUpDegrees)
 //            {
@@ -114,7 +124,7 @@ public abstract class AbstractDriveTrainGyroTurnCommand extends AbstractSynchron
 
             this.driveTrain.getMotorGroup().setPower(this.startPower);
 
-            if (true || this.driveTrain.getConfig().isDebug())
+            if (this.driveTrain.getConfig().isDebug())
             {
                 currentDegrees = this.driveTrain.getYaw();
                 this.driveTrain.telemetry.addData("Degrees: ", "%2f", degrees);
@@ -126,6 +136,7 @@ public abstract class AbstractDriveTrainGyroTurnCommand extends AbstractSynchron
         }
         else if (degrees < 0 && (currentDegrees > targetDegrees))
         {
+
 //            if (currentDegrees >= rampUpDegrees)
 //            {
 //                double newPower = startPower + Math.abs(((currentDegrees / rampUpDegrees) * powerBand));
@@ -139,9 +150,8 @@ public abstract class AbstractDriveTrainGyroTurnCommand extends AbstractSynchron
 
             this.driveTrain.getMotorGroup().setPower(this.startPower);
 
-            if (true || this.driveTrain.getConfig().isDebug())
+            if (this.driveTrain.getConfig().isDebug())
             {
-                currentDegrees = this.driveTrain.getYaw();
                 this.driveTrain.telemetry.addData("Degrees: ", "%2f", degrees);
                 this.driveTrain.telemetry.addData("Target Degrees: ", "%2f", targetDegrees);
                 this.driveTrain.telemetry.addData("Current Degrees: ", "%2f", currentDegrees);

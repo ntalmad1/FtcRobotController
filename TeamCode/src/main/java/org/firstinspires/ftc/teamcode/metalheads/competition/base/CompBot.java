@@ -4,11 +4,9 @@ import com.qualcomm.hardware.rev.RevTouchSensor;
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DistanceSensor;
-import com.qualcomm.robotcore.hardware.TouchSensor;
 
 import org.firstinspires.ftc.library.IsaacBot;
 import org.firstinspires.ftc.library.boom.arm.Arm;
-import org.firstinspires.ftc.library.component.command.Command;
 import org.firstinspires.ftc.library.component.command.ICommand;
 import org.firstinspires.ftc.library.component.command.OneTimeCommand;
 import org.firstinspires.ftc.library.component.command.OneTimeSynchronousCommand;
@@ -42,11 +40,6 @@ import org.firstinspires.ftc.teamcode.metalheads.competition.config.WinchCompCon
 public class CompBot extends IsaacBot{
 
     /**
-     *
-     */
-    protected RobotConfig robotConfig;
-
-    /**
      */
     public enum ArmPosition {
         INIT,
@@ -56,9 +49,6 @@ public class CompBot extends IsaacBot{
         PIXEL_PLACE_ROW3,
     }
 
-    /**
-     */
-    protected ArmCompConfig armConfig;
 
     /**
      */
@@ -66,7 +56,15 @@ public class CompBot extends IsaacBot{
 
     /**
      */
+    protected ArmCompConfig armConfig;
+
+    /**
+     */
     protected ArmPosition armPosition = ArmPosition.INIT;
+
+    /**
+     */
+    protected DistanceSensor backdropSensor;
 
     /**
      */
@@ -83,10 +81,11 @@ public class CompBot extends IsaacBot{
     /**
      */
     protected PixelCatcher pixelCatcher;
-
     /**
+     *
      */
-    protected DistanceSensor backdropSensor;
+    protected RobotConfig robotConfig;
+
 
     /**
      */
@@ -94,15 +93,20 @@ public class CompBot extends IsaacBot{
 
     /**
      */
-    protected WinchConfig winchConfig;
-
-    /**
-     */
     protected Winch winch;
 
     /**
      */
-    private boolean pickingPixel = false;
+    protected WinchConfig winchConfig;
+    /**
+     *
+     */
+    private float hangPower = (float)0.02;
+
+    /**
+     */
+    private boolean pickingPixels = false;
+
 
     /**
      * Constructor
@@ -121,10 +125,11 @@ public class CompBot extends IsaacBot{
         this.pixelCatcherConfig = new PixelCatcherCompConfig(this);
 
         this.winchConfig = new WinchCompConfig(this);
-        this.winchConfig.debug = true;
+        this.winchConfig.debug = false;
 
         //-------------------------------------------------
         // A Button
+        // First, cancel all commands then do onAPress()
         //-------------------------------------------------
         this.addGp2_A_PressHandler(event -> {
             CompBot.this.arm.cancelAllCommands();
@@ -134,6 +139,7 @@ public class CompBot extends IsaacBot{
 
         //-------------------------------------------------
         // B Button
+        // First, cancel all commands then do onBPress()
         //-------------------------------------------------
         this.addGp2_B_PressHandler(event -> {
             CompBot.this.arm.cancelAllCommands();
@@ -143,17 +149,20 @@ public class CompBot extends IsaacBot{
 
         //-------------------------------------------------------
         // X Button
+        // First, cancel all commands then do onXPress()
+        // If the robot is picking pixels, move the bottom boom up
+        // so the claw does not collide with the pixel catcher
         //-------------------------------------------------------
         this.addGp2_X_PressHandler(event -> {
             CompBot.this.arm.cancelAllCommands();
 
-            if (this.pickingPixel) {
+            if (this.pickingPixels) {
                 this.addCommand(new OneTimeSynchronousCommand() {
                     public void runOnce(ICommand outerCommand) {
                         CompBot.this.arm.moveBottomToPosition(CompBot.this.robotConfig.pixelReady_bottomBoom, 1)
                                 .wait(250, new CommandCallbackAdapter(){
                                     public void onSuccess(CommandSuccessEvent successEvent) {
-                                        CompBot.this.pickingPixel = false;
+                                        CompBot.this.pickingPixels = false;
                                         CompBot.this.onXPress();
                                         outerCommand.markAsCompleted();
                                     }
@@ -164,75 +173,7 @@ public class CompBot extends IsaacBot{
             else {
                 this.onXPress();
             }
-
-
         });
-    }
-
-    /**
-     *
-     */
-    private void onAPress () {
-        if (this.armPosition.equals(ArmPosition.INIT)) {
-            CompBot.this.armPosition = ArmPosition.PIXEL_READY;
-            CompBot.this.moveArm_fromInit_toPixelReady(PixelCatcher.WinchPosition.DOWN);
-        }
-        else if (this.armPosition.equals(ArmPosition.PIXEL_PLACE_ROW1) ||
-                this.armPosition.equals(ArmPosition.PIXEL_PLACE_ROW2) ||
-                this.armPosition.equals(ArmPosition.PIXEL_PLACE_ROW3)) {
-            CompBot.this.armPosition = ArmPosition.PIXEL_READY;
-            CompBot.this.moveArm_fromPixelPlace_toPixelReady();
-        }
-        else if (this.armPosition.equals(ArmPosition.PIXEL_READY)) {
-            CompBot.this.armPosition = ArmPosition.PIXEL_READY;
-            CompBot.this.moveArm_fromPixelReady_doPixelPick();
-        }
-    }
-
-    /**
-     *
-     */
-    private void onBPress () {
-        if (this.armPosition.equals(ArmPosition.INIT)) {
-            CompBot.this.armPosition = ArmPosition.PIXEL_READY;
-            CompBot.this.moveArm_fromInit_toPixelReady(PixelCatcher.WinchPosition.DOWN);
-        }
-        else if (this.armPosition.equals(ArmPosition.PIXEL_PLACE_ROW1) ||
-                this.armPosition.equals(ArmPosition.PIXEL_PLACE_ROW2) ||
-                this.armPosition.equals(ArmPosition.PIXEL_PLACE_ROW3)) {
-            CompBot.this.armPosition = ArmPosition.PIXEL_READY;
-            CompBot.this.moveArm_fromPixelPlace_toPixelReady();
-        }
-        else if (this.armPosition.equals(ArmPosition.PIXEL_READY)) {
-            CompBot.this.armPosition = ArmPosition.PIXEL_READY;
-            CompBot.this.moveArm_fromPixelPlace_toPixelReady();
-        }
-    }
-
-    /**
-     *
-     */
-    private void onXPress () {
-        if (this.armPosition.equals(ArmPosition.INIT)) {
-            CompBot.this.armPosition = ArmPosition.PIXEL_PLACE_ROW1;
-            CompBot.this.moveArm_fromInit_toPixelPlace();
-        }
-        else if (this.armPosition.equals(ArmPosition.PIXEL_PLACE_ROW1)) {
-            CompBot.this.armPosition = ArmPosition.PIXEL_PLACE_ROW2;
-            CompBot.this.moveArm_fromPixelPlace_toPixelPlaceRow2();
-        }
-        else if (this.armPosition.equals(ArmPosition.PIXEL_PLACE_ROW2)) {
-            CompBot.this.armPosition = ArmPosition.PIXEL_PLACE_ROW3;
-            CompBot.this.moveArm_fromPixelPlaceRow2_toPixelPlaceRow3();
-        }
-        else if (this.armPosition.equals(ArmPosition.PIXEL_PLACE_ROW3)) {
-            CompBot.this.armPosition = ArmPosition.PIXEL_PLACE_ROW1;
-            CompBot.this.moveArm_fromPixelPlaceHigh_toPixelPlace();
-        }
-        else if (this.armPosition.equals(ArmPosition.PIXEL_READY)) {
-            CompBot.this.armPosition = ArmPosition.PIXEL_PLACE_ROW1;
-            CompBot.this.moveArm_fromPixelReady_toPixelPlace();
-        }
     }
 
     /**
@@ -275,13 +216,18 @@ public class CompBot extends IsaacBot{
 
     /**
      *
+     * @param milliseconds
+     * @param callbackHandler
+     * @return
      */
-    private float hangPower = (float)0.02;
+    public CompBot wait (int milliseconds, CommandCallbackHandler callbackHandler) {
+        return (CompBot) super.wait(milliseconds, callbackHandler);
+    }
 
     /**
      *
      */
-    public void doHang () {
+    protected void doHang () {
         this.arm.addCommand(new OneTimeCommand() {
                     @Override
                     public void runOnce(ICommand command) {
@@ -303,17 +249,20 @@ public class CompBot extends IsaacBot{
         });
 
         this.arm.moveClawToPosition(this.arm.getClaw().getConfig().clawBoomConfig.homePosition);
-        //this.arm.wait(250);
+        this.arm.wait(250);
 
-        for (int i = 0; i < 450; ++i)
+        for (int i = 0; i < 100; ++i)
         {
             this.arm.addCommand(new OneTimeCommand() {
                 @Override
                 public void runOnce(ICommand command) {
-                    CompBot.this.getEventBus().fireEvent(new Gp2_Left_Trigger_Event(hangPower));
-                    command.markAsCompleted();
+                  // CompBot.this.telemetry.log().add("Adding Gp2_Left_Trigger_Event (" + i + ", " + hangPower + ")");
+                  CompBot.this.getEventBus().fireEvent(new Gp2_Left_Trigger_Event(hangPower));
+                  command.markAsCompleted();
                 }
             });
+            this.arm.wait(2);
+
             if (hangPower < 1) {
                 hangPower += 0.02;
             }
@@ -325,23 +274,23 @@ public class CompBot extends IsaacBot{
     }
 
     /**
+     */
+    protected void doHangStop () {
+
+    }
+
+    /**
      *
      * @return
      */
-    public RobotConfig getRobotConfig () {
+    protected RobotConfig getRobotConfig () {
         return this.robotConfig;
     }
 
     /**
-     */
-    public void doHangStop () {
-
-    }
-
-    /**
      *
      */
-    public void moveArm_toHomePosition () {
+    protected void moveArm_toHomePosition () {
 
         this.armPosition = ArmPosition.INIT;
 
@@ -357,7 +306,7 @@ public class CompBot extends IsaacBot{
     /**
      *
      */
-    public void moveArm_fromInit_toPixelReady(PixelCatcher.WinchPosition winchPosition) {
+    protected void moveArm_fromInit_toPixelReady(PixelCatcher.WinchPosition winchPosition) {
         this.armPosition = ArmPosition.PIXEL_READY;
         _moveArm_fromInit_toPixelReady(winchPosition);
     }
@@ -365,42 +314,42 @@ public class CompBot extends IsaacBot{
     /**
      *
      */
-    public void moveArm_fromInit_toPixelPlace() { _moveArm_fromInit_toPixelPlace(); }
+    protected void moveArm_fromInit_toPixelPlace() { _moveArm_fromInit_toPixelPlace(); }
 
     /**
      *
      */
-    public void moveArm_fromPixelReady_toPixelPlace () { _moveArm_fromPixelReady_toPixelPlace(); }
+    protected void moveArm_fromPixelReady_toPixelPlace () { _moveArm_fromPixelReady_toPixelPlace(); }
 
     /**
      *
      */
-    public void moveArm_fromPixelReady_doPixelPick () { _moveArm_fromPixelReady_doPickPixels(); }
+    protected void moveArm_fromPixelReady_doPixelPick () { _moveArm_fromPixelReady_doPickPixels(); }
 
     /**
      *
      */
-    public void moveArm_fromPixelPlace_toPixelReady () { _moveArm_fromPixelPlace_toPixelReady(); }
+    protected void moveArm_fromPixelPlace_toPixelReady () { _moveArm_fromPixelPlace_toPixelReady(); }
 
     /**
      *
      */
-    public void moveArm_fromPixelPlace_toPixelPlaceRow2 () { _moveArm_fromPixelPlace_toPixelPlaceRow2(); }
+    protected void moveArm_fromPixelPlace_toPixelPlaceRow2 () { _moveArm_fromPixelPlace_toPixelPlaceRow2(); }
 
     /**
      *
      */
-    public void moveArm_fromPixelPlaceRow2_toPixelPlaceRow3 () { _moveArm_fromPixelPlaceRow2_toPixelPlaceRow3(); }
+    protected void moveArm_fromPixelPlaceRow2_toPixelPlaceRow3 () { _moveArm_fromPixelPlaceRow2_toPixelPlaceRow3(); }
 
     /**
      *
      */
-    public void moveArm_fromPixelPlaceHigh_toPixelPlace () { _moveArm_fromPixelPlaceHigh_toPixelPlace(); }
+    protected void moveArm_fromPixelPlaceHigh_toPixelPlace () { _moveArm_fromPixelPlaceHigh_toPixelPlace(); }
 
     /**
      *
      */
-    public void moveArm_toHangReady () {
+    protected void moveArm_toHangReady () {
         if (this.arm.getBottomBoom().getPosition() < this.robotConfig.pixelReady_bottomBoom) {
             this.arm.moveBottomToPosition(this.robotConfig.hangReady_bottomBoom, 1);
         }
@@ -432,12 +381,75 @@ public class CompBot extends IsaacBot{
 
     /**
      *
-     * @param milliseconds
-     * @param callbackHandler
-     * @return
+     * @param handler
      */
-    public CompBot wait (int milliseconds, CommandCallbackHandler callbackHandler) {
-        return (CompBot) super.wait(milliseconds, callbackHandler);
+    protected void pingBackdrop (PingHandler handler) {
+        PingEvent event = new PingEvent(0, this.backdropSensor.getDistance(DistanceUnit.CM), DistanceUnit.CM);
+        handler.onPing(event);
+    }
+
+    /**
+     *
+     */
+    private void onAPress () {
+        if (this.armPosition.equals(ArmPosition.INIT)) {
+            CompBot.this.armPosition = ArmPosition.PIXEL_READY;
+            CompBot.this.moveArm_fromInit_toPixelReady(PixelCatcher.WinchPosition.DOWN);
+        }
+        else if (this.armPosition.equals(ArmPosition.PIXEL_PLACE_ROW1) ||
+                this.armPosition.equals(ArmPosition.PIXEL_PLACE_ROW2) ||
+                this.armPosition.equals(ArmPosition.PIXEL_PLACE_ROW3)) {
+            CompBot.this.armPosition = ArmPosition.PIXEL_READY;
+            CompBot.this.moveArm_fromPixelPlace_toPixelReady();
+        }
+        else if (this.armPosition.equals(ArmPosition.PIXEL_READY)) {
+            CompBot.this.moveArm_fromPixelReady_doPixelPick();
+        }
+    }
+
+    /**
+     *
+     */
+    private void onBPress () {
+        if (this.armPosition.equals(ArmPosition.INIT)) {
+            CompBot.this.armPosition = ArmPosition.PIXEL_READY;
+            CompBot.this.moveArm_fromInit_toPixelReady(PixelCatcher.WinchPosition.DOWN);
+        }
+        else if (this.armPosition.equals(ArmPosition.PIXEL_PLACE_ROW1) ||
+                this.armPosition.equals(ArmPosition.PIXEL_PLACE_ROW2) ||
+                this.armPosition.equals(ArmPosition.PIXEL_PLACE_ROW3)) {
+            CompBot.this.armPosition = ArmPosition.PIXEL_READY;
+            CompBot.this.moveArm_fromPixelPlace_toPixelReady();
+        }
+        else if (this.armPosition.equals(ArmPosition.PIXEL_READY)) {
+            CompBot.this.moveArm_fromPixelPlace_toPixelReady();
+        }
+    }
+
+    /**
+     *
+     */
+    private void onXPress () {
+        if (this.armPosition.equals(ArmPosition.INIT)) {
+            CompBot.this.armPosition = ArmPosition.PIXEL_PLACE_ROW1;
+            CompBot.this.moveArm_fromInit_toPixelPlace();
+        }
+        else if (this.armPosition.equals(ArmPosition.PIXEL_PLACE_ROW1)) {
+            CompBot.this.armPosition = ArmPosition.PIXEL_PLACE_ROW2;
+            CompBot.this.moveArm_fromPixelPlace_toPixelPlaceRow2();
+        }
+        else if (this.armPosition.equals(ArmPosition.PIXEL_PLACE_ROW2)) {
+            CompBot.this.armPosition = ArmPosition.PIXEL_PLACE_ROW3;
+            CompBot.this.moveArm_fromPixelPlaceRow2_toPixelPlaceRow3();
+        }
+        else if (this.armPosition.equals(ArmPosition.PIXEL_PLACE_ROW3)) {
+            CompBot.this.armPosition = ArmPosition.PIXEL_PLACE_ROW1;
+            CompBot.this.moveArm_fromPixelPlaceHigh_toPixelPlace();
+        }
+        else if (this.armPosition.equals(ArmPosition.PIXEL_READY)) {
+            CompBot.this.armPosition = ArmPosition.PIXEL_PLACE_ROW1;
+            CompBot.this.moveArm_fromPixelReady_toPixelPlace();
+        }
     }
 
     /**
@@ -548,70 +560,42 @@ public class CompBot extends IsaacBot{
      *
      */
     private void _moveArm_fromPixelReady_doPickPixels () {
+        this.arm.wait(0, new CommandCallbackAdapter () {
+                    public void onSuccess(CommandSuccessEvent successEvent) {
+                        CompBot.this.pickingPixels = true;
+                    }
+                })
+                .closeLeftClaw()
+                .closeRightClaw()
+                .wait(350)
+                .moveBottomToPosition(this.robotConfig.pixelPick_bottomBoom, 1)
+                .moveClawToPosition(this.robotConfig.pixelPick_clawBoom, 0.25)
+                .wait(350)
+                .openLeftClaw()
+                .openRightClaw();
 
-            this.arm.wait(0, new CommandCallbackAdapter () {
-                        public void onSuccess(CommandSuccessEvent successEvent) {
-                            CompBot.this.pickingPixel = true;
-                        }
-                    })
-                    .closeLeftClaw()
-                    .closeRightClaw()
-                    .wait(350)
-                    .moveBottomToPosition(this.robotConfig.pixelPick_bottomBoom, 1)
-                    .moveClawToPosition(this.robotConfig.pixelPick_clawBoom, 0.25)
-                    .wait(350)
-                    .openLeftClaw()
-                    .openRightClaw();
+        this.arm.addCommand(new OneTimeCommand() {
+                    @Override
+                    public void runOnce(ICommand leftArmCommand) {
+                        CompBot.this.pixelCatcher.setLeftArmPosition(0.6);
+                        leftArmCommand.markAsCompleted();
+                    }
+                });
+        this.arm.addCommand(new OneTimeCommand() {
+                    @Override
+                    public void runOnce(ICommand rightArmCommand) {
+                        CompBot.this.pixelCatcher.setRightArmPosition(0.6);
+                        rightArmCommand.markAsCompleted();
+                    }
+                });
 
-            this.arm.addCommand(new OneTimeCommand() {
-                        @Override
-                        public void runOnce(ICommand leftArmCommand) {
-                            CompBot.this.pixelCatcher.setLeftArmPosition(0.6);
-                            leftArmCommand.markAsCompleted();
-                        }
-                    });
-            this.arm.addCommand(new OneTimeCommand() {
-                        @Override
-                        public void runOnce(ICommand rightArmCommand) {
-                            CompBot.this.pixelCatcher.setRightArmPosition(0.6);
-                            rightArmCommand.markAsCompleted();
-                        }
-                    });
-
-            this.arm.wait(250)
-                    .moveBottomToPosition(this.robotConfig.pixelReady_bottomBoom, 1)
-                    .moveClawToPosition(this.robotConfig.pixelReady_clawBoom, 0.25)
-                    .wait(500, new CommandCallbackAdapter () {
-                        public void onSuccess(CommandSuccessEvent successEvent) {
-                            CompBot.this.pickingPixel = false;
-                        }
-                    });
-
-//        this.arm.addCommand(new OneTimeCommand() {
-//            @Override
-//            public void runOnce(ICommand leftArmCommand) {
-//                CompBot.this.pixelCatcher.setLeftArmPosition(1);
-//                leftArmCommand.markAsCompleted();
-//            }
-//        });
-//
-//        this.arm.addCommand(new OneTimeCommand() {
-//            @Override
-//            public void runOnce(ICommand rightArmCommand) {
-//                CompBot.this.pixelCatcher.setRightArmPosition(1);
-//                rightArmCommand.markAsCompleted();
-//            }
-//        });
+        this.arm.wait(250)
+                .moveBottomToPosition(this.robotConfig.pixelReady_bottomBoom, 1)
+                .moveClawToPosition(this.robotConfig.pixelReady_clawBoom, 0.25)
+                .wait(500, new CommandCallbackAdapter () {
+                    public void onSuccess(CommandSuccessEvent successEvent) {
+                        CompBot.this.pickingPixels = false;
+                    }
+                });
     }
-
-    /**
-     *
-     * @param handler
-     */
-    protected void pingBackdrop (PingHandler handler) {
-        PingEvent event = new PingEvent(0, this.backdropSensor.getDistance(DistanceUnit.CM), DistanceUnit.CM);
-        handler.onPing(event);
-    }
-
-
 }
