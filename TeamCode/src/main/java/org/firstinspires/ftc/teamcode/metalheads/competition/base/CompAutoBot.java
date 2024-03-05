@@ -14,7 +14,6 @@ import org.firstinspires.ftc.library.component.event.g1_a_press.Gp1_A_PressEvent
 import org.firstinspires.ftc.library.component.event.g1_a_press.Gp1_A_PressHandler;
 import org.firstinspires.ftc.library.component.event.gp2_y_press.Gp2_Y_PressEvent;
 import org.firstinspires.ftc.library.component.event.gp2_y_press.Gp2_Y_PressHandler;
-import org.firstinspires.ftc.library.component.event.ping.PingEvent;
 import org.firstinspires.ftc.library.drivetrain.SimpleDriveTrain;
 import org.firstinspires.ftc.library.drivetrain.commands.AbstractDriveTrainGyroTurnCommand;
 import org.firstinspires.ftc.library.pixelcatcher.PixelCatcher;
@@ -22,6 +21,7 @@ import org.firstinspires.ftc.library.utility.Direction;
 import org.firstinspires.ftc.library.utility.Units;
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
+import org.firstinspires.ftc.robotcore.external.navigation.Position;
 import org.firstinspires.ftc.teamcode.metalheads.competition.config.RobotAutoConfig;
 import org.firstinspires.ftc.teamcode.metalheads.competition.config.SimpleDriveCompConfig;
 import org.firstinspires.ftc.vision.VisionPortal;
@@ -55,7 +55,6 @@ public class CompAutoBot extends CompBot {
      */
     protected Rev2mDistanceSensor tokenSensor;
 
-
     /**
      */
     protected VisionPortal visionPortal;
@@ -85,7 +84,7 @@ public class CompAutoBot extends CompBot {
         super();
 
         // By declaring the configs here in the constructor any class that
-        // extends this class can make updated to the configs before the
+        // extends this class can make updates to the configs before the
         // objects are instantiated
 
         this.robotAutoConfig = new RobotAutoConfig();
@@ -161,6 +160,7 @@ public class CompAutoBot extends CompBot {
             }
         };
 
+        // deploy the arm to scan for token position
         this.deployArmCommand = new OneTimeCommand(){
             public void runOnce(ICommand command ) {
                 CompAutoBot.this.arm
@@ -304,14 +304,12 @@ public class CompAutoBot extends CompBot {
      */
     public CompAutoBot wait (int milliseconds, CommandCallbackHandler callbackHandler) {
         return (CompAutoBot) super.wait(milliseconds, callbackHandler);
-
-
     }
 
-    /**
+     /**
      *
      */
-    protected void autoRoutine_beginStepTwo_far() {
+    protected void autoRoutine_beginStepTwo_Corner(int distanceBack, int distanceToScanPosition) {
 
 //        this.addCommand(new OneTimeSynchronousCommand() {
 //            public void runOnce(ICommand outerCommand) {
@@ -467,9 +465,8 @@ public class CompAutoBot extends CompBot {
 
     /**
      *
-     * @param distance
      */
-    protected void autoRoutine_beginStepTwo_near (int distance, int forwards) {
+    protected void autoRoutine_beginStepTwo_Middle (int distanceToMiddle, int distanceToScanPosition) {
 
 //        this.addCommand(new OneTimeCommand() {
 //            public void runOnce(ICommand command) {
@@ -533,6 +530,8 @@ public class CompAutoBot extends CompBot {
 
     }
 
+//region PlacePurplePixel
+
     /**
      *
      */
@@ -546,15 +545,10 @@ public class CompAutoBot extends CompBot {
             public void runOnce(ICommand command) {
                 CompAutoBot.this.arm.moveBottomToPosition(CompAutoBot.this.getRobotConfig().pixelReady_bottomBoom);
                 CompAutoBot.this.driveTrain
-                        .forward(
-                                0.2,
-                                0.4,
-                                CompAutoBot.this.robotAutoConfig.placePurplePixelForwardsDistance, Units.Centimeters)
-                        .wait(0, new CommandCallbackAdapter(this){
-                            public void onAfter(CommandAfterEvent afterEvent) {
-                                command.markAsCompleted();
-                            }
-                        });
+                        .forward(0.2,
+                                 0.4,
+                                 CompAutoBot.this.robotAutoConfig.placePurplePixelForwardsDistance, Units.Centimeters)
+                        .endCommand(command);
             }
         });
 
@@ -562,32 +556,42 @@ public class CompAutoBot extends CompBot {
         this.addCommand(new OneTimeSynchronousCommand() {
             public void runOnce(ICommand outerCommand) {
                 CompAutoBot.this.closeClaw(CompAutoBot.this.robotAutoConfig.startingTrussDirection.invert());
-                CompAutoBot.this.arm.wait(100, new CommandCallbackAdapter(){
-                    public void onSuccess(CommandSuccessEvent successEvent) {
-                       outerCommand.markAsCompleted();
-                    }
-                });
+                CompAutoBot.this.arm.wait(100);
                 CompAutoBot.this.moveArm_fromInit_toPixelReady(PixelCatcher.WinchPosition.UP);
-                CompAutoBot.this.driveTrain.back(
-                        0.2,
-                        0.3,
-                        CompAutoBot.this.robotAutoConfig.placePurplePixelForwardsDistance, Units.Centimeters);
-                CompAutoBot.this.driveTrain.wait(0, new CommandCallbackAdapter(this){
-                    public void onSuccess(CommandSuccessEvent successEvent) {
-                        this.command.markAsCompleted();
-
-                        // 13 cm to back
-
-//                        if (CompAutoBot.this.robotAutoConfig.startPosition.equals(RobotAutoConfig.StartPosition.NEAR)) {
-//                            CompAutoBot.this.autoRoutine_beginStepTwo_near(81, 0);
-//                        }
-//                        else {
-//                            CompAutoBot.this.autoRoutine_beginStepTwo_far();
-//                        }
-                    }
-                });
+                CompAutoBot.this.driveTrain.endCommand(outerCommand);
             }
         });
+
+        // Corner :: reverse steps then begin step twp
+        if (this.robotAutoConfig.parkPosition.equals(RobotAutoConfig.ParkPosition.CORNER)) {
+            this.addCommand(new OneTimeSynchronousCommand() {
+                public void runOnce(ICommand outerCommand) {
+                    CompAutoBot.this.driveTrain.back(
+                            0.2,
+                            0.3,
+                            CompAutoBot.this.robotAutoConfig.placePurplePixelForwardsDistance, Units.Centimeters);
+                    CompAutoBot.this.driveTrain.wait(0, new CommandCallbackAdapter(){
+                        public void onSuccess(CommandSuccessEvent successEvent) {
+                            outerCommand.markAsCompleted();
+
+                            //** **//
+                            CompAutoBot.this.autoRoutine_beginStepTwo_Corner(13, );
+                        }
+                    });
+                }
+            });
+        }
+        // Middle :: sideways then begin step two
+        else {
+
+        }
+
+
+
+
+                // 13 cm to back
+
+
     }
 
     /**
@@ -719,15 +723,17 @@ public class CompAutoBot extends CompBot {
                 });
             }
         });
-
-
     }
+
+//endregion
+//region PlaceYellow
+
 
     /**
      *
      * @param distance
      */
-    protected void autoRoutine_placeYellowPixel (double distance) {
+    protected void autoRoutine_placeYellowPixelBackstage (double distance) {
 
         this.addCommand(new OneTimeSynchronousCommand() {
             public void runOnce(ICommand command) {
@@ -746,7 +752,7 @@ public class CompAutoBot extends CompBot {
                         .wait(0, new CommandCallbackAdapter(this){
                             public void onSuccess(CommandSuccessEvent successEvent) {
                                 this.command.markAsCompleted();
-                                CompAutoBot.this.autoRoutine_placeYellowPixelOnBackdrop();
+                                CompAutoBot.this.autoRoutine_placeYellowPixelBackdrop();
                             }
                         });
 
@@ -757,7 +763,7 @@ public class CompAutoBot extends CompBot {
     /**
      *
      */
-    protected void autoRoutine_placeYellowPixelOnBackdrop() {
+    protected void autoRoutine_placeYellowPixelBackdrop() {
 
 //        this.addCommand(new OneTimeSynchronousCommand() {
 //            public void runOnce(ICommand command) {
@@ -810,6 +816,9 @@ public class CompAutoBot extends CompBot {
 //            }
 //        });
     }
+
+//endregion
+//region ScanForToken
 
     /**
      *
@@ -873,6 +882,8 @@ public class CompAutoBot extends CompBot {
         });
     }
 
+//endregion
+//region PrivateUtilities
 
     /**
      *
@@ -951,4 +962,7 @@ public class CompAutoBot extends CompBot {
                     hardwareMap.get(WebcamName.class, this.robotAutoConfig.webCamName), aprilTagProcessor);
 
     }
+
+//endregion
+
 }

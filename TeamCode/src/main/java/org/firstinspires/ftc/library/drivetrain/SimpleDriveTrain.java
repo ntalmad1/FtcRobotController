@@ -4,6 +4,9 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.DistanceSensor;
 
+import org.firstinspires.ftc.library.component.command.ICommand;
+import org.firstinspires.ftc.library.component.event.command_callback.CommandCallbackAdapter;
+import org.firstinspires.ftc.library.component.event.command_callback.CommandSuccessEvent;
 import org.firstinspires.ftc.library.drivetrain.commands.AbstractDriveTrainGyroTurnCommand;
 import org.firstinspires.ftc.library.drivetrain.commands.AprilTagStrafeLeftCommand;
 import org.firstinspires.ftc.library.drivetrain.commands.AprilTagStrafeRightCommand;
@@ -82,6 +85,25 @@ public class SimpleDriveTrain extends AbstractDriveTrain
     {
         this.addCommand(new DriveTrainBackwardsCommand(this, startPower, maxPower, distance, units));
         return this;
+    }
+
+    /**
+     *
+     */
+    public void endCommand (ICommand command) {
+        this.endCommand(0, command);
+    }
+
+    /**
+     *
+     */
+    public void endCommand (int milliseconds, ICommand command) {
+        this.wait(milliseconds, new CommandCallbackAdapter(){
+            @Override
+            public void onSuccess(CommandSuccessEvent successEvent) {
+                command.markAsCompleted();
+            }
+        });
     }
 
     /**
