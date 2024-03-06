@@ -664,7 +664,6 @@ public class CompAutoBot extends CompBot {
 
         this.addCommand(new OneTimeSynchronousCommand() {
             public void runOnce(ICommand command) {
-
                 CompAutoBot.this.driveTrain
                         .forwardBySensor(0.2, CompAutoBot.this.backdropSensor, CompAutoBot.this.robotAutoConfig.backboardPlaceTarget)
                         .endCommand(command);
@@ -673,54 +672,35 @@ public class CompAutoBot extends CompBot {
 
         this.addCommand(new OneTimeSynchronousCommand() {
             public void runOnce(ICommand command) {
-
                 CompAutoBot.this.closeClaw(CompAutoBot.this.robotAutoConfig.startingTrussDirection);
                 CompAutoBot.this.arm.endCommand(command);
+            }
+        });
 
+        this.addCommand(new OneTimeSynchronousCommand() {
+            public void runOnce(ICommand outerCommand) {
+
+                Direction parkDirection = CompAutoBot.this.robotAutoConfig.parkPosition.equals(RobotAutoConfig.ParkPosition.CORNER) ?
+                        CompAutoBot.this.robotAutoConfig.backdropDirection : CompAutoBot.this.robotAutoConfig.backdropDirection.invert();
+
+                int parkPositionDistance = CompAutoBot.this.calculateParkPositionDistance();
+
+                CompAutoBot.this.driveTrain
+                        .back(0.2, 0.2, 15, Units.Centimeters)
+                        .sideways(parkDirection, 0.2, 0.4, parkPositionDistance, Units.Centimeters)
+                        .forward(0.2, 0.2, CompAutoBot.this.robotAutoConfig.parkPositionForwardsDistance_afterPlacingYellowPixelOnBackdrop, Units.Centimeters)
+                        .endCommand(outerCommand);
+            }
+        });
+
+        // goto to 'home' position with the arm
+        this.addCommand(new OneTimeSynchronousCommand() {
+            public void runOnce(ICommand outerCommand) {
+                CompAutoBot.this.moveArm_toHomePosition();
+                CompAutoBot.this.arm.endCommand(outerCommand);
             }
         });
     }
-
-
-//
-//        this.addCommand(new OneTimeSynchronousCommand() {
-//            public void runOnce(ICommand command) {
-//
-//                final Direction direction = CompAutoBot.this.robotAutoConfig.routine.equals(Routine.FAR) ?
-//                        CompAutoBot.this.robotAutoConfig.startingTrussDirection: CompAutoBot.this.robotAutoConfig.startingTrussDirection.invert();
-//
-//                CompAutoBot.this.driveTrain.back(0.2, 0.2, 15, Units.Centimeters)
-//                        .wait(250);
-//
-//                if (CompAutoBot.this.robotAutoConfig.autoCorrectAtEnd) {
-//                    CompAutoBot.this.driveTrain.gotoDegrees(direction, 0.2, 0.2, 90);
-//                }
-//
-//                CompAutoBot.this.driveTrain.wait(0, new CommandCallbackAdapter(this){
-//                            public void onSuccess(CommandSuccessEvent successEvent) {
-//                                this.command.markAsCompleted();
-//                            }
-//                        });
-//
-//            }
-//        });
-//
-//        this.addCommand(new OneTimeSynchronousCommand() {
-//            public void runOnce(ICommand command) {
-//
-//                CompAutoBot.this.arm//.moveMiddleToPosition(0.733, 1)
-//                        .wait(250)
-//                        .moveClawToPosition(0.250)
-//                        .wait(250)
-//                        .moveBottomToPosition(0.078, 0.01)
-//                        .wait(0, new CommandCallbackAdapter(this){
-//                            public void onSuccess(CommandSuccessEvent successEvent) {
-//                                this.command.markAsCompleted();
-//                            }
-//                        });
-//            }
-//        });
-//    }
 
 //endregion
 //region ScanForToken
@@ -792,6 +772,69 @@ public class CompAutoBot extends CompBot {
 
     /**
      *
+     */
+    private int calculateParkPositionDistance () {
+
+        // blue alliance corner
+        if (this.robotAutoConfig.backdropDirection.equals(Direction.LEFT) && this.robotAutoConfig.parkPosition.equals(RobotAutoConfig.ParkPosition.CORNER)) {
+
+            switch (propLocation) {
+                case LEFT:
+                    return RobotAutoConfig.ParkDistFromAprilTags_Blue.fromId1_toCorner;
+                case FORWARD:
+                    return RobotAutoConfig.ParkDistFromAprilTags_Blue.fromId2_toCorner;
+                case RIGHT:
+                    return RobotAutoConfig.ParkDistFromAprilTags_Blue.fromId3_toCorner;
+            }
+        }
+
+        // blue alliance middle
+        else if (this.robotAutoConfig.backdropDirection.equals(Direction.LEFT) && this.robotAutoConfig.parkPosition.equals(RobotAutoConfig.ParkPosition.MIDDLE)) {
+
+            switch (propLocation) {
+                case LEFT:
+                    return RobotAutoConfig.ParkDistFromAprilTags_Blue.fromId1_toMiddle;
+                case FORWARD:
+                    return RobotAutoConfig.ParkDistFromAprilTags_Blue.fromId2_toMiddle;
+                case RIGHT:
+                    return RobotAutoConfig.ParkDistFromAprilTags_Blue.fromId3_toMiddle;
+            }
+        }
+
+        // red alliance corner
+        else if (this.robotAutoConfig.backdropDirection.equals(Direction.RIGHT) && this.robotAutoConfig.parkPosition.equals(RobotAutoConfig.ParkPosition.CORNER)) {
+
+            switch (propLocation) {
+                case LEFT:
+                    return RobotAutoConfig.ParkDistFromAprilTags_Red.fromId4_toCorner;
+                case FORWARD:
+                    return RobotAutoConfig.ParkDistFromAprilTags_Red.fromId5_toCorner;
+                case RIGHT:
+                    return RobotAutoConfig.ParkDistFromAprilTags_Red.fromId6_toCorner;
+            }
+        }
+
+        // red alliance middle
+        else if (this.robotAutoConfig.backdropDirection.equals(Direction.RIGHT) && this.robotAutoConfig.parkPosition.equals(RobotAutoConfig.ParkPosition.MIDDLE)) {
+
+            switch (propLocation) {
+                case LEFT:
+                    return RobotAutoConfig.ParkDistFromAprilTags_Red.fromId4_toMiddle;
+                case FORWARD:
+                    return RobotAutoConfig.ParkDistFromAprilTags_Red.fromId5_toMiddle;
+                case RIGHT:
+                    return RobotAutoConfig.ParkDistFromAprilTags_Red.fromId6_toMiddle;
+            }
+        }
+
+        // something bad happened
+        this.telemetry.log().add("Distance not calculated!");
+        return 0;
+
+    }
+
+    /**
+     *
      * @param side
      */
     private void closeClaw (Direction side) {
@@ -823,7 +866,7 @@ public class CompAutoBot extends CompBot {
         }
 
         // red alliance
-        if (this.robotAutoConfig.backdropDirection.equals(Direction.RIGHT)) {
+        else if (this.robotAutoConfig.backdropDirection.equals(Direction.RIGHT)) {
 
             switch (propLocation) {
                 case LEFT:

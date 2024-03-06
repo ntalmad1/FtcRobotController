@@ -34,16 +34,31 @@ public class RobotAutoConfig {
     /**
      * Distance in CM
      */
-    public interface ParkDistFromAprilTags {
+    public interface ParkDistFromAprilTags_Blue {
 
         int fromId1_toCorner  = 52;
         int fromId1_toMiddle  = 68;
 
-        int fromId2_toCenter  = 68;
+        int fromId2_toCorner  = 68;
         int fromId2_toMiddle  = 52;
 
-        int fromId3_toCenter  = 83;
+        int fromId3_toCorner  = 83;
         int fromId3_toMiddle  = 37;
+    }
+
+    /**
+     * Distance in CM
+     */
+    public interface ParkDistFromAprilTags_Red {
+
+        int fromId4_toCorner  = 83;
+        int fromId4_toMiddle  = 37;
+
+        int fromId5_toCorner  = 68;
+        int fromId5_toMiddle  = 52;
+
+        int fromId6_toCorner  = 52;
+        int fromId6_toMiddle  = 68;
     }
 
     /**
@@ -100,5 +115,13 @@ public class RobotAutoConfig {
     /**
      */
     public int gotoCornerDistance_Far = 203;
+
+    /**
+     */
+    public int gotoCornerDistance_NEAR = 203;
+
+    /**
+     */
+    public int parkPositionForwardsDistance_afterPlacingYellowPixelOnBackdrop = 0;
 
 }
