@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode.metalheads.competition.base;
 
+import com.qualcomm.hardware.rev.Rev2mDistanceSensor;
 import com.qualcomm.hardware.rev.RevTouchSensor;
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
@@ -64,7 +65,7 @@ public class CompBot extends IsaacBot{
 
     /**
      */
-    protected DistanceSensor backdropSensor;
+    protected Rev2mDistanceSensor backdropSensor;
 
     /**
      */
@@ -201,7 +202,8 @@ public class CompBot extends IsaacBot{
     public void go () {
         super.go();
 
-        this.backdropSensor = this.hardwareMap.get(DistanceSensor.class, "backdropSensor");
+        DistanceSensor distanceSensor = this.hardwareMap.get(DistanceSensor.class, "backdropSensor");
+        this.backdropSensor = (Rev2mDistanceSensor) distanceSensor;
 
         this.trolleySensor = this.hardwareMap.get(RevTouchSensor.class, "trolleySensor");
         trolleySensor.resetDeviceConfigurationForOpMode();

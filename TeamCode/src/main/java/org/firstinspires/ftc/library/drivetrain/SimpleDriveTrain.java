@@ -215,6 +215,14 @@ public class SimpleDriveTrain extends AbstractDriveTrain
         return this;
     }
 
+    /**
+     *
+     * @param startPower
+     * @param maxPower
+     * @param distance
+     * @param units
+     * @return
+     */
     public SimpleDriveTrain forward (double startPower, double maxPower, double distance, Units units)
     {
         this.addCommand(new DriveTrainForwardsCommand(this, startPower, maxPower, distance, units));

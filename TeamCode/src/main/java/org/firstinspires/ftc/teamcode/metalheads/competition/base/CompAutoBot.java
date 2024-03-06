@@ -662,42 +662,26 @@ public class CompAutoBot extends CompBot {
      */
     protected void autoRoutine_placeYellowPixelBackdrop() {
 
-//        this.addCommand(new OneTimeSynchronousCommand() {
-//            public void runOnce(ICommand command) {
-//
-//                final Direction direction = CompAutoBot.this.robotAutoConfig.startPosition.equals(RobotAutoConfig.StartPosition.FAR)
-//                        ? CompAutoBot.this.robotAutoConfig.startingTrussDirection : CompAutoBot.this.robotAutoConfig.startingTrussDirection.invert();
-//
-//                if (direction == null) {
-//                    CompAutoBot.this.telemetry.log().add("ERROR: CompAutoBot.this.robotAutoConfig.startPosition - NOT SET");
-//                    command.markAsCompleted();
-//                    return;
-//                }
-//
-//                CompAutoBot.this.driveTrain.sideways(direction, 0.2, 0.2, distance, Units.Centimeters)
-//                        .forwardBySensor(0.2, CompAutoBot.this.backdropSensor, CompAutoBot.this.robotAutoConfig.backboardPlaceTarget)
-//                        .wait(0, new CommandCallbackAdapter(this){
-//                            public void onSuccess(CommandSuccessEvent successEvent) {
-//                                this.command.markAsCompleted();
-//                                CompAutoBot.this.autoRoutine_placeYellowPixelBackdrop();
-//                            }
-//                        });
-//
-//            }
-//        });
+        this.addCommand(new OneTimeSynchronousCommand() {
+            public void runOnce(ICommand command) {
 
-//        this.addCommand(new OneTimeSynchronousCommand() {
-//            public void runOnce(ICommand command) {
-//
-//                CompAutoBot.this.closeClaw(CompAutoBot.this.robotAutoConfig.startingTrussDirection.invert());
-//                CompAutoBot.this.arm.wait(0, new CommandCallbackAdapter(this){
-//                            public void onSuccess(CommandSuccessEvent successEvent) {
-//                                this.command.markAsCompleted();
-//                            }
-//                        });
-//
-//            }
-//        });
+                CompAutoBot.this.driveTrain
+                        .forwardBySensor(0.2, CompAutoBot.this.backdropSensor, CompAutoBot.this.robotAutoConfig.backboardPlaceTarget)
+                        .endCommand(command);
+            }
+        });
+
+        this.addCommand(new OneTimeSynchronousCommand() {
+            public void runOnce(ICommand command) {
+
+                CompAutoBot.this.closeClaw(CompAutoBot.this.robotAutoConfig.startingTrussDirection);
+                CompAutoBot.this.arm.endCommand(command);
+
+            }
+        });
+    }
+
+
 //
 //        this.addCommand(new OneTimeSynchronousCommand() {
 //            public void runOnce(ICommand command) {
@@ -736,7 +720,7 @@ public class CompAutoBot extends CompBot {
 //                        });
 //            }
 //        });
-    }
+//    }
 
 //endregion
 //region ScanForToken
