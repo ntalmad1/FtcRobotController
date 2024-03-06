@@ -96,4 +96,9 @@ public class RobotAutoConfig {
     /**
      */
     public String webCamName = "Webcam 1";
+
+    /**
+     */
+    public int gotoCornerDistance_Far = 203;
+
 }

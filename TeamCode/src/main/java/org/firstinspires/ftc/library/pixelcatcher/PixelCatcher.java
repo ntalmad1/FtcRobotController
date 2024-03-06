@@ -123,6 +123,30 @@ public class PixelCatcher extends Component {
 
     /**
      *
+     * @return
+     */
+    public ArmPosition getLeftArmPosition () {
+        return this.leftArmPos;
+    }
+
+    /**
+     *
+     * @return
+     */
+    public ArmPosition getRightArmPosition () {
+        return this.rightArmPos;
+    }
+
+    /**
+     *
+     * @return
+     */
+    public WinchPosition getWinchPosition () {
+        return this.winchPosition;
+    }
+
+    /**
+     *
      */
     public void toggleLeftArm () {
         switch (this.leftArmPos) {
@@ -193,25 +217,10 @@ public class PixelCatcher extends Component {
 
     /**
      *
+     * @param milliseconds
      * @return
      */
-    public ArmPosition getLeftArmPosition () {
-        return this.leftArmPos;
-    }
-
-    /**
-     *
-     * @return
-     */
-    public ArmPosition getRightArmPosition () {
-        return this.rightArmPos;
-    }
-
-    /**
-     *
-     * @return
-     */
-    public WinchPosition getWinchPosition () {
-        return this.winchPosition;
+    public PixelCatcher wait (int milliseconds) {
+        return (PixelCatcher) super.wait(milliseconds);
     }
 }

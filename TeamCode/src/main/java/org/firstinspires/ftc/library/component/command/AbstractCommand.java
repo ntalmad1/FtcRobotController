@@ -7,6 +7,7 @@ import org.firstinspires.ftc.library.component.event.HandlerRegistration;
 import org.firstinspires.ftc.library.component.event.command_callback.CommandAfterEvent;
 import org.firstinspires.ftc.library.component.event.command_callback.CommandCallbackEvent;
 import org.firstinspires.ftc.library.component.event.command_callback.CommandCallbackHandler;
+import org.firstinspires.ftc.library.component.event.command_callback.CommandFailureEvent;
 import org.firstinspires.ftc.library.component.event.command_callback.CommandSuccessEvent;
 
 /**
@@ -78,6 +79,16 @@ public abstract class AbstractCommand implements ICommand {
     public void markAsCompleted () {
         this.completed = true;
         this.fireEvent(new CommandSuccessEvent(this));
+        this.fireEvent(new CommandAfterEvent(this));
+    }
+
+    /**
+     *
+     * @param e
+     */
+    public void markAsFailed (Exception e) {
+        this.completed = true;
+        this.fireEvent(new CommandFailureEvent(this, e));
         this.fireEvent(new CommandAfterEvent(this));
     }
 

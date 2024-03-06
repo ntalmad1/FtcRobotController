@@ -14,6 +14,7 @@ import org.firstinspires.ftc.library.component.command.ICommand;
 import org.firstinspires.ftc.library.component.command.WaitCommand;
 import org.firstinspires.ftc.library.component.event.command_callback.CommandCallbackAdapter;
 import org.firstinspires.ftc.library.component.event.command_callback.CommandCallbackHandler;
+import org.firstinspires.ftc.library.component.event.command_callback.CommandSuccessEvent;
 import org.firstinspires.ftc.library.motor.EncodedMotor;
 
 /**
@@ -340,6 +341,29 @@ public class Arm extends Component {
     public Arm openLeftClaw () {
         this.addCommand(new ClawOpenCommand(this.claw, Claw.Side.LEFT));
         return this;
+    }
+
+    /**
+     *
+     * @param command
+     */
+    public void endCommand (ICommand command) {
+        this.endCommand(0, command);
+    }
+
+    /**
+     *
+     * @param milliseconds
+     * @param command
+     */
+    public void endCommand (int milliseconds, ICommand command) {
+
+        this.wait(milliseconds, new CommandCallbackAdapter() {
+            @Override
+            public void onSuccess(CommandSuccessEvent successEvent) {
+                command.markAsCompleted();
+            }
+        });
     }
 
     /**

@@ -17,15 +17,15 @@ import java.util.List;
  */
 public abstract class AbstractAprilTagStrafeCommand extends AbstractSynchronousCommand {
 
+    protected SimpleDriveTrain driveTrain;
+    protected Direction direction;
+
     private AprilTagProcessor aprilTagProcessor;
     private int targetId;
 
     private double power;
     private double maxDistance;
     private Units units;
-
-    protected SimpleDriveTrain driveTrain;
-    protected Direction direction;
 
     private int maxTics;
 
@@ -97,13 +97,12 @@ public abstract class AbstractAprilTagStrafeCommand extends AbstractSynchronousC
 
                 for (AprilTagDetection detection : currentDetections) {
 
-                    if (detection.id == this.targetId) {
-                        this.driveTrain.getRobot().telemetry.addData("Target ID: ",  " %7d", this.targetId);
-                        this.driveTrain.getRobot().telemetry.addData("Detected ID: ",  " %7d", detection.id);
-                        this.driveTrain.getRobot().telemetry.addData("Pos X: ",  " %2f", detection.ftcPose.x);
-                        this.driveTrain.getRobot().telemetry.update();
-                    }
-
+//                    if (detection.id == this.targetId) {
+//                        this.driveTrain.getRobot().telemetry.addData("Target ID: ",  " %7d", this.targetId);
+//                        this.driveTrain.getRobot().telemetry.addData("Detected ID: ",  " %7d", detection.id);
+//                        this.driveTrain.getRobot().telemetry.addData("Pos X: ",  " %2f", detection.ftcPose.x);
+//                        this.driveTrain.getRobot().telemetry.update();
+//                    }
 
                     if (detection.id == this.targetId) {
                         if (Direction.RIGHT.equals(this.direction) && detection.ftcPose.x <= -1.7) {
@@ -118,20 +117,19 @@ public abstract class AbstractAprilTagStrafeCommand extends AbstractSynchronousC
         }
         else {
 
-            List<AprilTagDetection> currentDetections = this.aprilTagProcessor.getDetections();
+//            List<AprilTagDetection> currentDetections = this.aprilTagProcessor.getDetections();
+//
+//            for (AprilTagDetection detection : currentDetections) {
+//
+//                if (detection.id == this.targetId) {
+//                    this.driveTrain.getRobot().telemetry.addData("Target ID: ", " %7d", this.targetId);
+//                    this.driveTrain.getRobot().telemetry.addData("Detected ID: ", " %7d", detection.id);
+//                    this.driveTrain.getRobot().telemetry.addData("Pos X: ", " %2f", detection.ftcPose.x);
+//                    this.driveTrain.getRobot().telemetry.update();
+//                }
+//            }
 
-            for (AprilTagDetection detection : currentDetections) {
-
-                if (detection.id == this.targetId) {
-                    this.driveTrain.getRobot().telemetry.addData("Target ID: ", " %7d", this.targetId);
-                    this.driveTrain.getRobot().telemetry.addData("Detected ID: ", " %7d", detection.id);
-                    this.driveTrain.getRobot().telemetry.addData("Pos X: ", " %2f", detection.ftcPose.x);
-                    this.driveTrain.getRobot().telemetry.update();
-                }
-            }
-
-
-           // this.endCommand(false);
+           this.endCommand(false);
 
         }
 
@@ -150,7 +148,12 @@ public abstract class AbstractAprilTagStrafeCommand extends AbstractSynchronousC
      */
     private void endCommand (boolean detected) {
         this.detected = detected;
-        //this.markAsCompleted();
+
+        if (detected) {
+            this.markAsCompleted();
+        } else {
+            this.markAsFailed(new Exception("Failed to detected April Tag with ID " + this.targetId));
+        }
 
         if (this.driveTrain.isBrakeOn()) {
             this.driveTrain.getMotorGroup().setPower(0);
