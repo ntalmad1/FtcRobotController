@@ -84,15 +84,27 @@ public class RobotAutoConfig {
 
     /**
      */
-    public int placePurplePixelForwardsDistance = 27;
+    public int placePurplePixelForwardsDistance = 35;
 
     /**
      */
-    public int placePurplePixelOppositeTrussDistance = 27;
+    public int placePurplePixelOppositeTrussDistance = 21;
 
     /**
      */
-    public int placePurplePixelTrussSideDistance = 27;
+    public int placePurplePixelTrussSideDistance = 30;
+
+    /**
+     *
+     */
+    public int placeYellowPixelBackstageDistance = 20;
+
+    /**
+     *
+     */
+    public int corner_backDistance_afterPlacingPurplePixelForwards = 13;
+    public int corner_backDistance_afterPlacingPurplePixelOppositeTruss = 11;
+    public int corner_backDistance_afterPlacingPurplePixelTrussSide = 15;
 
     /**
      *  NEAR / FAR
@@ -118,10 +130,10 @@ public class RobotAutoConfig {
 
     /**
      */
-    public int gotoCornerDistance_NEAR = 203;
+    public int gotoCornerDistance_Near = 40;
 
     /**
      */
-    public int parkPositionForwardsDistance_afterPlacingYellowPixelOnBackdrop = 0;
+    public int parkPositionForwardsDistance_afterPlacingYellowPixelOnBackdrop = 15;
 
 }

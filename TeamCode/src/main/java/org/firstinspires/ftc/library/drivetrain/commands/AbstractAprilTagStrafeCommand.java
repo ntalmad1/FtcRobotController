@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.library.drivetrain.commands;
 
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
 
 import org.firstinspires.ftc.library.component.command.AbstractSynchronousCommand;
 import org.firstinspires.ftc.library.drivetrain.SimpleDriveTrain;
@@ -31,6 +32,8 @@ public abstract class AbstractAprilTagStrafeCommand extends AbstractSynchronousC
 
     private boolean detected;
 
+    private double offset;
+
     /**
      * Constructor
      */
@@ -41,7 +44,8 @@ public abstract class AbstractAprilTagStrafeCommand extends AbstractSynchronousC
             int targetId,
             double power,
             double maxDistance,
-            Units units) {
+            Units units,
+            double offset) {
 
         super();
 
@@ -52,6 +56,7 @@ public abstract class AbstractAprilTagStrafeCommand extends AbstractSynchronousC
         this.power = power;
         this.maxDistance = maxDistance;
         this.units = units;
+        this.offset = offset;
     }
 
     /**
@@ -97,18 +102,33 @@ public abstract class AbstractAprilTagStrafeCommand extends AbstractSynchronousC
 
                 for (AprilTagDetection detection : currentDetections) {
 
-//                    if (detection.id == this.targetId) {
-//                        this.driveTrain.getRobot().telemetry.addData("Target ID: ",  " %7d", this.targetId);
-//                        this.driveTrain.getRobot().telemetry.addData("Detected ID: ",  " %7d", detection.id);
-//                        this.driveTrain.getRobot().telemetry.addData("Pos X: ",  " %2f", detection.ftcPose.x);
-//                        this.driveTrain.getRobot().telemetry.update();
-//                    }
+                    if (detection.id == this.targetId) {
+                        this.driveTrain.getRobot().telemetry.addData("Target ID: ",  " %7d", this.targetId);
+                        this.driveTrain.getRobot().telemetry.addData("Detected ID: ",  " %7d", detection.id);
+                        this.driveTrain.getRobot().telemetry.addData("Pos X: ",  " %2f", detection.ftcPose.x);
+                        this.driveTrain.getRobot().telemetry.update();
+                    }
 
                     if (detection.id == this.targetId) {
-                        if (Direction.RIGHT.equals(this.direction) && detection.ftcPose.x <= -1.7) {
+                        this.driveTrain.getMotorGroup().setPower(0.05);
+
+                        if (Direction.RIGHT.equals(this.direction) && detection.ftcPose.x <= this.offset) {
+
+                            if (Math.abs(this.offset - detection.ftcPose.x) > 0.5) {
+                                this.goLeft();
+                                return;
+                            }
+
                             this.endCommand(true);
                         }
-                        else if (Direction.LEFT.equals(this.direction) && detection.ftcPose.x >= 1.7 ) {
+
+                        else if (Direction.LEFT.equals(this.direction) && detection.ftcPose.x >= this.offset ) {
+
+                            if (Math.abs(detection.ftcPose.x - this.offset) > 0.5) {
+                                this.goRight();
+                                return;
+                            }
+
                             this.endCommand(true);
                         }
                     }
@@ -149,11 +169,7 @@ public abstract class AbstractAprilTagStrafeCommand extends AbstractSynchronousC
     private void endCommand (boolean detected) {
         this.detected = detected;
 
-        if (detected) {
-            this.markAsCompleted();
-        } else {
-            this.markAsFailed(new Exception("Failed to detected April Tag with ID " + this.targetId));
-        }
+
 
         if (this.driveTrain.isBrakeOn()) {
             this.driveTrain.getMotorGroup().setPower(0);
@@ -170,5 +186,52 @@ public abstract class AbstractAprilTagStrafeCommand extends AbstractSynchronousC
             this.driveTrain.getMotorGroup().enableAll();
             this.driveTrain.getMotorGroup().setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         }
+
+        if (detected) {
+            this.markAsCompleted();
+        } else {
+            this.markAsFailed(new Exception("Failed to detected April Tag with ID " + this.targetId));
+        }
+    }
+
+    private void goRight () {
+        this.driveTrain.getMotorGroup().setPower(0);
+        int tics = this.driveTrain.getLeftFrontMotor().getCurrentPosition();
+
+        this.driveTrain.getLeftFrontMotor().setDirection(DcMotorSimple.Direction.REVERSE);
+
+        this.driveTrain.getRightFrontMotor().setDirection(DcMotorSimple.Direction.REVERSE);
+        this.driveTrain.getRightRearMotor().setDirection(DcMotorSimple.Direction.FORWARD);
+
+        this.driveTrain.getLeftRearMotor().setDirection(DcMotorSimple.Direction.FORWARD);
+
+        this.driveTrain.resetMotorGroup();
+
+        this.driveTrain.getMotorGroup().setTargetPosition(tics);
+        this.driveTrain.getMotorGroup().setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        this.driveTrain.getMotorGroup().setPower(0.05);
+
+
+        this.direction = Direction.RIGHT;
+    }
+
+    private void goLeft () {
+        this.driveTrain.getMotorGroup().setPower(0);
+        int tics = this.driveTrain.getLeftFrontMotor().getCurrentPosition();
+
+        this.driveTrain.getLeftFrontMotor().setDirection(DcMotorSimple.Direction.FORWARD);
+
+        this.driveTrain.getRightFrontMotor().setDirection(DcMotorSimple.Direction.FORWARD);
+        this.driveTrain.getRightRearMotor().setDirection(DcMotorSimple.Direction.REVERSE);
+
+        this.driveTrain.getLeftRearMotor().setDirection(DcMotorSimple.Direction.REVERSE);
+
+        this.driveTrain.resetMotorGroup();
+
+        this.driveTrain.getMotorGroup().setTargetPosition(tics);
+        this.driveTrain.getMotorGroup().setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        this.driveTrain.getMotorGroup().setPower(0.05);
+
+        this.direction = Direction.LEFT;
     }
 }

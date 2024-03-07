@@ -50,10 +50,19 @@ public interface ICommand {
      */
     void init ();
 
+    /**
+     *
+     */
     void run ();
 
     /**
      *
      */
     void markAsCompleted();
+
+    /**
+     *
+     * @param fireEvents
+     */
+    void markAsCompleted(boolean fireEvents);
 }

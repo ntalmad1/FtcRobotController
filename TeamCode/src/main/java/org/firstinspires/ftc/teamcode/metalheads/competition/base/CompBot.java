@@ -65,10 +65,6 @@ public class CompBot extends IsaacBot{
 
     /**
      */
-    protected Rev2mDistanceSensor backdropSensor;
-
-    /**
-     */
     protected DroneLauncher droneLauncher;
 
     /**
@@ -201,9 +197,6 @@ public class CompBot extends IsaacBot{
      */
     public void go () {
         super.go();
-
-        DistanceSensor distanceSensor = this.hardwareMap.get(DistanceSensor.class, "backdropSensor");
-        this.backdropSensor = (Rev2mDistanceSensor) distanceSensor;
 
         this.trolleySensor = this.hardwareMap.get(RevTouchSensor.class, "trolleySensor");
         trolleySensor.resetDeviceConfigurationForOpMode();
@@ -379,15 +372,6 @@ public class CompBot extends IsaacBot{
                     }
                 });
 
-    }
-
-    /**
-     *
-     * @param handler
-     */
-    protected void pingBackdrop (PingHandler handler) {
-        PingEvent event = new PingEvent(0, this.backdropSensor.getDistance(DistanceUnit.CM), DistanceUnit.CM);
-        handler.onPing(event);
     }
 
     /**

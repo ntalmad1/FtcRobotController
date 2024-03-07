@@ -42,7 +42,7 @@ public class PixelCatcher extends Component {
 
     /**
      */
-    private Servo rightServo;
+    private ServoComponent rightServo;
 
     /**
      *
@@ -81,13 +81,10 @@ public class PixelCatcher extends Component {
         super.init();
 
         this.leftServo = new ServoComponent(this.config.leftArmServoConfig);
-        this.leftServo.init(false);
+        this.leftServo.init();
 
-        this.rightServo = this.robot.hardwareMap.get(Servo.class, config.rightArmServoName);
-
-        this.rightServo.resetDeviceConfigurationForOpMode();
-
-        this.rightServo.setPosition(this.config.rightArmServoInitPos);
+        this.rightServo = new ServoComponent(this.config.rightArmServoConfig);
+        this.rightServo.init();
 
         this.leftArmPos = this.config.leftArmInitPos;
         this.rightArmPos = this.config.rightArmInitPos;
@@ -115,6 +112,7 @@ public class PixelCatcher extends Component {
         }
 
         this.moveLeftArmToPosition(this.config.leftArmServoInitPos);
+        this.moveRightArmToPosition(this.config.rightArmServoInitPos);
     }
 
     /**
@@ -124,6 +122,7 @@ public class PixelCatcher extends Component {
         super.run();
 
         this.leftServo.run();
+        this.rightServo.run();
     }
 
     /**
@@ -160,6 +159,14 @@ public class PixelCatcher extends Component {
 
     /**
      *
+     * @param position
+     */
+    public void moveRightArmToPosition (double position) {
+        this.rightServo.gotoPosition(position);
+    }
+
+    /**
+     *
      */
     public void toggleLeftArm () {
         switch (this.leftArmPos) {
@@ -189,7 +196,7 @@ public class PixelCatcher extends Component {
      * @param pos
      */
     public void setRightArmPosition (double pos) {
-        this.rightServo.setPosition(pos);
+        this.moveRightArmToPosition(pos);
     }
 
 
@@ -199,12 +206,12 @@ public class PixelCatcher extends Component {
     public void toggleRightArm () {
         switch (this.rightArmPos) {
             case CLOSED:
-                this.rightServo.setPosition(this.config.rightArmServoOpenedPos);
+                this.moveRightArmToPosition(this.config.rightArmServoOpenedPos);
                 this.rightArmPos = ArmPosition.OPENED;
                 this.fireEvent(new PixelCatcherRightArmOpenEvent());
                 break;
             case OPENED:
-                this.rightServo.setPosition(this.config.rightArmServoClosedPos);
+                this.moveRightArmToPosition(this.config.rightArmServoClosedPos);
                 this.rightArmPos = ArmPosition.CLOSED;
                 this.fireEvent(new PixelCatcherRightArmCloseEvent());
                 break;

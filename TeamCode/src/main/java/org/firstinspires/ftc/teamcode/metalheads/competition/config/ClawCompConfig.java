@@ -32,11 +32,16 @@ public class ClawCompConfig extends ClawConfig {
         clawBoomConfig.direction = Servo.Direction.FORWARD;
         clawBoomConfig.controllerInputMethod = Control.Gp2_RightStickY;
         clawBoomConfig.invertInput = true;
-        clawBoomConfig.minPosition = 0.01;
+        clawBoomConfig.minPosition = 0.05;
         clawBoomConfig.maxPosition = 1;
         clawBoomConfig.zeroDegreePosition = 0.55;
         clawBoomConfig.homePosition = 0.03;
         clawBoomConfig.maxIncrement = 0.01;
+
+        // if using gobilda torque servo
+        clawBoomConfig.scaleRange = true;
+        clawBoomConfig.scaleMin = 0;
+        clawBoomConfig.scaleMax = 0.9;
 
         this.clawBoomConfig = clawBoomConfig;
     }

@@ -18,8 +18,8 @@ public class AprilTagStrafeLeftCommand extends AbstractAprilTagStrafeCommand {
      * @param maxDistance
      * @param units
      */
-    public AprilTagStrafeLeftCommand(SimpleDriveTrain driveTrain, AprilTagProcessor aprilTagProcessor, int id, double power, double maxDistance, Units units) {
-        super(driveTrain, Direction.LEFT, aprilTagProcessor, id, power, maxDistance, units);
+    public AprilTagStrafeLeftCommand(SimpleDriveTrain driveTrain, AprilTagProcessor aprilTagProcessor, int id, double power, double maxDistance, Units units, double offset) {
+        super(driveTrain, Direction.LEFT, aprilTagProcessor, id, power, maxDistance, units, offset);
     }
 
     /**

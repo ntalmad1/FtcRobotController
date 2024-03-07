@@ -97,11 +97,12 @@ public class SimpleDriveTrain extends AbstractDriveTrain
     /**
      *
      */
-    public void endCommand (int milliseconds, ICommand command) {
+    public void endCommand (int milliseconds, final ICommand outerCommand) {
         this.wait(milliseconds, new CommandCallbackAdapter(){
-            @Override
             public void onSuccess(CommandSuccessEvent successEvent) {
-                command.markAsCompleted();
+                if (outerCommand != null) {
+                    outerCommand.markAsCompleted();
+                }
             }
         });
     }
@@ -491,13 +492,14 @@ public class SimpleDriveTrain extends AbstractDriveTrain
             double power,
             double maxDistance,
             Units units,
+            double offset,
             CommandCallbackHandler handler) {
 
         switch (direction) {
             case RIGHT:
-                return this.strafeForAprilTagRight(aprilTagProcessor, id, power, maxDistance, units, handler);
+                return this.strafeForAprilTagRight(aprilTagProcessor, id, power, maxDistance, units, offset, handler);
             case LEFT:
-                return this.strafeForAprilTagLeft(aprilTagProcessor, id, power, maxDistance, units, handler);
+                return this.strafeForAprilTagLeft(aprilTagProcessor, id, power, maxDistance, units, offset, handler);
         }
 
         return this;
@@ -514,10 +516,10 @@ public class SimpleDriveTrain extends AbstractDriveTrain
      * @return
      */
     public SimpleDriveTrain strafeForAprilTagRight (
-            AprilTagProcessor aprilTagProcessor, int id, double power, double maxDistance, Units units, CommandCallbackHandler handler) {
+            AprilTagProcessor aprilTagProcessor, int id, double power, double maxDistance, Units units, double offset, CommandCallbackHandler handler) {
 
         ICommand command = new AprilTagStrafeRightCommand(
-                this, aprilTagProcessor, id, power, maxDistance, units);
+                this, aprilTagProcessor, id, power, maxDistance, units, offset);
 
         command.addCallbackHandler(handler);
 
@@ -536,10 +538,10 @@ public class SimpleDriveTrain extends AbstractDriveTrain
      * @return
      */
     public SimpleDriveTrain strafeForAprilTagLeft (
-            AprilTagProcessor aprilTagProcessor, int id, double power, double maxDistance, Units units, CommandCallbackHandler handler) {
+            AprilTagProcessor aprilTagProcessor, int id, double power, double maxDistance, Units units, double offset, CommandCallbackHandler handler) {
 
-        ICommand command = new AprilTagStrafeRightCommand(
-                this, aprilTagProcessor, id, power, maxDistance, units);
+        ICommand command = new AprilTagStrafeLeftCommand(
+                this, aprilTagProcessor, id, power, maxDistance, units, offset);
 
         command.addCallbackHandler(handler);
 

@@ -147,6 +147,10 @@ public class Boom extends Component {
         this.servo.resetDeviceConfigurationForOpMode();
         this.servo.setDirection(this.config.direction);
 
+        if (this.config.scaleRange) {
+            this.servo.scaleRange(this.config.scaleMin, this.config.scaleMax);
+        }
+
         if (this.config.isDualServo) {
             this.secondaryServo = this.robot.hardwareMap.get(Servo.class, this.config.secondaryServoName);
             this.secondaryServo.resetDeviceConfigurationForOpMode();

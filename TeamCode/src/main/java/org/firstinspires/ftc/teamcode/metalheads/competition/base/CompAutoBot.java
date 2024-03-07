@@ -15,6 +15,8 @@ import org.firstinspires.ftc.library.component.event.g1_a_press.Gp1_A_PressEvent
 import org.firstinspires.ftc.library.component.event.g1_a_press.Gp1_A_PressHandler;
 import org.firstinspires.ftc.library.component.event.gp2_y_press.Gp2_Y_PressEvent;
 import org.firstinspires.ftc.library.component.event.gp2_y_press.Gp2_Y_PressHandler;
+import org.firstinspires.ftc.library.component.event.ping.PingEvent;
+import org.firstinspires.ftc.library.component.event.ping.PingHandler;
 import org.firstinspires.ftc.library.drivetrain.SimpleDriveTrain;
 import org.firstinspires.ftc.library.drivetrain.commands.AbstractDriveTrainGyroTurnCommand;
 import org.firstinspires.ftc.library.pixelcatcher.PixelCatcher;
@@ -55,6 +57,10 @@ public class CompAutoBot extends CompBot {
     /**
      */
     protected Rev2mDistanceSensor tokenSensor;
+
+    /**
+     */
+    protected Rev2mDistanceSensor backdropSensor;
 
     /**
      */
@@ -110,8 +116,11 @@ public class CompAutoBot extends CompBot {
         this.driveTrain = new SimpleDriveTrain(driveTrainConfig);
         this.driveTrain.init();
 
-        DistanceSensor distanceSensor = hardwareMap.get(DistanceSensor.class, "tokenSensor");
-        this.tokenSensor = (Rev2mDistanceSensor) distanceSensor;
+        DistanceSensor distanceSensor01 = hardwareMap.get(DistanceSensor.class, "tokenSensor");
+        this.tokenSensor = (Rev2mDistanceSensor) distanceSensor01;
+
+        DistanceSensor distanceSensor02 = this.hardwareMap.get(DistanceSensor.class, "backdropSensor");
+        this.backdropSensor = (Rev2mDistanceSensor) distanceSensor02;
 
         if (this.robotAutoConfig.useBackdrop) {
             this.initAprilTagProcessor();
@@ -315,6 +324,7 @@ public class CompAutoBot extends CompBot {
         this.addCommand(new OneTimeSynchronousCommand() {
             public void runOnce(ICommand outerCommand) {
                 CompAutoBot.this.driveTrain
+                        .back(0.2, 0.3, distanceBack, Units.Centimeters)
                         .sideways(
                                 CompAutoBot.this.robotAutoConfig.startingTrussDirection.invert(),
                                 0.3, 0.3, 20, Units.Centimeters)
@@ -352,13 +362,18 @@ public class CompAutoBot extends CompBot {
 
             this.addCommand(new OneTimeSynchronousCommand() {
                 public void runOnce(ICommand outerCommand) {
+
+                    final Direction strafeDirection = CompAutoBot.this.robotAutoConfig.parkPosition.equals(RobotAutoConfig.ParkPosition.CORNER) ?
+                            CompAutoBot.this.robotAutoConfig.backdropDirection.invert() : CompAutoBot.this.robotAutoConfig.backdropDirection;
+
                     CompAutoBot.this.driveTrain.strafeForAprilTag(
                             CompAutoBot.this.aprilTagProcessor,
-                            CompAutoBot.this.robotAutoConfig.backdropDirection.invert(),
+                            strafeDirection,
                             CompAutoBot.this.convertPropLocationToAprilTagId(CompAutoBot.this.propLocation),
                             0.2,
                             140,
-                            Units.Centimeters, new CommandCallbackAdapter() {
+                            Units.Centimeters,
+                            CompAutoBot.this.getAprilTagOffset(), new CommandCallbackAdapter() {
                                 public void onSuccess(CommandSuccessEvent successEvent) {
                                     // place yellow token on backboard
                                     CompAutoBot.this.autoRoutine_placeYellowPixelBackdrop();
@@ -366,6 +381,7 @@ public class CompAutoBot extends CompBot {
 
                                 public void onFailure(CommandFailureEvent failureEvent) {
                                     // park
+                                    CompAutoBot.this.onPlaceYellowPixelFailure(strafeDirection.invert());
                                 }
 
                                 public void onAfter(CommandAfterEvent afterEvent) {
@@ -378,8 +394,32 @@ public class CompAutoBot extends CompBot {
         }
         // Place yellow pixel backstage
         else {
-
+            this.autoRoutine_placeYellowPixelBackstage();
         }
+    }
+
+    private void onPlaceYellowPixelFailure (Direction direction) {
+
+        this.addCommand(new OneTimeSynchronousCommand() {
+            public void runOnce(ICommand outerCommand) {
+                CompAutoBot.this.driveTrain
+                        .sideways(direction, 0.2, 0.4, 140, Units.Centimeters)
+                        .gotoDegrees(
+                                0.1,
+                                0.1,
+                                90)
+                        .wait(0, new CommandCallbackAdapter(){
+                            public void onSuccess(CommandSuccessEvent successEvent) {
+                                super.onSuccess(successEvent);
+                                outerCommand.markAsCompleted();
+                                CompAutoBot.this.autoRoutine_placeYellowPixelBackstage();
+                            }
+                        });
+            }
+        });
+
+
+
     }
 
     /**
@@ -449,6 +489,20 @@ public class CompAutoBot extends CompBot {
 
     }
 
+    /**
+     *
+     */
+    public void autoRoutine_end () {
+
+        this.addCommand(new OneTimeSynchronousCommand() {
+            public void runOnce(ICommand command) {
+                CompAutoBot.this.moveArm_toHomePosition();
+                CompAutoBot.this.driveTrain.endCommand(command);
+            }
+        });
+
+    }
+
 //region PlacePurplePixel
 
     /**
@@ -483,6 +537,9 @@ public class CompAutoBot extends CompBot {
 
         // Corner :: reverse steps then begin step twp
         if (this.robotAutoConfig.parkPosition.equals(RobotAutoConfig.ParkPosition.CORNER)) {
+            final int distanceToCorner = this.robotAutoConfig.startPosition.equals(RobotAutoConfig.StartPosition.FAR) ?
+                    this.robotAutoConfig.gotoCornerDistance_Far : this.robotAutoConfig.gotoCornerDistance_Near;
+
             this.addCommand(new OneTimeSynchronousCommand() {
                 public void runOnce(ICommand outerCommand) {
                     CompAutoBot.this.driveTrain.back(
@@ -494,7 +551,9 @@ public class CompAutoBot extends CompBot {
                             outerCommand.markAsCompleted();
 
                             //** **//
-                            CompAutoBot.this.autoRoutine_beginStepTwo_Corner(13, CompAutoBot.this.robotAutoConfig.gotoCornerDistance_Far);
+                            CompAutoBot.this.autoRoutine_beginStepTwo_Corner(
+                                    CompAutoBot.this.robotAutoConfig.corner_backDistance_afterPlacingPurplePixelForwards,
+                                    distanceToCorner);
                         }
                     });
                 }
@@ -504,12 +563,6 @@ public class CompAutoBot extends CompBot {
         else {
 
         }
-
-
-
-
-                // 13 cm to back
-
 
     }
 
@@ -534,33 +587,44 @@ public class CompAutoBot extends CompBot {
             }
         });
 
+        // drop the pixel
         this.addCommand(new OneTimeSynchronousCommand() {
             public void runOnce(ICommand outerCommand) {
                 CompAutoBot.this.closeClaw(CompAutoBot.this.robotAutoConfig.startingTrussDirection.invert());
-                CompAutoBot.this.arm.wait(100, new CommandCallbackAdapter(){
-                    public void onSuccess(CommandSuccessEvent successEvent) {
-                        outerCommand.markAsCompleted();
-                    }
-                });
+                CompAutoBot.this.arm.wait(100);
                 CompAutoBot.this.moveArm_fromInit_toPixelReady(PixelCatcher.WinchPosition.UP);
-                CompAutoBot.this.driveTrain.back(0.2, 0.3,
-                        CompAutoBot.this.robotAutoConfig.placePurplePixelOppositeTrussDistance, Units.Centimeters);
-                CompAutoBot.this.driveTrain.gyroTurn(CompAutoBot.this.robotAutoConfig.startingTrussDirection,
-                        0.2, 0.2, 0, AbstractDriveTrainGyroTurnCommand.Orientation.ABSOLUTE);
-                CompAutoBot.this.driveTrain.wait(0, new CommandCallbackAdapter(this){
-                    public void onSuccess(CommandSuccessEvent successEvent) {
-                        this.command.markAsCompleted();
-
-                        if (CompAutoBot.this.robotAutoConfig.startPosition.equals(RobotAutoConfig.StartPosition.NEAR)) {
-                            //CompAutoBot.this.autoRoutine_beginStepTwo_near(81, 0);
-                        }
-                        else {
-                            //CompAutoBot.this.autoRoutine_beginStepTwo_far();
-                        }
-                    }
-                });
+                CompAutoBot.this.driveTrain.endCommand(outerCommand);
             }
         });
+
+        // Corner :: reverse steps then begin step twp
+        if (this.robotAutoConfig.parkPosition.equals(RobotAutoConfig.ParkPosition.CORNER)) {
+            final int distanceToCorner = this.robotAutoConfig.startPosition.equals(RobotAutoConfig.StartPosition.FAR) ?
+                    this.robotAutoConfig.gotoCornerDistance_Far : this.robotAutoConfig.gotoCornerDistance_Near;
+
+            this.addCommand(new OneTimeSynchronousCommand() {
+                public void runOnce(ICommand outerCommand) {
+                    CompAutoBot.this.driveTrain.back(0.2, 0.3,
+                            CompAutoBot.this.robotAutoConfig.placePurplePixelOppositeTrussDistance, Units.Centimeters);
+                    CompAutoBot.this.driveTrain.gyroTurn(CompAutoBot.this.robotAutoConfig.startingTrussDirection,
+                            0.2, 0.2, 0, AbstractDriveTrainGyroTurnCommand.Orientation.ABSOLUTE);
+                    CompAutoBot.this.driveTrain.wait(0, new CommandCallbackAdapter(){
+                        public void onSuccess(CommandSuccessEvent successEvent) {
+                            outerCommand.markAsCompleted();
+
+                            //** **//
+                            CompAutoBot.this.autoRoutine_beginStepTwo_Corner(
+                                    CompAutoBot.this.robotAutoConfig.corner_backDistance_afterPlacingPurplePixelOppositeTruss,
+                                    distanceToCorner);
+                        }
+                    });
+                }
+            });
+        }
+        // Middle :: sideways then begin step two
+        else {
+
+        }
     }
 
     /**
@@ -610,38 +674,46 @@ public class CompAutoBot extends CompBot {
             }
         });
 
+        // drop the pixel
         this.addCommand(new OneTimeSynchronousCommand() {
             public void runOnce(ICommand outerCommand) {
                 CompAutoBot.this.closeClaw(CompAutoBot.this.robotAutoConfig.startingTrussDirection.invert());
-                CompAutoBot.this.arm.wait(100, new CommandCallbackAdapter(){
-                    public void onSuccess(CommandSuccessEvent successEvent) {
-                        outerCommand.markAsCompleted();
-                    }
-                });
+                CompAutoBot.this.arm.wait(100);
                 CompAutoBot.this.moveArm_fromInit_toPixelReady(PixelCatcher.WinchPosition.UP);
-                CompAutoBot.this.driveTrain.back(
-                        0.2,
-                        0.3,
-                        CompAutoBot.this.robotAutoConfig.placePurplePixelTrussSideDistance, Units.Centimeters);
-                CompAutoBot.this.driveTrain.sideways(CompAutoBot.this.robotAutoConfig.startingTrussDirection,
-                        0.2, 0.2,
-                        10, Units.Centimeters);
-                CompAutoBot.this.driveTrain.gyroTurn(CompAutoBot.this.robotAutoConfig.startingTrussDirection.invert(),
-                        0.2, 0.2, 0, AbstractDriveTrainGyroTurnCommand.Orientation.ABSOLUTE);
-                CompAutoBot.this.driveTrain.wait(0, new CommandCallbackAdapter(this){
-                    public void onSuccess(CommandSuccessEvent successEvent) {
-                        this.command.markAsCompleted();
-
-                        if (CompAutoBot.this.robotAutoConfig.startPosition.equals(RobotAutoConfig.StartPosition.NEAR)) {
-                            //CompAutoBot.this.autoRoutine_beginStepTwo_near(81, 0);
-                        }
-                        else {
-                            //CompAutoBot.this.autoRoutine_beginStepTwo_far();
-                        }
-                    }
-                });
+                CompAutoBot.this.driveTrain.endCommand(outerCommand);
             }
         });
+
+
+        // Corner :: reverse steps then begin step twp
+        if (this.robotAutoConfig.parkPosition.equals(RobotAutoConfig.ParkPosition.CORNER)) {
+            final int distanceToCorner = this.robotAutoConfig.startPosition.equals(RobotAutoConfig.StartPosition.FAR) ?
+                    this.robotAutoConfig.gotoCornerDistance_Far : this.robotAutoConfig.gotoCornerDistance_Near;
+
+            this.addCommand(new OneTimeSynchronousCommand() {
+                public void runOnce(ICommand outerCommand) {
+                    CompAutoBot.this.driveTrain.back(
+                            0.2,
+                            0.3,
+                            CompAutoBot.this.robotAutoConfig.placePurplePixelTrussSideDistance, Units.Centimeters);
+                    CompAutoBot.this.driveTrain.sideways(CompAutoBot.this.robotAutoConfig.startingTrussDirection,
+                            0.2, 0.2,
+                            10, Units.Centimeters);
+                    CompAutoBot.this.driveTrain.gyroTurn(CompAutoBot.this.robotAutoConfig.startingTrussDirection.invert(),
+                            0.2, 0.2, 0, AbstractDriveTrainGyroTurnCommand.Orientation.ABSOLUTE);
+                    CompAutoBot.this.driveTrain.wait(0, new CommandCallbackAdapter() {
+                        public void onSuccess(CommandSuccessEvent successEvent) {
+                            outerCommand.markAsCompleted();
+
+                            //** **//
+                            CompAutoBot.this.autoRoutine_beginStepTwo_Corner(
+                                    CompAutoBot.this.robotAutoConfig.corner_backDistance_afterPlacingPurplePixelTrussSide,
+                                    distanceToCorner);
+                        }
+                    });
+                }
+            });
+        }
     }
 
 //endregion
@@ -650,11 +722,44 @@ public class CompAutoBot extends CompBot {
 
     /**
      *
-     * @param distance
      */
-    protected void autoRoutine_placeYellowPixelBackstage (double distance) {
+    protected void autoRoutine_placeYellowPixelBackstage () {
 
+        this.addCommand(new OneTimeSynchronousCommand() {
+            public void runOnce(ICommand command) {
+                CompAutoBot.this.driveTrain
+                        .forward(0.2,
+                                0.3,
+                                CompAutoBot.this.robotAutoConfig.placeYellowPixelBackstageDistance, Units.Centimeters)
+                        .endCommand(command);
+            }
+        });
 
+        // drop the pixel
+        this.addCommand(new OneTimeSynchronousCommand() {
+            public void runOnce(ICommand outerCommand) {
+                CompAutoBot.this.closeClaw(CompAutoBot.this.robotAutoConfig.startingTrussDirection);
+                CompAutoBot.this.arm.wait(100);
+                CompAutoBot.this.driveTrain.endCommand(outerCommand);
+            }
+        });
+
+        this.addCommand(new OneTimeSynchronousCommand() {
+                public void runOnce(ICommand outerCommand) {
+                CompAutoBot.this.driveTrain.back(
+                        0.2,
+                        0.3,
+                        15, Units.Centimeters);
+                CompAutoBot.this.driveTrain.wait(0, new CommandCallbackAdapter(){
+                    public void onSuccess(CommandSuccessEvent successEvent) {
+                        outerCommand.markAsCompleted();
+
+                        //** **//
+                        CompAutoBot.this.autoRoutine_end();
+                    }
+                });
+            }
+        });
     }
 
     /**
@@ -688,6 +793,10 @@ public class CompAutoBot extends CompBot {
                 CompAutoBot.this.driveTrain
                         .back(0.2, 0.2, 15, Units.Centimeters)
                         .sideways(parkDirection, 0.2, 0.4, parkPositionDistance, Units.Centimeters)
+                        .gotoDegrees(
+                                0.1,
+                                0.1,
+                                90)
                         .forward(0.2, 0.2, CompAutoBot.this.robotAutoConfig.parkPositionForwardsDistance_afterPlacingYellowPixelOnBackdrop, Units.Centimeters)
                         .endCommand(outerCommand);
             }
@@ -883,6 +992,52 @@ public class CompAutoBot extends CompBot {
         return 0;
     }
 
+    private double getAprilTagOffset () {
+
+        if (this.robotAutoConfig.parkPosition.equals(RobotAutoConfig.ParkPosition.CORNER)
+            && this.robotAutoConfig.backdropDirection.equals(Direction.LEFT)
+            && this.robotAutoConfig.startPosition.equals(RobotAutoConfig.StartPosition.FAR)) {
+            return -1.7;
+        }
+        else if (this.robotAutoConfig.parkPosition.equals(RobotAutoConfig.ParkPosition.CORNER)
+                && this.robotAutoConfig.backdropDirection.equals(Direction.LEFT)
+                && this.robotAutoConfig.startPosition.equals(RobotAutoConfig.StartPosition.NEAR)) {
+            return 1;
+        }
+        else if (this.robotAutoConfig.parkPosition.equals(RobotAutoConfig.ParkPosition.CORNER)
+                && this.robotAutoConfig.backdropDirection.equals(Direction.RIGHT)
+                && this.robotAutoConfig.startPosition.equals(RobotAutoConfig.StartPosition.FAR)) {
+            return 1.3;
+        }
+        else if (this.robotAutoConfig.parkPosition.equals(RobotAutoConfig.ParkPosition.CORNER)
+                && this.robotAutoConfig.backdropDirection.equals(Direction.RIGHT)
+                && this.robotAutoConfig.startPosition.equals(RobotAutoConfig.StartPosition.NEAR)) {
+            return -1.7;
+        }
+        else if (this.robotAutoConfig.parkPosition.equals(RobotAutoConfig.ParkPosition.MIDDLE)
+                && this.robotAutoConfig.backdropDirection.equals(Direction.LEFT)
+                && this.robotAutoConfig.startPosition.equals(RobotAutoConfig.StartPosition.FAR)) {
+            return -1.7;
+        }
+        else if (this.robotAutoConfig.parkPosition.equals(RobotAutoConfig.ParkPosition.MIDDLE)
+                && this.robotAutoConfig.backdropDirection.equals(Direction.LEFT)
+                && this.robotAutoConfig.startPosition.equals(RobotAutoConfig.StartPosition.NEAR)) {
+            return 1.3;
+        }
+        else if (this.robotAutoConfig.parkPosition.equals(RobotAutoConfig.ParkPosition.MIDDLE)
+                && this.robotAutoConfig.backdropDirection.equals(Direction.RIGHT)
+                && this.robotAutoConfig.startPosition.equals(RobotAutoConfig.StartPosition.NEAR)) {
+            return 1.3;
+        }
+        else if (this.robotAutoConfig.parkPosition.equals(RobotAutoConfig.ParkPosition.MIDDLE)
+                && this.robotAutoConfig.backdropDirection.equals(Direction.RIGHT)
+                && this.robotAutoConfig.startPosition.equals(RobotAutoConfig.StartPosition.FAR)) {
+            return -1.7;
+        }
+
+        return 0;
+    }
+
     /**
      *
      * @param degrees
@@ -909,6 +1064,15 @@ public class CompAutoBot extends CompBot {
         this.visionPortal = VisionPortal.easyCreateWithDefaults(
                     hardwareMap.get(WebcamName.class, this.robotAutoConfig.webCamName), aprilTagProcessor);
 
+    }
+
+    /**
+     *
+     * @param handler
+     */
+    protected void pingBackdrop (PingHandler handler) {
+        PingEvent event = new PingEvent(0, this.backdropSensor.getDistance(DistanceUnit.CM), DistanceUnit.CM);
+        handler.onPing(event);
     }
 
 //endregion

@@ -138,7 +138,7 @@ public class ServoComponent extends Component {
     /**
      *
      */
-    public void init(boolean setHomePosition) {
+    public void init() {
         super.init();
 
         this.servo = this.robot.hardwareMap.get(com.qualcomm.robotcore.hardware.Servo.class, this.config.servoName);
@@ -233,9 +233,7 @@ public class ServoComponent extends Component {
             });
         }
 
-        if (setHomePosition) {
-            this.setServoPosition(this.config.homePosition);
-        }
+        this.setServoPosition(this.config.homePosition);
     }
 
     /**

@@ -6,6 +6,9 @@ import org.firstinspires.ftc.library.IsaacBot;
 import org.firstinspires.ftc.library.pixelcatcher.PixelCatcher;
 import org.firstinspires.ftc.library.pixelcatcher.PixelCatcherConfig;
 
+/**
+ *
+ */
 public class PixelCatcherCompConfig extends PixelCatcherConfig {
 
     /**
@@ -18,9 +21,10 @@ public class PixelCatcherCompConfig extends PixelCatcherConfig {
 
         ServoConfig leftServoConfig = new ServoConfig(robot);
         leftServoConfig.servoName = "leftCatcherServo";
-        leftServoConfig.maxIncrement = 0.01;
+        leftServoConfig.maxIncrement = 0.02;
         leftServoConfig.maxPosition = 1;
         leftServoConfig.minPosition = 0;
+        leftServoConfig.homePosition = 1;
 
         this.leftArmServoConfig = leftServoConfig;
 
@@ -36,7 +40,14 @@ public class PixelCatcherCompConfig extends PixelCatcherConfig {
 
         //--------------------------------------------------
 
-        this.rightArmServoName = "rightCatcherServo";
+        ServoConfig rightServoConfig = new ServoConfig(robot);
+        rightServoConfig.servoName = "rightCatcherServo";
+        rightServoConfig.maxIncrement = 0.02;
+        rightServoConfig.maxPosition = 1;
+        rightServoConfig.minPosition = 0;
+        rightServoConfig.homePosition = 1;
+
+        this.rightArmServoConfig = rightServoConfig;
 
         this.rightArmServoOpenedPos = 0;
 

@@ -77,6 +77,13 @@ public abstract class AbstractCommand implements ICommand {
      *
      */
     public void markAsCompleted () {
+        this.markAsCompleted(true);
+    }
+
+    /**
+     *
+     */
+    public void markAsCompleted (boolean fireEvents) {
         this.completed = true;
         this.fireEvent(new CommandSuccessEvent(this));
         this.fireEvent(new CommandAfterEvent(this));

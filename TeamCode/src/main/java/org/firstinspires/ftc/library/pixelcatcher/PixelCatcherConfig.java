@@ -48,7 +48,7 @@ public class PixelCatcherConfig {
     /**
      *
      */
-    public String rightArmServoName;
+    public ServoConfig rightArmServoConfig;
 
     /**
      *
@@ -73,6 +73,8 @@ public class PixelCatcherConfig {
     /**
      */
     public Control rightArmToggle = Control.Gp1_RightTrigger_Down;
+
+    // Pixel catcher winch
 
     public String winchServoName;
 

@@ -354,14 +354,14 @@ public class Arm extends Component {
     /**
      *
      * @param milliseconds
-     * @param command
+     * @param outerCommand
      */
-    public void endCommand (int milliseconds, ICommand command) {
+    public void endCommand (int milliseconds, final ICommand outerCommand) {
 
         this.wait(milliseconds, new CommandCallbackAdapter() {
             @Override
             public void onSuccess(CommandSuccessEvent successEvent) {
-                command.markAsCompleted();
+                outerCommand.markAsCompleted();
             }
         });
     }
