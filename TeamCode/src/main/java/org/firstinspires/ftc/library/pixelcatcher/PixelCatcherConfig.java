@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.library.pixelcatcher;
 
+import org.firstinspires.ftc.library.servo.ServoConfig;
 import org.firstinspires.ftc.library.utility.Control;
 import org.firstinspires.ftc.library.IsaacBot;
 
@@ -16,7 +17,7 @@ public class PixelCatcherConfig {
     /**
      *
      */
-    public String leftArmServoName;
+    public ServoConfig leftArmServoConfig;
 
     /**
      *
@@ -41,6 +42,8 @@ public class PixelCatcherConfig {
     /**
      */
     public Control leftArmToggle = Control.Gp1_LeftTrigger_Down;
+
+    // Right Arm
 
     /**
      *

@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode.metalheads.competition.config;
 
+import org.firstinspires.ftc.library.servo.ServoConfig;
 import org.firstinspires.ftc.library.utility.Control;
 import org.firstinspires.ftc.library.IsaacBot;
 import org.firstinspires.ftc.library.pixelcatcher.PixelCatcher;
@@ -15,7 +16,13 @@ public class PixelCatcherCompConfig extends PixelCatcherConfig {
     public PixelCatcherCompConfig (IsaacBot robot) {
         this.robot = robot;
 
-        this.leftArmServoName = "leftCatcherServo";
+        ServoConfig leftServoConfig = new ServoConfig(robot);
+        leftServoConfig.servoName = "leftCatcherServo";
+        leftServoConfig.maxIncrement = 0.01;
+        leftServoConfig.maxPosition = 1;
+        leftServoConfig.minPosition = 0;
+
+        this.leftArmServoConfig = leftServoConfig;
 
         this.leftArmServoOpenedPos = 0;
 

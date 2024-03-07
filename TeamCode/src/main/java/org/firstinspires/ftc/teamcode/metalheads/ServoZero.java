@@ -25,7 +25,7 @@ public class ServoZero extends IsaacBot {
 //        rightRelay.setPosition(1);
 //        leftRelay.setPosition(1);
 
-        Servo servo = this.hardwareMap.get(Servo.class, "catcherWinchServo");
+        Servo servo = this.hardwareMap.get(Servo.class, "leftCatcherServo");
         servo.resetDeviceConfigurationForOpMode();
 
         servo.setDirection(Servo.Direction.FORWARD);
@@ -41,6 +41,7 @@ public class ServoZero extends IsaacBot {
         double minpos = 0.0;
 
         while (this.opModeIsActive()) {
+
 
             if (gamepad1.left_bumper) {
                 minpos = servo.getPosition();

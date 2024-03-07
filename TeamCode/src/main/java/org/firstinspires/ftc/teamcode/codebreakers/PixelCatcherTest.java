@@ -5,7 +5,7 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.Servo;
 
-@TeleOp(name = "PixelCatcherTest", group = "Robot")
+@TeleOp(name = "PixelCatcherTest_", group = "Robot")
 @Disabled
 public class PixelCatcherTest extends LinearOpMode {
 

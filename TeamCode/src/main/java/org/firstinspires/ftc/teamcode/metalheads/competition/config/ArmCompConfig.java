@@ -34,7 +34,7 @@ public class ArmCompConfig extends ArmConfig {
         bottomBoomConfig.zeroDegreePosition = 0.5;
         bottomBoomConfig.degree = 0.000556;
         bottomBoomConfig.gearRatio = 5;
-        bottomBoomConfig.homePosition = 0.248;
+        bottomBoomConfig.homePosition = 0.265;
 
         this.clawConfig = new ClawCompConfig(robot);
         this.linActConfig = encodedMotorConfig;

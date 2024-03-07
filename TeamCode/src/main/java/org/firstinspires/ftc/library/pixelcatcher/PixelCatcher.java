@@ -3,6 +3,7 @@ package org.firstinspires.ftc.library.pixelcatcher;
 import com.qualcomm.robotcore.hardware.DistanceSensor;
 import com.qualcomm.robotcore.hardware.Servo;
 
+import org.firstinspires.ftc.library.servo.ServoComponent;
 import org.firstinspires.ftc.library.utility.Control;
 import org.firstinspires.ftc.library.claw.events.leftpixelping.LeftPixelPingEvent;
 import org.firstinspires.ftc.library.claw.events.rightpixelping.RightPixelPingEvent;
@@ -37,7 +38,7 @@ public class PixelCatcher extends Component {
 
     /**
      */
-    private Servo leftServo;
+    private ServoComponent leftServo;
 
     /**
      */
@@ -79,13 +80,13 @@ public class PixelCatcher extends Component {
     public void init () {
         super.init();
 
-        this.leftServo = this.robot.hardwareMap.get(Servo.class, config.leftArmServoName);
+        this.leftServo = new ServoComponent(this.config.leftArmServoConfig);
+        this.leftServo.init(false);
+
         this.rightServo = this.robot.hardwareMap.get(Servo.class, config.rightArmServoName);
 
-        this.leftServo.resetDeviceConfigurationForOpMode();
         this.rightServo.resetDeviceConfigurationForOpMode();
 
-        this.leftServo.setPosition(this.config.leftArmServoInitPos);
         this.rightServo.setPosition(this.config.rightArmServoInitPos);
 
         this.leftArmPos = this.config.leftArmInitPos;
@@ -112,6 +113,8 @@ public class PixelCatcher extends Component {
         if (this.config.winchToggle1 == Control.Gp1_LeftBumper_Down || this.config.winchToggle2 == Control.Gp1_LeftBumper_Down) {
             this.addGp1_Left_Bumper_DownHandler(event -> PixelCatcher.this.toggleWinch());
         }
+
+        this.moveLeftArmToPosition(this.config.leftArmServoInitPos);
     }
 
     /**
@@ -119,6 +122,8 @@ public class PixelCatcher extends Component {
      */
     public void run () {
         super.run();
+
+        this.leftServo.run();
     }
 
     /**
@@ -147,16 +152,24 @@ public class PixelCatcher extends Component {
 
     /**
      *
+     * @param position
+     */
+    public void moveLeftArmToPosition (double position) {
+        this.leftServo.gotoPosition(position);
+    }
+
+    /**
+     *
      */
     public void toggleLeftArm () {
         switch (this.leftArmPos) {
             case CLOSED:
-                this.leftServo.setPosition(this.config.leftArmServoOpenedPos);
+                this.moveLeftArmToPosition(this.config.leftArmServoOpenedPos);
                 this.leftArmPos = ArmPosition.OPENED;
                 this.fireEvent(new PixelCatcherLeftArmOpenEvent());
                 break;
             case OPENED:
-                this.leftServo.setPosition(this.config.leftArmServoClosedPos);
+                this.moveLeftArmToPosition(this.config.leftArmServoClosedPos);
                 this.leftArmPos = ArmPosition.CLOSED;
                 this.fireEvent(new PixelCatcherLeftArmCloseEvent());
                 break;
@@ -168,7 +181,7 @@ public class PixelCatcher extends Component {
      * @param pos
      */
     public void setLeftArmPosition (double pos) {
-        this.leftServo.setPosition(pos);
+        this.moveLeftArmToPosition(pos);
     }
 
     /**
