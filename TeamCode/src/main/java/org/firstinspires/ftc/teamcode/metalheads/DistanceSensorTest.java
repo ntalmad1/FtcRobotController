@@ -12,7 +12,7 @@ import org.firstinspires.ftc.library.IsaacBot;
  *
  */
 @TeleOp(name="Distance Sensor", group="Linear OpMode")
-@Disabled
+//@Disabled
 public class DistanceSensorTest extends IsaacBot {
 
 
@@ -20,8 +20,8 @@ public class DistanceSensorTest extends IsaacBot {
     @Override
     public void runOpMode() throws InterruptedException {
 
-        DistanceSensor pixelLeftSensor = hardwareMap.get(DistanceSensor.class, "leftPixelSensor");
-        DistanceSensor pixelRightSensor = hardwareMap.get(DistanceSensor.class, "rightPixelSensor");
+        DistanceSensor pixelLeftSensor = hardwareMap.get(DistanceSensor.class, "leftTokenSensor");
+        DistanceSensor pixelRightSensor = hardwareMap.get(DistanceSensor.class, "rightTokenSensor");
 
         waitForStart();
 

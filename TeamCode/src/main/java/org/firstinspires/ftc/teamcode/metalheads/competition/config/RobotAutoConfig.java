@@ -20,9 +20,7 @@ public class RobotAutoConfig {
         CORNER,
     }
 
-
     /**
-     *
      */
     public enum StartPosition {
         NEAR,
@@ -67,24 +65,32 @@ public class RobotAutoConfig {
 
     /**
      */
+    public ParkPosition parkPosition;
+
+    /**
+     */
+    public int leftTokenScanDistance = 10;
+
+    /**
+     */
+    public int rightTokenScanDistance = 10;
+
+    /**
+     */
+    public int frontTokenScanDistance = 35;
+
+    /**
+     */
+    public int bumpForwardsDistance = 18;
+
+    /**
+     * For the distance sensor detection
+     */
     public double backboardPlaceTarget = 6.5;
 
     /**
      */
-    public ParkPosition parkPosition;
-
-
-    /**
-     */
-    public double placePurplePixelOppositeTrussRotationDegrees = 25;
-
-    /**
-     */
-    public double placePurplePixelTrussSideRotationDegrees = 35;
-
-    /**
-     */
-    public int placePurplePixelForwardsDistance = 35;
+    public int placePurplePixelForwardsDistance = 39;
 
     /**
      */
@@ -92,7 +98,7 @@ public class RobotAutoConfig {
 
     /**
      */
-    public int placePurplePixelTrussSideDistance = 30;
+    public int placePurplePixelTrussSideDistance = 15;
 
     /**
      *
@@ -102,8 +108,8 @@ public class RobotAutoConfig {
     /**
      *
      */
-    public int corner_backDistance_afterPlacingPurplePixelForwards = 13;
-    public int corner_backDistance_afterPlacingPurplePixelOppositeTruss = 11;
+    public int corner_backDistance_afterPlacingPurplePixelForwards = 10;
+    public int corner_backDistance_afterPlacingPurplePixelOppositeTruss = 50;
     public int corner_backDistance_afterPlacingPurplePixelTrussSide = 15;
 
     /**
@@ -126,11 +132,17 @@ public class RobotAutoConfig {
 
     /**
      */
-    public int gotoCornerDistance_Far = 203;
+    public int gotoCornerDistance_Far = 190;
+    public int gotoCornerDistance_Far_forwards = 190;
+    public int gotoCornerDistance_Far_oppositeTruss = 190;
+    public int gotoCornerDistance_Far_trussSide = 190;
 
     /**
      */
     public int gotoCornerDistance_Near = 40;
+    public int gotoCornerDistance_Near_forwards = 40;
+    public int gotoCornerDistance_Near_oppositeTruss = 40;
+    public int gotoCornerDistance_Near_trussSide = 40;
 
     /**
      */
