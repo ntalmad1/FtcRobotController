@@ -1,28 +1,29 @@
-package org.firstinspires.ftc.teamcode.metalheads.competition.auto;
+package org.firstinspires.ftc.teamcode.metalheads.competition.auto.middle;
 
-import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
-import com.qualcomm.robotcore.eventloop.opmode.Disabled;
+import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import org.firstinspires.ftc.library.utility.Direction;
 import org.firstinspires.ftc.teamcode.metalheads.competition.base.CompAutoBot;
-import org.firstinspires.ftc.library.utility.Units;
 import org.firstinspires.ftc.teamcode.metalheads.competition.config.RobotAutoConfig;
 
 /**
  *
  */
-@Autonomous(name="RedNearCompAutoBot", group="Red")
-@Disabled
-public class RedNearCompAutoBot extends CompAutoBot {
+@TeleOp(name="BlueFar_Middle_Backdrop", group="MiddleBackdrop")
+//@Disabled
+public class BlueFar_Middle_Backdrop extends CompAutoBot {
 
     /**
      * Constructor
      */
-    public RedNearCompAutoBot() {
+    public BlueFar_Middle_Backdrop() {
         super();
 
         this.robotAutoConfig.startingTrussDirection = Direction.LEFT;
-        this.robotAutoConfig.startPosition = RobotAutoConfig.StartPosition.NEAR;
+        this.robotAutoConfig.startPosition = RobotAutoConfig.StartPosition.FAR;
+        this.robotAutoConfig.backdropDirection = Direction.LEFT;
+        this.robotAutoConfig.useBackdrop = true;
+        this.robotAutoConfig.parkPosition = RobotAutoConfig.ParkPosition.MIDDLE;
     }
 
     /**
@@ -32,7 +33,7 @@ public class RedNearCompAutoBot extends CompAutoBot {
 
         super.initBot();
 
-        telemetry.addLine("Red Near Initialized...");
+        telemetry.addLine("BlueFar_Middle_Backdrop Initialized...");
         telemetry.addLine("READY!");
         telemetry.update();
     }
@@ -41,9 +42,7 @@ public class RedNearCompAutoBot extends CompAutoBot {
      *
      */
     public void go () {
-
         super.go();
-
     }
 
     /**
@@ -52,5 +51,4 @@ public class RedNearCompAutoBot extends CompAutoBot {
     public void run () {
         super.run();
     }
-
 }

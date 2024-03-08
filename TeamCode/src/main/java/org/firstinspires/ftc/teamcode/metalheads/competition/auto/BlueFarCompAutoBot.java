@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode.metalheads.competition.auto;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import org.firstinspires.ftc.library.utility.Units;
@@ -12,7 +13,7 @@ import org.firstinspires.ftc.teamcode.metalheads.competition.config.RobotAutoCon
  *
  */
 @TeleOp(name="BlueFarCompAutoBot", group="Blue")
-//@Disabled
+@Disabled
 public class BlueFarCompAutoBot extends CompAutoBot {
 
     /**

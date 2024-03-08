@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.metalheads.competition.auto;
+package org.firstinspires.ftc.teamcode.metalheads.competition.auto.middle;
 
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
@@ -9,21 +9,21 @@ import org.firstinspires.ftc.teamcode.metalheads.competition.config.RobotAutoCon
 /**
  *
  */
-@TeleOp(name="BlueNear_Corner_Backdrop", group="CornerBackdrop")
+@TeleOp(name="BlueNear_Middle_Backdrop", group="MiddleBackdrop")
 //@Disabled
-public class Auto_BlueNear_Corner_Backdrop extends CompAutoBot {
+public class BlueNear_Middle_Backdrop extends CompAutoBot {
 
     /**
      * Constructor
      */
-    public Auto_BlueNear_Corner_Backdrop() {
+    public BlueNear_Middle_Backdrop() {
         super();
 
         this.robotAutoConfig.startingTrussDirection = Direction.RIGHT;
         this.robotAutoConfig.startPosition = RobotAutoConfig.StartPosition.NEAR;
         this.robotAutoConfig.backdropDirection = Direction.LEFT;
         this.robotAutoConfig.useBackdrop = true;
-        this.robotAutoConfig.parkPosition = RobotAutoConfig.ParkPosition.CORNER;
+        this.robotAutoConfig.parkPosition = RobotAutoConfig.ParkPosition.MIDDLE;
     }
 
     /**
@@ -33,7 +33,7 @@ public class Auto_BlueNear_Corner_Backdrop extends CompAutoBot {
 
         super.initBot();
 
-        telemetry.addLine("BlueNear_Corner_Backdrop Initialized...");
+        telemetry.addLine("BlueNear_Middle_Backdrop Initialized...");
         telemetry.addLine("READY!");
         telemetry.update();
     }
