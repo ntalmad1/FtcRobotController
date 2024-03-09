@@ -15,6 +15,8 @@ import org.firstinspires.ftc.library.component.command.WaitCommand;
 import org.firstinspires.ftc.library.component.event.command_callback.CommandCallbackAdapter;
 import org.firstinspires.ftc.library.component.event.command_callback.CommandCallbackHandler;
 import org.firstinspires.ftc.library.component.event.command_callback.CommandSuccessEvent;
+import org.firstinspires.ftc.library.component.event.gp2_y_press.Gp2_Y_PressEvent;
+import org.firstinspires.ftc.library.component.event.gp2_y_press.Gp2_Y_PressHandler;
 import org.firstinspires.ftc.library.motor.EncodedMotor;
 
 /**

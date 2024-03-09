@@ -9,7 +9,7 @@ import org.firstinspires.ftc.library.motor.EncodedMotorConfig;
 import org.firstinspires.ftc.library.utility.Control;
 
 @TeleOp(name="Linear Actuator Component", group="Linear OpMode")
-//@Disabled
+@Disabled
 public class LinearActuatorComponent extends IsaacBot {
 
     /**

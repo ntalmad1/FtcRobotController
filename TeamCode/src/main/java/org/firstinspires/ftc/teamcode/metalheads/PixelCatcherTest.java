@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode.metalheads;
 
 import com.qualcomm.hardware.rev.RevTouchSensor;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import org.firstinspires.ftc.library.IsaacBot;
@@ -25,7 +26,7 @@ import org.firstinspires.ftc.teamcode.metalheads.competition.config.ArmCompConfi
 import org.firstinspires.ftc.teamcode.metalheads.competition.config.PixelCatcherCompConfig;
 import org.firstinspires.ftc.teamcode.metalheads.competition.config.WinchCompConfig;
 
-@TeleOp(name="PixelCatcherTest", group="Linear OpMode")
+@TeleOp(name="PixelCatcherTest", group="Tests")
 //@Disabled
 public class PixelCatcherTest extends IsaacBot {
 

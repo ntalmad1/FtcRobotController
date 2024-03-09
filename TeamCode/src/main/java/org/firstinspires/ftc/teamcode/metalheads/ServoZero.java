@@ -7,7 +7,7 @@ import com.qualcomm.robotcore.hardware.Servo;
 
 import org.firstinspires.ftc.library.IsaacBot;
 
-@TeleOp(name="Servo Zero", group="Linear OpMode")
+@TeleOp(name="Servo Zero", group="Tests")
 //@Disabled
 public class ServoZero extends IsaacBot {
 
@@ -29,7 +29,7 @@ public class ServoZero extends IsaacBot {
         servo.resetDeviceConfigurationForOpMode();
         servo.setDirection(Servo.Direction.FORWARD);
 
-        servo.scaleRange(0, 0.9);
+    //    servo.scaleRange(0, 0.9);
 
         servo.setPosition(0.5);
 

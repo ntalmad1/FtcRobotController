@@ -12,7 +12,7 @@ import org.firstinspires.ftc.teamcode.metalheads.competition.config.RobotAutoCon
 /**
  *
  */
-@TeleOp(name="BlueFarCompAutoBot", group="Blue")
+@Autonomous(name="BlueFarCompAutoBot", group="Blue")
 @Disabled
 public class BlueFarCompAutoBot extends CompAutoBot {
 

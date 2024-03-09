@@ -98,7 +98,7 @@ public class CompBot extends IsaacBot{
     /**
      *
      */
-    private float hangPower = (float)0.02;
+    private float hangPower = (float)0.1;
 
     /**
      */
@@ -246,12 +246,11 @@ public class CompBot extends IsaacBot{
         this.arm.moveClawToPosition(this.arm.getClaw().getConfig().clawBoomConfig.homePosition);
         this.arm.wait(250);
 
-        for (int i = 0; i < 100; ++i)
+        for (int i = 0; i < 60; ++i)
         {
             this.arm.addCommand(new OneTimeCommand() {
                 @Override
                 public void runOnce(ICommand command) {
-                  // CompBot.this.telemetry.log().add("Adding Gp2_Left_Trigger_Event (" + i + ", " + hangPower + ")");
                   CompBot.this.getEventBus().fireEvent(new Gp2_Left_Trigger_Event(hangPower));
                   command.markAsCompleted();
                 }
@@ -259,7 +258,7 @@ public class CompBot extends IsaacBot{
             this.arm.wait(2);
 
             if (hangPower < 1) {
-                hangPower += 0.02;
+                hangPower += 1;
             }
 
             if (hangPower > 1) {

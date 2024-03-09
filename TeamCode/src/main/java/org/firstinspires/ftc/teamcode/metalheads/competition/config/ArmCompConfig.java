@@ -15,7 +15,7 @@ public class ArmCompConfig extends ArmConfig {
 
         EncodedMotorConfig encodedMotorConfig = new EncodedMotorConfig(robot);
         encodedMotorConfig.motorName = "actuatorMotor";
-        encodedMotorConfig.minTics = 0;
+        encodedMotorConfig.minTics = -10000;
         encodedMotorConfig.maxTics = 3400;
         encodedMotorConfig.increment = 200;
         encodedMotorConfig.debug = false;

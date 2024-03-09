@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode.metalheads;
 
 
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.util.ElapsedTime;
@@ -8,7 +9,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 import org.firstinspires.ftc.library.IsaacBot;
 
 @TeleOp(name="MotorTest", group="Linear OpMode")
-//@Disabled
+@Disabled
 public class MotorTest extends IsaacBot {
 
     //537.7 tick per revolution

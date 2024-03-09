@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode.metalheads.competition.auto.nobackrop;
 
+import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import org.firstinspires.ftc.library.utility.Direction;
@@ -9,7 +10,7 @@ import org.firstinspires.ftc.teamcode.metalheads.competition.config.RobotAutoCon
 /**
  *
  */
-@TeleOp(name="BlueFar_Corner_NoBackdrop", group="NoBackdrop")
+@Autonomous(name="BlueFar_Corner_NoBackdrop", group="NoBackdrop")
 //@Disabled
 public class BlueFar_Corner_NoBackdrop extends CompAutoBot {
 

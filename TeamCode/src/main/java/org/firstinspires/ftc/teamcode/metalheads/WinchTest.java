@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode.metalheads;
 
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import org.firstinspires.ftc.library.IsaacBot;
@@ -11,7 +12,7 @@ import org.firstinspires.ftc.teamcode.metalheads.competition.config.ArmCompConfi
 import org.firstinspires.ftc.teamcode.metalheads.competition.config.WinchCompConfig;
 
 @TeleOp(name="Winch Test", group="Linear OpMode")
-//@Disabled
+@Disabled
 public class WinchTest extends IsaacBot {
 
     //private Boom topBoom;

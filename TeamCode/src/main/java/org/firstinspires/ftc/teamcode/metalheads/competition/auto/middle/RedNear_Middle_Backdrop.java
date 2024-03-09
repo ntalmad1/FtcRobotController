@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode.metalheads.competition.auto.middle;
 
+import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import org.firstinspires.ftc.library.utility.Direction;
@@ -9,7 +10,7 @@ import org.firstinspires.ftc.teamcode.metalheads.competition.config.RobotAutoCon
 /**
  *
  */
-@TeleOp(name="ReNear_Middle_Backdrop", group="MiddleBackdrop")
+@Autonomous(name="RedNear_Middle_Backdrop", group="MiddleBackdrop")
 //@Disabled
 public class RedNear_Middle_Backdrop extends CompAutoBot {
 

@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode.metalheads.competition.auto.corner;
 
+import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import org.firstinspires.ftc.library.utility.Direction;
@@ -9,7 +10,7 @@ import org.firstinspires.ftc.teamcode.metalheads.competition.config.RobotAutoCon
 /**
  *
  */
-@TeleOp(name="RedFar_Corner_Backdrop", group="CornerBackdrop")
+@Autonomous(name="RedFar_Corner_Backdrop", group="CornerBackdrop")
 //@Disabled
 public class RedFar_Corner_Backdrop extends CompAutoBot {
 

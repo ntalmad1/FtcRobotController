@@ -45,6 +45,6 @@ public class DroneLauncherCompConfig extends DroneLauncherConfig {
 
         this.rotatorConfig.debug = false;
 
-        this.launchPosition = 0.385;
+        this.launchPosition = 0.388;
     }
 }

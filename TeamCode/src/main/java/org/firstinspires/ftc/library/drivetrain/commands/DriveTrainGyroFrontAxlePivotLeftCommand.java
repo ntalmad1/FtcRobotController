@@ -4,6 +4,7 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 
 import org.firstinspires.ftc.library.drivetrain.SimpleDriveTrain;
+import org.firstinspires.ftc.library.utility.Direction;
 
 public class DriveTrainGyroFrontAxlePivotLeftCommand extends AbstractDriveTrainGyroTurnCommand{
 
@@ -16,7 +17,7 @@ public class DriveTrainGyroFrontAxlePivotLeftCommand extends AbstractDriveTrainG
      * @param degrees
      */
     public DriveTrainGyroFrontAxlePivotLeftCommand(SimpleDriveTrain driveTrain, double startPower, double maxPower, double degrees, Orientation orientation) {
-        super(driveTrain, startPower, maxPower, degrees, orientation);
+        super(driveTrain, Direction.LEFT, startPower, maxPower, degrees, orientation);
     }
 
     /**

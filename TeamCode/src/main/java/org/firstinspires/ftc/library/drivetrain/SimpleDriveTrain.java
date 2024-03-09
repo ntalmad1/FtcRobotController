@@ -123,17 +123,19 @@ public class SimpleDriveTrain extends AbstractDriveTrain
 
         double currentDegrees = this.robot.getYaw();
 
-        if (currentDegrees == targetDegrees) {
+        double offset = Math.abs(currentDegrees - targetDegrees);
+
+        if (currentDegrees == targetDegrees || (offset <= 1)) {
             return this;
         }
 
         if (currentDegrees > targetDegrees)
         {
-            this.addCommand(new DriveTrainGyroTurnLeftCommand(this, startPower, maxPower, targetDegrees, AbstractDriveTrainGyroTurnCommand.Orientation.ABSOLUTE));
+            this.addCommand(new DriveTrainGyroTurnRightCommand(this, startPower, maxPower, targetDegrees, AbstractDriveTrainGyroTurnCommand.Orientation.ABSOLUTE));
         }
         else
         {
-            this.addCommand(new DriveTrainGyroTurnRightCommand(this, startPower, maxPower, targetDegrees, AbstractDriveTrainGyroTurnCommand.Orientation.ABSOLUTE));
+            this.addCommand(new DriveTrainGyroTurnLeftCommand(this, startPower, maxPower, targetDegrees, AbstractDriveTrainGyroTurnCommand.Orientation.ABSOLUTE));
         }
 
 
@@ -342,7 +344,7 @@ public class SimpleDriveTrain extends AbstractDriveTrain
     {
         switch (direction) {
             case RIGHT:
-                return this.gyroTurnRight(startPower, maxPower, degrees, orientation);
+                return this.gyroTurnRight(startPower, maxPower, -degrees, orientation);
             case LEFT:
                 return this.gyroTurnLeft(startPower, maxPower, degrees, orientation);
         }

@@ -1,18 +1,14 @@
 package org.firstinspires.ftc.library.pixelcatcher;
 
-import com.qualcomm.robotcore.hardware.DistanceSensor;
 import com.qualcomm.robotcore.hardware.Servo;
 
-import org.firstinspires.ftc.library.servo.ServoComponent;
-import org.firstinspires.ftc.library.utility.Control;
-import org.firstinspires.ftc.library.claw.events.leftpixelping.LeftPixelPingEvent;
-import org.firstinspires.ftc.library.claw.events.rightpixelping.RightPixelPingEvent;
 import org.firstinspires.ftc.library.component.Component;
 import org.firstinspires.ftc.library.pixelcatcher.events.leftarmclose.PixelCatcherLeftArmCloseEvent;
 import org.firstinspires.ftc.library.pixelcatcher.events.leftarmopen.PixelCatcherLeftArmOpenEvent;
 import org.firstinspires.ftc.library.pixelcatcher.events.rightarmclose.PixelCatcherRightArmCloseEvent;
 import org.firstinspires.ftc.library.pixelcatcher.events.rightarmopen.PixelCatcherRightArmOpenEvent;
-import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
+import org.firstinspires.ftc.library.servo.ServoComponent;
+import org.firstinspires.ftc.library.utility.Control;
 
 /**
  *

@@ -14,7 +14,7 @@ import org.firstinspires.ftc.library.component.event.EventBus;
 import org.firstinspires.ftc.teamcode.metalheads.competition.config.ClawCompConfig;
 
 @TeleOp(name="ClawTest", group="Linear OpMode")
-//@Disabled
+@Disabled
 public class ClawTest extends IsaacBot {
 
     private Claw claw;

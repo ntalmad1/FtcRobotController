@@ -39,7 +39,7 @@ public class ClawCompConfig extends ClawConfig {
         clawBoomConfig.maxIncrement = 0.01;
 
         // if using gobilda torque servo
-        clawBoomConfig.scaleRange = true;
+        clawBoomConfig.scaleRange = false;
         clawBoomConfig.scaleMin = 0;
         clawBoomConfig.scaleMax = 0.9;
 

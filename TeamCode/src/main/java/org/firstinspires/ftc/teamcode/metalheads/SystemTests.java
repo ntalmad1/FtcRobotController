@@ -22,7 +22,7 @@ import org.firstinspires.ftc.teamcode.metalheads.competition.config.DroneLaunche
 import org.firstinspires.ftc.teamcode.metalheads.competition.config.PixelCatcherCompConfig;
 import org.firstinspires.ftc.teamcode.metalheads.competition.config.SimpleDriveCompConfig;
 
-@TeleOp(name="System Tests", group="Linear OpMode")
+@TeleOp(name="System Tests", group="Tests")
 //@Disabled
 public class SystemTests extends IsaacBot {
 

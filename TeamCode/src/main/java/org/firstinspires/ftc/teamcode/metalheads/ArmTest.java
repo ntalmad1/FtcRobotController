@@ -31,7 +31,7 @@ import org.firstinspires.ftc.teamcode.metalheads.competition.config.PixelCatcher
 import org.firstinspires.ftc.teamcode.metalheads.competition.config.WinchCompConfig;
 
 @TeleOp(name="Arm Test", group="Linear OpMode")
-//@Disabled
+@Disabled
 public class ArmTest extends IsaacBot {
 
     //private Boom topBoom;
@@ -93,7 +93,6 @@ public class ArmTest extends IsaacBot {
                             ArmTest.this.pixelCatcher.toggleWinch();
                         }
                         command.markAsCompleted();
-                        ArmTest.this.telemetry.log().add("toggled pixelCatcher");
                     }
                 });
 
@@ -102,7 +101,6 @@ public class ArmTest extends IsaacBot {
                 ArmTest.this.arm.wait(250, new CommandCallbackAdapter(){
                     @Override
                     public void onSuccess(CommandSuccessEvent successEvent) {
-                        ArmTest.this.telemetry.log().add("onSuccess");
                         constantOutCommand.markAsCompleted();
                     }
                 });
@@ -112,7 +110,6 @@ public class ArmTest extends IsaacBot {
         this.addGp1_Y_PressHandler(new Gp1_Y_PressHandler() {
             @Override
             public void onGp2_A_Press(Gp1_Y_PressEvent event) {
-                ArmTest.this.telemetry.log().add("running arm");
                 ArmTest.this.arm.run();
             }
         });
