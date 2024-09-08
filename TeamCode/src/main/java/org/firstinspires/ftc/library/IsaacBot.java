@@ -37,14 +37,204 @@ import org.firstinspires.ftc.library.component.event.gp2_y_press.Gp2_Y_PressHand
  */
 public abstract class  IsaacBot extends LinearOpMode implements IComponent
 {
+    /**
+     */
     private static IsaacBot instance;
 
+    /**
+     *
+     * @param command
+     */
+    public void addCommand (ICommand command) {
+        this.robotComponent.addCommand(command);
+    }
+
+    /**
+     *
+     * @param handler
+     * @return
+     */
+    public HandlerRegistration addGp1_A_PressHandler (Gp1_A_PressHandler handler) {
+        return this.robotComponent.addGp1_A_PressHandler(handler);
+    }
+
+    /**
+     *
+     * @param handler
+     * @return
+     */
+    public HandlerRegistration addGp1_B_PressHandler (Gp1_B_PressHandler handler) {
+        return this.robotComponent.addGp1_B_PressHandler(handler);
+    }
+
+    /**
+     *
+     * @param handler
+     * @return
+     */
+    public HandlerRegistration addGp2_A_PressHandler (Gp2_A_PressHandler handler) {
+        return this.robotComponent.addGp2_A_PressHandler(handler);
+    }
+
+    /**
+     *
+     * @param handler
+     * @return
+     */
+    public HandlerRegistration addGp2_B_PressHandler (Gp2_B_PressHandler handler) {
+        return this.robotComponent.addGp2_B_PressHandler(handler);
+    }
+
+    /**
+     *
+     * @param handler
+     * @return
+     */
+    public HandlerRegistration addGp2_X_PressHandler (Gp2_X_PressHandler handler) {
+        return this.robotComponent.addGp2_X_PressHandler(handler);
+    }
+
+    public HandlerRegistration addGp2_Y_PressHandler (Gp2_Y_PressHandler handler) {
+        return this.robotComponent.addGp2_Y_PressHandler(handler);
+    }
+
+    /**
+     *
+     * @param handler
+     * @return
+     */
+    public HandlerRegistration addGp1_X_PressHandler (Gp1_X_PressHandler handler) {
+        return this.robotComponent.addGp1_X_PressHandler(handler);
+    }
+
+    /**
+     *
+     * @param handler
+     * @return
+     */
+    public HandlerRegistration addGp1_Y_PressHandler (Gp1_Y_PressHandler handler) {
+        return this.robotComponent.addGp1_Y_PressHandler(handler);
+    }
+
+
+    //endregion
+    /**
+     *
+     * @param handler
+     * @return
+     */
+    public HandlerRegistration addGp2_Left_Bumper_PressHandler (Gp2_Left_Bumper_PressHandler handler) {
+        return this.robotComponent.addGp2_Left_Bumper_PressHandler(handler);
+    }
+
+    /**
+     *
+     * @param handler
+     * @return
+     */
+    public HandlerRegistration addGp2_Right_Bumper_PressHandler (Gp2_Right_Bumper_PressHandler handler) {
+        return this.robotComponent.addGp2_Right_Bumper_PressHandler(handler);
+    }
+
+
+    //-----------------------------------------------------------------------------------------
+    /**
+     *
+     * @param handler
+     * @return
+     */
+    public HandlerRegistration addGp2_Dpad_Left_DownHandler (Gp2_Dpad_Left_DownHandler handler) {
+        return this.robotComponent.addGp2_Dpad_Left_DownHandler(handler);
+    }
+
+    /**
+     *
+     * @param handler
+     * @return
+     */
+    public HandlerRegistration addGp2_Dpad_Right_DownHandler (Gp2_Dpad_Right_DownHandler handler) {
+        return this.robotComponent.addGp2_Dpad_Right_DownHandler(handler);
+    }
+
+    /**
+     *
+     * @param handler
+     * @return
+     */
+    public HandlerRegistration addGp2_Dpad_Up_DownHandler (Gp2_Dpad_Up_DownHandler handler) {
+        return this.robotComponent.addGp2_Dpad_Up_DownHandler(handler);
+    }
+
+    /**
+     *
+     * @param handler
+     * @return
+     */
+    public HandlerRegistration addGp2_Dpad_Down_DownHandler (Gp2_Dpad_Down_DownHandler handler) {
+        return this.robotComponent.addGp2_Dpad_Down_DownHandler(handler);
+    }
+
+
+    //-----------------------------------------------------------------------------------------
+    /**
+     *
+     * @param handler
+     * @return
+     */
+    public HandlerRegistration addGp1_Dpad_Down_PressHandler (Gp1_Dpad_Down_PressHandler handler) {
+        return this.robotComponent.addGp1_Dpad_Down_PressHandler(handler);
+    }
+
+    /**
+     *
+     * @param handler
+     * @return
+     */
+    public HandlerRegistration addGp2_LeftStickXHandler (Gp2_LeftStickXHandler handler) {
+        return this.robotComponent.addGp2_LeftStickXHandler(handler);
+    }
+
+    /**
+     *
+     * @param handler
+     * @return
+     */
+    public HandlerRegistration addGp2_LeftStickYHandler (Gp2_LeftStickYHandler handler) {
+        return this.robotComponent.addGp2_LeftStickYHandler(handler);
+    }
+
+    /**
+     *
+     * @param handler
+     * @return
+     */
+    public HandlerRegistration addGp2_RightStickXHandler (Gp2_RightStickXHandler handler) {
+        return this.robotComponent.addGp2_RightStickXHandler(handler);
+    }
+
+    /**
+     *
+     * @param handler
+     * @return
+     */
+    public HandlerRegistration addGp2_RightStickYHandler (Gp2_RightStickYHandler handler) {
+        return this.robotComponent.addGp2_RightStickYHandler(handler);
+    }
+
+    /**
+     *
+     * @return IsaacBot
+     */
     public static IsaacBot getInstance() {
         return instance;
     }
 
-    private RobotComponent robotComponent;
+    /**
+     */
+    private final RobotComponent robotComponent;
 
+    /**
+     */
     private String imuName;
 
     /**
@@ -52,6 +242,8 @@ public abstract class  IsaacBot extends LinearOpMode implements IComponent
     private IMU imu;
 
     /**
+     * Constructor
+     *
      */
     public IsaacBot()
     {
@@ -71,9 +263,7 @@ public abstract class  IsaacBot extends LinearOpMode implements IComponent
     public double getYaw ()
     {
         YawPitchRollAngles gyro = imu.getRobotYawPitchRollAngles();
-        double yaw = gyro.getYaw(AngleUnit.DEGREES);
-
-        return yaw;
+        return gyro.getYaw(AngleUnit.DEGREES);
     }
 
     /**
@@ -91,37 +281,32 @@ public abstract class  IsaacBot extends LinearOpMode implements IComponent
         this.initImu(this.imuName);
     }
 
-
     /**
      *
      * @param imuName
      */
     public void initImu (String imuName)
     {
-//        telemetry.addLine("Imu Name: " + imuName);
-//        telemetry.update();
-
         this.imu = this.hardwareMap.get(IMU.class, imuName);
         this.imu.resetYaw();
     }
 
     /**
-     *
+     * This code gets ran at the start of runOpMode before start is pressed
      */
     public void initBot () {
-       this.robotComponent.init();
+        this.robotComponent.init();
     }
 
     /**
-     *
+     * This code gets ran right after start pressed and is only ran once
      */
     public void go () {
 
     }
 
-
     /**
-     *
+     * This code gets ran after start pressed and "whileOpIsActive" in a loop
      */
     public void run () {
         this.getEventBus().run();
@@ -147,97 +332,10 @@ public abstract class  IsaacBot extends LinearOpMode implements IComponent
 
     /**
      *
-     * @param command
+     * @param imuName
      */
-    public void addCommand (ICommand command) {
-        this.robotComponent.addCommand(command);
-    }
-
-    public HandlerRegistration addGp1_A_PressHandler (Gp1_A_PressHandler handler) {
-        return this.robotComponent.addGp1_A_PressHandler(handler);
-    }
-
-    public HandlerRegistration addGp1_B_PressHandler (Gp1_B_PressHandler handler) {
-        return this.robotComponent.addGp1_B_PressHandler(handler);
-    }
-
-    public HandlerRegistration addGp2_A_PressHandler (Gp2_A_PressHandler handler) {
-        return this.robotComponent.addGp2_A_PressHandler(handler);
-    }
-
-    public HandlerRegistration addGp2_B_PressHandler (Gp2_B_PressHandler handler) {
-        return this.robotComponent.addGp2_B_PressHandler(handler);
-    }
-
-    public HandlerRegistration addGp2_X_PressHandler (Gp2_X_PressHandler handler) {
-        return this.robotComponent.addGp2_X_PressHandler(handler);
-    }
-
-    public HandlerRegistration addGp2_Y_PressHandler (Gp2_Y_PressHandler handler) {
-        return this.robotComponent.addGp2_Y_PressHandler(handler);
-    }
-
-    public HandlerRegistration addGp1_X_PressHandler (Gp1_X_PressHandler handler) {
-        return this.robotComponent.addGp1_X_PressHandler(handler);
-    }
-
-    public HandlerRegistration addGp1_Y_PressHandler (Gp1_Y_PressHandler handler) {
-        return this.robotComponent.addGp1_Y_PressHandler(handler);
-    }
-    //endregion
-
-    public HandlerRegistration addGp2_Left_Bumper_PressHandler (Gp2_Left_Bumper_PressHandler handler) {
-        return this.robotComponent.addGp2_Left_Bumper_PressHandler(handler);
-    }
-
-    public HandlerRegistration addGp2_Right_Bumper_PressHandler (Gp2_Right_Bumper_PressHandler handler) {
-        return this.robotComponent.addGp2_Right_Bumper_PressHandler(handler);
-    }
-
-
-    //-----------------------------------------------------------------------------------------
-
-    public HandlerRegistration addGp2_Dpad_Left_DownHandler (Gp2_Dpad_Left_DownHandler handler) {
-        return this.robotComponent.addGp2_Dpad_Left_DownHandler(handler);
-    }
-
-    public HandlerRegistration addGp2_Dpad_Right_DownHandler (Gp2_Dpad_Right_DownHandler handler) {
-        return this.robotComponent.addGp2_Dpad_Right_DownHandler(handler);
-    }
-
-    public HandlerRegistration addGp2_Dpad_Up_DownHandler (Gp2_Dpad_Up_DownHandler handler) {
-        return this.robotComponent.addGp2_Dpad_Up_DownHandler(handler);
-    }
-
-    public HandlerRegistration addGp2_Dpad_Down_DownHandler (Gp2_Dpad_Down_DownHandler handler) {
-        return this.robotComponent.addGp2_Dpad_Down_DownHandler(handler);
-    }
-
-    //-----------------------------------------------------------------------------------------
-
-    public HandlerRegistration addGp1_Dpad_Down_PressHandler (Gp1_Dpad_Down_PressHandler handler) {
-        return this.robotComponent.addGp1_Dpad_Down_PressHandler(handler);
-    }
-
-    /**
-     *
-     * @param handler
-     * @return
-     */
-    public HandlerRegistration addGp2_LeftStickXHandler (Gp2_LeftStickXHandler handler) {
-        return this.robotComponent.addGp2_LeftStickXHandler(handler);
-    }
-
-    public HandlerRegistration addGp2_LeftStickYHandler (Gp2_LeftStickYHandler handler) {
-        return this.robotComponent.addGp2_LeftStickYHandler(handler);
-    }
-
-    public HandlerRegistration addGp2_RightStickXHandler (Gp2_RightStickXHandler handler) {
-        return this.robotComponent.addGp2_RightStickXHandler(handler);
-    }
-
-    public HandlerRegistration addGp2_RightStickYHandler (Gp2_RightStickYHandler handler) {
-        return this.robotComponent.addGp2_RightStickYHandler(handler);
+    public void setImuName (String imuName) {
+        this.imuName = imuName;
     }
 
     /**
@@ -256,10 +354,26 @@ public abstract class  IsaacBot extends LinearOpMode implements IComponent
 
     /**
      *
-     * @param imuName
+     * @param message
      */
-    public void setImuName (String imuName) {
-        this.imuName = imuName;
+    public void voiceLog (String message) {
+        this.voiceLog(message, 2000);
+    }
+
+    /**
+     *
+     * @param message
+     * @param milliseconds
+     */
+    public void voiceLog (String message, long milliseconds) {
+        this.telemetry.speak(message);
+        this.telemetry.log().add(message);
+
+        try {
+            this.sleep(milliseconds);
+        } catch (Exception e) {
+            // do nothing
+        }
     }
 
 }

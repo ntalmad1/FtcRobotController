@@ -7,6 +7,14 @@ public enum Control {
 
     /**
      */
+    Gp1_LeftBumper_Down,
+
+    /**
+     */
+    Gp1_RightBumper_Down,
+
+    /**
+     */
     Gp1_LeftTrigger_Down,
 
     /**

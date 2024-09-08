@@ -19,7 +19,7 @@ public class DroneLauncherCompConfig extends DroneLauncherConfig {
     public DroneLauncherCompConfig (IsaacBot robot) {
         this.robot = robot;
 
-        this.triggerServoName = "droneTrigger";
+        this.triggerServoName = "droneTriggerServo";
 
         this.triggerServoDownPos = 0.58;
 
@@ -28,7 +28,7 @@ public class DroneLauncherCompConfig extends DroneLauncherConfig {
 
         this.rotatorConfig = new RotatorConfig();
         this.rotatorConfig.robot = robot;
-        this.rotatorConfig.servoName = "droneBase";
+        this.rotatorConfig.servoName = "droneBaseServo";
         this.rotatorConfig.direction = Servo.Direction.FORWARD;
 
         this.rotatorConfig.invertInput = false;
@@ -45,6 +45,6 @@ public class DroneLauncherCompConfig extends DroneLauncherConfig {
 
         this.rotatorConfig.debug = false;
 
-        this.launchPosition = 0.385;
+        this.launchPosition = 0.388;
     }
 }

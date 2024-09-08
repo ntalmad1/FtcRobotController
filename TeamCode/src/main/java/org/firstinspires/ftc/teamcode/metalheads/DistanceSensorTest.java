@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode.metalheads;
 
+import com.qualcomm.hardware.rev.Rev2mDistanceSensor;
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
@@ -11,8 +12,8 @@ import org.firstinspires.ftc.library.IsaacBot;
 /**
  *
  */
-@TeleOp(name="Distance Sensor", group="Linear OpMode")
-@Disabled
+@TeleOp(name="Distance Sensor Test", group="Tests")
+//@Disabled
 public class DistanceSensorTest extends IsaacBot {
 
 
@@ -20,17 +21,25 @@ public class DistanceSensorTest extends IsaacBot {
     @Override
     public void runOpMode() throws InterruptedException {
 
-        DistanceSensor pixelLeftSensor = hardwareMap.get(DistanceSensor.class, "leftPixelSensor");
-        DistanceSensor pixelRightSensor = hardwareMap.get(DistanceSensor.class, "rightPixelSensor");
+        DistanceSensor pixelLeftSensor = hardwareMap.get(DistanceSensor.class, "leftTokenSensor");
+        Rev2mDistanceSensor leftSensor = (Rev2mDistanceSensor) pixelLeftSensor;
+
+        DistanceSensor pixelRightSensor = hardwareMap.get(DistanceSensor.class, "rightTokenSensor");
+        Rev2mDistanceSensor rightSensor = (Rev2mDistanceSensor) pixelRightSensor;
+
+        DistanceSensor tokenFrontSensor = hardwareMap.get(DistanceSensor.class, "tokenSensor");
+        Rev2mDistanceSensor frontSensor = (Rev2mDistanceSensor) tokenFrontSensor;
 
         waitForStart();
 
         while (this.opModeIsActive()) {
-            double distanceLeft = pixelLeftSensor.getDistance(DistanceUnit.MM);
-            double distanceRight = pixelRightSensor.getDistance(DistanceUnit.MM);
+            double distanceLeft = leftSensor.getDistance(DistanceUnit.CM);
+            double distanceRight = rightSensor.getDistance(DistanceUnit.CM);
+            double distanceFront = rightSensor.getDistance(DistanceUnit.CM);
 
             this.telemetry.addData("Left: ", "%2f", distanceLeft);
             this.telemetry.addData("Right: ", "%2f", distanceRight);
+            this.telemetry.addData("Front: ", "%2f", distanceFront);
             this.telemetry.update();
         }
     }

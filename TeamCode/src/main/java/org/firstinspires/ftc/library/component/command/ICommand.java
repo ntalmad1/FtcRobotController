@@ -37,6 +37,12 @@ public interface ICommand {
      *
      * @return
      */
+    boolean isRepeating ();
+
+    /**
+     *
+     * @return
+     */
     boolean isSynchronous ();
 
     /**
@@ -44,10 +50,19 @@ public interface ICommand {
      */
     void init ();
 
+    /**
+     *
+     */
     void run ();
 
     /**
      *
      */
     void markAsCompleted();
+
+    /**
+     *
+     * @param fireEvents
+     */
+    void markAsCompleted(boolean fireEvents);
 }

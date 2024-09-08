@@ -9,6 +9,7 @@ import org.firstinspires.ftc.library.component.command.WaitCommand;
 import org.firstinspires.ftc.library.component.event.command_callback.CommandCallbackAdapter;
 import org.firstinspires.ftc.library.component.event.command_callback.CommandCallbackHandler;
 import org.firstinspires.ftc.library.component.event.command_callback.CommandSuccessEvent;
+import org.firstinspires.ftc.library.pixelcatcher.PixelCatcher;
 import org.firstinspires.ftc.library.rotator.Rotator;
 
 
@@ -94,6 +95,21 @@ public class DroneLauncher extends Component {
     public DroneLauncher rotateToPosition (double position, double power) {
         this.addCommand(new BoomMoveToPositionCommand(this.rotator, position, power));
         return this;
+    }
+
+    private PixelCatcher.WinchPosition triggerPos = PixelCatcher.WinchPosition.DOWN;
+
+    public void toggleTriggger () {
+
+        if (this.triggerPos.equals(PixelCatcher.WinchPosition.DOWN)) {
+            DroneLauncher.this.trigger.setPosition(DroneLauncher.this.config.triggerServoUpPos);
+            this.triggerPos = PixelCatcher.WinchPosition.UP;
+        }
+        else {
+            DroneLauncher.this.trigger.setPosition(DroneLauncher.this.config.triggerServoDownPos);
+            this.triggerPos = PixelCatcher.WinchPosition.DOWN;
+        }
+
     }
 
     /**

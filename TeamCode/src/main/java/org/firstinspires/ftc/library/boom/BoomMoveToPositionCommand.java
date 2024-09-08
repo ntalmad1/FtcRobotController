@@ -37,8 +37,6 @@ public class BoomMoveToPositionCommand extends AbstractCommand {
         this.power = power;
 
         this.targetPosition = targetPosition;
-
-
     }
 
     public void init () {
@@ -50,6 +48,8 @@ public class BoomMoveToPositionCommand extends AbstractCommand {
         });
 
         this.boom.addCommand(command);
+
+        this.setInitialized(true);
     }
 
     public void run () {

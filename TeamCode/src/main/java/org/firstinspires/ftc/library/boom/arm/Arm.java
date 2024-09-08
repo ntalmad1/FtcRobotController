@@ -1,5 +1,7 @@
 package org.firstinspires.ftc.library.boom.arm;
 
+import com.qualcomm.robotcore.hardware.Servo;
+
 import org.firstinspires.ftc.library.boom.Boom;
 import org.firstinspires.ftc.library.boom.BoomMoveToDegreesCommand;
 import org.firstinspires.ftc.library.boom.BoomMoveToPositionCommand;
@@ -7,15 +9,24 @@ import org.firstinspires.ftc.library.claw.Claw;
 import org.firstinspires.ftc.library.claw.ClawCloseCommand;
 import org.firstinspires.ftc.library.claw.ClawOpenCommand;
 import org.firstinspires.ftc.library.component.Component;
+import org.firstinspires.ftc.library.component.command.Command;
 import org.firstinspires.ftc.library.component.command.ICommand;
 import org.firstinspires.ftc.library.component.command.WaitCommand;
+import org.firstinspires.ftc.library.component.event.command_callback.CommandCallbackAdapter;
 import org.firstinspires.ftc.library.component.event.command_callback.CommandCallbackHandler;
+import org.firstinspires.ftc.library.component.event.command_callback.CommandSuccessEvent;
+import org.firstinspires.ftc.library.component.event.gp2_y_press.Gp2_Y_PressEvent;
+import org.firstinspires.ftc.library.component.event.gp2_y_press.Gp2_Y_PressHandler;
+import org.firstinspires.ftc.library.motor.EncodedMotor;
 
+/**
+ *
+ */
 public class Arm extends Component {
 
     /**
      */
-    private final ArmConfig config;
+    private final Boom bottomBoom;
 
     /**
      */
@@ -23,11 +34,23 @@ public class Arm extends Component {
 
     /**
      */
-    private final Boom midBoom;
+    private final ArmConfig config;
 
     /**
      */
-    private final Boom bottomBoom;
+    private final EncodedMotor linAct;
+
+    /**
+     */
+    private Servo leftRelay;
+
+    /**
+     */
+    private Servo rightRelay;
+
+    /**
+     */
+    private double bottomBoomIncrement;
 
     /**
      * Constructor
@@ -40,17 +63,15 @@ public class Arm extends Component {
         this.config = configuration;
 
         this.claw = new Claw(this.config.clawConfig);
-        this.midBoom = new Boom(this.config.midBoomConfig);
-        this.midBoom.setInverted(true);
+        this.linAct = new EncodedMotor(this.config.linActConfig);
 
         this.bottomBoom = new Boom(this.config.bottomBoomConfig);
+        this.bottomBoomIncrement = this.config.bottomBoomConfig.maxIncrement;
 
         this.addGp2_LeftStickXHandler(event -> Arm.this.cancelAllCommands());
         this.addGp2_LeftStickYHandler(event -> Arm.this.cancelAllCommands());
         this.addGp2_RightStickXHandler(event -> Arm.this.cancelAllCommands());
         this.addGp2_RightStickYHandler(event -> Arm.this.cancelAllCommands());
-
-        // this.getCommandQueue().setDebug(true);
     }
 
     /**
@@ -59,11 +80,19 @@ public class Arm extends Component {
     public void init () {
         super.init();
 
+        //this.getCommandQueue().setDebug(true);
+
+        this.rightRelay = this.robot.hardwareMap.get(Servo.class, "rightBoomRelay");
+        this.leftRelay = this.robot.hardwareMap.get(Servo.class, "leftBoomRelay");
+
+        rightRelay.setPosition(1);
+        leftRelay.setPosition(1);
+
         this.claw.init();
 
         this.bottomBoom.init();
-        this.midBoom.init();
 
+        this.linAct.init();
     }
 
     /**
@@ -73,28 +102,32 @@ public class Arm extends Component {
         super.run();
 
         this.bottomBoom.run();
-        this.midBoom.run();
+        this.linAct.run();
         this.claw.run();
 
         if (this.config.debug) {
+            this.telemetry.addData("Bottom boom increment: ", "%2f", this.bottomBoomIncrement);
             this.telemetry.addData("Bottom boom degrees: ", "%2f", this.bottomBoom.getPositionDegrees());
             this.telemetry.addData("Bottom boom position: ", "%2f", this.bottomBoom.getPosition());
             this.telemetry.addLine();
 
-            this.telemetry.addData("Middle boom degrees: ", "%2f", this.midBoom.getPositionDegrees());
-            this.telemetry.addData("Middle boom position: ", "%2f", this.midBoom.getPosition());
+            this.telemetry.addData("Linear actuator position: ", "%7d", this.linAct.getCurrentPosition());
             this.telemetry.addLine();
 
             this.telemetry.addData("Claw boom degrees: ", "%2f", this.claw.getBase().getPositionDegrees());
             this.telemetry.addData("Claw boom position: ", "%2f", this.claw.getBase().getPosition());
             this.telemetry.addLine();
 
-            this.telemetry.addData("Claw rotator degrees: ", "%2f", this.claw.getRotator().getPositionDegrees());
-            this.telemetry.addData("Claw rotator position: ", "%2f", this.claw.getRotator().getPosition());
-            this.telemetry.addLine();
-
             this.telemetry.update();
         }
+    }
+
+    /**
+     *
+     * @param command
+     */
+    public Arm addCommand (ICommand command) {
+        return (Arm) super.addCommand(command);
     }
 
     public Arm closeLeftClaw () {
@@ -108,14 +141,52 @@ public class Arm extends Component {
         return this;
     }
 
-    public Arm openLeftClaw () {
-        this.addCommand(new ClawOpenCommand(this.claw, Claw.Side.LEFT));
-        return this;
+    /**
+     *
+     * @return
+     */
+    public double getBottomBoomIncrement () {
+        return this.bottomBoomIncrement;
     }
 
+    /**
+     *
+     * @return Claw
+     */
+    public Claw getClaw () {
+        return this.claw;
+    }
+
+    public Boom getBottomBoom () {
+        return this.bottomBoom;
+    }
+
+    /**
+     *
+     * @return EncodedMotor
+     */
+    public EncodedMotor getLinearActuator () {
+        return this.linAct;
+    }
+
+
+    /**
+     *
+     * @return Arm
+     */
     public Arm openRightClaw () {
         this.addCommand(new ClawOpenCommand(this.claw, Claw.Side.RIGHT));
         return this;
+    }
+
+    /**
+     *
+     * @param degrees Number of degrees to move the claw base by
+     * @return "this" for a fluid interface
+     */
+    public Arm moveClawDegreesFromCurrentPosition (double degrees) {
+        double targetDegrees = this.claw.getBase().getPositionDegrees() + degrees;
+        return this.moveClawToDegrees(targetDegrees);
     }
 
     /**
@@ -160,82 +231,37 @@ public class Arm extends Component {
 
     /**
      *
-     * @param degrees Rotates the claw to the given degrees position
-     * @return "this" for a fluid interface
+     * @param position
+     * @return Arm
      */
-    public Arm rotateClawToDegrees (double degrees) {
-        return this.rotateClawToDegrees(degrees, this.claw.getRotator().getMaxIncrement());
+    public Arm moveLinearActuatorToPosition (int position) {
+        return this.moveLinearActuatorToPosition(position, 1, new CommandCallbackAdapter());
     }
 
     /**
      *
-     * @param degrees Rotates the claw to the given degrees position
-     * @param power The increment to rotate by each cycle ( 0 -1 )
-     * @return "this" for a fluid interface
+     * @param position
+     * @param handler
+     * @return
      */
-    public Arm rotateClawToDegrees (double degrees, double power) {
-        this.addCommand(new BoomMoveToDegreesCommand(this.claw.getRotator(), degrees, power));
-        return this;
-    }
-
-    /**
-     *
-     * @param position The position to rotate the claw to ( 0 - 1 )
-     * @return "this" for a fluid interface
-     */
-    public Arm rotateClawToPosition (double position) {
-        return this.rotateClawToPosition(position, this.claw.getRotator().getMaxIncrement());
+    public Arm moveLinearActuatorToPosition (int position, CommandCallbackHandler handler) {
+        return this.moveLinearActuatorToPosition(position, 1, handler);
     }
 
     /**
      *
      * @param position
      * @param power
-     * @return "this" for a fluid interface
+     * @return Arm
      */
-    public Arm rotateClawToPosition (double position, double power) {
-        this.addCommand(new BoomMoveToPositionCommand(this.claw.getRotator(), position, power));
-        return this;
+    public Arm moveLinearActuatorToPosition (int position, double power) {
+        return this.moveLinearActuatorToPosition(position, 1, new CommandCallbackAdapter());
     }
 
-
-    /**
-     *
-     * @param degrees
-     * @return "this" for a fluid interface
-     */
-    public Arm moveMiddleToDegrees (double degrees) {
-        return this.moveMiddleToDegrees(degrees, this.midBoom.getMaxIncrement());
-    }
-
-    /**
-     *
-     * @param degrees
-     * @param power
-     * @return "this" for a fluid interface
-     */
-    public Arm moveMiddleToDegrees (double degrees, double power) {
-        this.addCommand(new BoomMoveToDegreesCommand(this.midBoom, degrees, power));
-        return this;
-    }
-
-    /**
-     *
-     * @param position
-     * @return "this" for a fluid interface
-     */
-    public Arm moveMiddleToPosition (double position) {
-        return this.moveMiddleToPosition(position, this.midBoom.getMaxIncrement());
-    }
-
-    /**
-     *
-     * @param position
-     * @param power
-     * @return "this" for a fluid interface
-     */
-    public Arm moveMiddleToPosition (double position, double power) {
-        this.addCommand(new BoomMoveToPositionCommand(this.midBoom, position, power));
+    public Arm moveLinearActuatorToPosition (int position, double power, CommandCallbackHandler handler) {
+        LinearActuatorMoveToPositionCommand command = new LinearActuatorMoveToPositionCommand(this.getLinearActuator(), position, power);
+        command.addCallbackHandler(handler);
+        this.addCommand(command);
         return this;
     }
 
@@ -291,22 +317,55 @@ public class Arm extends Component {
 
     /**
      *
-     * @param degrees Number of degrees to move the middle boom by
-     * @return "this" for a fluid interface
      */
-    public Arm moveMiddleDegreesFromCurrentPosition (double degrees) {
-        double targetDegrees = this.midBoom.getPositionDegrees() + degrees;
-        return this.moveMiddleToDegrees(targetDegrees);
+    public void setBottomBoomOff() {
+        this.rightRelay.setPosition(0);
+        this.leftRelay.setPosition(0);
     }
 
     /**
      *
-     * @param degrees Number of degrees to move the claw base by
-     * @return "this" for a fluid interface
      */
-    public Arm moveClawDegreesFromCurrentPosition (double degrees) {
-        double targetDegrees = this.claw.getBase().getPositionDegrees() + degrees;
-        return this.moveClawToDegrees(targetDegrees);
+    public void setBottomBoomOn() {
+        this.rightRelay.setPosition(1);
+        this.leftRelay.setPosition(1);
+    }
+
+    public void setBottomBoomIncrement (double increment) {
+        this.bottomBoomIncrement = increment;
+        this.bottomBoom.setMaxIncrement(increment);
+    }
+
+    /**
+     *
+     * @return Arm
+     */
+    public Arm openLeftClaw () {
+        this.addCommand(new ClawOpenCommand(this.claw, Claw.Side.LEFT));
+        return this;
+    }
+
+    /**
+     *
+     * @param command
+     */
+    public void endCommand (ICommand command) {
+        this.endCommand(0, command);
+    }
+
+    /**
+     *
+     * @param milliseconds
+     * @param outerCommand
+     */
+    public void endCommand (int milliseconds, final ICommand outerCommand) {
+
+        this.wait(milliseconds, new CommandCallbackAdapter() {
+            @Override
+            public void onSuccess(CommandSuccessEvent successEvent) {
+                outerCommand.markAsCompleted();
+            }
+        });
     }
 
     /**
@@ -315,10 +374,15 @@ public class Arm extends Component {
      * @return "this" for a fluid interface
      */
     public Arm wait (int milliseconds) {
-        this.addCommand(new WaitCommand(milliseconds));
-        return this;
+        return (Arm) super.wait(milliseconds);
     }
 
+    /**
+     *
+     * @param milliseconds
+     * @param handler
+     * @return
+     */
     public Arm wait (int milliseconds, CommandCallbackHandler handler) {
         ICommand command = new WaitCommand(milliseconds);
         command.addCallbackHandler(handler);

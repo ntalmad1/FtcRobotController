@@ -71,4 +71,8 @@ public class BoomConfig {
     /**
      */
     public boolean debug = false;
+
+    public boolean scaleRange = false;
+    public double scaleMin = 0;
+    public double scaleMax = 1;
 }

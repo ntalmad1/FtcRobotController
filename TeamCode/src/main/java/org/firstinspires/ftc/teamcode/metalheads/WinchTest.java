@@ -2,59 +2,57 @@ package org.firstinspires.ftc.teamcode.metalheads;
 
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-import com.qualcomm.robotcore.hardware.Servo;
 
-import org.firstinspires.ftc.library.boom.BoomConfig;
-import org.firstinspires.ftc.teamcode.metalheads.competition.config.ClawCompConfig;
-import org.firstinspires.ftc.library.utility.Control;
 import org.firstinspires.ftc.library.IsaacBot;
 import org.firstinspires.ftc.library.boom.arm.Arm;
 import org.firstinspires.ftc.library.boom.arm.ArmConfig;
-import org.firstinspires.ftc.library.claw.ClawConfig;
+import org.firstinspires.ftc.library.winch.Winch;
+import org.firstinspires.ftc.library.winch.WinchConfig;
+import org.firstinspires.ftc.teamcode.metalheads.competition.config.ArmCompConfig;
+import org.firstinspires.ftc.teamcode.metalheads.competition.config.WinchCompConfig;
 
-@TeleOp(name="ArmOpMode", group="Linear OpMode")
+@TeleOp(name="Winch Test", group="Linear OpMode")
 @Disabled
-public class ArmOpMode extends IsaacBot {
+public class WinchTest extends IsaacBot {
 
     //private Boom topBoom;
-    private Arm arm;
+    private Winch winch;
 
-    public ArmOpMode(){
+    public WinchTest(){
         super();
 
-        ClawConfig clawConfig = new ClawCompConfig(this);
+//        ClawConfig clawConfig = new ClawCompConfig(this);
 
-        BoomConfig midBoomConfig = new BoomConfig();
-        midBoomConfig.robot = this;
-        midBoomConfig.isDualServo = true;
-        midBoomConfig.servoName = "middleLeftServo";
-        midBoomConfig.secondaryServoName = "middleRightServo";
-        midBoomConfig.direction = Servo.Direction.REVERSE;
-        midBoomConfig.controllerInputMethod = Control.Gp2_RightStickX;
-        midBoomConfig.invertInput = false;
-        midBoomConfig.maxIncrement = 0.00054;
-        midBoomConfig.degree = 0.000556;
-        midBoomConfig.zeroDegreePosition = 0.0;
+//        BoomConfig midBoomConfig = new BoomConfig();
+//        midBoomConfig.robot = this;
+//        midBoomConfig.isDualServo = true;
+//        midBoomConfig.servoName = "middleLeftServo";
+//        midBoomConfig.secondaryServoName = "middleRightServo";
+//        midBoomConfig.direction = Servo.Direction.REVERSE;
+//        midBoomConfig.controllerInputMethod = Control.Gp2_RightStickX;
+//        midBoomConfig.invertInput = false;
+//        midBoomConfig.maxIncrement = 0.00054;
+//        midBoomConfig.degree = 0.000556;
+//        midBoomConfig.zeroDegreePosition = 0.0;
 
-        BoomConfig bottomBoomConfig = new BoomConfig();
-        bottomBoomConfig.robot = this;
-        bottomBoomConfig.isDualServo = true;
-        bottomBoomConfig.servoName = "bottomLeftServo";
-        bottomBoomConfig.secondaryServoName = "bottomRightServo";
-        bottomBoomConfig.direction = Servo.Direction.FORWARD;
-        bottomBoomConfig.controllerInputMethod = Control.Gp2_LeftStickX;
-        bottomBoomConfig.invertInput = true;
-        bottomBoomConfig.maxIncrement = 0.00054;
-        bottomBoomConfig.zeroDegreePosition = 0.28;
-        bottomBoomConfig.degree = 0.000556;
+//        BoomConfig bottomBoomConfig = new BoomConfig();
+//        bottomBoomConfig.robot = this;
+//        bottomBoomConfig.isDualServo = true;
+//        bottomBoomConfig.servoName = "bottomLeftServo";
+//        bottomBoomConfig.secondaryServoName = "bottomRightServo";
+//        bottomBoomConfig.direction = Servo.Direction.FORWARD;
+//        bottomBoomConfig.controllerInputMethod = Control.Gp2_LeftStickX;
+//        bottomBoomConfig.invertInput = true;
+//        bottomBoomConfig.maxIncrement = 0.00054;
+//        bottomBoomConfig.zeroDegreePosition = 0.28;
+//        bottomBoomConfig.degree = 0.000556;
 
-        ArmConfig armConfig = new ArmConfig();
-        armConfig.robot = this;
-        armConfig.clawConfig = clawConfig;
-        armConfig.midBoomConfig = midBoomConfig;
-        armConfig.bottomBoomConfig = bottomBoomConfig;
-
-        this.arm = new Arm(armConfig);
+        WinchConfig winchConfig = new WinchCompConfig(this);
+//        armConfig.robot = this;
+//        armConfig.clawConfig = clawConfig;
+//        armConfig.bottomBoomConfig = bottomBoomConfig;
+        winchConfig.debug = true;
+        this.winch = new Winch(winchConfig);
 
         // pickup pixel routine
 //        this.arm.addGp2_A_PressHandler(event -> {
@@ -85,7 +83,7 @@ public class ArmOpMode extends IsaacBot {
 
     @Override
     public void runOpMode() throws InterruptedException {
-        this.arm.init();
+        this.winch.init();
 
 
 //            ArmOpMode.this.arm.cancelAllCommands();
@@ -118,7 +116,7 @@ public class ArmOpMode extends IsaacBot {
         while (this.opModeIsActive()) {
 
             this.getEventBus().run();
-            this.arm.run();
+            this.winch.run();
 
 
 
