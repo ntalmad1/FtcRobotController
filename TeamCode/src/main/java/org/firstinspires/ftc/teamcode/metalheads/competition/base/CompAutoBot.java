@@ -9,7 +9,6 @@ import org.firstinspires.ftc.library.component.command.OneTimeSynchronousCommand
 import org.firstinspires.ftc.library.component.event.command_callback.CommandAfterEvent;
 import org.firstinspires.ftc.library.component.event.command_callback.CommandCallbackAdapter;
 import org.firstinspires.ftc.library.component.event.command_callback.CommandCallbackHandler;
-import org.firstinspires.ftc.library.component.event.command_callback.CommandFailureEvent;
 import org.firstinspires.ftc.library.component.event.command_callback.CommandSuccessEvent;
 import org.firstinspires.ftc.library.component.event.g1_a_press.Gp1_A_PressEvent;
 import org.firstinspires.ftc.library.component.event.g1_a_press.Gp1_A_PressHandler;
@@ -27,6 +26,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 import org.firstinspires.ftc.teamcode.metalheads.competition.config.RobotAutoConfig;
 import org.firstinspires.ftc.teamcode.metalheads.competition.config.SimpleDriveCompConfig;
 import org.firstinspires.ftc.vision.VisionPortal;
+import org.firstinspires.ftc.vision.apriltag.AprilTagDetection;
 import org.firstinspires.ftc.vision.apriltag.AprilTagProcessor;
 
 import java.util.ArrayList;
@@ -278,40 +278,101 @@ public class CompAutoBot extends CompBot {
                 }
             });
 
-            this.addCommand(new OneTimeSynchronousCommand() {
-                public void runOnce(ICommand outerCommand) {
-
-                    final Direction strafeDirection = CompAutoBot.this.getStrafeDirection();
-
-                    CompAutoBot.this.driveTrain.strafeForAprilTag(
-                            CompAutoBot.this.aprilTagProcessor,
-                            strafeDirection,
-                            CompAutoBot.this.convertPropLocationToAprilTagId(CompAutoBot.this.propLocation),
-                            0.2,
-                            140,
-                            Units.Centimeters,
-                            CompAutoBot.this.getAprilTagOffset(), new CommandCallbackAdapter() {
-                                public void onSuccess(CommandSuccessEvent successEvent) {
-                                    // place yellow token on backboard
-                                    CompAutoBot.this.autoRoutine_placeYellowPixelBackdrop();
-                                }
-
-                                public void onFailure(CommandFailureEvent failureEvent) {
-                                    // park
-                                    CompAutoBot.this.onPlaceYellowPixelFailure(strafeDirection.invert());
-                                }
-
-                                public void onAfter(CommandAfterEvent afterEvent) {
-                                    outerCommand.markAsCompleted();
-                                }
-                            });
-                }
-            });
+            this.autoRoutine_gotoAprilTag();
 
         }
         // Place yellow pixel backstage
         else {
             this.autoRoutine_placeYellowPixelBackstage();
+        }
+    }
+
+    /**
+     *
+     */
+    protected void autoRoutine_gotoAprilTag () {
+
+        final Direction aprilTagDirection =
+                CompAutoBot.this.getAprilTagDirection();
+        final int aprilTagEstimatedDistance = this.getAprilTagEstimatedDistance();
+        if (this.getAprilTagEstimatedDistance() == 0) {
+            this.autoRoutine_placeYellowPixelBackstage();
+            return;
+        }
+
+        this.addCommand(new OneTimeSynchronousCommand() {
+            public void runOnce(ICommand outerCommand) {
+                CompAutoBot.this.driveTrain
+                        .setBrakeOn()
+                        .sideways(aprilTagDirection, 0.2, 0.3, aprilTagEstimatedDistance, Units.Centimeters)
+                        .wait(300, new CommandCallbackAdapter(){
+                            public void onSuccess(CommandSuccessEvent successEvent) {
+                                CompAutoBot.this.telemetry.log().add("going to scan for April Tag");
+                                outerCommand.markAsCompleted();
+                                CompAutoBot.this.autoRoutine_scanForAprilTag();
+                            }
+                        });
+            }
+        });
+    }
+
+    private Direction aprilTagDirection;
+    private double aprilTagTarget;
+
+    /**
+     *
+     */
+    protected void autoRoutine_scanForAprilTag () {
+
+        List<AprilTagDetection> detections = this.aprilTagProcessor.getDetections();
+
+        boolean detected = false;
+
+        for (AprilTagDetection detection : detections) {
+
+            if (detection.id == this.convertPropLocationToAprilTagId(this.propLocation)) {
+                detected = true;
+                CompAutoBot.this.telemetry.log().add("Detected April Tag");
+                double aprilTagPlaceOffset = this.getAprilTagPlaceOffset();
+
+                double x = detection.ftcPose.x;
+
+                if (x < aprilTagPlaceOffset) {
+                    aprilTagDirection = Direction.LEFT;
+                    aprilTagTarget = aprilTagPlaceOffset - x;
+                }
+                else {
+                    aprilTagDirection = Direction.RIGHT;
+                    aprilTagTarget = Math.abs(x - aprilTagPlaceOffset);
+                }
+                this.driveTrain.getConfig().debug = true;
+//                if ((x < (aprilTagTarget + 0.25)) && (x > (aprilTagTarget - 0.25))) {
+                if (aprilTagTarget == 0) {
+                    this.autoRoutine_placeYellowPixelBackdrop();
+                    CompAutoBot.this.telemetry.log().add("Within Tolerance");
+                }
+                else {
+                    CompAutoBot.this.telemetry.log().add("Going to Target: "+aprilTagTarget);
+                    this.addCommand(new OneTimeSynchronousCommand() {
+                        public void runOnce(ICommand outerCommand) {
+                            CompAutoBot.this.driveTrain
+                                    .sideways(aprilTagDirection, 0.1, 0.1,
+                                            aprilTagTarget, Units.Inches)
+                                    .wait(0, new CommandCallbackAdapter(){
+                                        public void onSuccess(CommandSuccessEvent successEvent) {
+                                            outerCommand.markAsCompleted();
+                                            CompAutoBot.this.autoRoutine_placeYellowPixelBackdrop();
+                                        }
+                                    });
+                        }
+                    });
+                }
+            }
+        }
+
+        if (!detected) {
+            this.telemetry.log().add("PANIC MODE!! April Tag NOT DETECTED!!");
+            this.autoRoutine_placeYellowPixelBackdrop();
         }
     }
 
@@ -547,7 +608,7 @@ public class CompAutoBot extends CompBot {
                             CompAutoBot.this.robotAutoConfig.placePurplePixelTrussSideDistance, Units.Centimeters);
                     CompAutoBot.this.driveTrain.sideways(CompAutoBot.this.robotAutoConfig.startingTrussDirection,
                             0.2, 0.4,
-                            65, Units.Centimeters)
+                            78, Units.Centimeters)
                             .endCommand(outerCommand);
 
                 }
@@ -682,7 +743,7 @@ public class CompAutoBot extends CompBot {
 
         this.addCommand(new OneTimeSynchronousCommand() {
             public void runOnce(ICommand command) {
-                CompAutoBot.this.moveArm_fromPixelPlace_toPixelPlaceRow2();
+                CompAutoBot.this.moveArm_fromPixelPlace_toPixelPlaceRow2(CompAutoBot.this.robotAutoConfig.pixelPlaceRow2_bottomBoom_autonomous);
                 CompAutoBot.this.pixelCatcher.toggleWinch();
                 CompAutoBot.this.driveTrain
                         .wait(250)
@@ -702,7 +763,7 @@ public class CompAutoBot extends CompBot {
         this.addCommand(new OneTimeSynchronousCommand() {
             public void runOnce(ICommand outerCommand) {
 
-                Direction parkDirection = CompAutoBot.this.getStrafeDirection().invert();
+                Direction parkDirection = CompAutoBot.this.getAprilTagDirection().invert();
 
                 int parkPositionDistance = CompAutoBot.this.calculateParkPositionDistance();
 
@@ -773,7 +834,7 @@ public class CompAutoBot extends CompBot {
             public void runOnce(ICommand outerCommand) {
                 CompAutoBot.this.arm.moveBottomToPosition(CompAutoBot.this.getRobotConfig().pixelReady_bottomBoom);
                 CompAutoBot.this.driveTrain
-                        .forward(0.2, 0.4, 50, Units.Centimeters)
+                        .forward(0.2, 0.4, 54, Units.Centimeters)
                         .endCommand(outerCommand);
             }
         });
@@ -821,11 +882,11 @@ public class CompAutoBot extends CompBot {
 
             switch (propLocation) {
                 case LEFT:
-                    return RobotAutoConfig.ParkDistFromAprilTags_Blue.fromId1_toCorner;
+                    return RobotAutoConfig.DistToAprilTags_Blue.fromId1_toCorner;
                 case FORWARD:
-                    return RobotAutoConfig.ParkDistFromAprilTags_Blue.fromId2_toCorner;
+                    return RobotAutoConfig.DistToAprilTags_Blue.fromId2_toCorner;
                 case RIGHT:
-                    return RobotAutoConfig.ParkDistFromAprilTags_Blue.fromId3_toCorner;
+                    return RobotAutoConfig.DistToAprilTags_Blue.fromId3_toCorner;
             }
         }
 
@@ -834,11 +895,11 @@ public class CompAutoBot extends CompBot {
 
             switch (propLocation) {
                 case LEFT:
-                    return RobotAutoConfig.ParkDistFromAprilTags_Blue.fromId1_toMiddle;
+                    return RobotAutoConfig.DistToAprilTags_Blue.fromId1_toMiddle;
                 case FORWARD:
-                    return RobotAutoConfig.ParkDistFromAprilTags_Blue.fromId2_toMiddle;
+                    return RobotAutoConfig.DistToAprilTags_Blue.fromId2_toMiddle;
                 case RIGHT:
-                    return RobotAutoConfig.ParkDistFromAprilTags_Blue.fromId3_toMiddle;
+                    return RobotAutoConfig.DistToAprilTags_Blue.fromId3_toMiddle;
             }
         }
 
@@ -847,11 +908,11 @@ public class CompAutoBot extends CompBot {
 
             switch (propLocation) {
                 case LEFT:
-                    return RobotAutoConfig.ParkDistFromAprilTags_Red.fromId4_toCorner;
+                    return RobotAutoConfig.DistToAprilTags_Red.fromId4_toCorner;
                 case FORWARD:
-                    return RobotAutoConfig.ParkDistFromAprilTags_Red.fromId5_toCorner;
+                    return RobotAutoConfig.DistToAprilTags_Red.fromId5_toCorner;
                 case RIGHT:
-                    return RobotAutoConfig.ParkDistFromAprilTags_Red.fromId6_toCorner;
+                    return RobotAutoConfig.DistToAprilTags_Red.fromId6_toCorner;
             }
         }
 
@@ -860,11 +921,11 @@ public class CompAutoBot extends CompBot {
 
             switch (propLocation) {
                 case LEFT:
-                    return RobotAutoConfig.ParkDistFromAprilTags_Red.fromId4_toMiddle;
+                    return RobotAutoConfig.DistToAprilTags_Red.fromId4_toMiddle;
                 case FORWARD:
-                    return RobotAutoConfig.ParkDistFromAprilTags_Red.fromId5_toMiddle;
+                    return RobotAutoConfig.DistToAprilTags_Red.fromId5_toMiddle;
                 case RIGHT:
-                    return RobotAutoConfig.ParkDistFromAprilTags_Red.fromId6_toMiddle;
+                    return RobotAutoConfig.DistToAprilTags_Red.fromId6_toMiddle;
             }
         }
 
@@ -928,7 +989,7 @@ public class CompAutoBot extends CompBot {
      *
      * @return
      */
-    private double getAprilTagOffset () {
+    private double getAprilTagPlaceOffset() {
 
         if (this.robotAutoConfig.parkPosition.equals(RobotAutoConfig.ParkPosition.CORNER)
             && this.robotAutoConfig.backdropDirection.equals(Direction.LEFT)
@@ -997,7 +1058,7 @@ public class CompAutoBot extends CompBot {
      *
      * @return
      */
-    private Direction getStrafeDirection () {
+    private Direction getAprilTagDirection() {
 
         if (this.robotAutoConfig.parkPosition.equals(RobotAutoConfig.ParkPosition.CORNER)) {
 
@@ -1007,6 +1068,61 @@ public class CompAutoBot extends CompBot {
         else {
             return this.robotAutoConfig.backdropDirection;
         }
+    }
+
+    public int getAprilTagEstimatedDistance() {
+
+        if (this.robotAutoConfig.parkPosition.equals(RobotAutoConfig.ParkPosition.CORNER)) {
+            if (this.getAprilTagDirection().equals(Direction.RIGHT)) { // blue
+
+                switch (this.propLocation) {
+                    case LEFT:
+                        return RobotAutoConfig.DistToAprilTags_Blue.fromId1_toCorner;
+                    case FORWARD:
+                        return RobotAutoConfig.DistToAprilTags_Blue.fromId2_toCorner;
+                    case RIGHT:
+                        return RobotAutoConfig.DistToAprilTags_Blue.fromId3_toCorner;
+                }
+
+            }
+            else { // red
+                switch (this.propLocation) {
+                    case LEFT:
+                        return RobotAutoConfig.DistToAprilTags_Red.fromId4_toCorner;
+                    case FORWARD:
+                        return RobotAutoConfig.DistToAprilTags_Red.fromId5_toCorner;
+                    case RIGHT:
+                        return RobotAutoConfig.DistToAprilTags_Red.fromId6_toCorner;
+                }
+            }
+        }
+        // middle
+        else {
+
+            if (this.getAprilTagDirection().equals(Direction.LEFT)) { // blue
+                switch (this.propLocation) {
+                    case LEFT:
+                        return RobotAutoConfig.DistToAprilTags_Blue.fromId1_toMiddle;
+                    case FORWARD:
+                        return RobotAutoConfig.DistToAprilTags_Blue.fromId2_toMiddle;
+                    case RIGHT:
+                        return RobotAutoConfig.DistToAprilTags_Blue.fromId3_toMiddle;
+                }
+            }
+            else { // red
+                switch (this.propLocation) {
+                    case LEFT:
+                        return RobotAutoConfig.DistToAprilTags_Red.fromId4_toMiddle;
+                    case FORWARD:
+                        return RobotAutoConfig.DistToAprilTags_Red.fromId5_toMiddle;
+                    case RIGHT:
+                        return RobotAutoConfig.DistToAprilTags_Red.fromId6_toMiddle;
+                }
+            }
+
+        }
+
+        return 0;
     }
 
     /**

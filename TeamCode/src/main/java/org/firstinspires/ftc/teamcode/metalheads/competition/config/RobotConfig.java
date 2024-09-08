@@ -20,6 +20,7 @@ public class RobotConfig {
     public int    pixelPlaceRow2_linAct =  3400;
     public double pixelPlaceRow2_clawBoom = 0.731;
 
+
     public double pixelPlaceRow3_bottomBoom = 0.321;
     public int    pixelPlaceRow3_linAct =  3400;
     public double pixelPlaceRow3_clawBoom = 0.786;
