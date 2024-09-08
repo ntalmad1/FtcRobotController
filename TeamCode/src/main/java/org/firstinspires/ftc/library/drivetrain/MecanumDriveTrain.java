@@ -68,60 +68,18 @@ public class MecanumDriveTrain extends AbstractDriveTrain
         double x = newPoint.getX();
         double y = newPoint.getY();
 
-        // Denominator is the largest motor power (absolute value) or 1
-        // This ensures all the powers maintain the same ratio,
-        // but only if at least one is out of the range [-1, 1]
+
         double denominator = Math.max(Math.abs(y) + Math.abs(x) + Math.abs(rx), 1);
         double frontLeftPower = (y + x + rx) / denominator;
         double backLeftPower   = (y - x + rx) / denominator;
         double frontRightPower = (y - x - rx) / denominator;
         double backRightPower  = (y + x - rx) / denominator;
 
-
-
         // button controls
         if (robot.gamepad1.b) {
             //resetIMU
             this.robot.initImu(this.getConfig().imuName);
         }
-
-//        if (!robot.gamepad1.left_bumper || this.leftBumperRuntime.milliseconds() > this.bumperTimeout)
-//        {
-//            this.leftBumperFlag = false;
-//        }
-
-//        if (robot.gamepad1.left_bumper)
-//        {
-//            if (!this.leftBumperFlag) {
-//                leftBumperRuntime.reset();
-//
-//                double power = this.maxPower - 0.1;
-//                if (power < 0.1) {
-//                    power = 0.1;
-//                }
-//                this.maxPower = power;
-//            }
-//            this.leftBumperFlag = true;
-//        }
-
-//        if (!robot.gamepad1.right_bumper || rightBumperRuntime.milliseconds() > this.bumperTimeout)
-//        {
-//            this.rightBumperFlag = false;
-//        }
-//
-//        if (robot.gamepad1.right_bumper)
-//        {
-//            if (!this.rightBumperFlag) {
-//                rightBumperRuntime.reset();
-//
-//                double power = this.maxPower + 0.1;
-//                if (power > 1) {
-//                    power = 1;
-//                }
-//                this.maxPower = power;
-//            }
-//            this.rightBumperFlag = true;
-//        }
 
         frontLeftPower  = accelerate(frontLeftPower, this.leftFrontMotor);
         frontRightPower = accelerate(frontRightPower, this.rightFrontMotor);

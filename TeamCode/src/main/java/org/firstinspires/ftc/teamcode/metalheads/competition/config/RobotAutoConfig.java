@@ -140,7 +140,7 @@ public class RobotAutoConfig {
      */
     public int gotoCornerDistance_Near_forwards = 27;
     public int gotoCornerDistance_Near_oppositeTruss = 35;
-    public int gotoCornerDistance_Near_trussSide = 23;
+    public int gotoCornerDistance_Near_trussSide = 15;
 
     /**
      */
