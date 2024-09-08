@@ -330,6 +330,10 @@ public class CompBot extends IsaacBot{
      */
     protected void moveArm_fromPixelPlace_toPixelPlaceRow2 () { _moveArm_fromPixelPlace_toPixelPlaceRow2(); }
 
+    protected void moveArm_fromPixelPlace_toPixelPlaceRow2 (double bottomBoomPos) {
+        _moveArm_fromPixelPlace_toPixelPlaceRow2(bottomBoomPos);
+    }
+
     /**
      *
      */
@@ -467,10 +471,14 @@ public class CompBot extends IsaacBot{
                 .moveBottomToPosition(this.robotConfig.pixelPlace_bottomBoom, 1);
     }
 
+    private void _moveArm_fromPixelPlace_toPixelPlaceRow2 () {
+        this._moveArm_fromPixelPlace_toPixelPlaceRow2(this.robotConfig.pixelPlaceRow2_bottomBoom);
+    }
+
     /**
      *
      */
-    private void _moveArm_fromPixelPlace_toPixelPlaceRow2 () {
+    private void _moveArm_fromPixelPlace_toPixelPlaceRow2 (final double bottomBoomPos) {
         this.arm.addCommand(new OneTimeCommand() {
             @Override
             public void runOnce(ICommand command) {

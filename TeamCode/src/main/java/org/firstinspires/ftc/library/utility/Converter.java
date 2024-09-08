@@ -34,7 +34,7 @@ public class Converter
                 return (int)Math.round(length);
 
             case Inches:
-                length = length / 2.54;
+                length = length * 2.54;
                 return (int)Math.round(length);
         }
 
