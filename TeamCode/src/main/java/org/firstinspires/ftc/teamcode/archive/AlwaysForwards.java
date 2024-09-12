@@ -4,10 +4,9 @@ import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 
-import org.firstinspires.ftc.library.IsaacBot;
-import org.firstinspires.ftc.library.drivetrain.MecanumDriveTrain;
-import org.firstinspires.ftc.library.drivetrain.MecanumDriveTrainConfig;
-
+import org.firstinspires.ftc.teamcode.library.IsaacBot;
+import org.firstinspires.ftc.teamcode.library.drivetrain.MecanumDriveTrain;
+import org.firstinspires.ftc.teamcode.library.drivetrain.MecanumDriveTrainConfig;
 
 /**
  *

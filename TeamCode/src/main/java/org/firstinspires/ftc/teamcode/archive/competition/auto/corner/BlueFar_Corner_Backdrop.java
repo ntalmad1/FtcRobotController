@@ -4,6 +4,8 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 
 import org.firstinspires.ftc.teamcode.archive.competition.base.CompAutoBot;
+import org.firstinspires.ftc.teamcode.archive.competition.config.RobotAutoConfig;
+import org.firstinspires.ftc.teamcode.library.utility.Direction;
 
 /**
  *

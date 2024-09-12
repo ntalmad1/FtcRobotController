@@ -5,17 +5,17 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.Servo;
 
-import org.firstinspires.ftc.library.IsaacBot;
-import org.firstinspires.ftc.library.boom.BoomConfig;
-import org.firstinspires.ftc.library.boom.arm.Arm;
-import org.firstinspires.ftc.library.boom.arm.ArmConfig;
-import org.firstinspires.ftc.library.drivetrain.MecanumDriveTrain;
-import org.firstinspires.ftc.library.drivetrain.MecanumDriveTrainConfig;
-import org.firstinspires.ftc.library.utility.Control;
+import org.firstinspires.ftc.teamcode.library.IsaacBot;
+import org.firstinspires.ftc.teamcode.library.boom.BoomConfig;
+import org.firstinspires.ftc.teamcode.library.boom.arm.Arm;
+import org.firstinspires.ftc.teamcode.library.boom.arm.ArmConfig;
+import org.firstinspires.ftc.teamcode.library.drivetrain.MecanumDriveTrain;
+import org.firstinspires.ftc.teamcode.library.drivetrain.MecanumDriveTrainConfig;
+import org.firstinspires.ftc.teamcode.library.utility.Control;
 
 @TeleOp(name="ArmWithDriveTrain", group="Linear OpMode")
 @Disabled
-public class ArmWithDriveTrain extends IsaacBot{
+public class ArmWithDriveTrain extends IsaacBot {
 
     /**
      */

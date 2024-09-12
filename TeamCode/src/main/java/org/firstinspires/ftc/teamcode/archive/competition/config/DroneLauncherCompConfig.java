@@ -2,9 +2,9 @@ package org.firstinspires.ftc.teamcode.archive.competition.config;
 
 import com.qualcomm.robotcore.hardware.Servo;
 
-import org.firstinspires.ftc.library.IsaacBot;
-import org.firstinspires.ftc.library.dronelauncher.DroneLauncherConfig;
-import org.firstinspires.ftc.library.rotator.RotatorConfig;
+import org.firstinspires.ftc.teamcode.library.IsaacBot;
+import org.firstinspires.ftc.teamcode.library.dronelauncher.DroneLauncherConfig;
+import org.firstinspires.ftc.teamcode.library.rotator.RotatorConfig;
 
 /**
  *

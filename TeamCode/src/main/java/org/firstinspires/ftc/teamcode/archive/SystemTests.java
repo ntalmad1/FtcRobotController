@@ -3,15 +3,23 @@ package org.firstinspires.ftc.teamcode.archive;
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
+import org.firstinspires.ftc.teamcode.archive.competition.config.ArmCompConfig;
+import org.firstinspires.ftc.teamcode.archive.competition.config.DroneLauncherCompConfig;
+import org.firstinspires.ftc.teamcode.archive.competition.config.PixelCatcherCompConfig;
 import org.firstinspires.ftc.teamcode.archive.competition.config.SimpleDriveCompConfig;
 import org.firstinspires.ftc.teamcode.library.IsaacBot;
 import org.firstinspires.ftc.teamcode.library.boom.arm.Arm;
+import org.firstinspires.ftc.teamcode.library.boom.arm.ArmConfig;
 import org.firstinspires.ftc.teamcode.library.command.ICommand;
+import org.firstinspires.ftc.teamcode.library.command.OneTimeCommand;
 import org.firstinspires.ftc.teamcode.library.command.OneTimeSynchronousCommand;
+import org.firstinspires.ftc.teamcode.library.command.WaitCommand;
 import org.firstinspires.ftc.teamcode.library.drivetrain.SimpleDriveTrain;
 import org.firstinspires.ftc.teamcode.library.drivetrain.SimpleDriveTrainConfig;
 import org.firstinspires.ftc.teamcode.library.dronelauncher.DroneLauncher;
+import org.firstinspires.ftc.teamcode.library.dronelauncher.DroneLauncherConfig;
 import org.firstinspires.ftc.teamcode.library.pixelcatcher.PixelCatcher;
+import org.firstinspires.ftc.teamcode.library.pixelcatcher.PixelCatcherConfig;
 import org.firstinspires.ftc.teamcode.library.utility.Direction;
 import org.firstinspires.ftc.teamcode.library.winch.Winch;
 

@@ -2,11 +2,11 @@ package org.firstinspires.ftc.teamcode.archive.competition.config;
 
 import com.qualcomm.robotcore.hardware.Servo;
 
-import org.firstinspires.ftc.library.IsaacBot;
-import org.firstinspires.ftc.library.boom.BoomConfig;
-import org.firstinspires.ftc.library.boom.arm.ArmConfig;
-import org.firstinspires.ftc.library.motor.EncodedMotorConfig;
-import org.firstinspires.ftc.library.utility.Control;
+import org.firstinspires.ftc.teamcode.library.IsaacBot;
+import org.firstinspires.ftc.teamcode.library.boom.BoomConfig;
+import org.firstinspires.ftc.teamcode.library.boom.arm.ArmConfig;
+import org.firstinspires.ftc.teamcode.library.motor.EncodedMotorConfig;
+import org.firstinspires.ftc.teamcode.library.utility.Control;
 
 public class ArmCompConfig extends ArmConfig {
 

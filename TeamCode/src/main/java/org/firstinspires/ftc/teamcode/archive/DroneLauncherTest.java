@@ -3,13 +3,14 @@ package org.firstinspires.ftc.teamcode.archive;
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
-import org.firstinspires.ftc.library.IsaacBot;
-import org.firstinspires.ftc.library.component.event.gp2_a_press.Gp2_A_PressEvent;
-import org.firstinspires.ftc.library.component.event.gp2_a_press.Gp2_A_PressHandler;
-import org.firstinspires.ftc.library.dronelauncher.DroneLauncher;
-import org.firstinspires.ftc.library.dronelauncher.DroneLauncherConfig;
-import org.firstinspires.ftc.library.utility.Control;
-import org.firstinspires.ftc.teamcode.metalheads.competition.config.DroneLauncherCompConfig;
+import org.firstinspires.ftc.teamcode.archive.competition.config.DroneLauncherCompConfig;
+import org.firstinspires.ftc.teamcode.library.IsaacBot;
+import org.firstinspires.ftc.teamcode.library.dronelauncher.DroneLauncher;
+import org.firstinspires.ftc.teamcode.library.dronelauncher.DroneLauncherConfig;
+import org.firstinspires.ftc.teamcode.library.event.gp2_a_press.Gp2_A_PressEvent;
+import org.firstinspires.ftc.teamcode.library.event.gp2_a_press.Gp2_A_PressHandler;
+import org.firstinspires.ftc.teamcode.library.utility.Control;
+
 
 @TeleOp(name="DroneLauncherTest", group="Tests")
 @Disabled

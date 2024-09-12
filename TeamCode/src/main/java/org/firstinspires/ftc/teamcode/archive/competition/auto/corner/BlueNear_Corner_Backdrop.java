@@ -1,10 +1,11 @@
 package org.firstinspires.ftc.teamcode.archive.competition.auto.corner;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 
-import org.firstinspires.ftc.library.utility.Direction;
-import org.firstinspires.ftc.teamcode.metalheads.competition.base.CompAutoBot;
-import org.firstinspires.ftc.teamcode.metalheads.competition.config.RobotAutoConfig;
+import org.firstinspires.ftc.teamcode.archive.competition.base.CompAutoBot;
+import org.firstinspires.ftc.teamcode.archive.competition.config.RobotAutoConfig;
+import org.firstinspires.ftc.teamcode.library.utility.Direction;
 
 /**
  *

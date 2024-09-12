@@ -3,11 +3,11 @@ package org.firstinspires.ftc.teamcode.archive;
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
-import org.firstinspires.ftc.library.IsaacBot;
-import org.firstinspires.ftc.library.claw.Claw;
-import org.firstinspires.ftc.library.claw.ClawConfig;
-import org.firstinspires.ftc.library.component.event.EventBus;
-import org.firstinspires.ftc.teamcode.metalheads.competition.config.ClawCompConfig;
+import org.firstinspires.ftc.teamcode.archive.competition.config.ClawCompConfig;
+import org.firstinspires.ftc.teamcode.library.IsaacBot;
+import org.firstinspires.ftc.teamcode.library.claw.Claw;
+import org.firstinspires.ftc.teamcode.library.claw.ClawConfig;
+import org.firstinspires.ftc.teamcode.library.event.EventBus;
 
 @TeleOp(name="ClawTest", group="Linear OpMode")
 @Disabled

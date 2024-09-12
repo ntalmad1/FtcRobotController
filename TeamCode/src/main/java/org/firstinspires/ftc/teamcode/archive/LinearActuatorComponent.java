@@ -3,10 +3,10 @@ package org.firstinspires.ftc.teamcode.archive;
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
-import org.firstinspires.ftc.library.IsaacBot;
-import org.firstinspires.ftc.library.motor.EncodedMotor;
-import org.firstinspires.ftc.library.motor.EncodedMotorConfig;
-import org.firstinspires.ftc.library.utility.Control;
+import org.firstinspires.ftc.teamcode.library.IsaacBot;
+import org.firstinspires.ftc.teamcode.library.motor.EncodedMotor;
+import org.firstinspires.ftc.teamcode.library.motor.EncodedMotorConfig;
+import org.firstinspires.ftc.teamcode.library.utility.Control;
 
 @TeleOp(name="Linear Actuator Component", group="Linear OpMode")
 @Disabled

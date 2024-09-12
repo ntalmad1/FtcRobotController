@@ -8,7 +8,7 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 
 import java.util.Base64;
 
-@TeleOp(name="OmniPod", group="Tests")
+@TeleOp(name="OmniPodTest", group="Tests")
 // @Disabled
 public class OmniPodTest extends LinearOpMode {
 

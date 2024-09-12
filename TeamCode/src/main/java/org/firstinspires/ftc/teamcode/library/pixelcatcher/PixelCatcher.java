@@ -2,13 +2,13 @@ package org.firstinspires.ftc.teamcode.library.pixelcatcher;
 
 import com.qualcomm.robotcore.hardware.Servo;
 
-import org.firstinspires.ftc.library.component.Component;
-import org.firstinspires.ftc.library.pixelcatcher.events.leftarmclose.PixelCatcherLeftArmCloseEvent;
-import org.firstinspires.ftc.library.pixelcatcher.events.leftarmopen.PixelCatcherLeftArmOpenEvent;
-import org.firstinspires.ftc.library.pixelcatcher.events.rightarmclose.PixelCatcherRightArmCloseEvent;
-import org.firstinspires.ftc.library.pixelcatcher.events.rightarmopen.PixelCatcherRightArmOpenEvent;
-import org.firstinspires.ftc.library.servo.ServoComponent;
-import org.firstinspires.ftc.library.utility.Control;
+import org.firstinspires.ftc.teamcode.library.component.Component;
+import org.firstinspires.ftc.teamcode.library.pixelcatcher.events.leftarmclose.PixelCatcherLeftArmCloseEvent;
+import org.firstinspires.ftc.teamcode.library.pixelcatcher.events.leftarmopen.PixelCatcherLeftArmOpenEvent;
+import org.firstinspires.ftc.teamcode.library.pixelcatcher.events.rightarmclose.PixelCatcherRightArmCloseEvent;
+import org.firstinspires.ftc.teamcode.library.pixelcatcher.events.rightarmopen.PixelCatcherRightArmOpenEvent;
+import org.firstinspires.ftc.teamcode.library.servo.ServoComponent;
+import org.firstinspires.ftc.teamcode.library.utility.Control;
 
 /**
  *

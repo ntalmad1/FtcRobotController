@@ -3,10 +3,10 @@ package org.firstinspires.ftc.teamcode.archive;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 
-import org.firstinspires.ftc.library.IsaacBot;
-import org.firstinspires.ftc.library.drivetrain.SimpleDriveTrain;
-import org.firstinspires.ftc.library.drivetrain.SimpleDriveTrainConfig;
-import org.firstinspires.ftc.library.utility.Units;
+import org.firstinspires.ftc.teamcode.library.IsaacBot;
+import org.firstinspires.ftc.teamcode.library.drivetrain.SimpleDriveTrain;
+import org.firstinspires.ftc.teamcode.library.drivetrain.SimpleDriveTrainConfig;
+import org.firstinspires.ftc.teamcode.library.utility.Units;
 
 /**
  * 

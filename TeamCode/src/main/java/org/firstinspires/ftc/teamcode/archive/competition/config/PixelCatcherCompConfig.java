@@ -1,10 +1,10 @@
 package org.firstinspires.ftc.teamcode.archive.competition.config;
 
-import org.firstinspires.ftc.library.IsaacBot;
-import org.firstinspires.ftc.library.pixelcatcher.PixelCatcher;
-import org.firstinspires.ftc.library.pixelcatcher.PixelCatcherConfig;
-import org.firstinspires.ftc.library.servo.ServoConfig;
-import org.firstinspires.ftc.library.utility.Control;
+import org.firstinspires.ftc.teamcode.library.IsaacBot;
+import org.firstinspires.ftc.teamcode.library.pixelcatcher.PixelCatcher;
+import org.firstinspires.ftc.teamcode.library.pixelcatcher.PixelCatcherConfig;
+import org.firstinspires.ftc.teamcode.library.servo.ServoConfig;
+import org.firstinspires.ftc.teamcode.library.utility.Control;
 
 /**
  *

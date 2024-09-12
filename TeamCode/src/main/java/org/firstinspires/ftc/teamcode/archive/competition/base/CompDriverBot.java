@@ -1,12 +1,12 @@
 package org.firstinspires.ftc.teamcode.archive.competition.base;
 
-import org.firstinspires.ftc.library.component.event.g1_a_press.Gp1_A_PressEvent;
-import org.firstinspires.ftc.library.component.event.g1_a_press.Gp1_A_PressHandler;
-import org.firstinspires.ftc.library.component.event.gp2_y_press.Gp2_Y_PressEvent;
-import org.firstinspires.ftc.library.component.event.gp2_y_press.Gp2_Y_PressHandler;
-import org.firstinspires.ftc.library.drivetrain.MecanumDriveTrain;
-import org.firstinspires.ftc.library.pixelcatcher.PixelCatcher;
-import org.firstinspires.ftc.teamcode.metalheads.competition.config.MecanumDriveCompConfig;
+import org.firstinspires.ftc.teamcode.archive.competition.config.MecanumDriveCompConfig;
+import org.firstinspires.ftc.teamcode.library.drivetrain.MecanumDriveTrain;
+import org.firstinspires.ftc.teamcode.library.event.g1_a_press.Gp1_A_PressEvent;
+import org.firstinspires.ftc.teamcode.library.event.g1_a_press.Gp1_A_PressHandler;
+import org.firstinspires.ftc.teamcode.library.event.gp2_y_press.Gp2_Y_PressEvent;
+import org.firstinspires.ftc.teamcode.library.event.gp2_y_press.Gp2_Y_PressHandler;
+import org.firstinspires.ftc.teamcode.library.pixelcatcher.PixelCatcher;
 
 /**
  *

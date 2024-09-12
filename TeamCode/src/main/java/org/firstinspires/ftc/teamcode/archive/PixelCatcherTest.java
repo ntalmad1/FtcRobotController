@@ -3,9 +3,10 @@ package org.firstinspires.ftc.teamcode.archive;
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
-import org.firstinspires.ftc.library.IsaacBot;
-import org.firstinspires.ftc.library.pixelcatcher.PixelCatcher;
-import org.firstinspires.ftc.teamcode.metalheads.competition.config.PixelCatcherCompConfig;
+import org.firstinspires.ftc.teamcode.archive.competition.config.PixelCatcherCompConfig;
+import org.firstinspires.ftc.teamcode.library.IsaacBot;
+import org.firstinspires.ftc.teamcode.library.pixelcatcher.PixelCatcher;
+
 
 @TeleOp(name="PixelCatcherTest", group="Tests")
 @Disabled

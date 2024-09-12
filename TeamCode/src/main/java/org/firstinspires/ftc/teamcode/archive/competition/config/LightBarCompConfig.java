@@ -1,7 +1,7 @@
 package org.firstinspires.ftc.teamcode.archive.competition.config;
 
-import org.firstinspires.ftc.library.IsaacBot;
-import org.firstinspires.ftc.library.lightbar.LightBarConfig;
+import org.firstinspires.ftc.teamcode.library.IsaacBot;
+import org.firstinspires.ftc.teamcode.library.lightbar.LightBarConfig;
 
 /**
  *

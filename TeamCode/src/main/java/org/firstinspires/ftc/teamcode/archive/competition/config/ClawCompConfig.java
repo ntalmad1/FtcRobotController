@@ -2,10 +2,10 @@ package org.firstinspires.ftc.teamcode.archive.competition.config;
 
 import com.qualcomm.robotcore.hardware.Servo;
 
-import org.firstinspires.ftc.library.IsaacBot;
-import org.firstinspires.ftc.library.boom.BoomConfig;
-import org.firstinspires.ftc.library.claw.ClawConfig;
-import org.firstinspires.ftc.library.utility.Control;
+import org.firstinspires.ftc.teamcode.library.IsaacBot;
+import org.firstinspires.ftc.teamcode.library.boom.BoomConfig;
+import org.firstinspires.ftc.teamcode.library.claw.ClawConfig;
+import org.firstinspires.ftc.teamcode.library.utility.Control;
 
 /**
  *

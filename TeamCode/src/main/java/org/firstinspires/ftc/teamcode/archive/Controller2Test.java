@@ -3,8 +3,8 @@ package org.firstinspires.ftc.teamcode.archive;
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
-import org.firstinspires.ftc.library.IsaacBot;
-import org.firstinspires.ftc.library.component.Component;
+import org.firstinspires.ftc.teamcode.library.IsaacBot;
+import org.firstinspires.ftc.teamcode.library.component.Component;
 
 @TeleOp(name="Controller2Test", group="Linear OpMode")
 @Disabled
