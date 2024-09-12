@@ -1,0 +1,183 @@
+package org.firstinspires.ftc.teamcode.library.drivetrain;
+
+import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.util.ElapsedTime;
+
+import org.firstinspires.ftc.library.utility.GridUtils;
+import org.firstinspires.ftc.library.utility.Point;
+
+/**
+ *
+ */
+public class MecanumDriveTrain extends AbstractDriveTrain
+{
+    /**
+     */
+    private double maxPower;
+
+    //private boolean leftBumperFlag;
+    //private boolean rightBumperFlag;
+
+    //private ElapsedTime leftBumperRuntime = new ElapsedTime();
+    //private ElapsedTime rightBumperRuntime = new ElapsedTime();
+    //private int bumperTimeout = 250;
+
+    /**
+     *
+     */
+
+    /**
+     * Constructor
+     *
+     * @param config
+     */
+    public MecanumDriveTrain(MecanumDriveTrainConfig config)
+    {
+        super(config);
+
+        this.maxPower = config.maxPower;
+    }
+
+    /**
+     *
+     */
+    public void init ()
+    {
+        super.init();
+
+        leftFrontMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        rightFrontMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        rightRearMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        leftRearMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+
+        leftFrontMotor.setDirection(this.getConfig().leftFrontMotorDirection);
+        rightFrontMotor.setDirection(this.getConfig().rightFrontMotorDirection);
+        rightRearMotor.setDirection(this.getConfig().rightRearMotorDirection);
+        leftRearMotor.setDirection(this.getConfig().leftRearMotorDirection);
+    }
+
+    public void run ()
+    {
+        double yaw = -(this.getYaw() + getConfig().yawOffset);
+
+        float leftY = -this.robot.gamepad1.left_stick_y;
+        float leftX = this.robot.gamepad1.left_stick_x;
+        float rx = this.robot.gamepad1.right_stick_x;
+
+        Point newPoint = GridUtils.rotatePointByDegrees(leftX,leftY,yaw);
+        double x = newPoint.getX();
+        double y = newPoint.getY();
+
+
+        double denominator = Math.max(Math.abs(y) + Math.abs(x) + Math.abs(rx), 1);
+        double frontLeftPower = (y + x + rx) / denominator;
+        double backLeftPower   = (y - x + rx) / denominator;
+        double frontRightPower = (y - x - rx) / denominator;
+        double backRightPower  = (y + x - rx) / denominator;
+
+        // button controls
+        if (robot.gamepad1.b) {
+            //resetIMU
+            this.robot.initImu(this.getConfig().imuName);
+        }
+
+        frontLeftPower  = accelerate(frontLeftPower, this.leftFrontMotor);
+        frontRightPower = accelerate(frontRightPower, this.rightFrontMotor);
+        backRightPower  = accelerate(backRightPower, this.rightRearMotor);
+        backLeftPower   = accelerate(backLeftPower, this.leftRearMotor);
+
+        this.leftFrontMotor.setPower(frontLeftPower);
+        this.rightFrontMotor.setPower(frontRightPower);
+        this.rightRearMotor.setPower(backRightPower);
+        this.leftRearMotor.setPower(backLeftPower);
+
+        if (this.getConfig().isDebug())
+        {
+            this.robot.telemetry.addData("Rotated Y: ", "%.2f", y);
+            this.robot.telemetry.addData("Rotated X: ", "%.2f", x);
+            this.robot.telemetry.addData("Right X: ", "%.2f", rx);
+            this.robot.telemetry.addData("Yaw: ", "%.2f", yaw);
+            this.robot.telemetry.addData("frontLeftPower: ", "%.2f", frontLeftPower);
+            this.robot.telemetry.addData("backLeftPower: ", "%.2f", backLeftPower);
+            this.robot.telemetry.addData("frontRightPower: ", "%.2f", frontRightPower);
+            this.robot.telemetry.addData("backRightPower: ", "%.2f", backRightPower);
+            this.robot.telemetry.addData("Max Power: ", "%.2f", this.maxPower);
+            //this.robot.telemetry.addData("Left Bumper Timer: ", "%.2f", this.leftBumperRuntime.milliseconds());
+            this.robot.telemetry.update();
+        }
+    }
+
+
+    /**
+     *
+     * @return
+     */
+    protected MecanumDriveTrainConfig getConfig() {
+        return (MecanumDriveTrainConfig)super.getConfig();
+    }
+
+    /**
+     *
+     * @param targetPower
+     * @param motor
+     * @return
+     */
+    private double accelerate (double targetPower, DcMotor motor)
+    {
+        if (!this.getConfig().incrementalDeceleration && targetPower == 0)
+        {
+            return 0;
+        }
+        
+        double currentPower = motor.getPower();
+        double newpower = targetPower;
+        if (currentPower < targetPower)
+        {
+            double power = currentPower + this.getConfig().accelerationIncrement;
+            if (power > targetPower)
+            {
+                power = targetPower;
+            }
+
+            newpower = power;
+        }
+        else if (currentPower > targetPower)
+        {
+            double power = currentPower - this.getConfig().accelerationIncrement;
+            if (power < targetPower)
+            {
+                power = targetPower;
+            }
+
+            newpower = power;
+        }
+        if (Math.abs(newpower) > this.maxPower)
+        {
+            if (newpower < 0)
+            {
+                newpower = this.maxPower * -1;
+            }
+            else
+            {
+                newpower = this.maxPower;
+            }
+        }
+        return newpower;
+
+    }
+
+    /**
+     *
+     * @return
+     */
+    protected double getYaw () {
+
+        if (this.getConfig().alwaysForwards) {
+            return this.robot.getYaw();
+        }
+        else {
+            return 0;
+        }
+    }
+
+}

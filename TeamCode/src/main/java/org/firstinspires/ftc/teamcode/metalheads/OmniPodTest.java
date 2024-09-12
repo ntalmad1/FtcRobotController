@@ -21,9 +21,9 @@ public class OmniPodTest extends LinearOpMode {
      */
     public void runOpMode() {
 
-        motor  = hardwareMap.get(DcMotor.class, "motor");
+        motor  = hardwareMap.get(DcMotor.class, "motor3");
 
-        encoder = hardwareMap.get(DcMotor.class, "motor");
+        encoder = hardwareMap.get(DcMotor.class, "motor3");
 
         encoder.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
