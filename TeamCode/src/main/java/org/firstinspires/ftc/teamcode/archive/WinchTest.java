@@ -3,10 +3,8 @@ package org.firstinspires.ftc.teamcode.archive;
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
-import org.firstinspires.ftc.library.IsaacBot;
-import org.firstinspires.ftc.library.winch.Winch;
-import org.firstinspires.ftc.library.winch.WinchConfig;
-import org.firstinspires.ftc.teamcode.metalheads.competition.config.WinchCompConfig;
+import org.firstinspires.ftc.teamcode.library.IsaacBot;
+import org.firstinspires.ftc.teamcode.library.winch.Winch;
 
 @TeleOp(name="Winch Test", group="Linear OpMode")
 @Disabled

@@ -10,7 +10,7 @@ import org.firstinspires.ftc.teamcode.metalheads.competition.config.RobotAutoCon
  *
  */
 @Autonomous(name="RedFar_Middle_Backdrop", group="MiddleBackdrop")
-//@Disabled
+@Disabled
 public class RedFar_Middle_Backdrop extends CompAutoBot {
 
     /**

@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode.library.drivetrain;
 
-import org.firstinspires.ftc.library.IsaacBot;
+
+import org.firstinspires.ftc.teamcode.library.IsaacBot;
 
 public class AbstractDriveTrainConfig
 {

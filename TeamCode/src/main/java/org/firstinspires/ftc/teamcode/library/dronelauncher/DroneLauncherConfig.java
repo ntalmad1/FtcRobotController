@@ -1,7 +1,7 @@
 package org.firstinspires.ftc.teamcode.library.dronelauncher;
 
-import org.firstinspires.ftc.library.IsaacBot;
-import org.firstinspires.ftc.library.rotator.RotatorConfig;
+import org.firstinspires.ftc.teamcode.library.IsaacBot;
+import org.firstinspires.ftc.teamcode.library.rotator.RotatorConfig;
 
 /**
  *

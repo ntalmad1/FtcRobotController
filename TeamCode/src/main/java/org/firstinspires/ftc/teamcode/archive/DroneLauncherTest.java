@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode.archive;
 
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import org.firstinspires.ftc.library.IsaacBot;
@@ -11,7 +12,7 @@ import org.firstinspires.ftc.library.utility.Control;
 import org.firstinspires.ftc.teamcode.metalheads.competition.config.DroneLauncherCompConfig;
 
 @TeleOp(name="DroneLauncherTest", group="Tests")
-//@Disabled
+@Disabled
 public class DroneLauncherTest extends IsaacBot {
 
     private DroneLauncher droneLauncher;

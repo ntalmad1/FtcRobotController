@@ -2,22 +2,19 @@ package org.firstinspires.ftc.teamcode.library.boom.arm;
 
 import com.qualcomm.robotcore.hardware.Servo;
 
-import org.firstinspires.ftc.library.boom.Boom;
-import org.firstinspires.ftc.library.boom.BoomMoveToDegreesCommand;
-import org.firstinspires.ftc.library.boom.BoomMoveToPositionCommand;
-import org.firstinspires.ftc.library.claw.Claw;
-import org.firstinspires.ftc.library.claw.ClawCloseCommand;
-import org.firstinspires.ftc.library.claw.ClawOpenCommand;
-import org.firstinspires.ftc.library.component.Component;
-import org.firstinspires.ftc.library.component.command.Command;
-import org.firstinspires.ftc.library.component.command.ICommand;
-import org.firstinspires.ftc.library.component.command.WaitCommand;
-import org.firstinspires.ftc.library.component.event.command_callback.CommandCallbackAdapter;
-import org.firstinspires.ftc.library.component.event.command_callback.CommandCallbackHandler;
-import org.firstinspires.ftc.library.component.event.command_callback.CommandSuccessEvent;
-import org.firstinspires.ftc.library.component.event.gp2_y_press.Gp2_Y_PressEvent;
-import org.firstinspires.ftc.library.component.event.gp2_y_press.Gp2_Y_PressHandler;
-import org.firstinspires.ftc.library.motor.EncodedMotor;
+import org.firstinspires.ftc.teamcode.library.boom.Boom;
+import org.firstinspires.ftc.teamcode.library.boom.BoomMoveToDegreesCommand;
+import org.firstinspires.ftc.teamcode.library.boom.BoomMoveToPositionCommand;
+import org.firstinspires.ftc.teamcode.library.claw.Claw;
+import org.firstinspires.ftc.teamcode.library.claw.ClawCloseCommand;
+import org.firstinspires.ftc.teamcode.library.claw.ClawOpenCommand;
+import org.firstinspires.ftc.teamcode.library.command.ICommand;
+import org.firstinspires.ftc.teamcode.library.command.WaitCommand;
+import org.firstinspires.ftc.teamcode.library.component.Component;
+import org.firstinspires.ftc.teamcode.library.event.command_callback.CommandCallbackAdapter;
+import org.firstinspires.ftc.teamcode.library.event.command_callback.CommandCallbackHandler;
+import org.firstinspires.ftc.teamcode.library.event.command_callback.CommandSuccessEvent;
+import org.firstinspires.ftc.teamcode.library.motor.EncodedMotor;
 
 /**
  *

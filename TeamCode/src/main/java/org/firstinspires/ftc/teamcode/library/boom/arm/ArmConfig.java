@@ -1,9 +1,10 @@
 package org.firstinspires.ftc.teamcode.library.boom.arm;
 
-import org.firstinspires.ftc.library.IsaacBot;
-import org.firstinspires.ftc.library.boom.BoomConfig;
-import org.firstinspires.ftc.library.claw.ClawConfig;
-import org.firstinspires.ftc.library.motor.EncodedMotorConfig;
+
+import org.firstinspires.ftc.teamcode.library.IsaacBot;
+import org.firstinspires.ftc.teamcode.library.boom.BoomConfig;
+import org.firstinspires.ftc.teamcode.library.claw.ClawConfig;
+import org.firstinspires.ftc.teamcode.library.motor.EncodedMotorConfig;
 
 /**
  *

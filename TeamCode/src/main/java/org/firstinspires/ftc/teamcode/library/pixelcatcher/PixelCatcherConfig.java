@@ -1,8 +1,8 @@
 package org.firstinspires.ftc.teamcode.library.pixelcatcher;
 
-import org.firstinspires.ftc.library.servo.ServoConfig;
-import org.firstinspires.ftc.library.utility.Control;
-import org.firstinspires.ftc.library.IsaacBot;
+import org.firstinspires.ftc.teamcode.library.IsaacBot;
+import org.firstinspires.ftc.teamcode.library.servo.ServoConfig;
+import org.firstinspires.ftc.teamcode.library.utility.Control;
 
 /**
  *

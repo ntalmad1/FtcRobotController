@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode.archive;
 
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import org.firstinspires.ftc.library.IsaacBot;
@@ -7,7 +8,7 @@ import org.firstinspires.ftc.library.pixelcatcher.PixelCatcher;
 import org.firstinspires.ftc.teamcode.metalheads.competition.config.PixelCatcherCompConfig;
 
 @TeleOp(name="PixelCatcherTest", group="Tests")
-//@Disabled
+@Disabled
 public class PixelCatcherTest extends IsaacBot {
 
     private PixelCatcher pixelCatcher;

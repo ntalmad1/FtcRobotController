@@ -1,20 +1,20 @@
 package org.firstinspires.ftc.teamcode.library.component;
 
-import org.firstinspires.ftc.library.component.event.HandlerRegistration;
-import org.firstinspires.ftc.library.component.event.gp2_a_press.Gp2_A_PressHandler;
-import org.firstinspires.ftc.library.component.event.gp2_dpad_down_down.Gp2_Dpad_Down_DownHandler;
-import org.firstinspires.ftc.library.component.event.gp2_dpad_left_down.Gp2_Dpad_Left_DownHandler;
-import org.firstinspires.ftc.library.component.event.gp2_dpad_right_down.Gp2_Dpad_Right_DownHandler;
-import org.firstinspires.ftc.library.component.event.gp2_dpad_up_down.Gp2_Dpad_Up_DownHandler;
-import org.firstinspires.ftc.library.component.event.gp2_left_bumper_press.Gp2_Left_Bumper_PressHandler;
-import org.firstinspires.ftc.library.component.event.gp2_left_stick_x.Gp2_LeftStickXHandler;
-import org.firstinspires.ftc.library.component.event.gp2_left_stick_y.Gp2_LeftStickYHandler;
-import org.firstinspires.ftc.library.component.event.gp2_right_bumper_press.Gp2_Right_Bumper_PressHandler;
-import org.firstinspires.ftc.library.component.event.gp2_right_stick_x.Gp2_RightStickXHandler;
-import org.firstinspires.ftc.library.component.event.gp2_right_stick_y.Gp2_RightStickYHandler;
-import org.firstinspires.ftc.library.component.event.gp2_y_press.Gp2_Y_PressHandler;
-import org.firstinspires.ftc.library.component.event.gp2_b_press.Gp2_B_PressHandler;
-import org.firstinspires.ftc.library.component.event.gp2_x_press.Gp2_X_PressHandler;
+import org.firstinspires.ftc.teamcode.library.event.HandlerRegistration;
+import org.firstinspires.ftc.teamcode.library.event.gp2_a_press.Gp2_A_PressHandler;
+import org.firstinspires.ftc.teamcode.library.event.gp2_b_press.Gp2_B_PressHandler;
+import org.firstinspires.ftc.teamcode.library.event.gp2_dpad_down_down.Gp2_Dpad_Down_DownHandler;
+import org.firstinspires.ftc.teamcode.library.event.gp2_dpad_left_down.Gp2_Dpad_Left_DownHandler;
+import org.firstinspires.ftc.teamcode.library.event.gp2_dpad_right_down.Gp2_Dpad_Right_DownHandler;
+import org.firstinspires.ftc.teamcode.library.event.gp2_dpad_up_down.Gp2_Dpad_Up_DownHandler;
+import org.firstinspires.ftc.teamcode.library.event.gp2_left_bumper_press.Gp2_Left_Bumper_PressHandler;
+import org.firstinspires.ftc.teamcode.library.event.gp2_left_stick_x.Gp2_LeftStickXHandler;
+import org.firstinspires.ftc.teamcode.library.event.gp2_left_stick_y.Gp2_LeftStickYHandler;
+import org.firstinspires.ftc.teamcode.library.event.gp2_right_bumper_press.Gp2_Right_Bumper_PressHandler;
+import org.firstinspires.ftc.teamcode.library.event.gp2_right_stick_x.Gp2_RightStickXHandler;
+import org.firstinspires.ftc.teamcode.library.event.gp2_right_stick_y.Gp2_RightStickYHandler;
+import org.firstinspires.ftc.teamcode.library.event.gp2_x_press.Gp2_X_PressHandler;
+import org.firstinspires.ftc.teamcode.library.event.gp2_y_press.Gp2_Y_PressHandler;
 
 /**
  *

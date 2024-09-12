@@ -2,7 +2,7 @@ package org.firstinspires.ftc.teamcode.library.component;
 
 import com.qualcomm.robotcore.hardware.DigitalChannel;
 
-import org.firstinspires.ftc.library.IsaacBot;
+import org.firstinspires.ftc.teamcode.library.IsaacBot;
 
 /**
  *

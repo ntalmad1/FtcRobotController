@@ -2,13 +2,8 @@ package org.firstinspires.ftc.teamcode.library.claw;
 
 import com.qualcomm.robotcore.hardware.Servo;
 
-import org.firstinspires.ftc.library.boom.Boom;
-import org.firstinspires.ftc.library.claw.events.leftpincherclose.ClawLeftPincherCloseEvent;
-import org.firstinspires.ftc.library.claw.events.leftpincheropen.ClawLeftPincherOpenEvent;
-import org.firstinspires.ftc.library.claw.events.rightpincherclose.ClawRightPincherCloseEvent;
-import org.firstinspires.ftc.library.claw.events.rightpincheropen.ClawRightPincherOpenEvent;
-import org.firstinspires.ftc.library.rotator.Rotator;
-import org.firstinspires.ftc.library.component.Component;
+import org.firstinspires.ftc.teamcode.library.boom.Boom;
+import org.firstinspires.ftc.teamcode.library.component.Component;
 
 /**
  *

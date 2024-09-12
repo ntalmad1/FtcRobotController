@@ -3,8 +3,9 @@ package org.firstinspires.ftc.teamcode.library.drivetrain.commands;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.DistanceSensor;
 
-import org.firstinspires.ftc.library.drivetrain.SimpleDriveTrain;
-import org.firstinspires.ftc.library.utility.Units;
+import org.firstinspires.ftc.teamcode.library.drivetrain.SimpleDriveTrain;
+import org.firstinspires.ftc.teamcode.library.utility.Units;
+
 
 public class DriveTrainScanSidewaysLeftCommand extends AbstractDriveTrainScanCommand {
 

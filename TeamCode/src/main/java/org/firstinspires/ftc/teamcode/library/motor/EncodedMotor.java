@@ -3,13 +3,11 @@ package org.firstinspires.ftc.teamcode.library.motor;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 
-import org.firstinspires.ftc.library.IsaacBot;
-import org.firstinspires.ftc.library.component.Component;
-import org.firstinspires.ftc.library.component.event.command_callback.CommandCallbackAdapter;
-import org.firstinspires.ftc.library.component.event.command_callback.CommandCallbackHandler;
-import org.firstinspires.ftc.library.component.event.gp2_right_stick_x.Gp2_RightStickXEvent;
-import org.firstinspires.ftc.library.component.event.gp2_right_stick_x.Gp2_RightStickXHandler;
-import org.firstinspires.ftc.library.utility.Control;
+import org.firstinspires.ftc.teamcode.library.component.Component;
+import org.firstinspires.ftc.teamcode.library.event.command_callback.CommandCallbackHandler;
+import org.firstinspires.ftc.teamcode.library.event.gp2_right_stick_x.Gp2_RightStickXEvent;
+import org.firstinspires.ftc.teamcode.library.event.gp2_right_stick_x.Gp2_RightStickXHandler;
+import org.firstinspires.ftc.teamcode.library.utility.Control;
 
 /**
  *

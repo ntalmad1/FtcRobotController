@@ -2,18 +2,13 @@ package org.firstinspires.ftc.teamcode.library.winch;
 
 import com.qualcomm.robotcore.hardware.DcMotor;
 
-import org.firstinspires.ftc.library.IsaacBot;
-import org.firstinspires.ftc.library.component.Component;
-import org.firstinspires.ftc.library.component.event.command_callback.CommandCallbackAdapter;
-import org.firstinspires.ftc.library.component.event.gp2_left_trigger.Gp2_Left_Trigger_Event;
-import org.firstinspires.ftc.library.component.event.gp2_left_trigger.Gp2_Left_Trigger_Handler;
-import org.firstinspires.ftc.library.component.event.gp2_left_trigger_down.Gp2_Left_Trigger_DownEvent;
-import org.firstinspires.ftc.library.component.event.gp2_left_trigger_down.Gp2_Left_Trigger_DownHandler;
-import org.firstinspires.ftc.library.component.event.gp2_right_trigger.Gp2_Right_Trigger_Event;
-import org.firstinspires.ftc.library.component.event.gp2_right_trigger.Gp2_Right_Trigger_Handler;
-import org.firstinspires.ftc.library.component.event.gp2_right_trigger_down.Gp2_Right_Trigger_DownEvent;
-import org.firstinspires.ftc.library.component.event.gp2_right_trigger_down.Gp2_Right_Trigger_DownHandler;
-import org.firstinspires.ftc.library.motor.EncodedMotor;
+import org.firstinspires.ftc.teamcode.library.component.Component;
+import org.firstinspires.ftc.teamcode.library.event.command_callback.CommandCallbackAdapter;
+import org.firstinspires.ftc.teamcode.library.event.gp2_left_trigger.Gp2_Left_Trigger_Event;
+import org.firstinspires.ftc.teamcode.library.event.gp2_left_trigger.Gp2_Left_Trigger_Handler;
+import org.firstinspires.ftc.teamcode.library.event.gp2_right_trigger.Gp2_Right_Trigger_Event;
+import org.firstinspires.ftc.teamcode.library.event.gp2_right_trigger.Gp2_Right_Trigger_Handler;
+import org.firstinspires.ftc.teamcode.library.motor.EncodedMotor;
 
 /**
  *

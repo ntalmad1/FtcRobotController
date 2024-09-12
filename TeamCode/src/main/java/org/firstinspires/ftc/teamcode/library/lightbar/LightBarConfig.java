@@ -1,6 +1,6 @@
 package org.firstinspires.ftc.teamcode.library.lightbar;
 
-import org.firstinspires.ftc.library.IsaacBot;
+import org.firstinspires.ftc.teamcode.library.IsaacBot;
 
 /**
  *

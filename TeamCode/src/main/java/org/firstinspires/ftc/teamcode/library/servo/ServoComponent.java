@@ -1,7 +1,7 @@
 package org.firstinspires.ftc.teamcode.library.servo;
 
-import org.firstinspires.ftc.library.component.Component;
-import org.firstinspires.ftc.library.utility.Control;
+import org.firstinspires.ftc.teamcode.library.component.Component;
+import org.firstinspires.ftc.teamcode.library.utility.Control;
 
 /**
  *

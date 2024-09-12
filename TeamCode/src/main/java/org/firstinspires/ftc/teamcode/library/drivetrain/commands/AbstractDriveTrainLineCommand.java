@@ -2,10 +2,10 @@ package org.firstinspires.ftc.teamcode.library.drivetrain.commands;
 
 import com.qualcomm.robotcore.hardware.DcMotor;
 
-import org.firstinspires.ftc.library.component.command.AbstractSynchronousCommand;
-import org.firstinspires.ftc.library.drivetrain.SimpleDriveTrain;
-import org.firstinspires.ftc.library.utility.Converter;
-import org.firstinspires.ftc.library.utility.Units;
+import org.firstinspires.ftc.teamcode.library.command.AbstractSynchronousCommand;
+import org.firstinspires.ftc.teamcode.library.drivetrain.SimpleDriveTrain;
+import org.firstinspires.ftc.teamcode.library.utility.Converter;
+import org.firstinspires.ftc.teamcode.library.utility.Units;
 
 /**
  *

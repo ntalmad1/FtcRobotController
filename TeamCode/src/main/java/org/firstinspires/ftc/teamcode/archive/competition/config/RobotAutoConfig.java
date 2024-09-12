@@ -1,6 +1,6 @@
 package org.firstinspires.ftc.teamcode.archive.competition.config;
 
-import org.firstinspires.ftc.library.utility.Direction;
+import org.firstinspires.ftc.teamcode.library.utility.Direction;
 
 /**
  *

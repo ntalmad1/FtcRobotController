@@ -4,36 +4,32 @@ import com.qualcomm.hardware.rev.RevTouchSensor;
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
-import org.firstinspires.ftc.library.IsaacBot;
-import org.firstinspires.ftc.library.boom.arm.Arm;
-import org.firstinspires.ftc.library.component.command.ICommand;
-import org.firstinspires.ftc.library.component.command.OneTimeCommand;
-import org.firstinspires.ftc.library.component.command.OneTimeSynchronousCommand;
-import org.firstinspires.ftc.library.component.command.WaitCommand;
-import org.firstinspires.ftc.library.component.event.command_callback.CommandCallbackAdapter;
-import org.firstinspires.ftc.library.component.event.command_callback.CommandCallbackHandler;
-import org.firstinspires.ftc.library.component.event.command_callback.CommandSuccessEvent;
-import org.firstinspires.ftc.library.component.event.gp2_left_trigger.Gp2_Left_Trigger_Event;
-import org.firstinspires.ftc.library.dronelauncher.DroneLauncher;
-import org.firstinspires.ftc.library.dronelauncher.DroneLauncherConfig;
-import org.firstinspires.ftc.library.pixelcatcher.PixelCatcher;
-import org.firstinspires.ftc.library.pixelcatcher.PixelCatcherConfig;
-import org.firstinspires.ftc.library.winch.ConstantOutWinchCommand;
-import org.firstinspires.ftc.library.winch.ConstantPressureWinchCommand;
-import org.firstinspires.ftc.library.winch.Winch;
-import org.firstinspires.ftc.library.winch.WinchConfig;
-import org.firstinspires.ftc.teamcode.metalheads.competition.config.ArmCompConfig;
-import org.firstinspires.ftc.teamcode.metalheads.competition.config.DroneLauncherCompConfig;
-import org.firstinspires.ftc.teamcode.metalheads.competition.config.PixelCatcherCompConfig;
-import org.firstinspires.ftc.teamcode.metalheads.competition.config.RobotConfig;
-import org.firstinspires.ftc.teamcode.metalheads.competition.config.WinchCompConfig;
+import org.firstinspires.ftc.teamcode.archive.competition.config.ArmCompConfig;
+import org.firstinspires.ftc.teamcode.archive.competition.config.DroneLauncherCompConfig;
+import org.firstinspires.ftc.teamcode.archive.competition.config.PixelCatcherCompConfig;
+import org.firstinspires.ftc.teamcode.archive.competition.config.RobotConfig;
+import org.firstinspires.ftc.teamcode.archive.competition.config.WinchCompConfig;
+import org.firstinspires.ftc.teamcode.library.IsaacBot;
+import org.firstinspires.ftc.teamcode.library.boom.arm.Arm;
+import org.firstinspires.ftc.teamcode.library.command.ICommand;
+import org.firstinspires.ftc.teamcode.library.command.OneTimeCommand;
+import org.firstinspires.ftc.teamcode.library.event.command_callback.CommandCallbackAdapter;
+import org.firstinspires.ftc.teamcode.library.event.command_callback.CommandCallbackHandler;
+import org.firstinspires.ftc.teamcode.library.event.command_callback.CommandSuccessEvent;
+import org.firstinspires.ftc.teamcode.library.dronelauncher.DroneLauncher;
+import org.firstinspires.ftc.teamcode.library.dronelauncher.DroneLauncherConfig;
+import org.firstinspires.ftc.teamcode.library.pixelcatcher.PixelCatcher;
+import org.firstinspires.ftc.teamcode.library.pixelcatcher.PixelCatcherConfig;
+import org.firstinspires.ftc.teamcode.library.winch.ConstantPressureWinchCommand;
+import org.firstinspires.ftc.teamcode.library.winch.Winch;
+import org.firstinspires.ftc.teamcode.library.winch.WinchConfig;
 
 /**
  *
  */
 @TeleOp(name="CompBot", group="Linear OpMode")
 @Disabled
-public class CompBot extends IsaacBot{
+public class CompBot extends IsaacBot {
 
     /**
      */

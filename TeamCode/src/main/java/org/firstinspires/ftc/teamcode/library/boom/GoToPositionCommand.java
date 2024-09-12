@@ -1,7 +1,7 @@
 package org.firstinspires.ftc.teamcode.library.boom;
 
-import org.firstinspires.ftc.library.component.command.AbstractCommand;
-import org.firstinspires.ftc.library.utility.Direction;
+import org.firstinspires.ftc.teamcode.library.command.AbstractCommand;
+import org.firstinspires.ftc.teamcode.library.utility.Direction;
 
 /**
  *

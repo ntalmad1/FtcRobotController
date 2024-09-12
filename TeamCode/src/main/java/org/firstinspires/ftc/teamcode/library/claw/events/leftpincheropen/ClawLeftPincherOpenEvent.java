@@ -1,8 +1,7 @@
 package org.firstinspires.ftc.teamcode.library.claw.events.leftpincheropen;
 
-import org.firstinspires.ftc.library.component.event.Event;
-import org.firstinspires.ftc.library.component.event.EventType;
-
+import org.firstinspires.ftc.teamcode.library.event.Event;
+import org.firstinspires.ftc.teamcode.library.event.EventType;
 
 /**
  *

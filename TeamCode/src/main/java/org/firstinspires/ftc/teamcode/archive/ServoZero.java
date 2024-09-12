@@ -1,13 +1,14 @@
 package org.firstinspires.ftc.teamcode.archive;
 
 
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.Servo;
 
 import org.firstinspires.ftc.library.IsaacBot;
 
 @TeleOp(name="Servo Zero", group="Tests")
-//@Disabled
+@Disabled
 public class ServoZero extends IsaacBot {
 
     @Override

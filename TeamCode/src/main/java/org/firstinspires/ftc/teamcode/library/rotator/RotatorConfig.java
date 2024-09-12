@@ -1,6 +1,6 @@
 package org.firstinspires.ftc.teamcode.library.rotator;
 
-import org.firstinspires.ftc.library.boom.BoomConfig;
+import org.firstinspires.ftc.teamcode.library.boom.BoomConfig;
 
 /**
  *

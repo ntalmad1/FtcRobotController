@@ -1,7 +1,7 @@
 package org.firstinspires.ftc.teamcode.library.winch;
 
-import org.firstinspires.ftc.library.IsaacBot;
-import org.firstinspires.ftc.library.motor.EncodedMotorConfig;
+import org.firstinspires.ftc.teamcode.library.IsaacBot;
+import org.firstinspires.ftc.teamcode.library.motor.EncodedMotorConfig;
 
 /**
  *

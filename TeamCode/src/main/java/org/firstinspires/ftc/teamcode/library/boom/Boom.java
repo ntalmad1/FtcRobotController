@@ -2,8 +2,8 @@ package org.firstinspires.ftc.teamcode.library.boom;
 
 import com.qualcomm.robotcore.hardware.Servo;
 
-import org.firstinspires.ftc.library.utility.Control;
-import org.firstinspires.ftc.library.component.Component;
+import org.firstinspires.ftc.teamcode.library.component.Component;
+import org.firstinspires.ftc.teamcode.library.utility.Control;
 
 /**
  *

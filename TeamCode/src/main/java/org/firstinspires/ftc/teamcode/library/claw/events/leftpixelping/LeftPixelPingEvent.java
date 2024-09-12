@@ -1,8 +1,9 @@
 package org.firstinspires.ftc.teamcode.library.claw.events.leftpixelping;
 
-import org.firstinspires.ftc.library.component.event.Event;
-import org.firstinspires.ftc.library.component.event.EventType;
-import org.firstinspires.ftc.library.pixelcatcher.PixelCatcher;
+
+import org.firstinspires.ftc.teamcode.library.event.Event;
+import org.firstinspires.ftc.teamcode.library.event.EventType;
+import org.firstinspires.ftc.teamcode.library.pixelcatcher.PixelCatcher;
 
 /**
  *

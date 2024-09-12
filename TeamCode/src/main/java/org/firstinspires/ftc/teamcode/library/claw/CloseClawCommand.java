@@ -1,6 +1,6 @@
 package org.firstinspires.ftc.teamcode.library.claw;
 
-import org.firstinspires.ftc.library.component.command.AbstractCommand;
+import org.firstinspires.ftc.teamcode.library.command.AbstractCommand;
 
 /**
  *

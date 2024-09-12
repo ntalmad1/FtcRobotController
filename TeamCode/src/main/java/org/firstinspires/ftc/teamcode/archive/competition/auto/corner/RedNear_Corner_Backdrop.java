@@ -10,7 +10,7 @@ import org.firstinspires.ftc.teamcode.metalheads.competition.config.RobotAutoCon
  *
  */
 @Autonomous(name="RedNear_Corner_Backdrop", group="CornerBackdrop")
-//@Disabled
+@Disabled
 public class RedNear_Corner_Backdrop extends CompAutoBot {
 
     /**

@@ -1,8 +1,5 @@
 package org.firstinspires.ftc.teamcode.library.pixelcatcher.events.leftarmclose;
 
-import org.firstinspires.ftc.library.component.event.Event;
-import org.firstinspires.ftc.library.component.event.EventType;
-
 /**
  *
  */

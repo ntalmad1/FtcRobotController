@@ -2,8 +2,7 @@ package org.firstinspires.ftc.teamcode.library.winch;
 
 import com.qualcomm.robotcore.hardware.TouchSensor;
 
-import org.firstinspires.ftc.library.component.command.AbstractRepeatingCommand;
-import org.firstinspires.ftc.library.component.command.Command;
+import org.firstinspires.ftc.teamcode.library.command.AbstractRepeatingCommand;
 
 /**
  *

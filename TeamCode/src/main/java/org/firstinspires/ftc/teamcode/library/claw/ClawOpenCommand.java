@@ -1,8 +1,8 @@
 package org.firstinspires.ftc.teamcode.library.claw;
 
-import org.firstinspires.ftc.library.component.command.AbstractCommand;
-import org.firstinspires.ftc.library.component.event.command_callback.CommandCallbackAdapter;
-import org.firstinspires.ftc.library.component.event.command_callback.CommandSuccessEvent;
+import org.firstinspires.ftc.teamcode.library.command.AbstractCommand;
+import org.firstinspires.ftc.teamcode.library.event.command_callback.CommandCallbackAdapter;
+import org.firstinspires.ftc.teamcode.library.event.command_callback.CommandSuccessEvent;
 
 /**
  *

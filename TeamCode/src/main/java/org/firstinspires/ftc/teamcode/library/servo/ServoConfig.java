@@ -2,8 +2,8 @@ package org.firstinspires.ftc.teamcode.library.servo;
 
 import com.qualcomm.robotcore.hardware.Servo;
 
-import org.firstinspires.ftc.library.IsaacBot;
-import org.firstinspires.ftc.library.utility.Control;
+import org.firstinspires.ftc.teamcode.library.IsaacBot;
+import org.firstinspires.ftc.teamcode.library.utility.Control;
 
 /**
  *

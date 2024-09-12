@@ -1,27 +1,27 @@
 package org.firstinspires.ftc.teamcode.library.lightbar;
 
-import org.firstinspires.ftc.library.component.LEDIndicator;
-import org.firstinspires.ftc.library.claw.events.leftpincherclose.ClawLeftPincherCloseEvent;
-import org.firstinspires.ftc.library.claw.events.leftpincherclose.ClawLeftPincherCloseHandler;
-import org.firstinspires.ftc.library.claw.events.leftpincheropen.ClawLeftPincherOpenEvent;
-import org.firstinspires.ftc.library.claw.events.leftpincheropen.ClawLeftPincherOpenHandler;
-import org.firstinspires.ftc.library.claw.events.leftpixelping.LeftPixelPingEvent;
-import org.firstinspires.ftc.library.claw.events.leftpixelping.LeftPixelPingHandler;
-import org.firstinspires.ftc.library.claw.events.rightpincherclose.ClawRightPincherCloseEvent;
-import org.firstinspires.ftc.library.claw.events.rightpincherclose.ClawRightPincherCloseHandler;
-import org.firstinspires.ftc.library.claw.events.rightpincheropen.ClawRightPincherOpenEvent;
-import org.firstinspires.ftc.library.claw.events.rightpincheropen.ClawRightPincherOpenHandler;
-import org.firstinspires.ftc.library.claw.events.rightpixelping.RightPixelPingEvent;
-import org.firstinspires.ftc.library.claw.events.rightpixelping.RightPixelPingHandler;
-import org.firstinspires.ftc.library.component.Component;
-import org.firstinspires.ftc.library.pixelcatcher.events.leftarmopen.PixelCatcherLeftArmOpenEvent;
-import org.firstinspires.ftc.library.pixelcatcher.events.leftarmopen.PixelCatcherLeftArmOpenHandler;
-import org.firstinspires.ftc.library.pixelcatcher.events.leftarmclose.PixelCatcherLeftArmCloseEvent;
-import org.firstinspires.ftc.library.pixelcatcher.events.leftarmclose.PixelCatcherLeftArmCloseHandler;
-import org.firstinspires.ftc.library.pixelcatcher.events.rightarmclose.PixelCatcherRightArmCloseHandler;
-import org.firstinspires.ftc.library.pixelcatcher.events.rightarmclose.PixelCatcherRightArmCloseEvent;
-import org.firstinspires.ftc.library.pixelcatcher.events.rightarmopen.PixelCatcherRightArmOpenHandler;
-import org.firstinspires.ftc.library.pixelcatcher.events.rightarmopen.PixelCatcherRightArmOpenEvent;
+import org.firstinspires.ftc.teamcode.library.claw.events.leftpincherclose.ClawLeftPincherCloseEvent;
+import org.firstinspires.ftc.teamcode.library.claw.events.leftpincherclose.ClawLeftPincherCloseHandler;
+import org.firstinspires.ftc.teamcode.library.claw.events.leftpincheropen.ClawLeftPincherOpenEvent;
+import org.firstinspires.ftc.teamcode.library.claw.events.leftpincheropen.ClawLeftPincherOpenHandler;
+import org.firstinspires.ftc.teamcode.library.claw.events.leftpixelping.LeftPixelPingEvent;
+import org.firstinspires.ftc.teamcode.library.claw.events.leftpixelping.LeftPixelPingHandler;
+import org.firstinspires.ftc.teamcode.library.claw.events.rightpincherclose.ClawRightPincherCloseEvent;
+import org.firstinspires.ftc.teamcode.library.claw.events.rightpincherclose.ClawRightPincherCloseHandler;
+import org.firstinspires.ftc.teamcode.library.claw.events.rightpincheropen.ClawRightPincherOpenEvent;
+import org.firstinspires.ftc.teamcode.library.claw.events.rightpincheropen.ClawRightPincherOpenHandler;
+import org.firstinspires.ftc.teamcode.library.claw.events.rightpixelping.RightPixelPingEvent;
+import org.firstinspires.ftc.teamcode.library.claw.events.rightpixelping.RightPixelPingHandler;
+import org.firstinspires.ftc.teamcode.library.component.Component;
+import org.firstinspires.ftc.teamcode.library.component.LEDIndicator;
+import org.firstinspires.ftc.teamcode.library.pixelcatcher.events.leftarmclose.PixelCatcherLeftArmCloseEvent;
+import org.firstinspires.ftc.teamcode.library.pixelcatcher.events.leftarmclose.PixelCatcherLeftArmCloseHandler;
+import org.firstinspires.ftc.teamcode.library.pixelcatcher.events.leftarmopen.PixelCatcherLeftArmOpenEvent;
+import org.firstinspires.ftc.teamcode.library.pixelcatcher.events.leftarmopen.PixelCatcherLeftArmOpenHandler;
+import org.firstinspires.ftc.teamcode.library.pixelcatcher.events.rightarmclose.PixelCatcherRightArmCloseEvent;
+import org.firstinspires.ftc.teamcode.library.pixelcatcher.events.rightarmclose.PixelCatcherRightArmCloseHandler;
+import org.firstinspires.ftc.teamcode.library.pixelcatcher.events.rightarmopen.PixelCatcherRightArmOpenEvent;
+import org.firstinspires.ftc.teamcode.library.pixelcatcher.events.rightarmopen.PixelCatcherRightArmOpenHandler;
 
 /**
  *

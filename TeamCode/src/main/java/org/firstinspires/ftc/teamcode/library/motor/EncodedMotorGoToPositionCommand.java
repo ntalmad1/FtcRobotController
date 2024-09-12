@@ -2,7 +2,7 @@ package org.firstinspires.ftc.teamcode.library.motor;
 
 import com.qualcomm.robotcore.hardware.DcMotor;
 
-import org.firstinspires.ftc.library.component.command.AbstractSynchronousCommand;
+import org.firstinspires.ftc.teamcode.library.command.AbstractSynchronousCommand;
 
 /**
  *

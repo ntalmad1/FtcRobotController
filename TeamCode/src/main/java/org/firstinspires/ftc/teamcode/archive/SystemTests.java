@@ -1,29 +1,22 @@
 package org.firstinspires.ftc.teamcode.archive;
 
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
-import org.firstinspires.ftc.library.IsaacBot;
-import org.firstinspires.ftc.library.boom.arm.Arm;
-import org.firstinspires.ftc.library.boom.arm.ArmConfig;
-import org.firstinspires.ftc.library.component.command.ICommand;
-import org.firstinspires.ftc.library.component.command.OneTimeCommand;
-import org.firstinspires.ftc.library.component.command.OneTimeSynchronousCommand;
-import org.firstinspires.ftc.library.component.command.WaitCommand;
-import org.firstinspires.ftc.library.drivetrain.SimpleDriveTrain;
-import org.firstinspires.ftc.library.drivetrain.SimpleDriveTrainConfig;
-import org.firstinspires.ftc.library.dronelauncher.DroneLauncher;
-import org.firstinspires.ftc.library.dronelauncher.DroneLauncherConfig;
-import org.firstinspires.ftc.library.pixelcatcher.PixelCatcher;
-import org.firstinspires.ftc.library.pixelcatcher.PixelCatcherConfig;
-import org.firstinspires.ftc.library.utility.Direction;
-import org.firstinspires.ftc.library.winch.Winch;
-import org.firstinspires.ftc.teamcode.metalheads.competition.config.ArmCompConfig;
-import org.firstinspires.ftc.teamcode.metalheads.competition.config.DroneLauncherCompConfig;
-import org.firstinspires.ftc.teamcode.metalheads.competition.config.PixelCatcherCompConfig;
-import org.firstinspires.ftc.teamcode.metalheads.competition.config.SimpleDriveCompConfig;
+import org.firstinspires.ftc.teamcode.archive.competition.config.SimpleDriveCompConfig;
+import org.firstinspires.ftc.teamcode.library.IsaacBot;
+import org.firstinspires.ftc.teamcode.library.boom.arm.Arm;
+import org.firstinspires.ftc.teamcode.library.command.ICommand;
+import org.firstinspires.ftc.teamcode.library.command.OneTimeSynchronousCommand;
+import org.firstinspires.ftc.teamcode.library.drivetrain.SimpleDriveTrain;
+import org.firstinspires.ftc.teamcode.library.drivetrain.SimpleDriveTrainConfig;
+import org.firstinspires.ftc.teamcode.library.dronelauncher.DroneLauncher;
+import org.firstinspires.ftc.teamcode.library.pixelcatcher.PixelCatcher;
+import org.firstinspires.ftc.teamcode.library.utility.Direction;
+import org.firstinspires.ftc.teamcode.library.winch.Winch;
 
 @TeleOp(name="System Tests", group="Tests")
-//@Disabled
+@Disabled
 public class SystemTests extends IsaacBot {
 
     /**

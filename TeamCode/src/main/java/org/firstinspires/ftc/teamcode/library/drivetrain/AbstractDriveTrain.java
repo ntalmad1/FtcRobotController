@@ -3,10 +3,10 @@ package org.firstinspires.ftc.teamcode.library.drivetrain;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
-import org.firstinspires.ftc.library.component.Component;
-import org.firstinspires.ftc.library.component.command.ICommand;
-import org.firstinspires.ftc.library.component.command.WaitCommand;
-import org.firstinspires.ftc.library.component.event.command_callback.CommandCallbackHandler;
+import org.firstinspires.ftc.teamcode.library.command.ICommand;
+import org.firstinspires.ftc.teamcode.library.command.WaitCommand;
+import org.firstinspires.ftc.teamcode.library.component.Component;
+import org.firstinspires.ftc.teamcode.library.event.command_callback.CommandCallbackHandler;
 
 import java.util.ArrayList;
 import java.util.List;
