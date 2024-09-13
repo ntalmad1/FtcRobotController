@@ -6,6 +6,10 @@ import org.firstinspires.ftc.teamcode.library.IsaacBot;
 import org.firstinspires.ftc.teamcode.library.drivetrain.MecanumDriveTrain;
 import org.firstinspires.ftc.teamcode.library.drivetrain.MecanumDriveTrainConfig;
 
+/**
+ *
+ * @noinspection unused
+ */
 @TeleOp(name="MecanumTest", group="Tests")
 public class MecanumTest extends IsaacBot {
 
@@ -13,6 +17,9 @@ public class MecanumTest extends IsaacBot {
      */
     private MecanumDriveTrain driveTrain;
 
+    /**
+     * Constructor
+     */
     public MecanumTest() {
 
         MecanumDriveTrainConfig config = new MecanumDriveTrainConfig();
@@ -29,6 +36,9 @@ public class MecanumTest extends IsaacBot {
         driveTrain = new MecanumDriveTrain(config);
     }
 
+    /**
+     * @throws InterruptedException
+     */
     @Override
     public void runOpMode() throws InterruptedException {
 
@@ -37,8 +47,6 @@ public class MecanumTest extends IsaacBot {
         this.voiceLog("System Armed");
 
         waitForStart();
-
-
 
         while(this.opModeIsActive()) {
             driveTrain.run();
