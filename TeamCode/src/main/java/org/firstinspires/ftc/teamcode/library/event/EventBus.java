@@ -1,16 +1,18 @@
 package org.firstinspires.ftc.teamcode.library.event;
 
 import org.firstinspires.ftc.teamcode.library.IsaacBot;
-import org.firstinspires.ftc.teamcode.library.event.g1_a_press.Gp1_A_PressEvent;
-import org.firstinspires.ftc.teamcode.library.event.g1_b_press.Gp1_B_PressEvent;
-import org.firstinspires.ftc.teamcode.library.event.g2_x_press.Gp1_X_PressEvent;
-import org.firstinspires.ftc.teamcode.library.event.g2_y_press.Gp1_Y_PressEvent;
+import org.firstinspires.ftc.teamcode.library.event.gp1_a_press.Gp1_A_PressEvent;
+import org.firstinspires.ftc.teamcode.library.event.gp1_b_press.Gp1_B_PressEvent;
 import org.firstinspires.ftc.teamcode.library.event.gp1_dpad_down_down.Gp1_Dpad_Down_DownEvent;
 import org.firstinspires.ftc.teamcode.library.event.gp1_dpad_down_press.Gp1_Dpad_Down_PressEvent;
+import org.firstinspires.ftc.teamcode.library.event.gp1_dpad_up_down.Gp1_Dpad_Up_DownEvent;
+import org.firstinspires.ftc.teamcode.library.event.gp1_dpad_up_press.Gp1_Dpad_Up_PressEvent;
 import org.firstinspires.ftc.teamcode.library.event.gp1_left_bumper_down.Gp1_Left_Bumper_DownEvent;
 import org.firstinspires.ftc.teamcode.library.event.gp1_left_trigger_down.Gp1_Left_Trigger_DownEvent;
 import org.firstinspires.ftc.teamcode.library.event.gp1_right_bumper_down.Gp1_Right_Bumper_DownEvent;
 import org.firstinspires.ftc.teamcode.library.event.gp1_right_trigger_down.Gp1_Right_Trigger_DownEvent;
+import org.firstinspires.ftc.teamcode.library.event.gp1_x_press.Gp1_X_PressEvent;
+import org.firstinspires.ftc.teamcode.library.event.gp1_y_press.Gp1_Y_PressEvent;
 import org.firstinspires.ftc.teamcode.library.event.gp2_a_press.Gp2_A_PressEvent;
 import org.firstinspires.ftc.teamcode.library.event.gp2_b_press.Gp2_B_PressEvent;
 import org.firstinspires.ftc.teamcode.library.event.gp2_dpad_down_down.Gp2_Dpad_Down_DownEvent;
@@ -28,12 +30,6 @@ import org.firstinspires.ftc.teamcode.library.event.gp2_right_stick_y.Gp2_RightS
 import org.firstinspires.ftc.teamcode.library.event.gp2_right_trigger.Gp2_Right_Trigger_Event;
 import org.firstinspires.ftc.teamcode.library.event.gp2_right_trigger_down.Gp2_Right_Trigger_DownEvent;
 import org.firstinspires.ftc.teamcode.library.event.gp2_x_press.Gp2_X_PressEvent;
-import org.firstinspires.ftc.teamcode.library.event.gp2_y_press.Gp2_Y_PressEvent;
-import org.firstinspires.ftc.teamcode.library.event.gp2_dpad_up_down.Gp2_Dpad_Up_DownEvent;
-import org.firstinspires.ftc.teamcode.library.event.gp2_left_stick_x.Gp2_LeftStickXEvent;
-import org.firstinspires.ftc.teamcode.library.event.gp2_left_stick_y.Gp2_LeftStickYEvent;
-import org.firstinspires.ftc.teamcode.library.event.gp2_left_trigger.Gp2_Left_Trigger_Event;
-import org.firstinspires.ftc.teamcode.library.event.gp2_right_stick_x.Gp2_RightStickXEvent;
 import org.firstinspires.ftc.teamcode.library.event.gp2_y_press.Gp2_Y_PressEvent;
 
 /**
@@ -110,6 +106,7 @@ public class EventBus extends HandlerManager {
      *
      */
     private boolean g1_dpad_down_down;
+    private boolean g1_dpad_up_down;
 
 
     /**
@@ -245,6 +242,15 @@ public class EventBus extends HandlerManager {
             this.fireEvent(new Gp1_Dpad_Down_DownEvent());
         }
 
+        boolean current_gp1_dpad_up = this.robot.gamepad1.dpad_up;
+        if (this.g1_dpad_up_down && !current_gp1_dpad_up) {
+            this.g1_dpad_up_down = false;
+            this.fireEvent(new Gp1_Dpad_Up_PressEvent());
+        }
+        else if (current_gp1_dpad_up) {
+            this.g1_dpad_up_down = true;
+            this.fireEvent(new Gp1_Dpad_Up_DownEvent());
+        }
 
         // Gamepad 2 Dpad Down Events
         boolean current_gp2_dpad_left = this.robot.gamepad2.dpad_left;

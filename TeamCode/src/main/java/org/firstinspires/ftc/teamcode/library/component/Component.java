@@ -10,10 +10,10 @@ import org.firstinspires.ftc.teamcode.library.event.EventBus;
 import org.firstinspires.ftc.teamcode.library.event.EventHandler;
 import org.firstinspires.ftc.teamcode.library.event.EventType;
 import org.firstinspires.ftc.teamcode.library.event.HandlerRegistration;
-import org.firstinspires.ftc.teamcode.library.event.g1_a_press.Gp1_A_PressEvent;
-import org.firstinspires.ftc.teamcode.library.event.g1_a_press.Gp1_A_PressHandler;
-import org.firstinspires.ftc.teamcode.library.event.g1_b_press.Gp1_B_PressEvent;
-import org.firstinspires.ftc.teamcode.library.event.g1_b_press.Gp1_B_PressHandler;
+import org.firstinspires.ftc.teamcode.library.event.gp1_a_press.Gp1_A_PressEvent;
+import org.firstinspires.ftc.teamcode.library.event.gp1_a_press.Gp1_A_PressHandler;
+import org.firstinspires.ftc.teamcode.library.event.gp1_b_press.Gp1_B_PressEvent;
+import org.firstinspires.ftc.teamcode.library.event.gp1_b_press.Gp1_B_PressHandler;
 import org.firstinspires.ftc.teamcode.library.event.g2_x_press.Gp1_X_PressEvent;
 import org.firstinspires.ftc.teamcode.library.event.g2_x_press.Gp1_X_PressHandler;
 import org.firstinspires.ftc.teamcode.library.event.g2_y_press.Gp1_Y_PressEvent;
@@ -22,6 +22,8 @@ import org.firstinspires.ftc.teamcode.library.event.gp1_dpad_down_down.Gp1_Dpad_
 import org.firstinspires.ftc.teamcode.library.event.gp1_dpad_down_down.Gp1_Dpad_Down_DownHandler;
 import org.firstinspires.ftc.teamcode.library.event.gp1_dpad_down_press.Gp1_Dpad_Down_PressEvent;
 import org.firstinspires.ftc.teamcode.library.event.gp1_dpad_down_press.Gp1_Dpad_Down_PressHandler;
+import org.firstinspires.ftc.teamcode.library.event.gp1_dpad_up_press.Gp1_Dpad_Up_PressEvent;
+import org.firstinspires.ftc.teamcode.library.event.gp1_dpad_up_press.Gp1_Dpad_Up_PressHandler;
 import org.firstinspires.ftc.teamcode.library.event.gp1_left_bumper_down.Gp1_Left_Bumper_DownEvent;
 import org.firstinspires.ftc.teamcode.library.event.gp1_left_bumper_down.Gp1_Left_Bumper_DownHandler;
 import org.firstinspires.ftc.teamcode.library.event.gp1_left_trigger_down.Gp1_Left_Trigger_DownEvent;
@@ -239,6 +241,10 @@ public abstract class Component implements IComponent {
 
     public HandlerRegistration addGp1_Dpad_Down_PressHandler (Gp1_Dpad_Down_PressHandler handler) {
         return EventBus.getInstance().addHandler(Gp1_Dpad_Down_PressEvent.TYPE, handler);
+    }
+
+    public HandlerRegistration addGp1_Dpad_Up_PressHandler (Gp1_Dpad_Up_PressHandler handler) {
+        return EventBus.getInstance().addHandler(Gp1_Dpad_Up_PressEvent.TYPE, handler);
     }
 
     public HandlerRegistration addGp2_Dpad_Left_DownHandler (Gp2_Dpad_Left_DownHandler handler) {

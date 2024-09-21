@@ -12,11 +12,12 @@ import org.firstinspires.ftc.teamcode.library.command.WaitCommand;
 import org.firstinspires.ftc.teamcode.library.event.EventBus;
 import org.firstinspires.ftc.teamcode.library.event.HandlerRegistration;
 import org.firstinspires.ftc.teamcode.library.event.command_callback.CommandCallbackHandler;
-import org.firstinspires.ftc.teamcode.library.event.g1_a_press.Gp1_A_PressHandler;
-import org.firstinspires.ftc.teamcode.library.event.g1_b_press.Gp1_B_PressHandler;
+import org.firstinspires.ftc.teamcode.library.event.gp1_a_press.Gp1_A_PressHandler;
+import org.firstinspires.ftc.teamcode.library.event.gp1_b_press.Gp1_B_PressHandler;
 import org.firstinspires.ftc.teamcode.library.event.g2_x_press.Gp1_X_PressHandler;
 import org.firstinspires.ftc.teamcode.library.event.g2_y_press.Gp1_Y_PressHandler;
 import org.firstinspires.ftc.teamcode.library.event.gp1_dpad_down_press.Gp1_Dpad_Down_PressHandler;
+import org.firstinspires.ftc.teamcode.library.event.gp1_dpad_up_press.Gp1_Dpad_Up_PressHandler;
 import org.firstinspires.ftc.teamcode.library.event.gp2_a_press.Gp2_A_PressHandler;
 import org.firstinspires.ftc.teamcode.library.event.gp2_b_press.Gp2_B_PressHandler;
 import org.firstinspires.ftc.teamcode.library.event.gp2_dpad_down_down.Gp2_Dpad_Down_DownHandler;
@@ -184,6 +185,15 @@ public abstract class  IsaacBot extends LinearOpMode implements IComponent
      */
     public HandlerRegistration addGp1_Dpad_Down_PressHandler (Gp1_Dpad_Down_PressHandler handler) {
         return this.robotComponent.addGp1_Dpad_Down_PressHandler(handler);
+    }
+
+    /**
+     *
+     * @param handler
+     * @return
+     */
+    public HandlerRegistration addGp1_Dpad_Up_PressHandler (Gp1_Dpad_Up_PressHandler handler) {
+        return this.robotComponent.addGp1_Dpad_Up_PressHandler(handler);
     }
 
     /**

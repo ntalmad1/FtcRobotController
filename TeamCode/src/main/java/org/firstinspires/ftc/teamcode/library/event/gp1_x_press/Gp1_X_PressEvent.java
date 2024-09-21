@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.library.event.g2_x_press;
+package org.firstinspires.ftc.teamcode.library.event.gp1_x_press;
 
 import org.firstinspires.ftc.teamcode.library.event.Event;
 import org.firstinspires.ftc.teamcode.library.event.EventType;

@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.library.event.g2_y_press;
+package org.firstinspires.ftc.teamcode.library.event.gp1_y_press;
 
 import org.firstinspires.ftc.teamcode.library.event.Event;
 import org.firstinspires.ftc.teamcode.library.event.EventType;
@@ -34,6 +34,6 @@ public class Gp1_Y_PressEvent extends Event<Gp1_Y_PressHandler> {
      */
     @Override
     public void handle(Gp1_Y_PressHandler handler) {
-        handler.onGp2_A_Press(this);
+        handler.onGp1_Y_Press(this);
     }
 }
