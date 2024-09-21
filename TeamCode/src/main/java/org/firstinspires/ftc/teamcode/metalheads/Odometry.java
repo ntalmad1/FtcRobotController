@@ -11,9 +11,9 @@ import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 public class Odometry extends LinearOpMode {
 
     // Declare hardware components
-    private DcMotor leftOdometryWheel;
-    private DcMotor rightOdometryWheel;
-    private DcMotor perpendicularWheel;
+    private DcMotor leftEncoder;
+    private DcMotor rightEncoder;
+    private DcMotor centerEncoder;
     private IMU imu;
 
     // Robot's current position and orientation
@@ -29,67 +29,89 @@ public class Odometry extends LinearOpMode {
     private static final double FORWARD_OFFSET = 834;
 
     // Previous encoder values
-    private double previousLeftDistance = 0;
-    private double previousRightDistance = 0;
-    private double previousRearDistance = 0;
+    private double prev_left_encoder_pos = 0;
+    private double prev_right_encoder_pos = 0;
+    private double prev_center_encoder_pos = 0;
 
     @Override
     public void runOpMode() {
         // Initialize hardware components
-        leftOdometryWheel = hardwareMap.get(DcMotor.class, "leftOmni");
-        rightOdometryWheel = hardwareMap.get(DcMotor.class, "rightOmni");
-        perpendicularWheel = hardwareMap.get(DcMotor.class, "rearOmni");
+        leftEncoder = hardwareMap.get(DcMotor.class, "leftOmni");
+        rightEncoder = hardwareMap.get(DcMotor.class, "rightOmni");
+        centerEncoder = hardwareMap.get(DcMotor.class, "rearOmni");
         imu = hardwareMap.get(IMU.class, "imu");
 
         // Wait for the start command
         waitForStart();
 
+        /*
+
+        delta_left_encoder_pos = left_encoder_pos - prev_left_encoder_pos
+        delta_right_encoder_pos = right_encoder_pos - prev_right_encoder_pos
+        delta_center_encoder_pos = center_encoder_pos - prev_center_encoder_pos
+
+        phi = (delta_left_encoder_pos - delta_right_encoder_pos) / trackwidth
+        delta_middle_pos = (delta_left_encoder_pos + delta_right_encoder_pos) / 2
+        delta_perp_pos = delta_center_encoder_pos - forward_offset * phi
+
+        delta_x = delta_middle_pos * cos(heading) - delta_perp_pos * sin(heading)
+        delta_y = delta_middle_pos * sin(heading) + delta_perp_pos * cos(heading)
+
+        x_pos += delta_x
+        y_pos += delta_y
+        heading += phi
+
+        prev_left_encoder_pos = left_encoder_pos
+        prev_right_encoder_pos = right_encoder_pos
+        prev_center_encoder_pos = center_encoder_pos
+
+
+         */
+
         // Main loop
         while (opModeIsActive()) {
-            // Read encoder values
-            double leftDistance = leftOdometryWheel.getCurrentPosition();
-            double rightDistance = rightOdometryWheel.getCurrentPosition();
-            double rearDistance = perpendicularWheel.getCurrentPosition();
-
 
             // Calculate deltas
-            double deltaLeft = leftDistance - previousLeftDistance;
-            double deltaRight = rightDistance - previousRightDistance;
-            double deltaRear = rearDistance - previousRearDistance;
+            double delta_left_encoder_pos = leftEncoder.getCurrentPosition() - prev_left_encoder_pos;
+            double delta_right_encoder_pos = -rightEncoder.getCurrentPosition() - prev_right_encoder_pos;
+            double delta_center_encoder_pos = centerEncoder.getCurrentPosition() - prev_center_encoder_pos;
 
+            telemetry.addData("delta_left_encoder_pos", delta_left_encoder_pos);
+            telemetry.addData("delta_right_encoder_pos", delta_right_encoder_pos);
+            telemetry.addData("delta_center_encoder_pos", delta_center_encoder_pos);
 
-            double phi = (deltaLeft - deltaRight) / TRACK_WIDTH;
-            double deltaMiddle = (deltaLeft + deltaRight) / 2;
-            double deltaPerp = (deltaRear - FORWARD_OFFSET) * phi;
+            double phi = (delta_left_encoder_pos - delta_right_encoder_pos) / TRACK_WIDTH;
+            double delta_middle_pos = (delta_left_encoder_pos + delta_right_encoder_pos) / 2;
+            double delta_perp_pos = delta_center_encoder_pos - (FORWARD_OFFSET * phi);
 
+            telemetry.addData("phi", phi);
+            telemetry.addData("delta_middle_pos", delta_middle_pos);
+            telemetry.addData("delta_perp_pos", delta_perp_pos);
 
-            delta_x += deltaMiddle * Math.cos(heading) - deltaPerp * Math.sin(heading);
-            delta_y += deltaMiddle * Math.sin(heading) - deltaPerp * Math.cos(heading);
+            delta_x = delta_middle_pos * Math.cos(heading) - delta_perp_pos * Math.sin(heading);
+            delta_y = delta_middle_pos * Math.sin(heading) - delta_perp_pos * Math.cos(heading);
 
+            telemetry.addData("delta_x", delta_x);
+            telemetry.addData("delta_y", delta_y);
 
-            x += delta_x; // Update X based on perpendicular wheel
-            y += delta_y; // Update Y based on perpendicular wheel
-            heading -= phi;
+            x += delta_x;
+            y += delta_y;
+            heading += phi;
 
             // Update previous values
-            previousLeftDistance = leftDistance;
-            previousRightDistance = rightDistance;
-            previousRearDistance = rearDistance;
+            prev_left_encoder_pos = leftEncoder.getCurrentPosition();
+            prev_right_encoder_pos = -rightEncoder.getCurrentPosition();
+            prev_center_encoder_pos = centerEncoder.getCurrentPosition();
 
             // Output the current position
-            telemetry.addData("DeltaLeft: ", deltaLeft);
-            telemetry.addData("DeltaRight: ", deltaRight);
-            telemetry.addData("DeltaRear: ", deltaRear);
-
-            telemetry.addData("Phi: ", phi);
             telemetry.addData("Heading: ", heading);
-            telemetry.addData("Delta_x: ", delta_x);
-            telemetry.addData("Delta_y: ", delta_y);
-            telemetry.addData("DeltaPerp: ", deltaPerp);
-
             telemetry.addData("X: ", x);
             telemetry.addData("Y: ", y);
-            telemetry.addData("Degrees ", imu.getRobotYawPitchRollAngles().getYaw(AngleUnit.DEGREES));
+            telemetry.addData("X cm: ", x * 0.24);
+            telemetry.addData("Y cm: ", y * 0.24);
+
+            telemetry.addData("IMU Degrees ", imu.getRobotYawPitchRollAngles().getYaw(AngleUnit.DEGREES));
+
             telemetry.update();
 
         }
