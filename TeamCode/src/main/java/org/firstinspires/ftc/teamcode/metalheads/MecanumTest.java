@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode.metalheads;
 
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import org.firstinspires.ftc.teamcode.library.IsaacBot;
@@ -11,6 +12,7 @@ import org.firstinspires.ftc.teamcode.library.drivetrain.MecanumDriveTrainConfig
  * @noinspection unused
  */
 @TeleOp(name="MecanumTest", group="Tests")
+@Disabled
 public class MecanumTest extends IsaacBot {
 
     /**
