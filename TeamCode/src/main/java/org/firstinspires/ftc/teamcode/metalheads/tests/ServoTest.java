@@ -1,6 +1,5 @@
-package org.firstinspires.ftc.teamcode.metalheads;
+package org.firstinspires.ftc.teamcode.metalheads.tests;
 
-import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.Servo;
@@ -28,7 +27,7 @@ public class ServoTest extends LinearOpMode {
     @Override
     public void runOpMode() throws InterruptedException {
 
-        String servoName = "leftActServo";
+        String servoName = "servoName";
 
         Servo servo = this.hardwareMap.get(Servo.class, servoName);
         servo.resetDeviceConfigurationForOpMode();
