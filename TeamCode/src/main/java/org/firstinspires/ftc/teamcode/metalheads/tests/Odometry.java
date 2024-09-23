@@ -199,14 +199,14 @@ public class Odometry extends LinearOpMode {
             if (button) {
                 loopoff = true;
                 toggle = true;
-                return new boolean[]{true,false};
+                return new boolean[]{loopoff,toggle};
             }
         }
 
         toggle = false;
-        if (!button) loopoff = false;
+        if (!button) {loopoff = false;}
 
-        return new boolean[]{toggle,loopoff};
+        return new boolean[]{loopoff,toggle};
     }
 
 }
