@@ -1,5 +1,7 @@
 package org.firstinspires.ftc.teamcode.metalheads;
 
+import android.os.Trace;
+
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
@@ -25,8 +27,8 @@ public class Odometry extends LinearOpMode {
 
     // Constants for odometry calculations
     //private static final double WHEEL_RADIUS = 0.024;
-    private static final double TRACK_WIDTH = 938;
-    private static final double FORWARD_OFFSET = 834;
+    private static double TRACK_WIDTH = 938;
+    private static double FORWARD_OFFSET = 834;
 
     // Previous encoder values
     private double prev_left_encoder_pos = 0;
@@ -40,6 +42,8 @@ public class Odometry extends LinearOpMode {
         rightEncoder = hardwareMap.get(DcMotor.class, "rightOmni");
         centerEncoder = hardwareMap.get(DcMotor.class, "rearOmni");
         imu = hardwareMap.get(IMU.class, "imu");
+
+        String changing = "Track Width";
 
         // Wait for the start command
         waitForStart();
@@ -71,28 +75,34 @@ public class Odometry extends LinearOpMode {
         // Main loop
         while (opModeIsActive()) {
 
-            // Calculate deltas
+            //Button Delcration
+            //A
+            boolean aToggle = false;
+            boolean aLoop = false;
+            //B
+            boolean bToggle = false;
+            boolean bloop = false;
+            //Dpad_Right
+            boolean padrToggle = false;
+            boolean padrLoop = false;
+            //Dpad_Left
+            boolean padlToggle = false;
+            boolean padlLoop = false;
+
+            boolean switcher = false;
+
+
+            //Main Math
             double delta_left_encoder_pos = leftEncoder.getCurrentPosition() - prev_left_encoder_pos;
             double delta_right_encoder_pos = -rightEncoder.getCurrentPosition() - prev_right_encoder_pos;
             double delta_center_encoder_pos = centerEncoder.getCurrentPosition() - prev_center_encoder_pos;
-
-            telemetry.addData("delta_left_encoder_pos", delta_left_encoder_pos);
-            telemetry.addData("delta_right_encoder_pos", delta_right_encoder_pos);
-            telemetry.addData("delta_center_encoder_pos", delta_center_encoder_pos);
 
             double phi = (delta_left_encoder_pos - delta_right_encoder_pos) / TRACK_WIDTH;
             double delta_middle_pos = (delta_left_encoder_pos + delta_right_encoder_pos) / 2;
             double delta_perp_pos = delta_center_encoder_pos - (FORWARD_OFFSET * phi);
 
-            telemetry.addData("phi", phi);
-            telemetry.addData("delta_middle_pos", delta_middle_pos);
-            telemetry.addData("delta_perp_pos", delta_perp_pos);
-
             delta_x = delta_middle_pos * Math.cos(heading) - delta_perp_pos * Math.sin(heading);
             delta_y = delta_middle_pos * Math.sin(heading) - delta_perp_pos * Math.cos(heading);
-
-            telemetry.addData("delta_x", delta_x);
-            telemetry.addData("delta_y", delta_y);
 
             x += delta_x;
             y += delta_y;
@@ -103,17 +113,100 @@ public class Odometry extends LinearOpMode {
             prev_right_encoder_pos = -rightEncoder.getCurrentPosition();
             prev_center_encoder_pos = centerEncoder.getCurrentPosition();
 
+
+            //Odometry Tuning
+
+            //Button A Toggle
+            boolean[] buttonA = toggleButton(gamepad1.a,aLoop,aToggle);
+            aLoop = buttonA[0];
+            aToggle = buttonA[1];
+
+            //button B toggle
+            boolean[] buttonB = toggleButton(gamepad1.b,bloop,bToggle);
+            bloop = buttonB[0];
+            bToggle = buttonB[1];
+
+            //button Dpad_Left toggle
+            boolean[] buttonDpadl = toggleButton(gamepad1.dpad_left,padlLoop,padlToggle);
+            padlLoop = buttonDpadl[0];
+            padlToggle = buttonDpadl[1];
+
+            //button Dpad_Right toggle
+            boolean[] buttonDpadr = toggleButton(gamepad1.dpad_right,padrLoop,padrToggle);
+            padrLoop = buttonDpadr[0];
+            padrToggle = buttonDpadr[1];
+
+
+            if (aToggle) {
+                if (switcher) {
+                    switcher = false;
+                } else switcher = true;
+            }
+
+            if (aToggle) {
+
+                changing = "Forward Offset";
+
+                if (padrToggle) FORWARD_OFFSET += 1;
+                if (gamepad1.dpad_up) FORWARD_OFFSET += 5;
+                if (padlToggle) FORWARD_OFFSET -= 1;
+                if (gamepad1.dpad_down) FORWARD_OFFSET -= 5;
+
+            } else {
+
+                changing = "Track Width";
+
+                if (padrToggle) TRACK_WIDTH += 1;
+                if (gamepad1.dpad_up) TRACK_WIDTH += 5;
+                if (padlToggle) TRACK_WIDTH -= 1;
+                if (gamepad1.dpad_down) TRACK_WIDTH -= 5;
+
+            }
+
+            if (bToggle) {
+                heading = 0;
+                x = 0;
+                y = 0;
+            }
+
+
+
             // Output the current position
+            telemetry.addData("Changing: ", changing);
+            telemetry.addData("Track Width", TRACK_WIDTH);
+            telemetry.addData("Forward Offset", FORWARD_OFFSET);
             telemetry.addData("Heading: ", heading);
             telemetry.addData("X: ", x);
             telemetry.addData("Y: ", y);
-            telemetry.addData("X cm: ", x * 0.24);
-            telemetry.addData("Y cm: ", y * 0.24);
+            telemetry.addData("X cm: ", x * .024);
+            telemetry.addData("Y cm: ", y * .024);
 
             telemetry.addData("IMU Degrees ", imu.getRobotYawPitchRollAngles().getYaw(AngleUnit.DEGREES));
+            telemetry.addData("IMU Radians: ", imu.getRobotYawPitchRollAngles().getYaw(AngleUnit.RADIANS));
 
             telemetry.update();
 
         }
     }
+
+    /**
+     * A loop Memory variable (boolean[0]), and the actual toggle that when put in a if() loop will run 1 singular time until button is pressed again
+     * @return LoopMemory and buttonToggle
+     */
+    private boolean[] toggleButton(boolean button, boolean loopoff, boolean toggle) {
+
+        if (!loopoff) {
+            if (button) {
+                loopoff = true;
+                toggle = true;
+                return new boolean[]{true,false};
+            }
+        }
+
+        toggle = false;
+        if (!button) loopoff = false;
+
+        return new boolean[]{toggle,loopoff};
+    }
+
 }
