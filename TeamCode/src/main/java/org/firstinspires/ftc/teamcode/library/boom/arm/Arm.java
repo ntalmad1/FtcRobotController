@@ -65,10 +65,10 @@ public class Arm extends Component {
         this.bottomBoom = new Boom(this.config.bottomBoomConfig);
         this.bottomBoomIncrement = this.config.bottomBoomConfig.maxIncrement;
 
-        this.addGp2_LeftStickXHandler(event -> Arm.this.cancelAllCommands());
-        this.addGp2_LeftStickYHandler(event -> Arm.this.cancelAllCommands());
-        this.addGp2_RightStickXHandler(event -> Arm.this.cancelAllCommands());
-        this.addGp2_RightStickYHandler(event -> Arm.this.cancelAllCommands());
+        this.addGp2_LeftStick_X_Handler(event -> Arm.this.cancelAllCommands());
+        this.addGp2_LeftStick_Y_Handler(event -> Arm.this.cancelAllCommands());
+        this.addGp2_RightStick_X_Handler(event -> Arm.this.cancelAllCommands());
+        this.addGp2_RightStick_Y_Handler(event -> Arm.this.cancelAllCommands());
     }
 
     /**

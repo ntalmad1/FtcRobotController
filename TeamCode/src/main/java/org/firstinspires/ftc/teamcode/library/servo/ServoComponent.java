@@ -152,7 +152,7 @@ public class ServoComponent extends Component {
         }
 
         if (config.controllerInputMethod.equals(Control.Gp2_LeftStickX)) {
-            this.addGp2_LeftStickXHandler(event -> {
+            this.addGp2_LeftStick_X_Handler(event -> {
                 double position = event.getPosition();
                 if (ServoComponent.this.config.invertInput) {
                     position = -position;
@@ -160,7 +160,7 @@ public class ServoComponent extends Component {
                 ServoComponent.this.move(position, ServoComponent.this.maxIncrement, ServoComponent.this.config.minPosition, ServoComponent.this.config.maxPosition);
             });
         } else if (config.controllerInputMethod.equals(Control.Gp2_LeftStickY)) {
-            this.addGp2_LeftStickYHandler(event -> {
+            this.addGp2_LeftStick_Y_Handler(event -> {
                 double position = event.getPosition();
                 if (ServoComponent.this.config.invertInput) {
                     position = -position;
@@ -168,7 +168,7 @@ public class ServoComponent extends Component {
                 ServoComponent.this.move(position, ServoComponent.this.maxIncrement, ServoComponent.this.config.minPosition, ServoComponent.this.config.maxPosition);
             });
         } else if (config.controllerInputMethod.equals(Control.Gp2_RightStickX)) {
-            this.addGp2_RightStickXHandler(event -> {
+            this.addGp2_RightStick_X_Handler(event -> {
                 double position = event.getPosition();
                 if (ServoComponent.this.config.invertInput) {
                     position = -position;
@@ -176,7 +176,7 @@ public class ServoComponent extends Component {
                 ServoComponent.this.move(position, ServoComponent.this.maxIncrement, ServoComponent.this.config.minPosition, ServoComponent.this.config.maxPosition);
             });
         } else if (config.controllerInputMethod.equals(Control.Gp2_RightStickY)) {
-            this.addGp2_RightStickYHandler(event -> {
+            this.addGp2_RightStick_Y_Handler(event -> {
                 double position = event.getPosition();
                 if (ServoComponent.this.config.invertInput) {
                     position = -position;

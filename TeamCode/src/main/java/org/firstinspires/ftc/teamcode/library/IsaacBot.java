@@ -22,6 +22,10 @@ import org.firstinspires.ftc.teamcode.library.event.gp1_dpad_down.gp1_dpad_up_do
 import org.firstinspires.ftc.teamcode.library.event.gp1_dpad_press.gp1_dpad_left_press.Gp1_Dpad_Left_PressHandler;
 import org.firstinspires.ftc.teamcode.library.event.gp1_dpad_press.gp1_dpad_right_press.Gp1_Dpad_Right_PressHandler;
 import org.firstinspires.ftc.teamcode.library.event.gp1_dpad_press.gp1_dpad_up_press.Gp1_Dpad_Up_PressHandler;
+import org.firstinspires.ftc.teamcode.library.event.gp1_left_stick_x.Gp1_LeftStick_X_Handler;
+import org.firstinspires.ftc.teamcode.library.event.gp1_left_stick_y.Gp1_LeftStick_Y_Handler;
+import org.firstinspires.ftc.teamcode.library.event.gp1_right_stick_x.Gp1_RightStick_X_Handler;
+import org.firstinspires.ftc.teamcode.library.event.gp1_right_stick_y.Gp1_RightStick_Y_Handler;
 import org.firstinspires.ftc.teamcode.library.event.gp1_x_press.Gp1_X_PressHandler;
 import org.firstinspires.ftc.teamcode.library.event.gp1_y_press.Gp1_Y_PressHandler;
 import org.firstinspires.ftc.teamcode.library.event.gp2_a_press.Gp2_A_PressHandler;
@@ -35,11 +39,11 @@ import org.firstinspires.ftc.teamcode.library.event.gp2_dpad_press.gp2_dpad_left
 import org.firstinspires.ftc.teamcode.library.event.gp2_dpad_press.gp2_dpad_right_press.Gp2_Dpad_Right_PressHandler;
 import org.firstinspires.ftc.teamcode.library.event.gp2_dpad_press.gp2_dpad_up_press.Gp2_Dpad_Up_PressHandler;
 import org.firstinspires.ftc.teamcode.library.event.gp2_left_bumper_press.Gp2_Left_Bumper_PressHandler;
-import org.firstinspires.ftc.teamcode.library.event.gp2_left_stick_x.Gp2_LeftStickXHandler;
-import org.firstinspires.ftc.teamcode.library.event.gp2_left_stick_y.Gp2_LeftStickYHandler;
+import org.firstinspires.ftc.teamcode.library.event.gp2_left_stick_x.Gp2_LeftStick_X_Handler;
+import org.firstinspires.ftc.teamcode.library.event.gp2_left_stick_y.Gp2_LeftStick_Y_Handler;
 import org.firstinspires.ftc.teamcode.library.event.gp2_right_bumper_press.Gp2_Right_Bumper_PressHandler;
-import org.firstinspires.ftc.teamcode.library.event.gp2_right_stick_x.Gp2_RightStickXHandler;
-import org.firstinspires.ftc.teamcode.library.event.gp2_right_stick_y.Gp2_RightStickYHandler;
+import org.firstinspires.ftc.teamcode.library.event.gp2_right_stick_x.Gp2_RightStick_X_Handler;
+import org.firstinspires.ftc.teamcode.library.event.gp2_right_stick_y.Gp2_RightStick_Y_Handler;
 import org.firstinspires.ftc.teamcode.library.event.gp2_x_press.Gp2_X_PressHandler;
 import org.firstinspires.ftc.teamcode.library.event.gp2_y_press.Gp2_Y_PressHandler;
 
@@ -307,8 +311,8 @@ public abstract class  IsaacBot extends LinearOpMode implements IComponent
      * @param handler
      * @return
      */
-    public HandlerRegistration addGp2_LeftStickXHandler (Gp2_LeftStickXHandler handler) {
-        return this.robotComponent.addGp2_LeftStickXHandler(handler);
+    public HandlerRegistration addGp1_LeftStick_X_Handler (Gp1_LeftStick_X_Handler handler) {
+        return this.robotComponent.addGp1_LeftStick_X_Handler(handler);
     }
 
     /**
@@ -316,8 +320,8 @@ public abstract class  IsaacBot extends LinearOpMode implements IComponent
      * @param handler
      * @return
      */
-    public HandlerRegistration addGp2_LeftStickYHandler (Gp2_LeftStickYHandler handler) {
-        return this.robotComponent.addGp2_LeftStickYHandler(handler);
+    public HandlerRegistration addGp1_LeftStick_Y_Handler (Gp1_LeftStick_Y_Handler handler) {
+        return this.robotComponent.addGp1_LeftStick_Y_Handler(handler);
     }
 
     /**
@@ -325,8 +329,8 @@ public abstract class  IsaacBot extends LinearOpMode implements IComponent
      * @param handler
      * @return
      */
-    public HandlerRegistration addGp2_RightStickXHandler (Gp2_RightStickXHandler handler) {
-        return this.robotComponent.addGp2_RightStickXHandler(handler);
+    public HandlerRegistration addGp1_RightStick_X_Handler (Gp1_RightStick_X_Handler handler) {
+        return this.robotComponent.addGp1_RightStick_X_Handler(handler);
     }
 
     /**
@@ -334,9 +338,49 @@ public abstract class  IsaacBot extends LinearOpMode implements IComponent
      * @param handler
      * @return
      */
-    public HandlerRegistration addGp2_RightStickYHandler (Gp2_RightStickYHandler handler) {
-        return this.robotComponent.addGp2_RightStickYHandler(handler);
+    public HandlerRegistration addGp1_RightStickYHandler (Gp1_RightStick_Y_Handler handler) {
+        return this.robotComponent.addGp1_RightStick_Y_Handler(handler);
     }
+
+    //----------------------------------------------------------------------------------------------
+
+    /**
+     *
+     * @param handler
+     * @return
+     */
+    public HandlerRegistration addGp2_LeftStick_X_Handler (Gp2_LeftStick_X_Handler handler) {
+        return this.robotComponent.addGp2_LeftStick_X_Handler(handler);
+    }
+
+    /**
+     *
+     * @param handler
+     * @return
+     */
+    public HandlerRegistration addGp2_LeftStick_Y_Handler (Gp2_LeftStick_Y_Handler handler) {
+        return this.robotComponent.addGp2_LeftStick_Y_Handler(handler);
+    }
+
+    /**
+     *
+     * @param handler
+     * @return
+     */
+    public HandlerRegistration addGp2_RightStick_X_Handler (Gp2_RightStick_X_Handler handler) {
+        return this.robotComponent.addGp2_RightStick_X_Handler(handler);
+    }
+
+    /**
+     *
+     * @param handler
+     * @return
+     */
+    public HandlerRegistration addGp2_RightStick_Y_Handler (Gp2_RightStick_Y_Handler handler) {
+        return this.robotComponent.addGp2_RightStick_Y_Handler(handler);
+    }
+
+    //----------------------------------------------------------------------------------------------
 
     /**
      *

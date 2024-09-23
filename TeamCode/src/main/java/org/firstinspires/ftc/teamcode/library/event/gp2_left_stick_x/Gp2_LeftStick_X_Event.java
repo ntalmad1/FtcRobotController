@@ -6,9 +6,9 @@ import org.firstinspires.ftc.teamcode.library.event.EventType;
 /**
  *
  */
-public class Gp2_LeftStickXEvent extends Event<Gp2_LeftStickXHandler> {
+public class Gp2_LeftStick_X_Event extends Event<Gp2_LeftStick_X_Handler> {
 
-    public final static EventType<Gp2_LeftStickXHandler> TYPE = new EventType<Gp2_LeftStickXHandler>();
+    public final static EventType<Gp2_LeftStick_X_Handler> TYPE = new EventType<Gp2_LeftStick_X_Handler>();
 
     /**
      *
@@ -19,7 +19,7 @@ public class Gp2_LeftStickXEvent extends Event<Gp2_LeftStickXHandler> {
      *
      * @param pos
      */
-    public Gp2_LeftStickXEvent (double pos) {
+    public Gp2_LeftStick_X_Event(double pos) {
         this.position = pos;
     }
 
@@ -32,12 +32,12 @@ public class Gp2_LeftStickXEvent extends Event<Gp2_LeftStickXHandler> {
     }
 
     @Override
-    public EventType<Gp2_LeftStickXHandler> getType() {
+    public EventType<Gp2_LeftStick_X_Handler> getType() {
         return TYPE;
     }
 
     @Override
-    public void handle(Gp2_LeftStickXHandler handler) {
-        handler.onGp2_LeftStickX(this);
+    public void handle(Gp2_LeftStick_X_Handler handler) {
+        handler.onGp2_LeftStick_X(this);
     }
 }

@@ -12,8 +12,12 @@ import org.firstinspires.ftc.teamcode.library.event.gp1_dpad_press.gp1_dpad_left
 import org.firstinspires.ftc.teamcode.library.event.gp1_dpad_press.gp1_dpad_right_press.Gp1_Dpad_Right_PressEvent;
 import org.firstinspires.ftc.teamcode.library.event.gp1_dpad_press.gp1_dpad_up_press.Gp1_Dpad_Up_PressEvent;
 import org.firstinspires.ftc.teamcode.library.event.gp1_left_bumper_down.Gp1_Left_Bumper_DownEvent;
+import org.firstinspires.ftc.teamcode.library.event.gp1_left_stick_x.Gp1_LeftStick_X_Event;
+import org.firstinspires.ftc.teamcode.library.event.gp1_left_stick_y.Gp1_LeftStick_Y_Event;
 import org.firstinspires.ftc.teamcode.library.event.gp1_left_trigger_down.Gp1_Left_Trigger_DownEvent;
 import org.firstinspires.ftc.teamcode.library.event.gp1_right_bumper_down.Gp1_Right_Bumper_DownEvent;
+import org.firstinspires.ftc.teamcode.library.event.gp1_right_stick_x.Gp1_RightStick_X_Event;
+import org.firstinspires.ftc.teamcode.library.event.gp1_right_stick_y.Gp1_RightStick_Y_Event;
 import org.firstinspires.ftc.teamcode.library.event.gp1_right_trigger_down.Gp1_Right_Trigger_DownEvent;
 import org.firstinspires.ftc.teamcode.library.event.gp1_x_press.Gp1_X_PressEvent;
 import org.firstinspires.ftc.teamcode.library.event.gp1_y_press.Gp1_Y_PressEvent;
@@ -28,13 +32,13 @@ import org.firstinspires.ftc.teamcode.library.event.gp2_dpad_press.gp2_dpad_left
 import org.firstinspires.ftc.teamcode.library.event.gp2_dpad_press.gp2_dpad_right_press.Gp2_Dpad_Right_PressEvent;
 import org.firstinspires.ftc.teamcode.library.event.gp2_dpad_press.gp2_dpad_up_press.Gp2_Dpad_Up_PressEvent;
 import org.firstinspires.ftc.teamcode.library.event.gp2_left_bumper_press.Gp2_Left_Bumper_PressEvent;
-import org.firstinspires.ftc.teamcode.library.event.gp2_left_stick_x.Gp2_LeftStickXEvent;
-import org.firstinspires.ftc.teamcode.library.event.gp2_left_stick_y.Gp2_LeftStickYEvent;
+import org.firstinspires.ftc.teamcode.library.event.gp2_left_stick_x.Gp2_LeftStick_X_Event;
+import org.firstinspires.ftc.teamcode.library.event.gp2_left_stick_y.Gp2_LeftStick_Y_Event;
 import org.firstinspires.ftc.teamcode.library.event.gp2_left_trigger.Gp2_Left_Trigger_Event;
 import org.firstinspires.ftc.teamcode.library.event.gp2_left_trigger_down.Gp2_Left_Trigger_DownEvent;
 import org.firstinspires.ftc.teamcode.library.event.gp2_right_bumper_press.Gp2_Right_Bumper_PressEvent;
-import org.firstinspires.ftc.teamcode.library.event.gp2_right_stick_x.Gp2_RightStickXEvent;
-import org.firstinspires.ftc.teamcode.library.event.gp2_right_stick_y.Gp2_RightStickYEvent;
+import org.firstinspires.ftc.teamcode.library.event.gp2_right_stick_x.Gp2_RightStick_X_Event;
+import org.firstinspires.ftc.teamcode.library.event.gp2_right_stick_y.Gp2_RightStick_Y_Event;
 import org.firstinspires.ftc.teamcode.library.event.gp2_right_trigger.Gp2_Right_Trigger_Event;
 import org.firstinspires.ftc.teamcode.library.event.gp2_right_trigger_down.Gp2_Right_Trigger_DownEvent;
 import org.firstinspires.ftc.teamcode.library.event.gp2_x_press.Gp2_X_PressEvent;
@@ -83,6 +87,14 @@ public class EventBus extends HandlerManager {
 
     private boolean gp2_left_trigger_down;
     private boolean gp2_right_trigger_down;
+
+    /**
+     *
+     */
+    private double gp1_leftStickX;
+    private double gp1_leftStickY;
+    private double gp1_rightStickX;
+    private double gp1_rightStickY;
 
     /**
      *
@@ -208,12 +220,54 @@ public class EventBus extends HandlerManager {
 
         //--------------------------------------------------------
 
+        double current_gp1_leftStickX = this.robot.gamepad1.left_stick_x;
+        if (current_gp1_leftStickX > 0
+         || current_gp1_leftStickX < 0
+         || (current_gp1_leftStickX == 0 && gp1_leftStickX != 0)) {
+
+            Gp1_LeftStick_X_Event event = new Gp1_LeftStick_X_Event(current_gp1_leftStickX);
+            this.fireEvent(event);
+            gp1_leftStickX = current_gp1_leftStickX;
+        }
+
+        double current_gp1_leftStickY = this.robot.gamepad1.left_stick_y;
+        if (current_gp1_leftStickY > 0
+                || current_gp1_leftStickY < 0
+                || (current_gp1_leftStickY == 0 && gp1_leftStickY != 0)) {
+
+            Gp1_LeftStick_Y_Event event = new Gp1_LeftStick_Y_Event(current_gp1_leftStickY);
+            this.fireEvent(event);
+            gp1_leftStickY = current_gp1_leftStickY;
+        }
+
+        double current_gp1_rightStickX = this.robot.gamepad1.right_stick_x;
+        if (current_gp1_rightStickX > 0
+                || current_gp1_rightStickX < 0
+                || (current_gp1_rightStickX == 0 && gp1_rightStickX != 0)) {
+
+            Gp1_RightStick_X_Event event = new Gp1_RightStick_X_Event(current_gp1_rightStickX);
+            this.fireEvent(event);
+            gp1_rightStickX = current_gp1_rightStickX;
+        }
+
+        double current_gp1_rightStickY = this.robot.gamepad1.right_stick_y;
+        if (current_gp1_rightStickY > 0
+                || current_gp1_rightStickY < 0
+                || (current_gp1_rightStickY == 0 && gp1_rightStickY != 0)) {
+
+            Gp1_RightStick_Y_Event event = new Gp1_RightStick_Y_Event(current_gp1_rightStickY);
+            this.fireEvent(event);
+            gp1_rightStickY = current_gp1_rightStickY;
+        }
+
+        //------------------------------------------------------------------------------------------
+
         double current_gp2_leftStickX = this.robot.gamepad2.left_stick_x;
         if (current_gp2_leftStickX > 0
-         || current_gp2_leftStickX < 0
-         || (current_gp2_leftStickX == 0 && gp2_leftStickX != 0)) {
+                || current_gp2_leftStickX < 0
+                || (current_gp2_leftStickX == 0 && gp2_leftStickX != 0)) {
 
-            Gp2_LeftStickXEvent event = new Gp2_LeftStickXEvent(current_gp2_leftStickX);
+            Gp2_LeftStick_X_Event event = new Gp2_LeftStick_X_Event(current_gp2_leftStickX);
             this.fireEvent(event);
             gp2_leftStickX = current_gp2_leftStickX;
         }
@@ -223,7 +277,7 @@ public class EventBus extends HandlerManager {
                 || current_gp2_leftStickY < 0
                 || (current_gp2_leftStickY == 0 && gp2_leftStickY != 0)) {
 
-            Gp2_LeftStickYEvent event = new Gp2_LeftStickYEvent(current_gp2_leftStickY);
+            Gp2_LeftStick_Y_Event event = new Gp2_LeftStick_Y_Event(current_gp2_leftStickY);
             this.fireEvent(event);
             gp2_leftStickY = current_gp2_leftStickY;
         }
@@ -233,7 +287,7 @@ public class EventBus extends HandlerManager {
                 || current_gp2_rightStickX < 0
                 || (current_gp2_rightStickX == 0 && gp2_rightStickX != 0)) {
 
-            Gp2_RightStickXEvent event = new Gp2_RightStickXEvent(current_gp2_rightStickX);
+            Gp2_RightStick_X_Event event = new Gp2_RightStick_X_Event(current_gp2_rightStickX);
             this.fireEvent(event);
             gp2_rightStickX = current_gp2_rightStickX;
         }
@@ -243,7 +297,7 @@ public class EventBus extends HandlerManager {
                 || current_gp2_rightStickY < 0
                 || (current_gp2_rightStickY == 0 && gp2_rightStickY != 0)) {
 
-            Gp2_RightStickYEvent event = new Gp2_RightStickYEvent(current_gp2_rightStickY);
+            Gp2_RightStick_Y_Event event = new Gp2_RightStick_Y_Event(current_gp2_rightStickY);
             this.fireEvent(event);
             gp2_rightStickY = current_gp2_rightStickY;
         }

@@ -10,7 +10,7 @@ import org.firstinspires.ftc.teamcode.library.IsaacBot;
  * get the servo positions for set positions and limits.
  *
  */
-@TeleOp(name="LinActCalibTool", group="Calibration")
+@TeleOp(name="LinActCalibTool", group="Tools")
 // @Disabled
 public class LinActCalibTool extends IsaacBot {
 
@@ -36,7 +36,7 @@ public class LinActCalibTool extends IsaacBot {
 
     /**
      */
-    private double gamePadIncrement;
+    private double dpadIncrement;
 
     /**
      * Constructor
@@ -47,7 +47,7 @@ public class LinActCalibTool extends IsaacBot {
         leftServoName = "leftActServo";
         rightServoName = "rightActServo";
         stickIncrement = 0.0002;
-        gamePadIncrement = 0.002;
+        dpadIncrement = 0.002;
 
         leftActuatorServo = this.hardwareMap.get(Servo.class, leftServoName);
         leftActuatorServo.resetDeviceConfigurationForOpMode();
@@ -55,24 +55,28 @@ public class LinActCalibTool extends IsaacBot {
         rightActuatorServo = this.hardwareMap.get(Servo.class, rightServoName);
         rightActuatorServo.resetDeviceConfigurationForOpMode();
 
-        // this.addGp1_LeftStick_Y_Handler();
+        this.addGp1_LeftStick_Y_Handler(event -> {
+            moveServoByStick(leftActuatorServo, event.getPosition());
+        });
 
-        // this.addGp1_RightStick_X_Handler();
+        this.addGp1_RightStick_X_Handler(event -> {
+            moveServoByStick(rightActuatorServo, event.getPosition());
+        });
 
         this.addGp1_Dpad_Down_PressHandler(event -> {
-
+            decrementServo(leftActuatorServo);
         });
 
         this.addGp1_Dpad_Up_PressHandler(event -> {
-
+            incrementServo(leftActuatorServo);
         });
 
         this.addGp1_Dpad_Left_PressHandler(event -> {
-
+            incrementServo(rightActuatorServo);
         });
 
         this.addGp1_Dpad_Right_PressHandler(event -> {
-
+            decrementServo(rightActuatorServo);
         });
     }
 
@@ -90,14 +94,54 @@ public class LinActCalibTool extends IsaacBot {
     @Override
     public void run() {
        super.run();
+
+       telemetry.addData("Left servo pos:", "%.3f", leftActuatorServo.getPosition());
+       telemetry.addData("Right servo pos:", "%.3f", rightActuatorServo.getPosition());
+       telemetry.update();
+    }
+
+    /**
+     *
+     * @param stickPosition
+     */
+    private void moveServoByStick(Servo servo, double stickPosition) {
+        double newPos = servo.getPosition() + (stickPosition > 0 ? -stickIncrement : stickIncrement);
+
+        if (newPos < 0) {
+            newPos = 0;
+        }
+        else if (newPos > 1) {
+            newPos = 1;
+        }
+
+        servo.setPosition(newPos);
     }
 
     /**
      *
      * @param servo
      */
-    private void DpadIncrement (Servo servo) {
-            
+    private void incrementServo(Servo servo) {
+        double newPosition = servo.getPosition() + this.dpadIncrement;
+
+        if (newPosition > 1) {
+            newPosition = 1;
+        }
+
+        servo.setPosition(newPosition);
     }
 
+    /**
+     *
+     * @param servo
+     */
+    private void decrementServo(Servo servo) {
+        double newPosition = servo.getPosition() - this.dpadIncrement;
+
+        if (newPosition < 0) {
+            newPosition = 0;
+        }
+
+        servo.setPosition(newPosition);
+    }
 }

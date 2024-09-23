@@ -5,11 +5,11 @@ import org.firstinspires.ftc.teamcode.library.event.EventHandler;
 /**
  *
  */
-public interface Gp2_LeftStickXHandler extends EventHandler
+public interface Gp2_LeftStick_X_Handler extends EventHandler
 {
     /**
      *
      * @param event
      */
-    void onGp2_LeftStickX (Gp2_LeftStickXEvent event);
+    void onGp2_LeftStick_X(Gp2_LeftStick_X_Event event);
 }
