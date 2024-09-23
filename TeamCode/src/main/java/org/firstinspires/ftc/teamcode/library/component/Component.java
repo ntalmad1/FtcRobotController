@@ -14,10 +14,6 @@ import org.firstinspires.ftc.teamcode.library.event.gp1_a_press.Gp1_A_PressEvent
 import org.firstinspires.ftc.teamcode.library.event.gp1_a_press.Gp1_A_PressHandler;
 import org.firstinspires.ftc.teamcode.library.event.gp1_b_press.Gp1_B_PressEvent;
 import org.firstinspires.ftc.teamcode.library.event.gp1_b_press.Gp1_B_PressHandler;
-import org.firstinspires.ftc.teamcode.library.event.g2_x_press.Gp1_X_PressEvent;
-import org.firstinspires.ftc.teamcode.library.event.g2_x_press.Gp1_X_PressHandler;
-import org.firstinspires.ftc.teamcode.library.event.g2_y_press.Gp1_Y_PressEvent;
-import org.firstinspires.ftc.teamcode.library.event.g2_y_press.Gp1_Y_PressHandler;
 import org.firstinspires.ftc.teamcode.library.event.gp1_dpad_down_down.Gp1_Dpad_Down_DownEvent;
 import org.firstinspires.ftc.teamcode.library.event.gp1_dpad_down_down.Gp1_Dpad_Down_DownHandler;
 import org.firstinspires.ftc.teamcode.library.event.gp1_dpad_down_press.Gp1_Dpad_Down_PressEvent;
@@ -32,6 +28,10 @@ import org.firstinspires.ftc.teamcode.library.event.gp1_right_bumper_down.Gp1_Ri
 import org.firstinspires.ftc.teamcode.library.event.gp1_right_bumper_down.Gp1_Right_Bumper_DownHandler;
 import org.firstinspires.ftc.teamcode.library.event.gp1_right_trigger_down.Gp1_Right_Trigger_DownEvent;
 import org.firstinspires.ftc.teamcode.library.event.gp1_right_trigger_down.Gp1_Right_Trigger_DownHandler;
+import org.firstinspires.ftc.teamcode.library.event.gp1_x_press.Gp1_X_PressEvent;
+import org.firstinspires.ftc.teamcode.library.event.gp1_x_press.Gp1_X_PressHandler;
+import org.firstinspires.ftc.teamcode.library.event.gp1_y_press.Gp1_Y_PressEvent;
+import org.firstinspires.ftc.teamcode.library.event.gp1_y_press.Gp1_Y_PressHandler;
 import org.firstinspires.ftc.teamcode.library.event.gp2_a_press.Gp2_A_PressEvent;
 import org.firstinspires.ftc.teamcode.library.event.gp2_a_press.Gp2_A_PressHandler;
 import org.firstinspires.ftc.teamcode.library.event.gp2_b_press.Gp2_B_PressEvent;

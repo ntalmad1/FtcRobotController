@@ -28,7 +28,7 @@ public class ServoTest extends IsaacBot {
 
     /**
      */
-    private String servoName = "leftActServo";
+    private String servoName = "rightActServo";
 
     /**
      */
@@ -67,7 +67,7 @@ public class ServoTest extends IsaacBot {
      */
     @Override
     public void go() {
-        servo.setPosition(0);
+        servo.setPosition(1);
     }
 
     /**
@@ -75,6 +75,7 @@ public class ServoTest extends IsaacBot {
      */
     @Override
     public void run() {
+        super.run();
 
         if (this.gamepad1.left_stick_y != 0) {
 

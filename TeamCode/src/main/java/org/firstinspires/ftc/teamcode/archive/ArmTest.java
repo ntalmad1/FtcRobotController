@@ -14,10 +14,10 @@ import org.firstinspires.ftc.teamcode.library.command.ICommand;
 import org.firstinspires.ftc.teamcode.library.command.OneTimeCommand;
 import org.firstinspires.ftc.teamcode.library.event.command_callback.CommandCallbackAdapter;
 import org.firstinspires.ftc.teamcode.library.event.command_callback.CommandSuccessEvent;
-import org.firstinspires.ftc.teamcode.library.event.g2_x_press.Gp1_X_PressEvent;
-import org.firstinspires.ftc.teamcode.library.event.g2_x_press.Gp1_X_PressHandler;
-import org.firstinspires.ftc.teamcode.library.event.g2_y_press.Gp1_Y_PressEvent;
-import org.firstinspires.ftc.teamcode.library.event.g2_y_press.Gp1_Y_PressHandler;
+import org.firstinspires.ftc.teamcode.library.event.gp1_x_press.Gp1_X_PressEvent;
+import org.firstinspires.ftc.teamcode.library.event.gp1_x_press.Gp1_X_PressHandler;
+import org.firstinspires.ftc.teamcode.library.event.gp1_y_press.Gp1_Y_PressEvent;
+import org.firstinspires.ftc.teamcode.library.event.gp1_y_press.Gp1_Y_PressHandler;
 import org.firstinspires.ftc.teamcode.library.event.gp2_dpad_down_down.Gp2_Dpad_Down_DownEvent;
 import org.firstinspires.ftc.teamcode.library.event.gp2_dpad_down_down.Gp2_Dpad_Down_DownHandler;
 import org.firstinspires.ftc.teamcode.library.event.gp2_dpad_up_down.Gp2_Dpad_Up_DownEvent;
@@ -105,7 +105,7 @@ public class ArmTest extends IsaacBot {
 
         this.addGp1_Y_PressHandler(new Gp1_Y_PressHandler() {
             @Override
-            public void onGp2_A_Press(Gp1_Y_PressEvent event) {
+            public void onGp1_Y_Press(Gp1_Y_PressEvent event) {
                 ArmTest.this.arm.run();
             }
         });
