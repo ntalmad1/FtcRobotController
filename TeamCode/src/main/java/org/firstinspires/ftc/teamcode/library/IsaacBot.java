@@ -242,7 +242,7 @@ public abstract class  IsaacBot extends LinearOpMode implements IComponent
 
     /**
      */
-    private final RobotComponent robotComponent;
+    protected final RobotComponent robotComponent;
 
     /**
      */
