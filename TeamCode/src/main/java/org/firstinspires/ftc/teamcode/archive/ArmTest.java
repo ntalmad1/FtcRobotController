@@ -18,10 +18,10 @@ import org.firstinspires.ftc.teamcode.library.event.gp1_x_press.Gp1_X_PressEvent
 import org.firstinspires.ftc.teamcode.library.event.gp1_x_press.Gp1_X_PressHandler;
 import org.firstinspires.ftc.teamcode.library.event.gp1_y_press.Gp1_Y_PressEvent;
 import org.firstinspires.ftc.teamcode.library.event.gp1_y_press.Gp1_Y_PressHandler;
-import org.firstinspires.ftc.teamcode.library.event.gp2_dpad_down_down.Gp2_Dpad_Down_DownEvent;
-import org.firstinspires.ftc.teamcode.library.event.gp2_dpad_down_down.Gp2_Dpad_Down_DownHandler;
-import org.firstinspires.ftc.teamcode.library.event.gp2_dpad_up_down.Gp2_Dpad_Up_DownEvent;
-import org.firstinspires.ftc.teamcode.library.event.gp2_dpad_up_down.Gp2_Dpad_Up_DownHandler;
+import org.firstinspires.ftc.teamcode.library.event.gp2_dpad_down.gp2_dpad_down_down.Gp2_Dpad_Down_DownEvent;
+import org.firstinspires.ftc.teamcode.library.event.gp2_dpad_down.gp2_dpad_down_down.Gp2_Dpad_Down_DownHandler;
+import org.firstinspires.ftc.teamcode.library.event.gp2_dpad_down.gp2_dpad_up_down.Gp2_Dpad_Up_DownEvent;
+import org.firstinspires.ftc.teamcode.library.event.gp2_dpad_down.gp2_dpad_up_down.Gp2_Dpad_Up_DownHandler;
 import org.firstinspires.ftc.teamcode.library.pixelcatcher.PixelCatcher;
 import org.firstinspires.ftc.teamcode.library.winch.ConstantOutWinchCommand;
 import org.firstinspires.ftc.teamcode.library.winch.Winch;

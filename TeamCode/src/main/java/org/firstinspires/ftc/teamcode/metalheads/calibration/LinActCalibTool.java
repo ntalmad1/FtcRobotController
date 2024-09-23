@@ -55,17 +55,25 @@ public class LinActCalibTool extends IsaacBot {
         rightActuatorServo = this.hardwareMap.get(Servo.class, rightServoName);
         rightActuatorServo.resetDeviceConfigurationForOpMode();
 
-        this.addGp1_LeftStick_Y_Handler();
+        // this.addGp1_LeftStick_Y_Handler();
 
-        this.addGp1_RightStick_X_Handler();
+        // this.addGp1_RightStick_X_Handler();
 
-        this.addGp1_Dpad_Down_PressHandler();
+        this.addGp1_Dpad_Down_PressHandler(event -> {
 
-        this.addGp1_Dpad_Up_PressHandler();
+        });
 
-        this.addGp1_Dpad_Left_PressHandler();
+        this.addGp1_Dpad_Up_PressHandler(event -> {
 
-        this.addGp1_Dpad_Right_PressHandler();
+        });
+
+        this.addGp1_Dpad_Left_PressHandler(event -> {
+
+        });
+
+        this.addGp1_Dpad_Right_PressHandler(event -> {
+
+        });
     }
 
     /**
