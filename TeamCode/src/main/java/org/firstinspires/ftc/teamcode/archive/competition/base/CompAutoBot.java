@@ -17,8 +17,8 @@ import org.firstinspires.ftc.teamcode.library.event.command_callback.CommandAfte
 import org.firstinspires.ftc.teamcode.library.event.command_callback.CommandCallbackAdapter;
 import org.firstinspires.ftc.teamcode.library.event.command_callback.CommandCallbackHandler;
 import org.firstinspires.ftc.teamcode.library.event.command_callback.CommandSuccessEvent;
-import org.firstinspires.ftc.teamcode.library.event.g1_a_press.Gp1_A_PressEvent;
-import org.firstinspires.ftc.teamcode.library.event.g1_a_press.Gp1_A_PressHandler;
+import org.firstinspires.ftc.teamcode.library.event.gp1_a_press.Gp1_A_PressEvent;
+import org.firstinspires.ftc.teamcode.library.event.gp1_a_press.Gp1_A_PressHandler;
 import org.firstinspires.ftc.teamcode.library.event.gp2_y_press.Gp2_Y_PressEvent;
 import org.firstinspires.ftc.teamcode.library.event.gp2_y_press.Gp2_Y_PressHandler;
 import org.firstinspires.ftc.teamcode.library.event.ping.PingEvent;

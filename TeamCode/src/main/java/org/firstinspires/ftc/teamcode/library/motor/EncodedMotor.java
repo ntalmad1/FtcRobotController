@@ -5,8 +5,8 @@ import com.qualcomm.robotcore.hardware.DcMotorSimple;
 
 import org.firstinspires.ftc.teamcode.library.component.Component;
 import org.firstinspires.ftc.teamcode.library.event.command_callback.CommandCallbackHandler;
-import org.firstinspires.ftc.teamcode.library.event.gp2_right_stick_x.Gp2_RightStickXEvent;
-import org.firstinspires.ftc.teamcode.library.event.gp2_right_stick_x.Gp2_RightStickXHandler;
+import org.firstinspires.ftc.teamcode.library.event.gp2_right_stick_x.Gp2_RightStick_X_Event;
+import org.firstinspires.ftc.teamcode.library.event.gp2_right_stick_x.Gp2_RightStick_X_Handler;
 import org.firstinspires.ftc.teamcode.library.utility.Control;
 
 /**
@@ -108,9 +108,9 @@ public class EncodedMotor extends Component {
         this.setBrake(this.config.brakeOn);
 
         if (Control.Gp2_RightStickX.equals(this.config.control)) {
-            this.addGp2_RightStickXHandler(new Gp2_RightStickXHandler() {
+            this.addGp2_RightStick_X_Handler(new Gp2_RightStick_X_Handler() {
                 @Override
-                public void onGp2_RightStickX(Gp2_RightStickXEvent event) {
+                public void onGp2_RightStick_X(Gp2_RightStick_X_Event event) {
                     EncodedMotor.this.move(event.getPosition());
                 }
             });
