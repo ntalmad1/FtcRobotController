@@ -42,7 +42,7 @@ public class LinActCalibTool extends IsaacBot {
     /**
      * Constructor
      */
-    public LinActCalibTool(){
+    public LinActsCalib(){
         super();
 
         leftServoName = "leftActServo";
