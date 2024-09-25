@@ -18,15 +18,21 @@ public class ServoTest extends IsaacBot {
 
     /**
      */
-    private double yStickIncrement = 0.0002;
+    private double yStickIncrement;
 
     /**
      */
-    private double gamePadIncrement = 0.002;
+    private double gamePadIncrement;
 
     /**
      */
-    private String servoName = "rightActServo";
+    private String servoName;
+
+    private double servoInitPos;
+
+    private double servoMinPos;
+
+    private double servoMaxPos;
 
     /**
      */
@@ -34,6 +40,14 @@ public class ServoTest extends IsaacBot {
 
     @Override
     public void initBot() {
+        yStickIncrement = 0.0006;
+        gamePadIncrement = 0.002;
+        servoName = "testServo";
+        servoInitPos = 0.5;
+        servoMinPos = 0.484;
+        servoMaxPos = 0.65;
+
+
         servo = this.hardwareMap.get(Servo.class, servoName);
         servo.resetDeviceConfigurationForOpMode();
 
@@ -41,8 +55,8 @@ public class ServoTest extends IsaacBot {
             public void onGp1_Dpad_Down_Press(Gp1_Dpad_Down_PressEvent event) {
                 double newPos = servo.getPosition() - gamePadIncrement;
 
-                if (newPos < 0) newPos = 0;
-                if (newPos > 1) newPos = 1;
+                if (newPos < servoMinPos) newPos = servoMinPos;
+                if (newPos > servoMaxPos) newPos = servoMaxPos;
 
                 servo.setPosition(newPos);
             }
@@ -52,11 +66,22 @@ public class ServoTest extends IsaacBot {
             public void onGp1_Dpad_Up_Press(Gp1_Dpad_Up_PressEvent event) {
                 double newPos = servo.getPosition() + gamePadIncrement;
 
-                if (newPos < 0) newPos = 0;
-                if (newPos > 1) newPos = 1;
+                if (newPos < servoMinPos) newPos = servoMinPos;
+                if (newPos > servoMaxPos) newPos = servoMaxPos;
 
                 servo.setPosition(newPos);
             }
+        });
+
+        this.addGp1_A_PressHandler(event -> {
+
+            if (servo.getPosition() > 0.5) {
+                servo.setPosition(servoMinPos);
+            }
+            else {
+                servo.setPosition(servoMaxPos);
+            }
+
         });
     }
 
@@ -65,7 +90,7 @@ public class ServoTest extends IsaacBot {
      */
     @Override
     public void go() {
-        servo.setPosition(1);
+        servo.setPosition(this.servoInitPos);
     }
 
     /**
@@ -81,8 +106,8 @@ public class ServoTest extends IsaacBot {
 
             double newPos = servo.getPosition() + (ly > 0 ? -yStickIncrement : yStickIncrement);
 
-            if (newPos < 0) newPos = 0;
-            if (newPos > 1) newPos = 1;
+            if (newPos < servoMinPos) newPos = servoMinPos;
+            if (newPos > servoMaxPos) newPos = servoMaxPos;
 
             servo.setPosition(newPos);
         }
