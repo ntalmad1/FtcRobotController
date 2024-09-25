@@ -5,8 +5,8 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import org.firstinspires.ftc.teamcode.archive.competition.config.DroneLauncherCompConfig;
 import org.firstinspires.ftc.teamcode.library.IsaacBot;
-import org.firstinspires.ftc.teamcode.library.dronelauncher.DroneLauncher;
-import org.firstinspires.ftc.teamcode.library.dronelauncher.DroneLauncherConfig;
+import org.firstinspires.ftc.teamcode.archive.library.dronelauncher.DroneLauncher;
+import org.firstinspires.ftc.teamcode.archive.library.dronelauncher.DroneLauncherConfig;
 import org.firstinspires.ftc.teamcode.library.event.gp2_a_press.Gp2_A_PressEvent;
 import org.firstinspires.ftc.teamcode.library.event.gp2_a_press.Gp2_A_PressHandler;
 import org.firstinspires.ftc.teamcode.library.utility.Control;

@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.library.rotator;
+package org.firstinspires.ftc.teamcode.archive.library.boom;
 
 import com.qualcomm.robotcore.hardware.Servo;
 
@@ -8,12 +8,12 @@ import org.firstinspires.ftc.teamcode.library.utility.Control;
 /**
  *
  */
-public class Rotator extends Component {
+public class Boom extends Component {
 
     /**
      *
      */
-    private final RotatorConfig config;
+    private final BoomConfig config;
 
     /**
      * Reverse forwards vs backwards for calculating position in degrees
@@ -41,7 +41,7 @@ public class Rotator extends Component {
      *
      * @param config The configuration values of the boom
      */
-    public Rotator(RotatorConfig config) {
+    public Boom (BoomConfig config) {
         super(config.robot);
 
         this.config = config;
@@ -53,7 +53,7 @@ public class Rotator extends Component {
      *
      * @return
      */
-    public RotatorConfig getConfig () {
+    public BoomConfig getConfig () {
         return this.config;
     }
 
@@ -120,7 +120,7 @@ public class Rotator extends Component {
         double startPosition = this.servo.getPosition();
         double targetPosition = this.calculateTargetPosition(degrees);
 
-        this.addCommand(new RotatorGoToPositionCommand(this, this.getMaxIncrement(), startPosition, targetPosition));
+        this.addCommand(new GoToPositionCommand(this, this.getMaxIncrement(), startPosition, targetPosition));
     }
 
     /**
@@ -134,7 +134,7 @@ public class Rotator extends Component {
 
     public void gotoPosition (double targetPosition, double maxIncrement) {
         double startPosition = this.servo.getPosition();
-        this.addCommand(new RotatorGoToPositionCommand(this, maxIncrement, startPosition, targetPosition));
+        this.addCommand(new GoToPositionCommand(this, maxIncrement, startPosition, targetPosition));
     }
 
     /**
@@ -160,34 +160,34 @@ public class Rotator extends Component {
         if (config.controllerInputMethod.equals(Control.Gp2_LeftStickX)) {
             this.addGp2_LeftStick_X_Handler(event -> {
                 double position = event.getPosition();
-                if (Rotator.this.config.invertInput) {
+                if (Boom.this.config.invertInput) {
                     position = -position;
                 }
-                Rotator.this.move(position, Rotator.this.maxIncrement, Rotator.this.config.minPosition, Rotator.this.config.maxPosition);
+                Boom.this.move(position, Boom.this.maxIncrement, Boom.this.config.minPosition, Boom.this.config.maxPosition);
             });
         } else if (config.controllerInputMethod.equals(Control.Gp2_LeftStickY)) {
             this.addGp2_LeftStick_Y_Handler(event -> {
                 double position = event.getPosition();
-                if (Rotator.this.config.invertInput) {
+                if (Boom.this.config.invertInput) {
                     position = -position;
                 }
-                Rotator.this.move(position, Rotator.this.maxIncrement, Rotator.this.config.minPosition, Rotator.this.config.maxPosition);
+                Boom.this.move(position, Boom.this.maxIncrement, Boom.this.config.minPosition, Boom.this.config.maxPosition);
             });
         } else if (config.controllerInputMethod.equals(Control.Gp2_RightStickX)) {
             this.addGp2_RightStick_X_Handler(event -> {
                 double position = event.getPosition();
-                if (Rotator.this.config.invertInput) {
+                if (Boom.this.config.invertInput) {
                     position = -position;
                 }
-                Rotator.this.move(position, Rotator.this.maxIncrement, Rotator.this.config.minPosition, Rotator.this.config.maxPosition);
+                Boom.this.move(position, Boom.this.maxIncrement, Boom.this.config.minPosition, Boom.this.config.maxPosition);
             });
         } else if (config.controllerInputMethod.equals(Control.Gp2_RightStickY)) {
             this.addGp2_RightStick_Y_Handler(event -> {
                 double position = event.getPosition();
-                if (Rotator.this.config.invertInput) {
+                if (Boom.this.config.invertInput) {
                     position = -position;
                 }
-                Rotator.this.move(position, Rotator.this.maxIncrement, Rotator.this.config.minPosition, Rotator.this.config.maxPosition);
+                Boom.this.move(position, Boom.this.maxIncrement, Boom.this.config.minPosition, Boom.this.config.maxPosition);
             });
         }
 
@@ -195,10 +195,10 @@ public class Rotator extends Component {
                 || (config.controllerInputMethod2 != null && config.controllerInputMethod2.equals(Control.Gp2_Dpad_Up))) {
             this.addGp2_Dpad_Up_DownHandler(event -> {
                 double position = 1;
-                if (Rotator.this.config.invertInput) {
+                if (Boom.this.config.invertInput) {
                     position = -position;
                 }
-                Rotator.this.move(position, Rotator.this.maxIncrement, Rotator.this.config.minPosition, Rotator.this.config.maxPosition);
+                Boom.this.move(position, Boom.this.maxIncrement, Boom.this.config.minPosition, Boom.this.config.maxPosition);
             });
         }
 
@@ -206,10 +206,10 @@ public class Rotator extends Component {
                 || (config.controllerInputMethod2 != null && config.controllerInputMethod2.equals(Control.Gp2_Dpad_Right))) {
             this.addGp2_Dpad_Right_DownHandler(event -> {
                 double position = 1;
-                if (Rotator.this.config.invertInput) {
+                if (Boom.this.config.invertInput) {
                     position = -position;
                 }
-                Rotator.this.move(position, Rotator.this.maxIncrement, Rotator.this.config.minPosition, Rotator.this.config.maxPosition);
+                Boom.this.move(position, Boom.this.maxIncrement, Boom.this.config.minPosition, Boom.this.config.maxPosition);
             });
         }
 
@@ -217,10 +217,10 @@ public class Rotator extends Component {
                 || (config.controllerInputMethod2 != null && config.controllerInputMethod2.equals(Control.Gp2_Dpad_Down))) {
             this.addGp2_Dpad_Down_DownHandler(event -> {
                 double position = -1;
-                if (Rotator.this.config.invertInput) {
+                if (Boom.this.config.invertInput) {
                     position = -position;
                 }
-                Rotator.this.move(position, Rotator.this.maxIncrement, Rotator.this.config.minPosition, Rotator.this.config.maxPosition);
+                Boom.this.move(position, Boom.this.maxIncrement, Boom.this.config.minPosition, Boom.this.config.maxPosition);
 
                 this.telemetry.addLine("Dpad Down...");
                 this.telemetry.update();
@@ -232,10 +232,10 @@ public class Rotator extends Component {
                 || (config.controllerInputMethod2 != null && config.controllerInputMethod2.equals(Control.Gp2_Dpad_Left))) {
             this.addGp2_Dpad_Left_DownHandler(event -> {
                 double position = -1;
-                if (Rotator.this.config.invertInput) {
+                if (Boom.this.config.invertInput) {
                     position = -position;
                 }
-                Rotator.this.move(position, Rotator.this.maxIncrement, Rotator.this.config.minPosition, Rotator.this.config.maxPosition);
+                Boom.this.move(position, Boom.this.maxIncrement, Boom.this.config.minPosition, Boom.this.config.maxPosition);
             });
         }
 

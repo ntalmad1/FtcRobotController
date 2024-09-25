@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.library.rotator;
+package org.firstinspires.ftc.teamcode.archive.library.boom;
 
 import com.qualcomm.robotcore.hardware.Servo;
 
@@ -8,7 +8,7 @@ import org.firstinspires.ftc.teamcode.library.utility.Control;
 /**
  *
  */
-public class RotatorConfig {
+public class BoomConfig {
 
     /**
      */

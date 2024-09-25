@@ -5,8 +5,8 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import org.firstinspires.ftc.teamcode.archive.competition.config.ClawCompConfig;
 import org.firstinspires.ftc.teamcode.library.IsaacBot;
-import org.firstinspires.ftc.teamcode.library.claw.Claw;
-import org.firstinspires.ftc.teamcode.library.claw.ClawConfig;
+import org.firstinspires.ftc.teamcode.archive.library.claw.Claw;
+import org.firstinspires.ftc.teamcode.archive.library.claw.ClawConfig;
 import org.firstinspires.ftc.teamcode.library.event.EventBus;
 
 @TeleOp(name="ClawTest", group="Linear OpMode")

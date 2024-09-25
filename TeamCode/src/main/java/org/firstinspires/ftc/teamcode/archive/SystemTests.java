@@ -8,20 +8,20 @@ import org.firstinspires.ftc.teamcode.archive.competition.config.DroneLauncherCo
 import org.firstinspires.ftc.teamcode.archive.competition.config.PixelCatcherCompConfig;
 import org.firstinspires.ftc.teamcode.archive.competition.config.SimpleDriveCompConfig;
 import org.firstinspires.ftc.teamcode.library.IsaacBot;
-import org.firstinspires.ftc.teamcode.library.boom.arm.Arm;
-import org.firstinspires.ftc.teamcode.library.boom.arm.ArmConfig;
+import org.firstinspires.ftc.teamcode.archive.library.arm.Arm;
+import org.firstinspires.ftc.teamcode.archive.library.arm.ArmConfig;
 import org.firstinspires.ftc.teamcode.library.command.ICommand;
 import org.firstinspires.ftc.teamcode.library.command.OneTimeCommand;
 import org.firstinspires.ftc.teamcode.library.command.OneTimeSynchronousCommand;
 import org.firstinspires.ftc.teamcode.library.command.WaitCommand;
 import org.firstinspires.ftc.teamcode.library.drivetrain.SimpleDriveTrain;
 import org.firstinspires.ftc.teamcode.library.drivetrain.SimpleDriveTrainConfig;
-import org.firstinspires.ftc.teamcode.library.dronelauncher.DroneLauncher;
-import org.firstinspires.ftc.teamcode.library.dronelauncher.DroneLauncherConfig;
+import org.firstinspires.ftc.teamcode.archive.library.dronelauncher.DroneLauncher;
+import org.firstinspires.ftc.teamcode.archive.library.dronelauncher.DroneLauncherConfig;
 import org.firstinspires.ftc.teamcode.library.pixelcatcher.PixelCatcher;
 import org.firstinspires.ftc.teamcode.library.pixelcatcher.PixelCatcherConfig;
 import org.firstinspires.ftc.teamcode.library.utility.Direction;
-import org.firstinspires.ftc.teamcode.library.winch.Winch;
+import org.firstinspires.ftc.teamcode.archive.library.winch.Winch;
 
 @TeleOp(name="System Tests", group="Tests")
 @Disabled

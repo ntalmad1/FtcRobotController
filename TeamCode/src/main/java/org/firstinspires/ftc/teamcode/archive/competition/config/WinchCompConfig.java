@@ -3,8 +3,8 @@ package org.firstinspires.ftc.teamcode.archive.competition.config;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 
 import org.firstinspires.ftc.teamcode.library.IsaacBot;
-import org.firstinspires.ftc.teamcode.library.motor.EncodedMotorConfig;
-import org.firstinspires.ftc.teamcode.library.winch.WinchConfig;
+import org.firstinspires.ftc.teamcode.library.encodedmotor.EncodedMotorConfig;
+import org.firstinspires.ftc.teamcode.archive.library.winch.WinchConfig;
 
 /**
  *

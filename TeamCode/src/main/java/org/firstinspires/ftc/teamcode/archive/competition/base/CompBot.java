@@ -10,7 +10,7 @@ import org.firstinspires.ftc.teamcode.archive.competition.config.PixelCatcherCom
 import org.firstinspires.ftc.teamcode.archive.competition.config.RobotConfig;
 import org.firstinspires.ftc.teamcode.archive.competition.config.WinchCompConfig;
 import org.firstinspires.ftc.teamcode.library.IsaacBot;
-import org.firstinspires.ftc.teamcode.library.boom.arm.Arm;
+import org.firstinspires.ftc.teamcode.archive.library.arm.Arm;
 import org.firstinspires.ftc.teamcode.library.command.ICommand;
 import org.firstinspires.ftc.teamcode.library.command.OneTimeCommand;
 import org.firstinspires.ftc.teamcode.library.command.OneTimeSynchronousCommand;
@@ -18,15 +18,15 @@ import org.firstinspires.ftc.teamcode.library.command.WaitCommand;
 import org.firstinspires.ftc.teamcode.library.event.command_callback.CommandCallbackAdapter;
 import org.firstinspires.ftc.teamcode.library.event.command_callback.CommandCallbackHandler;
 import org.firstinspires.ftc.teamcode.library.event.command_callback.CommandSuccessEvent;
-import org.firstinspires.ftc.teamcode.library.dronelauncher.DroneLauncher;
-import org.firstinspires.ftc.teamcode.library.dronelauncher.DroneLauncherConfig;
+import org.firstinspires.ftc.teamcode.archive.library.dronelauncher.DroneLauncher;
+import org.firstinspires.ftc.teamcode.archive.library.dronelauncher.DroneLauncherConfig;
 import org.firstinspires.ftc.teamcode.library.event.gp2_left_trigger.Gp2_Left_Trigger_Event;
 import org.firstinspires.ftc.teamcode.library.pixelcatcher.PixelCatcher;
 import org.firstinspires.ftc.teamcode.library.pixelcatcher.PixelCatcherConfig;
-import org.firstinspires.ftc.teamcode.library.winch.ConstantOutWinchCommand;
-import org.firstinspires.ftc.teamcode.library.winch.ConstantPressureWinchCommand;
-import org.firstinspires.ftc.teamcode.library.winch.Winch;
-import org.firstinspires.ftc.teamcode.library.winch.WinchConfig;
+import org.firstinspires.ftc.teamcode.archive.library.winch.ConstantOutWinchCommand;
+import org.firstinspires.ftc.teamcode.archive.library.winch.ConstantPressureWinchCommand;
+import org.firstinspires.ftc.teamcode.archive.library.winch.Winch;
+import org.firstinspires.ftc.teamcode.archive.library.winch.WinchConfig;
 
 /**
  *

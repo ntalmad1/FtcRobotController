@@ -6,9 +6,9 @@ import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.Servo;
 
 import org.firstinspires.ftc.teamcode.library.IsaacBot;
-import org.firstinspires.ftc.teamcode.library.boom.BoomConfig;
-import org.firstinspires.ftc.teamcode.library.boom.arm.Arm;
-import org.firstinspires.ftc.teamcode.library.boom.arm.ArmConfig;
+import org.firstinspires.ftc.teamcode.archive.library.boom.BoomConfig;
+import org.firstinspires.ftc.teamcode.archive.library.arm.Arm;
+import org.firstinspires.ftc.teamcode.archive.library.arm.ArmConfig;
 import org.firstinspires.ftc.teamcode.library.drivetrain.MecanumDriveTrain;
 import org.firstinspires.ftc.teamcode.library.drivetrain.MecanumDriveTrainConfig;
 import org.firstinspires.ftc.teamcode.library.utility.Control;
