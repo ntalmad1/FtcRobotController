@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode.metalheads.tests;
 
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.hardware.Servo;
 
 import org.firstinspires.ftc.teamcode.library.IsaacBot;
@@ -13,7 +14,7 @@ import org.firstinspires.ftc.teamcode.library.event.gp1_dpad_press.gp1_dpad_up_p
  *
  */
 @TeleOp(name="ServoTest", group="Tests")
-//@Disabled
+@Disabled
 public class ServoTest extends IsaacBot {
 
     /**

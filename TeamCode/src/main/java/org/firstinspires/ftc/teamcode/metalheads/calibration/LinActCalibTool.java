@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode.metalheads.calibration;
 
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.hardware.Servo;
 
 import org.firstinspires.ftc.teamcode.library.IsaacBot;
@@ -11,7 +12,7 @@ import org.firstinspires.ftc.teamcode.library.IsaacBot;
  *
  */
 @TeleOp(name="LinActCalibTool", group="Tools")
-// @Disabled
+@Disabled
 public class LinActCalibTool extends IsaacBot {
 
     /**
