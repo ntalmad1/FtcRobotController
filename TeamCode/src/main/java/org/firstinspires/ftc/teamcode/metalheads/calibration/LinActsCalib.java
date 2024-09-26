@@ -1,7 +1,6 @@
 package org.firstinspires.ftc.teamcode.metalheads.calibration;
 
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.hardware.Servo;
 
 import org.firstinspires.ftc.teamcode.library.IsaacBot;
@@ -11,9 +10,9 @@ import org.firstinspires.ftc.teamcode.library.IsaacBot;
  * get the servo positions for set positions and limits.
  *
  */
-@TeleOp(name="LinActCalibTool", group="Tools")
-@Disabled
-public class LinActCalibTool extends IsaacBot {
+@TeleOp(name="LinActsCalib", group="Calibration")
+// @Disabled
+public class LinActsCalib extends IsaacBot {
 
     /**
      */
@@ -94,11 +93,11 @@ public class LinActCalibTool extends IsaacBot {
      */
     @Override
     public void run() {
-       super.run();
+        super.run();
 
-       telemetry.addData("Left servo pos:", "%.3f", leftActuatorServo.getPosition());
-       telemetry.addData("Right servo pos:", "%.3f", rightActuatorServo.getPosition());
-       telemetry.update();
+        telemetry.addData("Left servo pos:", "%.3f", leftActuatorServo.getPosition());
+        telemetry.addData("Right servo pos:", "%.3f", rightActuatorServo.getPosition());
+        telemetry.update();
     }
 
     /**
