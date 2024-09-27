@@ -475,6 +475,13 @@ public abstract class  IsaacBot extends LinearOpMode implements IComponent
     }
 
     /**
+     * This code gets ran right after the stop is pressed and is only ran once
+     */
+    public void onStop () {
+
+    }
+
+    /**
      *
      * @throws InterruptedException
      */
