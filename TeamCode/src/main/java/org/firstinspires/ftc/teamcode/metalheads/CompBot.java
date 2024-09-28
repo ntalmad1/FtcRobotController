@@ -5,6 +5,7 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import org.firstinspires.ftc.teamcode.library.IsaacBot;
 import org.firstinspires.ftc.teamcode.metalheads.base.CompBotConfig;
+import org.firstinspires.ftc.teamcode.metalheads.components.Arm;
 import org.firstinspires.ftc.teamcode.metalheads.components.Claw;
 import org.firstinspires.ftc.teamcode.metalheads.components.DoubleHooks;
 import org.firstinspires.ftc.teamcode.metalheads.components.FlapperBars;
@@ -18,6 +19,8 @@ public class CompBot extends IsaacBot {
     /**
      */
     protected CompBotConfig config;
+
+    protected Arm arm;
 
     /**
      */
@@ -62,6 +65,16 @@ public class CompBot extends IsaacBot {
 
         this.config = compBotConfig;
 
+        // this.config.debugArm = true;
+        // this.config.debugClaw = true;
+        // this.config.debugDoubleHooks = true;
+        // this.config.debugFlapperBars = true;
+        // this.config.debugIntake = true;
+        // this.config.debugWinch = true;
+
+        this.config.debugAll = true;
+
+        this.arm = new Arm(this.config.armConfig);
         this.claw = new Claw(this.config.clawConfig);
         this.doubleHooks = new DoubleHooks(this.config.doubleHooksConfig);
         this.flapperBars = new FlapperBars(this.config.flapperBarsConfig);
@@ -76,6 +89,7 @@ public class CompBot extends IsaacBot {
     public void initBot(){
         super.initBot();
 
+        this.arm.init();
         this.claw.init();
         this.doubleHooks.init();
         this.flapperBars.init();
@@ -98,13 +112,20 @@ public class CompBot extends IsaacBot {
     public void run() {
         super.run();
 
-        this.claw.run(this.config.debug);
-        this.doubleHooks.run(this.config.debug);
-        this.flapperBars.run(this.config.debug);
-        this.intake.run(this.config.debug);
-        this.winch.run(this.config.debug);
+        this.arm.run(this.config.debugArm || this.config.debugAll);
+        this.claw.run(this.config.debugClaw || this.config.debugAll);
+        this.doubleHooks.run(this.config.debugDoubleHooks || this.config.debugAll);
+        this.flapperBars.run(this.config.debugFlapperBars || this.config.debugAll);
+        this.intake.run(this.config.debugIntake || this.config.debugAll);
+        this.winch.run(this.config.debugWinch || this.config.debugAll);
 
-        if (this.config.debug) {
+        if (this.config.debugAll
+            || this.config.debugArm
+            || this.config.debugClaw
+            || this.config.debugDoubleHooks
+            || this.config.debugFlapperBars
+            || this.config.debugIntake
+            || this.config.debugWinch) {
             telemetry.update();
         }
     }

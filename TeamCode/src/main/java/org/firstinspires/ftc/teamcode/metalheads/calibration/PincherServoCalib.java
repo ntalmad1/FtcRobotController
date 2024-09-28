@@ -12,9 +12,9 @@ import org.firstinspires.ftc.teamcode.library.event.gp1_dpad_press.gp1_dpad_up_p
 /**
  *
  */
-@TeleOp(name="ClawServoCalibration", group="Calibration")
+@TeleOp(name="PincherServoCalibration", group="Calibration")
 //@Disabled
-public class ClawServoCalib extends IsaacBot {
+public class PincherServoCalib extends IsaacBot {
 
     /**
      */
@@ -42,7 +42,7 @@ public class ClawServoCalib extends IsaacBot {
     public void initBot() {
         yStickIncrement = 0.0006;
         gamePadIncrement = 0.002;
-        servoName = "clawServo";
+        servoName = "pincherServo";
         servoInitPos = 0.5;
         servoMinPos = 0.484;
         servoMaxPos = 0.65;

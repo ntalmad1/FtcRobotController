@@ -10,9 +10,9 @@ import org.firstinspires.ftc.teamcode.library.IsaacBot;
  * get the servo positions for set positions and limits.
  *
  */
-@TeleOp(name="LinActsCalib", group="Calibration")
+@TeleOp(name="DoubleHooksServosCalib", group="Calibration")
 // @Disabled
-public class LinActsCalib extends IsaacBot {
+public class DoubleHooksServosCalib extends IsaacBot {
 
     /**
      */
@@ -41,7 +41,7 @@ public class LinActsCalib extends IsaacBot {
     /**
      * Constructor
      */
-    public LinActsCalib(){
+    public DoubleHooksServosCalib(){
         super();
 
         leftServoName = "leftActServo";
