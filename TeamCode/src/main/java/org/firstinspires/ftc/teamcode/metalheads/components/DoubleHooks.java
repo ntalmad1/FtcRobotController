@@ -1,7 +1,5 @@
 package org.firstinspires.ftc.teamcode.metalheads.components;
 
-
-import org.firstinspires.ftc.teamcode.library.IsaacBot;
 import org.firstinspires.ftc.teamcode.library.component.Component;
 import org.firstinspires.ftc.teamcode.library.encodedmotor.EncodedMotor;
 import org.firstinspires.ftc.teamcode.library.servo.ServoComponent;

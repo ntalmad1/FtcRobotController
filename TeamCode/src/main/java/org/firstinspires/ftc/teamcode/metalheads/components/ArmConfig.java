@@ -1,2 +1,4 @@
-package org.firstinspires.ftc.teamcode.metalheads.components;public class ArmConfig {
+package org.firstinspires.ftc.teamcode.metalheads.components;
+
+public class ArmConfig {
 }

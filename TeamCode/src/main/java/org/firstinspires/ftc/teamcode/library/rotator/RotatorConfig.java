@@ -75,4 +75,13 @@ public class RotatorConfig {
     public boolean scaleRange = false;
     public double scaleMin = 0;
     public double scaleMax = 1;
+
+    /**
+     * Constructor
+     *
+     * @param robot
+     */
+    public RotatorConfig(IsaacBot robot) {
+        this.robot = robot;
+    }
 }

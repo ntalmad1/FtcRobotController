@@ -6,13 +6,13 @@ import org.firstinspires.ftc.teamcode.library.servo.ServoComponentConfig;
 /**
  *
  */
-public class FlapperBarsConfigs extends ServoComponentConfig {
+public class FlapperBarsConfig extends ServoComponentConfig {
     /**
      * Constructor
      *
      * @param robot
      */
-    public FlapperBarsConfigs(IsaacBot robot) {
+    public FlapperBarsConfig(IsaacBot robot) {
         super(robot);
     }
 }
