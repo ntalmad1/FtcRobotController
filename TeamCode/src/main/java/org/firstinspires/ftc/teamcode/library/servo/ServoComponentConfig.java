@@ -8,7 +8,7 @@ import org.firstinspires.ftc.teamcode.library.utility.Control;
 /**
  *
  */
-public class ServoConfig {
+public class ServoComponentConfig {
 
     /**
      */
@@ -34,6 +34,8 @@ public class ServoConfig {
      */
     public Control controllerInputMethod = Control.NONE;
 
+    /**
+     */
     public Control controllerInputMethod2 = Control.NONE;
 
     /**
@@ -77,7 +79,7 @@ public class ServoConfig {
      *
      * @param robot
      */
-    public ServoConfig (IsaacBot robot) {
+    public ServoComponentConfig(IsaacBot robot) {
         this.robot = robot;
     }
 }

@@ -3,7 +3,7 @@ package org.firstinspires.ftc.teamcode.archive.competition.config;
 import org.firstinspires.ftc.teamcode.library.IsaacBot;
 import org.firstinspires.ftc.teamcode.library.pixelcatcher.PixelCatcher;
 import org.firstinspires.ftc.teamcode.library.pixelcatcher.PixelCatcherConfig;
-import org.firstinspires.ftc.teamcode.library.servo.ServoConfig;
+import org.firstinspires.ftc.teamcode.library.servo.ServoComponentConfig;
 import org.firstinspires.ftc.teamcode.library.utility.Control;
 
 /**
@@ -19,7 +19,7 @@ public class PixelCatcherCompConfig extends PixelCatcherConfig {
     public PixelCatcherCompConfig (IsaacBot robot) {
         this.robot = robot;
 
-        ServoConfig leftServoConfig = new ServoConfig(robot);
+        ServoComponentConfig leftServoConfig = new ServoComponentConfig(robot);
         leftServoConfig.servoName = "leftCatcherServo";
         leftServoConfig.maxIncrement = 0.02;
         leftServoConfig.maxPosition = 1;
@@ -40,7 +40,7 @@ public class PixelCatcherCompConfig extends PixelCatcherConfig {
 
         //--------------------------------------------------
 
-        ServoConfig rightServoConfig = new ServoConfig(robot);
+        ServoComponentConfig rightServoConfig = new ServoComponentConfig(robot);
         rightServoConfig.servoName = "rightCatcherServo";
         rightServoConfig.maxIncrement = 0.02;
         rightServoConfig.maxPosition = 1;

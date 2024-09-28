@@ -5,6 +5,7 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import org.firstinspires.ftc.teamcode.library.IsaacBot;
 import org.firstinspires.ftc.teamcode.metalheads.base.CompBotConfig;
+import org.firstinspires.ftc.teamcode.metalheads.components.DoubleHooks;
 
 @TeleOp(name="CompBot", group="Base")
 //@Disabled
@@ -15,15 +16,15 @@ public class CompBot extends IsaacBot {
     protected CompBotConfig config;
 
     /**
+     */
+    private DoubleHooks doubleHooks;
+
+    /**
      * Constructor
      *
      */
     public CompBot(){
-        super();
-
-        CompBotConfig compBotConfig = new CompBotConfig() {};
-
-        this.config = compBotConfig;
+        this(null);
     }
 
 
@@ -35,7 +36,13 @@ public class CompBot extends IsaacBot {
     public CompBot(CompBotConfig compBotConfig) {
         super();
 
+        if (compBotConfig == null) {
+            compBotConfig = new CompBotConfig(this);
+        }
+
         this.config = compBotConfig;
+
+        this.doubleHooks = new DoubleHooks(compBotConfig.doubleHooksConfig);
     }
 
     /**
@@ -43,7 +50,7 @@ public class CompBot extends IsaacBot {
      */
     @Override
     public void initBot(){
-
+        this.doubleHooks.init();
     }
 
     /**
@@ -59,7 +66,13 @@ public class CompBot extends IsaacBot {
      */
     @Override
     public void run() {
+        super.run();
 
+        this.doubleHooks.run(this.config.debug);
+
+        if (this.config.debug) {
+            telemetry.update();
+        }
     }
 
     /**

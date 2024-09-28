@@ -113,6 +113,10 @@ public abstract class Component implements IComponent {
     public Telemetry telemetry;
 
     /**
+     */
+    private boolean debug;
+
+    /**
      *
      * @param robot
      */
@@ -417,12 +421,30 @@ public abstract class Component implements IComponent {
 
     /**
      *
+     * @return boolean
+     */
+    public boolean isDebug() {
+        return this.debug;
+    }
+
+    /**
+     *
      * @param milliseconds
      */
     public Component wait (int milliseconds) {
         WaitCommand waitCommand = new WaitCommand(milliseconds);
         this.addCommand(waitCommand);
         return this;
+    }
+
+    /**
+     *
+     * @param debug
+     */
+    public void run(boolean debug) {
+        this.setDebug(debug);
+
+        this.run();
     }
 
     /**
@@ -437,5 +459,13 @@ public abstract class Component implements IComponent {
             return;
         }
         command.run();
+    }
+
+    /**
+     *
+     * @param debug
+     */
+    public void setDebug(boolean debug) {
+        this.debug = debug;
     }
 }

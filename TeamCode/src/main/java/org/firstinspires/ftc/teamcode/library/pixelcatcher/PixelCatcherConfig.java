@@ -1,7 +1,7 @@
 package org.firstinspires.ftc.teamcode.library.pixelcatcher;
 
 import org.firstinspires.ftc.teamcode.library.IsaacBot;
-import org.firstinspires.ftc.teamcode.library.servo.ServoConfig;
+import org.firstinspires.ftc.teamcode.library.servo.ServoComponentConfig;
 import org.firstinspires.ftc.teamcode.library.utility.Control;
 
 /**
@@ -17,7 +17,7 @@ public class PixelCatcherConfig {
     /**
      *
      */
-    public ServoConfig leftArmServoConfig;
+    public ServoComponentConfig leftArmServoConfig;
 
     /**
      *
@@ -48,7 +48,7 @@ public class PixelCatcherConfig {
     /**
      *
      */
-    public ServoConfig rightArmServoConfig;
+    public ServoComponentConfig rightArmServoConfig;
 
     /**
      *

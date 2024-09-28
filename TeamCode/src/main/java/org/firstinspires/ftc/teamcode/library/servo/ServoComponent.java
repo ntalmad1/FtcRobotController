@@ -11,7 +11,7 @@ public class ServoComponent extends Component {
     /**
      *
      */
-    private final ServoConfig config;
+    private final ServoComponentConfig config;
 
     /**
      * Reverse forwards vs backwards for calculating position in degrees
@@ -39,7 +39,7 @@ public class ServoComponent extends Component {
      *
      * @param config The configuration values of the boom
      */
-    public ServoComponent(ServoConfig config) {
+    public ServoComponent(ServoComponentConfig config) {
         super(config.robot);
 
         this.config = config;
@@ -51,7 +51,7 @@ public class ServoComponent extends Component {
      *
      * @return
      */
-    public ServoConfig getConfig () {
+    public ServoComponentConfig getConfig () {
         return this.config;
     }
 
