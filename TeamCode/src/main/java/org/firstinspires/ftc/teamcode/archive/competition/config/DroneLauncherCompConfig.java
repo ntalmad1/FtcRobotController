@@ -26,7 +26,7 @@ public class DroneLauncherCompConfig extends DroneLauncherConfig {
         this.triggerServoUpPos = 0.43;
 
 
-        this.rotatorConfig = new RotatorConfig();
+        this.rotatorConfig = new RotatorConfig(robot);
         this.rotatorConfig.robot = robot;
         this.rotatorConfig.servoName = "droneBaseServo";
         this.rotatorConfig.direction = Servo.Direction.FORWARD;

@@ -18,13 +18,13 @@ import org.firstinspires.ftc.teamcode.library.IsaacBot;
  * right max
  *
  */
-@TeleOp(name="DoubleHooksServosCalib", group="Calibration")
+@TeleOp(name="DoubleFlapperBarsCalib", group="Calibration")
 // @Disabled
-public class DoubleHooksServosCalib extends IsaacBot {
+public class DoubleFlapperBarsServosCalib extends IsaacBot {
 
     /**
      */
-    private Servo leftActuatorServo;
+    private Servo leftFlapperBar;
 
     /**
      */
@@ -36,7 +36,7 @@ public class DoubleHooksServosCalib extends IsaacBot {
 
     /**
      */
-    private String rightServoName;
+    private String rightFlapperBar;
 
     /**
      */
@@ -49,11 +49,11 @@ public class DoubleHooksServosCalib extends IsaacBot {
     /**
      * Constructor
      */
-    public DoubleHooksServosCalib(){
+    public DoubleFlapperBarsServosCalib(){
         super();
 
-        leftServoName = "leftActuatorArm";
-        rightServoName = "rightActuatorArm";
+        leftServoName = "leftFlapper";
+        rightFlapperBar = "rightFlapper";
         stickIncrement = 0.0002;
         dpadIncrement = 0.002;
     }
@@ -65,14 +65,14 @@ public class DoubleHooksServosCalib extends IsaacBot {
     public void initBot() {
         super.initBot();
 
-        leftActuatorServo = this.hardwareMap.get(Servo.class, leftServoName);
-        leftActuatorServo.resetDeviceConfigurationForOpMode();
+        leftFlapperBar = this.hardwareMap.get(Servo.class, leftServoName);
+        leftFlapperBar.resetDeviceConfigurationForOpMode();
 
-        rightActuatorServo = this.hardwareMap.get(Servo.class, rightServoName);
+        rightActuatorServo = this.hardwareMap.get(Servo.class, rightFlapperBar);
         rightActuatorServo.resetDeviceConfigurationForOpMode();
 
         this.addGp1_LeftStick_Y_Handler(event -> {
-            moveServoByStick(leftActuatorServo, event.getPosition());
+            moveServoByStick(leftFlapperBar, event.getPosition());
         });
 
         this.addGp1_RightStick_X_Handler(event -> {
@@ -80,11 +80,11 @@ public class DoubleHooksServosCalib extends IsaacBot {
         });
 
         this.addGp1_Dpad_Down_PressHandler(event -> {
-            decrementServo(leftActuatorServo);
+            decrementServo(leftFlapperBar);
         });
 
         this.addGp1_Dpad_Up_PressHandler(event -> {
-            incrementServo(leftActuatorServo);
+            incrementServo(leftFlapperBar);
         });
 
         this.addGp1_Dpad_Left_PressHandler(event -> {
@@ -95,7 +95,7 @@ public class DoubleHooksServosCalib extends IsaacBot {
             decrementServo(rightActuatorServo);
         });
 
-        this.leftActuatorServo.setPosition(0);
+        this.leftFlapperBar.setPosition(0);
         this.rightActuatorServo.setPosition(1);
 
     }
@@ -107,7 +107,7 @@ public class DoubleHooksServosCalib extends IsaacBot {
     public void run() {
        super.run();
 
-       telemetry.addData("Left servo pos:", "%.3f", leftActuatorServo.getPosition());
+       telemetry.addData("Left servo pos:", "%.3f", leftFlapperBar.getPosition());
        telemetry.addData("Right servo pos:", "%.3f", rightActuatorServo.getPosition());
        telemetry.update();
     }

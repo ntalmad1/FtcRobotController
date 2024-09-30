@@ -31,7 +31,7 @@ import org.firstinspires.ftc.teamcode.archive.library.winch.WinchConfig;
 /**
  *
  */
-@TeleOp(name="CompBot", group="Linear OpMode")
+@TeleOp(name="CompBotOld", group="Linear OpMode")
 @Disabled
 public class CompBot extends IsaacBot {
 
