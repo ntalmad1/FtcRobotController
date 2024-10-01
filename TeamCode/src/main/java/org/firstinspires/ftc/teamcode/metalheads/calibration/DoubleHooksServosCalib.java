@@ -105,11 +105,11 @@ public class DoubleHooksServosCalib extends IsaacBot {
      */
     @Override
     public void run() {
-       super.run();
+        super.run();
 
-       telemetry.addData("Left servo pos:", "%.3f", leftActuatorServo.getPosition());
-       telemetry.addData("Right servo pos:", "%.3f", rightActuatorServo.getPosition());
-       telemetry.update();
+        telemetry.addData("Left servo pos:", "%.3f", leftActuatorServo.getPosition());
+        telemetry.addData("Right servo pos:", "%.3f", rightActuatorServo.getPosition());
+        telemetry.update();
     }
 
     /**

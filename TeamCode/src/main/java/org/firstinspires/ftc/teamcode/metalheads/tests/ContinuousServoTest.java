@@ -1,11 +1,12 @@
 package org.firstinspires.ftc.teamcode.metalheads.tests;
 
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.CRServo;
 
 @TeleOp(name="ContinuousServoTest", group="Tests")
-// @Disabled
+@Disabled
 public class ContinuousServoTest extends LinearOpMode {
 
 

@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode.metalheads.tests;
 
 import android.os.Trace;
 
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
@@ -10,6 +11,7 @@ import com.qualcomm.robotcore.hardware.IMU;
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 
 @TeleOp(name = "Odometry Test")
+// @Disabled
 public class Odometry extends LinearOpMode {
 
     // Declare hardware components
@@ -95,7 +97,7 @@ public class Odometry extends LinearOpMode {
             //Main Math
             double delta_left_encoder_pos = leftEncoder.getCurrentPosition() - prev_left_encoder_pos;
             double delta_right_encoder_pos = -rightEncoder.getCurrentPosition() - prev_right_encoder_pos;
-            double delta_center_encoder_pos = centerEncoder.getCurrentPosition() - prev_center_encoder_pos;
+            double delta_center_encoder_pos = -centerEncoder.getCurrentPosition() - prev_center_encoder_pos;
 
             double phi = (delta_left_encoder_pos - delta_right_encoder_pos) / TRACK_WIDTH;
             double delta_middle_pos = (delta_left_encoder_pos + delta_right_encoder_pos) / 2;
@@ -180,6 +182,10 @@ public class Odometry extends LinearOpMode {
             telemetry.addData("Y: ", y);
             telemetry.addData("X cm: ", x * .024);
             telemetry.addData("Y cm: ", y * .024);
+
+            telemetry.addData("Left Omni: ", leftEncoder.getCurrentPosition());
+            telemetry.addData("Right Omni: ", rightEncoder.getCurrentPosition());
+            telemetry.addData("Front Omni : ", centerEncoder.getCurrentPosition());
 
             telemetry.addData("IMU Degrees ", imu.getRobotYawPitchRollAngles().getYaw(AngleUnit.DEGREES));
             telemetry.addData("IMU Radians: ", imu.getRobotYawPitchRollAngles().getYaw(AngleUnit.RADIANS));

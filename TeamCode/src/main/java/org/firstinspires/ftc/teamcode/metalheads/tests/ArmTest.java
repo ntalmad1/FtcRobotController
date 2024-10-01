@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode.metalheads.tests;
 
 import org.firstinspires.ftc.teamcode.library.IsaacBot;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import org.firstinspires.ftc.teamcode.library.event.gp1_a_press.Gp1_A_PressEvent;
 import org.firstinspires.ftc.teamcode.library.event.gp1_a_press.Gp1_A_PressHandler;
 import org.firstinspires.ftc.teamcode.library.event.gp1_left_bumper_down.Gp1_Left_Bumper_DownEvent;
@@ -17,7 +18,7 @@ import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
 
 @TeleOp(name="ArmTest", group="Tests")
-// @Disabled
+@Disabled
 public class ArmTest extends IsaacBot {
 
     //config
