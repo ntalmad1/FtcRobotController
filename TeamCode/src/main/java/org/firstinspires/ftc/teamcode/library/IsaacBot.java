@@ -338,7 +338,7 @@ public abstract class  IsaacBot extends LinearOpMode implements IComponent
      * @param handler
      * @return
      */
-    public HandlerRegistration addGp1_RightStickYHandler (Gp1_RightStick_Y_Handler handler) {
+    public HandlerRegistration addGp1_RightStick_Y_Handler (Gp1_RightStick_Y_Handler handler) {
         return this.robotComponent.addGp1_RightStick_Y_Handler(handler);
     }
 

@@ -6,7 +6,7 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 
 @TeleOp(name="OmniPodTest", group="Tests")
 // @Disabled
-public class OmniPodTest extends LinearOpMode {
+public class MotorTest extends LinearOpMode {
 
     private DcMotor motor;
 

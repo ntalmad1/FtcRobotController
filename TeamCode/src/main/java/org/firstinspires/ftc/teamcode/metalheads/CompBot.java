@@ -74,12 +74,12 @@ public class CompBot extends IsaacBot {
 
         this.config.debugAll = true;
 
-        this.arm = new Arm(this.config.armConfig);
-        this.claw = new Claw(this.config.clawConfig);
-        this.doubleHooks = new DoubleHooks(this.config.doubleHooksConfig);
-        this.flapperBars = new FlapperBars(this.config.flapperBarsConfig);
-        this.intake = new Intake(this.config.intakeConfig);
-        this.winch = new Winch(this.config.winchConfig);
+//        this.arm = new Arm(this.config.armConfig);
+//        this.claw = new Claw(this.config.clawConfig);
+//        this.doubleHooks = new DoubleHooks(this.config.doubleHooksConfig);
+//        this.flapperBars = new FlapperBars(this.config.flapperBarsConfig);
+//        this.intake = new Intake(this.config.intakeConfig);
+//        this.winch = new Winch(this.config.winchConfig);
     }
 
     /**
@@ -89,12 +89,12 @@ public class CompBot extends IsaacBot {
     public void initBot(){
         super.initBot();
 
-        this.arm.init();
-        this.claw.init();
-        this.doubleHooks.init();
-        this.flapperBars.init();
-        this.intake.init();
-        this.winch.init();
+//        this.arm.init();
+//        this.claw.init();
+//        this.doubleHooks.init();
+//        this.flapperBars.init();
+//        this.intake.init();
+//        this.winch.init();
     }
 
     /**

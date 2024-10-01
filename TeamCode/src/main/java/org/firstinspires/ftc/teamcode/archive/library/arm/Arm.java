@@ -11,7 +11,7 @@ import org.firstinspires.ftc.teamcode.archive.library.claw.ClawOpenCommand;
 import org.firstinspires.ftc.teamcode.library.command.ICommand;
 import org.firstinspires.ftc.teamcode.library.command.WaitCommand;
 import org.firstinspires.ftc.teamcode.library.component.Component;
-import org.firstinspires.ftc.teamcode.library.encodedmotor.EncodedMotorMoveToPositionCommand;
+import org.firstinspires.ftc.teamcode.library.encodedmotor.EncodedMotorGoToPositionCommand;
 import org.firstinspires.ftc.teamcode.library.event.command_callback.CommandCallbackAdapter;
 import org.firstinspires.ftc.teamcode.library.event.command_callback.CommandCallbackHandler;
 import org.firstinspires.ftc.teamcode.library.event.command_callback.CommandSuccessEvent;
@@ -257,7 +257,7 @@ public class Arm extends Component {
     }
 
     public Arm moveLinearActuatorToPosition (int position, double power, CommandCallbackHandler handler) {
-        EncodedMotorMoveToPositionCommand command = new EncodedMotorMoveToPositionCommand(this.getLinearActuator(), position, power);
+        EncodedMotorGoToPositionCommand command = new EncodedMotorGoToPositionCommand(this.getLinearActuator(), position, power);
         command.addCallbackHandler(handler);
         this.addCommand(command);
         return this;

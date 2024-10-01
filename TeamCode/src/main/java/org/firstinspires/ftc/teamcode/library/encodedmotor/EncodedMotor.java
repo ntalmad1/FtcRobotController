@@ -5,8 +5,6 @@ import com.qualcomm.robotcore.hardware.DcMotorSimple;
 
 import org.firstinspires.ftc.teamcode.library.component.Component;
 import org.firstinspires.ftc.teamcode.library.event.command_callback.CommandCallbackHandler;
-import org.firstinspires.ftc.teamcode.library.event.gp2_right_stick_x.Gp2_RightStick_X_Event;
-import org.firstinspires.ftc.teamcode.library.event.gp2_right_stick_x.Gp2_RightStick_X_Handler;
 import org.firstinspires.ftc.teamcode.library.utility.Control;
 
 /**
@@ -52,6 +50,18 @@ public class EncodedMotor extends Component {
         return this.motor.getCurrentPosition();
     }
 
+    /**
+     *
+     * @return
+     */
+    public DcMotorSimple.Direction getDirection() {
+        return this.motor.getDirection();
+    }
+
+    /**
+     *
+     * @return
+     */
     public int getTargetPosition () {
         return this.motor.getTargetPosition();
     }
@@ -107,13 +117,12 @@ public class EncodedMotor extends Component {
 
         this.setBrake(this.config.brakeOn);
 
+        if (Control.Gp1_LeftStickY.equals(this.config.control)) {
+            this.addGp1_LeftStick_Y_Handler(event -> { EncodedMotor.this.move(-event.getPosition()); });
+        }
+
         if (Control.Gp2_RightStickX.equals(this.config.control)) {
-            this.addGp2_RightStick_X_Handler(new Gp2_RightStick_X_Handler() {
-                @Override
-                public void onGp2_RightStick_X(Gp2_RightStick_X_Event event) {
-                    EncodedMotor.this.move(event.getPosition());
-                }
-            });
+            this.addGp2_RightStick_X_Handler(event -> { EncodedMotor.this.move(event.getPosition()); });
         }
     }
 
@@ -137,11 +146,17 @@ public class EncodedMotor extends Component {
         this.move(power, this.config.increment);
     }
 
+    private double previousPower = 0;
+
     /**
      *
      * @param power
      */
     public void move (double power, int increment) {
+
+        if (previousPower == 0 && power == 0) {
+            return;
+        }
 
         int targetPosition = this.motor.getCurrentPosition() + increment * (power < 0 ? -1 : 1);
 
@@ -151,6 +166,11 @@ public class EncodedMotor extends Component {
         else if (power < 0 && targetPosition < this.config.minTics) {
             targetPosition = this.config.minTics;
         }
+        else if (power == 0) {
+            targetPosition = this.motor.getCurrentPosition();
+        }
+
+        previousPower = power;
 
         this.motor.setTargetPosition(targetPosition);
         this.motor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
