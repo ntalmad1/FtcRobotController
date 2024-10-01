@@ -201,7 +201,7 @@ public class CompBot extends IsaacBot {
      *
      */
     public void run () {
-        super.run();
+        //super.run();
     }
 
     /**

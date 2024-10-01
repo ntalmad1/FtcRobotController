@@ -54,7 +54,7 @@ public class GotoDegreesTest extends IsaacBot {
      *
      */
     public void run () {
-        super.run();
+        //super.run();
 
         this.driveTrain.run();
     }

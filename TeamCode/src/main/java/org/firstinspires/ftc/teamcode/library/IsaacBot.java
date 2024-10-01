@@ -1,16 +1,25 @@
 package org.firstinspires.ftc.teamcode.library;
 
+import androidx.annotation.NonNull;
+
+import com.acmerobotics.dashboard.telemetry.TelemetryPacket;
+import com.acmerobotics.roadrunner.Action;
+import com.acmerobotics.roadrunner.ParallelAction;
+import com.acmerobotics.roadrunner.ftc.Actions;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.IMU;
 
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.YawPitchRollAngles;
+import org.firstinspires.ftc.teamcode.library.action.AbstractAction;
 import org.firstinspires.ftc.teamcode.library.component.IComponent;
 import org.firstinspires.ftc.teamcode.library.component.RobotComponent;
 import org.firstinspires.ftc.teamcode.library.command.ICommand;
 import org.firstinspires.ftc.teamcode.library.command.WaitCommand;
 import org.firstinspires.ftc.teamcode.library.event.EventBus;
 import org.firstinspires.ftc.teamcode.library.event.HandlerRegistration;
+import org.firstinspires.ftc.teamcode.library.event.action_callback.ActionAfterEvent;
+import org.firstinspires.ftc.teamcode.library.event.action_callback.ActionCallbackAdapter;
 import org.firstinspires.ftc.teamcode.library.event.command_callback.CommandCallbackHandler;
 import org.firstinspires.ftc.teamcode.library.event.gp1_a_press.Gp1_A_PressHandler;
 import org.firstinspires.ftc.teamcode.library.event.gp1_b_press.Gp1_B_PressHandler;
@@ -470,8 +479,6 @@ public abstract class  IsaacBot extends LinearOpMode implements IComponent
      * This code gets ran after start pressed and "whileOpIsActive" in a loop
      */
     public void run () {
-        this.getEventBus().run();
-        this.robotComponent.run();
     }
 
     /**
@@ -480,6 +487,10 @@ public abstract class  IsaacBot extends LinearOpMode implements IComponent
     public void onStop () {
 
     }
+
+    /**
+     */
+    private IsaacBotRunAction runningIsaacBotAction;
 
     /**
      *
@@ -493,9 +504,28 @@ public abstract class  IsaacBot extends LinearOpMode implements IComponent
 
         this.go();
 
+        this.runningIsaacBotAction = new IsaacBotRunAction();
+
+        Actions.runBlocking(new ParallelAction(this.runningIsaacBotAction));
+
         while (this.opModeIsActive()) {
-            this.run();
         }
+    }
+
+    /**
+     *
+     * @param actionToRun
+     */
+    public void runAction(Action actionToRun) {
+
+        IsaacBotRunAction oldIsaacBotAction = this.runningIsaacBotAction;
+        IsaacBot.this.runningIsaacBotAction = new IsaacBotRunAction();
+
+        ParallelAction actionWrapper = new ParallelAction(IsaacBot.this.runningIsaacBotAction, actionToRun);
+
+        oldIsaacBotAction.markAsCompleted();
+
+        Actions.runBlocking(actionWrapper);
     }
 
     /**
@@ -544,4 +574,40 @@ public abstract class  IsaacBot extends LinearOpMode implements IComponent
         }
     }
 
+    /**
+     *
+     */
+    private class IsaacBotRunAction extends AbstractAction {
+
+        /**
+         *
+         */
+        @Override
+        public void init() {
+            this.setInitialized(true);
+        }
+
+        /**
+         *
+         * @param telemetryPacket
+         * @return
+         */
+        @Override
+        public boolean run(TelemetryPacket telemetryPacket) {
+
+            if (!this.isInitialized()) {
+                this.init();
+            }
+
+            IsaacBot.this.getEventBus().run();
+            IsaacBot.this.robotComponent.run();
+            IsaacBot.this.run();
+
+            if (this.isCompleted()) {
+                return STOP;
+            }
+
+            return CONTIUE;
+        }
+    }
 }

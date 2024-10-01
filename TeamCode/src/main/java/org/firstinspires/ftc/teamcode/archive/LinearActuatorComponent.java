@@ -54,7 +54,7 @@ public class LinearActuatorComponent extends IsaacBot {
      *
      */
     public void run () {
-        super.run();
+        //super.run();
 
         this.linAct.run();
     }

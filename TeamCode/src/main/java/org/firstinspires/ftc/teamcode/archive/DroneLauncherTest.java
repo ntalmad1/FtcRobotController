@@ -59,7 +59,7 @@ public class DroneLauncherTest extends IsaacBot {
      *
      */
     public void run () {
-        super.run();
+        //super.run();
 
         this.droneLauncher.run();
     }
