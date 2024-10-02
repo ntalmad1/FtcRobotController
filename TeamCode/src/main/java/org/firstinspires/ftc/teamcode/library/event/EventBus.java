@@ -415,7 +415,6 @@ public class EventBus extends HandlerManager {
             this.fireEvent(new Gp2_Dpad_Up_DownEvent());
         }
 
-
         boolean current_gp2_dpad_left = this.robot.gamepad2.dpad_left;
         if (this.g2_dpad_left_down && !current_gp2_dpad_left) {
             this.g2_dpad_left_down = false;

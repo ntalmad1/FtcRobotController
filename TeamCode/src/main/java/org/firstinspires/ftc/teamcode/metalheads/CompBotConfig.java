@@ -4,6 +4,7 @@ import org.firstinspires.ftc.teamcode.library.IsaacBot;
 import org.firstinspires.ftc.teamcode.library.continuousservo.ContinuousServoConfig;
 import org.firstinspires.ftc.teamcode.library.encodedmotor.EncodedMotorConfig;
 import org.firstinspires.ftc.teamcode.library.rotator.RotatorConfig;
+import org.firstinspires.ftc.teamcode.library.servo.ServoComponentConfig;
 import org.firstinspires.ftc.teamcode.library.utility.Control;
 import org.firstinspires.ftc.teamcode.metalheads.components.ArmConfig;
 import org.firstinspires.ftc.teamcode.metalheads.components.ClawConfig;
@@ -103,9 +104,35 @@ public class CompBotConfig {
 
         // double hooks
         this.doubleHooksConfig = new DoubleHooksConfig(robot);
+        this.doubleHooksConfig.linearActuatorConfig = new EncodedMotorConfig(robot);
+        this.doubleHooksConfig.linearActuatorConfig.motorName = "linearActuator";
+        this.doubleHooksConfig.linearActuatorConfig.increment = 10000;
+        this.doubleHooksConfig.linearActuatorConfig.minTics = 0;
+        this.doubleHooksConfig.linearActuatorConfig.maxTics = 8574;
+        this.doubleHooksConfig.linearActuatorConfig.control = Control.Gp2_Dpad_UpDown;
+
+        this.doubleHooksConfig.doubleServosConfig = new ServoComponentConfig(robot);
+        this.doubleHooksConfig.doubleServosConfig.isDualServo = true;
+        this.doubleHooksConfig.doubleServosConfig.servoName = "leftActuatorArm";
+        this.doubleHooksConfig.doubleServosConfig.homePosition = 0;
+        this.doubleHooksConfig.doubleServosConfig.minPosition = 0;
+        this.doubleHooksConfig.doubleServosConfig.maxPosition = 0.336;
+        this.doubleHooksConfig.doubleServosConfig.zeroDegreePosition = 0;
+        this.doubleHooksConfig.doubleServosConfig.secondaryServoName = "rightActuatorArm";
+        this.doubleHooksConfig.doubleServosConfig.secondaryServoOffset = 1 - 0.979;
+        this.doubleHooksConfig.doubleServosConfig.controllerInputMethod = Control.Gp2_Dpad_Left;
+        this.doubleHooksConfig.doubleServosConfig.controllerInputMethod2 = Control.Gp2_Dpad_Right;
 
         // flapper bars
         this.flapperBarsConfig = new FlapperBarsConfig(robot);
+        this.flapperBarsConfig.isDualServo = true;
+        this.flapperBarsConfig.servoName = "leftFlapper";
+        this.flapperBarsConfig.zeroDegreePosition = 0;
+        this.flapperBarsConfig.homePosition = 0;
+        this.flapperBarsConfig.minPosition = 0;
+        this.flapperBarsConfig.maxPosition = 1;
+        this.flapperBarsConfig.secondaryServoName = "rightFlapper";
+        this.flapperBarsConfig.controllerInputMethod = Control.Gp2_RightStickY;
 
         // intake
         this.intakeConfig = new IntakeConfig(robot);
@@ -130,5 +157,11 @@ public class CompBotConfig {
 
         // winch
         this.winchConfig = new WinchConfig(robot);
+        this.winchConfig.control = Control.Gp1_RightStickY;
+        this.winchConfig.motorName = "winch";
+        this.winchConfig.minTics = 0;
+        this.winchConfig.maxTics = 9999;
+        this.winchConfig.increment = 10000;
+
     }
 }

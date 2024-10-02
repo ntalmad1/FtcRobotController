@@ -53,6 +53,11 @@ public class DoubleHooks extends Component {
 
             this.doubleServos.run();
             this.linearActuator.run();
+
+            if (this.isDebug()) {
+                telemetry.addData("Linear Act Pos: ", this.linearActuator.getCurrentPosition());
+                telemetry.addData("Double Hooks Servo Pos", this.doubleServos.getPosition());
+            }
         }
     }
 }

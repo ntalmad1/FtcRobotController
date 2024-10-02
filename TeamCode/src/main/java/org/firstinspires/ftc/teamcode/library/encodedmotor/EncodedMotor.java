@@ -130,6 +130,14 @@ public class EncodedMotor extends Component {
         if (Control.Gp2_RightStickX.equals(this.config.control)) {
             this.addGp2_RightStick_X_Handler(event -> { EncodedMotor.this.move(event.getPosition()); });
         }
+
+        if (Control.Gp2_Dpad_UpDown.equals(this.config.control)) {
+            this.addGp2_Dpad_Up_DownHandler(event -> { EncodedMotor.this.move(1); });
+            this.addGp2_Dpad_Up_PressHandler(event -> { EncodedMotor.this.move(0); });
+
+            this.addGp2_Dpad_Down_DownHandler(event -> { EncodedMotor.this.move(-1); });
+            this.addGp2_Dpad_Down_PressHandler(event -> { EncodedMotor.this.move(0); });
+        }
     }
 
     public boolean isBrakeOn () {

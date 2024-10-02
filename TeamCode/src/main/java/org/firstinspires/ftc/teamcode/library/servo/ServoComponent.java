@@ -309,7 +309,7 @@ public class ServoComponent extends Component {
     private void setServoPosition (double position) {
         this.servo.setPosition(position);
         if (this.config.isDualServo) {
-            this.secondaryServo.setPosition(1 - position);
+            this.secondaryServo.setPosition(1 - this.config.secondaryServoOffset - position);
         }
     }
 

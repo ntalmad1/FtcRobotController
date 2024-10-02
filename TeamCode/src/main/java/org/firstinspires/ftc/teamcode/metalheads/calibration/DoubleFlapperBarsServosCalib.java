@@ -7,16 +7,6 @@ import com.qualcomm.robotcore.hardware.Servo;
 import org.firstinspires.ftc.teamcode.library.IsaacBot;
 
 /**
- * Tool to 'zero' the servos for the linear actuator arms. Also to
- * get the servo positions for set positions and limits.
- *
- * left start 0
- * right start 0.979
- *
- * left hook position 0.140
- *
- * left max 0.336
- * right max
  *
  */
 @TeleOp(name="DoubleFlapperBarsCalib", group="Calibration")

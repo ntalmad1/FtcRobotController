@@ -28,6 +28,10 @@ public class ServoComponentConfig {
 
     /**
      */
+    public double  secondaryServoOffset = 0;
+
+    /**
+     */
     public Servo.Direction direction;
 
     /**

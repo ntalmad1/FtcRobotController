@@ -65,7 +65,7 @@ public class CompBot extends IsaacBot {
 
         this.config.debugArm = true;
         // this.config.debugClaw = true;
-        // this.config.debugDoubleHooks = true;
+        this.config.debugDoubleHooks = true;
         // this.config.debugFlapperBars = true;
         this.config.debugIntake = true;
         // this.config.debugWinch = true;
@@ -74,7 +74,7 @@ public class CompBot extends IsaacBot {
 
         this.arm = new Arm(this.config.armConfig);
 //        this.claw = new Claw(this.config.clawConfig);
-//        this.doubleHooks = new DoubleHooks(this.config.doubleHooksConfig);
+        this.doubleHooks = new DoubleHooks(this.config.doubleHooksConfig);
 //        this.flapperBars = new FlapperBars(this.config.flapperBarsConfig);
         this.intake = new Intake(this.config.intakeConfig);
 //        this.winch = new Winch(this.config.winchConfig);
@@ -89,10 +89,11 @@ public class CompBot extends IsaacBot {
 
         this.arm.init();
 //        this.claw.init();
-//        this.doubleHooks.init();
+        this.doubleHooks.init();
 //        this.flapperBars.init();
         this.intake.init();
 //        this.winch.init();
+
     }
 
     /**
@@ -112,11 +113,12 @@ public class CompBot extends IsaacBot {
 
         this.arm.run(this.config.debugArm || this.config.debugAll);
 //        this.claw.run(this.config.debugClaw || this.config.debugAll);
-//        this.doubleHooks.run(this.config.debugDoubleHooks || this.config.debugAll);
+        this.doubleHooks.run(this.config.debugDoubleHooks || this.config.debugAll);
 //        this.flapperBars.run(this.config.debugFlapperBars || this.config.debugAll);
         this.intake.run(this.config.debugIntake || this.config.debugAll);
 //        this.winch.run(this.config.debugWinch || this.config.debugAll);
 //
+
         if (this.config.debugAll
             || this.config.debugArm
             || this.config.debugClaw
