@@ -110,15 +110,21 @@ public class EncodedMotor extends Component {
         super.init();
 
         this.motor = this.robot.hardwareMap.get(DcMotor.class, this.config.motorName);
-
         this.motor.setDirection(this.config.initialMotorDirection);
-        this.motor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        this.motor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
-        this.setBrake(this.config.brakeOn);
+        if (this.config.brakeOn) {
+            this.setBrake(true);
+        }
+
+        this.motor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        this.motor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
         if (Control.Gp1_LeftStickY.equals(this.config.control)) {
             this.addGp1_LeftStick_Y_Handler(event -> { EncodedMotor.this.move(-event.getPosition()); });
+        }
+
+        if (Control.Gp2_LeftStickY.equals(this.config.control)) {
+            this.addGp2_LeftStick_Y_Handler(event -> { EncodedMotor.this.move(-event.getPosition()); });
         }
 
         if (Control.Gp2_RightStickX.equals(this.config.control)) {
@@ -148,6 +154,10 @@ public class EncodedMotor extends Component {
 
     private double previousPower = 0;
 
+    private boolean holding = false;
+
+    private int holdPosition;
+
     /**
      *
      * @param power
@@ -162,15 +172,31 @@ public class EncodedMotor extends Component {
 
         if (power > 0 && targetPosition > this.config.maxTics) {
             targetPosition = this.config.maxTics;
+            previousPower = power;
+            holding = false;
         }
         else if (power < 0 && targetPosition < this.config.minTics) {
             targetPosition = this.config.minTics;
+            previousPower = power;
+            holding = false;
         }
         else if (power == 0) {
             targetPosition = this.motor.getCurrentPosition();
+            previousPower = power;
+
+            if (isBrakeOn()) {
+                if (!holding) {
+                    holdPosition = targetPosition;
+                }
+                else {
+                    targetPosition = holdPosition;
+                }
+                holding = true;
+                power = 1;
+            }
         }
 
-        previousPower = power;
+
 
         this.motor.setTargetPosition(targetPosition);
         this.motor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
@@ -233,6 +259,14 @@ public class EncodedMotor extends Component {
      */
     public void setTargetPosition (int position) {
         this.motor.setTargetPosition(position);
+    }
+
+    /**
+     *
+     * @return
+     */
+    public DcMotor.ZeroPowerBehavior getZeroPowerBehavior() {
+        return this.motor.getZeroPowerBehavior();
     }
 
 }

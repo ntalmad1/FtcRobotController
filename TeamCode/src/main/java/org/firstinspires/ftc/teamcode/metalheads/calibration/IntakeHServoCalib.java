@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode.metalheads.calibration;
 
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.Servo;
 
@@ -11,10 +12,10 @@ import org.firstinspires.ftc.teamcode.library.event.gp1_dpad_press.gp1_dpad_up_p
 
 /**
  * Max position .8 // NOTE MUST be titled correctly
- * Min os 0.15
+ * Min is 0.15
  */
 @TeleOp(name="IntakeHServoCalib", group="Calibration")
-//@Disabled
+@Disabled
 public class IntakeHServoCalib extends IsaacBot {
 
     /**

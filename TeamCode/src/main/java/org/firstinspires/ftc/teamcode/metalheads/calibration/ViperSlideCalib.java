@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode.metalheads.calibration;
 
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 
@@ -9,7 +10,7 @@ import org.firstinspires.ftc.teamcode.library.IsaacBot;
  * max motor position 2977
  */
 @TeleOp(name="ViperSlideCalib", group="Calibration")
-//@Disabled
+@Disabled
 public class ViperSlideCalib extends IsaacBot {
 
     /**

@@ -1,5 +1,7 @@
 package org.firstinspires.ftc.teamcode.metalheads.components;
 
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
+
 import org.firstinspires.ftc.teamcode.library.component.Component;
 import org.firstinspires.ftc.teamcode.library.continuousservo.ContinuousServo;
 import org.firstinspires.ftc.teamcode.library.rotator.Rotator;
@@ -39,6 +41,25 @@ public class Intake extends Component {
         this.vServo = new Rotator(this.config.vServoConfig);
 
         this.roller = new ContinuousServo(this.config.rollerConfig);
+
+        this.addGp2_Right_Trigger_DownHandler(event -> {
+            this.roller.setDirection(DcMotorSimple.Direction.REVERSE);
+            this.roller.setPower(1);
+        });
+
+        this.addGp2_Right_Trigger_UpHandler(event -> {
+            this.roller.stop();
+
+        });
+
+        this.addGp2_Left_Trigger_DownHandler(event -> {
+            this.roller.setDirection(DcMotorSimple.Direction.FORWARD);
+            this.roller.setPower(1);
+        });
+
+        this.addGp2_Left_Trigger_UpHandler(event -> {
+            this.roller.stop();
+        });
     }
 
 
@@ -64,5 +85,9 @@ public class Intake extends Component {
         this.hServo.run();
         this.vServo.run();
         this.roller.run();
+
+        telemetry.addLine("Intake");
+        telemetry.addData("   H Servo Position:", this.hServo.getPosition());
+        telemetry.addData("   V Servo Position", this.vServo.getPosition());
     }
 }

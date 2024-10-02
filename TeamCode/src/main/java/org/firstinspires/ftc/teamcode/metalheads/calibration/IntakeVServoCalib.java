@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode.metalheads.calibration;
 
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.Servo;
 
@@ -12,6 +13,8 @@ import org.firstinspires.ftc.teamcode.library.event.gp1_dpad_press.gp1_dpad_up_p
 /**
  * Max position 0.674
  * Min pos 0.233
+ *
+ * init pos 0.247
  */
 @TeleOp(name="IntakeVServoCalib", group="Calibration")
 //@Disabled

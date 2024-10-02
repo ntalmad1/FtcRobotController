@@ -32,6 +32,8 @@ import org.firstinspires.ftc.teamcode.library.event.gp1_dpad_press.gp1_dpad_up_p
 import org.firstinspires.ftc.teamcode.library.event.gp1_dpad_press.gp1_dpad_up_press.Gp1_Dpad_Up_PressHandler;
 import org.firstinspires.ftc.teamcode.library.event.gp1_left_bumper_down.Gp1_Left_Bumper_DownEvent;
 import org.firstinspires.ftc.teamcode.library.event.gp1_left_bumper_down.Gp1_Left_Bumper_DownHandler;
+import org.firstinspires.ftc.teamcode.library.event.gp1_left_bumper_up.Gp1_Left_Bumper_UpEvent;
+import org.firstinspires.ftc.teamcode.library.event.gp1_left_bumper_up.Gp1_Left_Bumper_UpHandler;
 import org.firstinspires.ftc.teamcode.library.event.gp1_left_stick_x.Gp1_LeftStick_X_Event;
 import org.firstinspires.ftc.teamcode.library.event.gp1_left_stick_x.Gp1_LeftStick_X_Handler;
 import org.firstinspires.ftc.teamcode.library.event.gp1_left_stick_y.Gp1_LeftStick_Y_Event;
@@ -40,6 +42,8 @@ import org.firstinspires.ftc.teamcode.library.event.gp1_left_trigger_down.Gp1_Le
 import org.firstinspires.ftc.teamcode.library.event.gp1_left_trigger_down.Gp1_Left_Trigger_DownHandler;
 import org.firstinspires.ftc.teamcode.library.event.gp1_right_bumper_down.Gp1_Right_Bumper_DownEvent;
 import org.firstinspires.ftc.teamcode.library.event.gp1_right_bumper_down.Gp1_Right_Bumper_DownHandler;
+import org.firstinspires.ftc.teamcode.library.event.gp1_right_bumper_up.Gp1_Right_Bumper_UpEvent;
+import org.firstinspires.ftc.teamcode.library.event.gp1_right_bumper_up.Gp1_Right_Bumper_UpHandler;
 import org.firstinspires.ftc.teamcode.library.event.gp1_right_stick_x.Gp1_RightStick_X_Event;
 import org.firstinspires.ftc.teamcode.library.event.gp1_right_stick_x.Gp1_RightStick_X_Handler;
 import org.firstinspires.ftc.teamcode.library.event.gp1_right_stick_y.Gp1_RightStick_Y_Event;
@@ -70,8 +74,12 @@ import org.firstinspires.ftc.teamcode.library.event.gp2_dpad_press.gp2_dpad_righ
 import org.firstinspires.ftc.teamcode.library.event.gp2_dpad_press.gp2_dpad_right_press.Gp2_Dpad_Right_PressHandler;
 import org.firstinspires.ftc.teamcode.library.event.gp2_dpad_press.gp2_dpad_up_press.Gp2_Dpad_Up_PressEvent;
 import org.firstinspires.ftc.teamcode.library.event.gp2_dpad_press.gp2_dpad_up_press.Gp2_Dpad_Up_PressHandler;
+import org.firstinspires.ftc.teamcode.library.event.gp2_left_bumper_down.Gp2_Left_Bumper_DownEvent;
+import org.firstinspires.ftc.teamcode.library.event.gp2_left_bumper_down.Gp2_Left_Bumper_DownHandler;
 import org.firstinspires.ftc.teamcode.library.event.gp2_left_bumper_press.Gp2_Left_Bumper_PressEvent;
 import org.firstinspires.ftc.teamcode.library.event.gp2_left_bumper_press.Gp2_Left_Bumper_PressHandler;
+import org.firstinspires.ftc.teamcode.library.event.gp2_left_bumper_up.Gp2_Left_Bumper_UpEvent;
+import org.firstinspires.ftc.teamcode.library.event.gp2_left_bumper_up.Gp2_Left_Bumper_UpHandler;
 import org.firstinspires.ftc.teamcode.library.event.gp2_left_stick_x.Gp2_LeftStick_X_Event;
 import org.firstinspires.ftc.teamcode.library.event.gp2_left_stick_x.Gp2_LeftStick_X_Handler;
 import org.firstinspires.ftc.teamcode.library.event.gp2_left_stick_y.Gp2_LeftStick_Y_Event;
@@ -80,8 +88,14 @@ import org.firstinspires.ftc.teamcode.library.event.gp2_left_trigger.Gp2_Left_Tr
 import org.firstinspires.ftc.teamcode.library.event.gp2_left_trigger.Gp2_Left_Trigger_Handler;
 import org.firstinspires.ftc.teamcode.library.event.gp2_left_trigger_down.Gp2_Left_Trigger_DownEvent;
 import org.firstinspires.ftc.teamcode.library.event.gp2_left_trigger_down.Gp2_Left_Trigger_DownHandler;
+import org.firstinspires.ftc.teamcode.library.event.gp2_left_trigger_up.Gp2_Left_Trigger_UpEvent;
+import org.firstinspires.ftc.teamcode.library.event.gp2_left_trigger_up.Gp2_Left_Trigger_UpHandler;
+import org.firstinspires.ftc.teamcode.library.event.gp2_right_bumper_down.Gp2_Right_Bumper_DownEvent;
+import org.firstinspires.ftc.teamcode.library.event.gp2_right_bumper_down.Gp2_Right_Bumper_DownHandler;
 import org.firstinspires.ftc.teamcode.library.event.gp2_right_bumper_press.Gp2_Right_Bumper_PressEvent;
 import org.firstinspires.ftc.teamcode.library.event.gp2_right_bumper_press.Gp2_Right_Bumper_PressHandler;
+import org.firstinspires.ftc.teamcode.library.event.gp2_right_bumper_up.Gp2_Right_Bumper_UpEvent;
+import org.firstinspires.ftc.teamcode.library.event.gp2_right_bumper_up.Gp2_Right_Bumper_UpHandler;
 import org.firstinspires.ftc.teamcode.library.event.gp2_right_stick_x.Gp2_RightStick_X_Event;
 import org.firstinspires.ftc.teamcode.library.event.gp2_right_stick_x.Gp2_RightStick_X_Handler;
 import org.firstinspires.ftc.teamcode.library.event.gp2_right_stick_y.Gp2_RightStick_Y_Event;
@@ -90,6 +104,8 @@ import org.firstinspires.ftc.teamcode.library.event.gp2_right_trigger.Gp2_Right_
 import org.firstinspires.ftc.teamcode.library.event.gp2_right_trigger.Gp2_Right_Trigger_Handler;
 import org.firstinspires.ftc.teamcode.library.event.gp2_right_trigger_down.Gp2_Right_Trigger_DownEvent;
 import org.firstinspires.ftc.teamcode.library.event.gp2_right_trigger_down.Gp2_Right_Trigger_DownHandler;
+import org.firstinspires.ftc.teamcode.library.event.gp2_right_trigger_up.Gp2_Right_Trigger_UpEvent;
+import org.firstinspires.ftc.teamcode.library.event.gp2_right_trigger_up.Gp2_Right_Trigger_UpHandler;
 import org.firstinspires.ftc.teamcode.library.event.gp2_x_press.Gp2_X_PressEvent;
 import org.firstinspires.ftc.teamcode.library.event.gp2_x_press.Gp2_X_PressHandler;
 import org.firstinspires.ftc.teamcode.library.event.gp2_y_press.Gp2_Y_PressEvent;
@@ -159,9 +175,37 @@ public abstract class Component implements IComponent {
         return EventBus.getInstance().addHandler(Gp1_Left_Bumper_DownEvent.TYPE, handler);
     }
 
+    public HandlerRegistration addGp1_Left_Bumper_UpHandler (Gp1_Left_Bumper_UpHandler handler) {
+        return EventBus.getInstance().addHandler(Gp1_Left_Bumper_UpEvent.TYPE, handler);
+    }
+
+    public HandlerRegistration addGp1_Right_Bumper_UpHandler (Gp1_Right_Bumper_UpHandler handler) {
+        return EventBus.getInstance().addHandler(Gp1_Right_Bumper_UpEvent.TYPE, handler);
+    }
+
     public HandlerRegistration addGp1_Right_Bumper_DownHandler (Gp1_Right_Bumper_DownHandler handler) {
         return EventBus.getInstance().addHandler(Gp1_Right_Bumper_DownEvent.TYPE, handler);
     }
+
+    //-----------------------------------------------------------------------------------------------
+
+    public HandlerRegistration addGp2_Left_Bumper_DownHandler (Gp2_Left_Bumper_DownHandler handler) {
+        return EventBus.getInstance().addHandler(Gp2_Left_Bumper_DownEvent.TYPE, handler);
+    }
+
+    public HandlerRegistration addGp2_Left_Bumper_UpHandler (Gp2_Left_Bumper_UpHandler handler) {
+        return EventBus.getInstance().addHandler(Gp2_Left_Bumper_UpEvent.TYPE, handler);
+    }
+
+    public HandlerRegistration addGp2_Right_Bumper_UpHandler (Gp2_Right_Bumper_UpHandler handler) {
+        return EventBus.getInstance().addHandler(Gp2_Right_Bumper_UpEvent.TYPE, handler);
+    }
+
+    public HandlerRegistration addGp2_Right_Bumper_DownHandler (Gp2_Right_Bumper_DownHandler handler) {
+        return EventBus.getInstance().addHandler(Gp2_Right_Bumper_DownEvent.TYPE, handler);
+    }
+
+
 
     /**
      *
@@ -188,6 +232,24 @@ public abstract class Component implements IComponent {
      */
     public HandlerRegistration addGp2_Right_Trigger_DownHandler (Gp2_Right_Trigger_DownHandler handler) {
         return EventBus.getInstance().addHandler(Gp2_Right_Trigger_DownEvent.TYPE, handler);
+    }
+
+    /**
+     *
+     * @param handler
+     * @return
+     */
+    public HandlerRegistration addGp2_Left_Trigger_UpHandler (Gp2_Left_Trigger_UpHandler handler) {
+        return EventBus.getInstance().addHandler(Gp2_Left_Trigger_UpEvent.TYPE, handler);
+    }
+
+    /**
+     *
+     * @param handler
+     * @return
+     */
+    public HandlerRegistration addGp2_Right_Trigger_UpHandler (Gp2_Right_Trigger_UpHandler handler) {
+        return EventBus.getInstance().addHandler(Gp2_Right_Trigger_UpEvent.TYPE, handler);
     }
 
     /**
