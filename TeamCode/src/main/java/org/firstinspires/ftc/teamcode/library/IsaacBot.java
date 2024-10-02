@@ -56,6 +56,9 @@ import org.firstinspires.ftc.teamcode.library.event.gp2_right_stick_y.Gp2_RightS
 import org.firstinspires.ftc.teamcode.library.event.gp2_x_press.Gp2_X_PressHandler;
 import org.firstinspires.ftc.teamcode.library.event.gp2_y_press.Gp2_Y_PressHandler;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  *
  * @noinspection unused
@@ -68,11 +71,56 @@ public abstract class  IsaacBot extends LinearOpMode implements IComponent
 
     /**
      *
+     * @return IsaacBot
+     */
+    public static IsaacBot getInstance() {
+        return instance;
+    }
+
+    /**
+     */
+    protected final RobotComponent robotComponent;
+
+    /**
+     */
+    private String imuName;
+
+    /**
+     */
+    private IMU imu;
+
+    /**
+     */
+    private IsaacBotRunAction runningIsaacBotAction;
+
+    /**
+     */
+    private List<Action> actionsToRun = new ArrayList<Action>();
+
+    /**
+     * Constructor
+     *
+     */
+    public IsaacBot()
+    {
+        super();
+
+        instance = this;
+
+        EventBus.init(this);
+
+        this.robotComponent = new RobotComponent(this);
+    }
+
+    /**
+     *
      * @param command
      */
     public void addCommand (ICommand command) {
         this.robotComponent.addCommand(command);
     }
+
+//region addHandlers
 
     /**
      *
@@ -141,8 +189,6 @@ public abstract class  IsaacBot extends LinearOpMode implements IComponent
         return this.robotComponent.addGp1_Y_PressHandler(handler);
     }
 
-
-    //endregion
     /**
      *
      * @param handler
@@ -389,41 +435,16 @@ public abstract class  IsaacBot extends LinearOpMode implements IComponent
         return this.robotComponent.addGp2_RightStick_Y_Handler(handler);
     }
 
+    //endregion
+
     //----------------------------------------------------------------------------------------------
 
     /**
      *
-     * @return IsaacBot
+     * @return
      */
-    public static IsaacBot getInstance() {
-        return instance;
-    }
-
-    /**
-     */
-    protected final RobotComponent robotComponent;
-
-    /**
-     */
-    private String imuName;
-
-    /**
-     */
-    private IMU imu;
-
-    /**
-     * Constructor
-     *
-     */
-    public IsaacBot()
-    {
-        super();
-
-        instance = this;
-
-        EventBus.init(this);
-
-        this.robotComponent = new RobotComponent(this);
+    public EventBus getEventBus () {
+        return EventBus.getInstance();
     }
 
     /**
@@ -434,14 +455,6 @@ public abstract class  IsaacBot extends LinearOpMode implements IComponent
     {
         YawPitchRollAngles gyro = imu.getRobotYawPitchRollAngles();
         return gyro.getYaw(AngleUnit.DEGREES);
-    }
-
-    /**
-     *
-     * @return
-     */
-    public EventBus getEventBus () {
-        return EventBus.getInstance();
     }
 
     /**
@@ -485,12 +498,40 @@ public abstract class  IsaacBot extends LinearOpMode implements IComponent
      * This code gets ran right after the stop is pressed and is only ran once
      */
     public void onStop () {
-
     }
 
     /**
+     *
+     * @param action
      */
-    private IsaacBotRunAction runningIsaacBotAction;
+    public void runAction (Action action) {
+        this.actionsToRun.add(action);
+        this.runningIsaacBotAction.markAsCompleted();
+    }
+
+    /**
+     *
+     */
+    public void runActions() {
+
+        if (this.runningIsaacBotAction == null || this.runningIsaacBotAction.isCompleted()) {
+            IsaacBot.this.runningIsaacBotAction = new IsaacBotRunAction();
+        }
+
+        if (this.actionsToRun.isEmpty()) {
+            ParallelAction actionWrapper = new ParallelAction(IsaacBot.this.runningIsaacBotAction);
+            Actions.runBlocking(actionWrapper);
+        }
+        else
+        {
+            Action actionToRun = this.actionsToRun.remove(0);
+
+            ParallelAction actionWrapper = new ParallelAction(IsaacBot.this.runningIsaacBotAction, actionToRun);
+            Actions.runBlocking(actionWrapper);
+        }
+
+        this.runActions();
+    }
 
     /**
      *
@@ -504,29 +545,16 @@ public abstract class  IsaacBot extends LinearOpMode implements IComponent
 
         this.go();
 
-        this.runningIsaacBotAction = new IsaacBotRunAction();
-
-        Actions.runBlocking(new ParallelAction(this.runningIsaacBotAction));
+        this.runActions();
 
         while (this.opModeIsActive()) {
+
         }
+
+        this.onStop();
     }
 
-    /**
-     *
-     * @param actionToRun
-     */
-    public void runAction(Action actionToRun) {
 
-        IsaacBotRunAction oldIsaacBotAction = this.runningIsaacBotAction;
-        IsaacBot.this.runningIsaacBotAction = new IsaacBotRunAction();
-
-        ParallelAction actionWrapper = new ParallelAction(IsaacBot.this.runningIsaacBotAction, actionToRun);
-
-        oldIsaacBotAction.markAsCompleted();
-
-        Actions.runBlocking(actionWrapper);
-    }
 
     /**
      *

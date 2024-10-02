@@ -1,6 +1,8 @@
 package org.firstinspires.ftc.teamcode.library.continuousservo;
 
 import com.qualcomm.robotcore.hardware.CRServo;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
+
 import org.firstinspires.ftc.teamcode.library.component.Component;
 
 public class ContinuousServo extends Component {
@@ -42,11 +44,30 @@ public class ContinuousServo extends Component {
         super.run();
     }
 
+    public void setDirection(DcMotorSimple.Direction direction) {
+        servo.setDirection(direction);
+    }
+
     /**
      *
      * @param power
      */
     public void setPower(double power) {
         this.servo.setPower(power);
+    }
+
+    /**
+     *
+     * @param power
+     */
+    public void run(double power) {
+        this.setPower(power);
+    }
+
+    /**
+     *
+     */
+    public void stop() {
+        this.servo.setPower(0);
     }
 }

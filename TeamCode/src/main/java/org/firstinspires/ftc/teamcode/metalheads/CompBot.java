@@ -65,7 +65,7 @@ public class CompBot extends IsaacBot {
 
         this.config = compBotConfig;
 
-        // this.config.debugArm = true;
+        this.config.debugArm = true;
         // this.config.debugClaw = true;
         // this.config.debugDoubleHooks = true;
         // this.config.debugFlapperBars = true;
@@ -74,7 +74,7 @@ public class CompBot extends IsaacBot {
 
         this.config.debugAll = true;
 
-//        this.arm = new Arm(this.config.armConfig);
+        this.arm = new Arm(this.config.armConfig);
 //        this.claw = new Claw(this.config.clawConfig);
 //        this.doubleHooks = new DoubleHooks(this.config.doubleHooksConfig);
 //        this.flapperBars = new FlapperBars(this.config.flapperBarsConfig);
@@ -89,7 +89,7 @@ public class CompBot extends IsaacBot {
     public void initBot(){
         super.initBot();
 
-//        this.arm.init();
+        this.arm.init();
 //        this.claw.init();
 //        this.doubleHooks.init();
 //        this.flapperBars.init();
@@ -113,12 +113,12 @@ public class CompBot extends IsaacBot {
         super.run();
 
         this.arm.run(this.config.debugArm || this.config.debugAll);
-        this.claw.run(this.config.debugClaw || this.config.debugAll);
-        this.doubleHooks.run(this.config.debugDoubleHooks || this.config.debugAll);
-        this.flapperBars.run(this.config.debugFlapperBars || this.config.debugAll);
-        this.intake.run(this.config.debugIntake || this.config.debugAll);
-        this.winch.run(this.config.debugWinch || this.config.debugAll);
-
+//        this.claw.run(this.config.debugClaw || this.config.debugAll);
+//        this.doubleHooks.run(this.config.debugDoubleHooks || this.config.debugAll);
+//        this.flapperBars.run(this.config.debugFlapperBars || this.config.debugAll);
+//        this.intake.run(this.config.debugIntake || this.config.debugAll);
+//        this.winch.run(this.config.debugWinch || this.config.debugAll);
+//
         if (this.config.debugAll
             || this.config.debugArm
             || this.config.debugClaw

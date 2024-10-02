@@ -54,5 +54,13 @@ public class Arm extends Component {
 
         this.mainBoom.run();
         this.viperSlide.run();
+
+        if (this.isDebug()) {
+
+            telemetry.addLine("Arm");
+
+            telemetry.addData("   Main Boom Position:", this.mainBoom.getCurrentPosition());
+            telemetry.addData("   Viper Slide Position:", this.viperSlide.getCurrentPosition());
+        }
     }
 }

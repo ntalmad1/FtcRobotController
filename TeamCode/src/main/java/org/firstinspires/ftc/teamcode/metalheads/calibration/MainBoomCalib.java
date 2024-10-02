@@ -1,16 +1,16 @@
 package org.firstinspires.ftc.teamcode.metalheads.calibration;
 
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 
 import org.firstinspires.ftc.teamcode.library.IsaacBot;
 
 /**
-
  *
  */
 @TeleOp(name="MainBoomCalib", group="Calibration")
-//@Disabled
+@Disabled
 public class MainBoomCalib extends IsaacBot {
 
     /**
@@ -21,6 +21,10 @@ public class MainBoomCalib extends IsaacBot {
      */
     private String motorName;
 
+    /**
+     * Constructor
+     *
+     */
     public MainBoomCalib() {
         super();
 

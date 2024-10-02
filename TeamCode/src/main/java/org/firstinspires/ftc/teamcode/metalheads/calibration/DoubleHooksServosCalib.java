@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode.metalheads.calibration;
 
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.Servo;
 
@@ -19,7 +20,7 @@ import org.firstinspires.ftc.teamcode.library.IsaacBot;
  *
  */
 @TeleOp(name="DoubleHooksServosCalib", group="Calibration")
-// @Disabled
+@Disabled
 public class DoubleHooksServosCalib extends IsaacBot {
 
     /**

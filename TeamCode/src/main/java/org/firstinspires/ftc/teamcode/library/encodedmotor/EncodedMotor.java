@@ -121,6 +121,10 @@ public class EncodedMotor extends Component {
             this.addGp1_LeftStick_Y_Handler(event -> { EncodedMotor.this.move(-event.getPosition()); });
         }
 
+        if (Control.Gp2_LeftStickY.equals(this.config.control)) {
+            this.addGp2_LeftStick_Y_Handler(event -> { EncodedMotor.this.move(-event.getPosition()); });
+        }
+
         if (Control.Gp2_RightStickX.equals(this.config.control)) {
             this.addGp2_RightStick_X_Handler(event -> { EncodedMotor.this.move(event.getPosition()); });
         }

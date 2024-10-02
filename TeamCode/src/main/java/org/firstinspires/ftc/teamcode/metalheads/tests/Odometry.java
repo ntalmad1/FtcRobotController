@@ -11,7 +11,7 @@ import com.qualcomm.robotcore.hardware.IMU;
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 
 @TeleOp(name = "Odometry Test")
-// @Disabled
+@Disabled
 public class Odometry extends LinearOpMode {
 
     // Declare hardware components

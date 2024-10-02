@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode.metalheads.calibration;
 
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.Servo;
 
@@ -13,7 +14,7 @@ import org.firstinspires.ftc.teamcode.library.event.gp1_dpad_press.gp1_dpad_up_p
  * Max position 1
  */
 @TeleOp(name="ClawRotatorCalib", group="Calibration")
-//@Disabled
+@Disabled
 public class ClawRotatorCalib extends IsaacBot {
 
     /**
