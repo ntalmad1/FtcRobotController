@@ -1,8 +1,9 @@
-package org.firstinspires.ftc.teamcode.metalheads.base;
+package org.firstinspires.ftc.teamcode.metalheads;
 
 import org.firstinspires.ftc.teamcode.library.IsaacBot;
 import org.firstinspires.ftc.teamcode.library.continuousservo.ContinuousServoConfig;
 import org.firstinspires.ftc.teamcode.library.encodedmotor.EncodedMotorConfig;
+import org.firstinspires.ftc.teamcode.library.rotator.RotatorConfig;
 import org.firstinspires.ftc.teamcode.library.utility.Control;
 import org.firstinspires.ftc.teamcode.metalheads.components.ArmConfig;
 import org.firstinspires.ftc.teamcode.metalheads.components.ClawConfig;
@@ -93,8 +94,8 @@ public class CompBotConfig {
         this.armConfig.mainBoomConfig = new EncodedMotorConfig(robot);
         this.armConfig.mainBoomConfig.increment = 10000;
         this.armConfig.mainBoomConfig.motorName = "arm";
-        this.armConfig.mainBoomConfig.minTics = -20000;
-        this.armConfig.mainBoomConfig.maxTics = 20000;
+        this.armConfig.mainBoomConfig.minTics = -736;
+        this.armConfig.mainBoomConfig.maxTics = 5000;
         this.armConfig.mainBoomConfig.control = Control.Gp2_LeftStickY;
 
         // claw
@@ -110,6 +111,22 @@ public class CompBotConfig {
         this.intakeConfig = new IntakeConfig(robot);
         intakeConfig.rollerConfig = new ContinuousServoConfig(robot);
         intakeConfig.rollerConfig.servoName = "intake";
+
+        this.intakeConfig.hServoConfig = new RotatorConfig(robot);
+        this.intakeConfig.hServoConfig.servoName = "intakeHorizontal";
+        this.intakeConfig.hServoConfig.controllerInputMethod = Control.Gp1_LeftStickX;
+        this.intakeConfig.hServoConfig.zeroDegreePosition = 0.5;
+        this.intakeConfig.hServoConfig.homePosition = 0.5;
+        this.intakeConfig.hServoConfig.minPosition = 0.15;
+        this.intakeConfig.hServoConfig.maxPosition = 0.80;
+
+        this.intakeConfig.vServoConfig = new RotatorConfig(robot);
+        this.intakeConfig.vServoConfig.servoName = "intakeVertical";
+        this.intakeConfig.vServoConfig.controllerInputMethod = Control.Gp1_LeftStickY;
+        this.intakeConfig.vServoConfig.zeroDegreePosition = 0.5;
+        this.intakeConfig.vServoConfig.homePosition = 0.5;
+        this.intakeConfig.vServoConfig.minPosition = 0.233;
+        this.intakeConfig.vServoConfig.maxPosition = 0.674;
 
         // winch
         this.winchConfig = new WinchConfig(robot);

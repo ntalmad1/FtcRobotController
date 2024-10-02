@@ -40,6 +40,7 @@ import org.firstinspires.ftc.teamcode.library.event.gp2_left_stick_x.Gp2_LeftSti
 import org.firstinspires.ftc.teamcode.library.event.gp2_left_stick_y.Gp2_LeftStick_Y_Event;
 import org.firstinspires.ftc.teamcode.library.event.gp2_left_trigger.Gp2_Left_Trigger_Event;
 import org.firstinspires.ftc.teamcode.library.event.gp2_left_trigger_down.Gp2_Left_Trigger_DownEvent;
+import org.firstinspires.ftc.teamcode.library.event.gp2_left_trigger_up.Gp2_Left_Trigger_UpEvent;
 import org.firstinspires.ftc.teamcode.library.event.gp2_right_bumper_down.Gp2_Right_Bumper_DownEvent;
 import org.firstinspires.ftc.teamcode.library.event.gp2_right_bumper_press.Gp2_Right_Bumper_PressEvent;
 import org.firstinspires.ftc.teamcode.library.event.gp2_right_bumper_up.Gp2_Right_Bumper_UpEvent;
@@ -47,6 +48,7 @@ import org.firstinspires.ftc.teamcode.library.event.gp2_right_stick_x.Gp2_RightS
 import org.firstinspires.ftc.teamcode.library.event.gp2_right_stick_y.Gp2_RightStick_Y_Event;
 import org.firstinspires.ftc.teamcode.library.event.gp2_right_trigger.Gp2_Right_Trigger_Event;
 import org.firstinspires.ftc.teamcode.library.event.gp2_right_trigger_down.Gp2_Right_Trigger_DownEvent;
+import org.firstinspires.ftc.teamcode.library.event.gp2_right_trigger_up.Gp2_Right_Trigger_UpEvent;
 import org.firstinspires.ftc.teamcode.library.event.gp2_x_press.Gp2_X_PressEvent;
 import org.firstinspires.ftc.teamcode.library.event.gp2_y_press.Gp2_Y_PressEvent;
 
@@ -215,24 +217,46 @@ public class EventBus extends HandlerManager {
             this.gp1_right_trigger_down = false;
         }
 
-        float current_gp2_left_trigger = this.robot.gamepad2.left_trigger;
-        if (current_gp2_left_trigger >= 0.5 && !this.gp2_left_trigger_down) {
-            this.fireEvent(new Gp2_Left_Trigger_DownEvent());
-            this.gp2_left_trigger_down = true;
-        }
-        else if (current_gp2_left_trigger < 0.5) {
+//        float current_gp2_left_trigger = this.robot.gamepad2.left_trigger;
+//        if (current_gp2_left_trigger >= 0.5 && !this.gp2_left_trigger_down) {
+//            this.fireEvent(new Gp2_Left_Trigger_DownEvent());
+//            this.gp2_left_trigger_down = true;
+//        }
+//        else if (current_gp2_left_trigger < 0.5) {
+//            this.gp2_left_trigger_down = false;
+//        }
+
+        boolean current_gp2_left_trigger_down = this.robot.gamepad2.left_trigger >= 0.5 ;
+        if (this.gp2_left_trigger_down && !current_gp2_left_trigger_down) {
             this.gp2_left_trigger_down = false;
+            this.fireEvent(new Gp2_Left_Trigger_UpEvent());
+        }
+        else if (current_gp2_left_trigger_down && !this.gp2_left_trigger_down) {
+            this.gp2_left_trigger_down = true;
+            this.fireEvent(new Gp2_Left_Trigger_DownEvent());
+        }
+
+//        float current_gp2_right_trigger = this.robot.gamepad2.right_trigger;
+//        if (current_gp2_right_trigger >= 0.5 && !this.gp2_right_trigger_down) {
+//            this.fireEvent(new Gp2_Right_Trigger_DownEvent());
+//            this.gp2_right_trigger_down = true;
+//        }
+//        else if (current_gp2_right_trigger < 0.5) {
+//            this.gp2_right_trigger_down = false;
+//        }
+
+        boolean current_gp2_right_trigger_down = this.robot.gamepad2.right_trigger >= 0.5 ;
+        if (this.gp2_right_trigger_down && !current_gp2_right_trigger_down) {
+            this.gp2_right_trigger_down = false;
+            this.fireEvent(new Gp2_Right_Trigger_UpEvent());
+        }
+        else if (current_gp2_right_trigger_down && !this.gp2_right_trigger_down) {
+            this.gp2_right_trigger_down = true;
+            this.fireEvent(new Gp2_Right_Trigger_DownEvent());
         }
 
         float current_gp2_right_trigger = this.robot.gamepad2.right_trigger;
-        if (current_gp2_right_trigger >= 0.5 && !this.gp2_right_trigger_down) {
-            this.fireEvent(new Gp2_Right_Trigger_DownEvent());
-            this.gp2_right_trigger_down = true;
-        }
-        else if (current_gp2_right_trigger < 0.5) {
-            this.gp2_right_trigger_down = false;
-        }
-
+        float current_gp2_left_trigger  = this.robot.gamepad2.left_trigger;
         if ((current_gp2_left_trigger == 0 && this.gp2_left_trigger > 0) || (current_gp2_left_trigger > 0)) {
             this.fireEvent(new Gp2_Left_Trigger_Event(current_gp2_left_trigger));
         }

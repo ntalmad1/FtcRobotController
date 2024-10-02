@@ -12,7 +12,7 @@ import org.firstinspires.ftc.teamcode.library.event.gp1_dpad_press.gp1_dpad_up_p
 
 /**
  * Max position .8 // NOTE MUST be titled correctly
- * Min os 0.15
+ * Min is 0.15
  */
 @TeleOp(name="IntakeHServoCalib", group="Calibration")
 @Disabled

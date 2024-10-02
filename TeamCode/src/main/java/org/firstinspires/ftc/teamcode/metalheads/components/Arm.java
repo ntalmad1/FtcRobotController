@@ -61,6 +61,7 @@ public class Arm extends Component {
 
             telemetry.addData("   Main Boom Position:", this.mainBoom.getCurrentPosition());
             telemetry.addData("   Viper Slide Position:", this.viperSlide.getCurrentPosition());
+            telemetry.addData("   VS ZeroPower Behav:", this.viperSlide.getZeroPowerBehavior());
         }
     }
 }

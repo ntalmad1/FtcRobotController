@@ -22,8 +22,6 @@ public class ContinuousServo extends Component {
         super(continuousServoConfig.robot);
 
         this.config = continuousServoConfig;
-
-        servo = robot.hardwareMap.get(CRServo.class, this.config.servoName);
     }
 
     /**
@@ -32,6 +30,8 @@ public class ContinuousServo extends Component {
     @Override
     public void init() {
        super.init();
+
+       servo = robot.hardwareMap.get(CRServo.class, this.config.servoName);
 
        servo.setDirection(this.config.direction);
     }

@@ -157,6 +157,40 @@ public class Rotator extends Component {
             this.secondaryServo.setDirection(this.config.direction);
         }
 
+        if (config.controllerInputMethod.equals(Control.Gp1_LeftStickX)) {
+            this.addGp1_LeftStick_X_Handler(event -> {
+                double position = event.getPosition();
+                if (Rotator.this.config.invertInput) {
+                    position = -position;
+                }
+                Rotator.this.move(position, Rotator.this.maxIncrement, Rotator.this.config.minPosition, Rotator.this.config.maxPosition);
+            });
+        } else if (config.controllerInputMethod.equals(Control.Gp1_LeftStickY)) {
+            this.addGp1_LeftStick_Y_Handler(event -> {
+                double position = event.getPosition();
+                if (Rotator.this.config.invertInput) {
+                    position = -position;
+                }
+                Rotator.this.move(position, Rotator.this.maxIncrement, Rotator.this.config.minPosition, Rotator.this.config.maxPosition);
+            });
+        } else if (config.controllerInputMethod.equals(Control.Gp1_RightStickX)) {
+            this.addGp1_RightStick_X_Handler(event -> {
+                double position = event.getPosition();
+                if (Rotator.this.config.invertInput) {
+                    position = -position;
+                }
+                Rotator.this.move(position, Rotator.this.maxIncrement, Rotator.this.config.minPosition, Rotator.this.config.maxPosition);
+            });
+        } else if (config.controllerInputMethod.equals(Control.Gp1_RightStickY)) {
+            this.addGp1_RightStick_Y_Handler(event -> {
+                double position = event.getPosition();
+                if (Rotator.this.config.invertInput) {
+                    position = -position;
+                }
+                Rotator.this.move(position, Rotator.this.maxIncrement, Rotator.this.config.minPosition, Rotator.this.config.maxPosition);
+            });
+        }
+
         if (config.controllerInputMethod.equals(Control.Gp2_LeftStickX)) {
             this.addGp2_LeftStick_X_Handler(event -> {
                 double position = event.getPosition();

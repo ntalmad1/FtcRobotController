@@ -88,6 +88,8 @@ import org.firstinspires.ftc.teamcode.library.event.gp2_left_trigger.Gp2_Left_Tr
 import org.firstinspires.ftc.teamcode.library.event.gp2_left_trigger.Gp2_Left_Trigger_Handler;
 import org.firstinspires.ftc.teamcode.library.event.gp2_left_trigger_down.Gp2_Left_Trigger_DownEvent;
 import org.firstinspires.ftc.teamcode.library.event.gp2_left_trigger_down.Gp2_Left_Trigger_DownHandler;
+import org.firstinspires.ftc.teamcode.library.event.gp2_left_trigger_up.Gp2_Left_Trigger_UpEvent;
+import org.firstinspires.ftc.teamcode.library.event.gp2_left_trigger_up.Gp2_Left_Trigger_UpHandler;
 import org.firstinspires.ftc.teamcode.library.event.gp2_right_bumper_down.Gp2_Right_Bumper_DownEvent;
 import org.firstinspires.ftc.teamcode.library.event.gp2_right_bumper_down.Gp2_Right_Bumper_DownHandler;
 import org.firstinspires.ftc.teamcode.library.event.gp2_right_bumper_press.Gp2_Right_Bumper_PressEvent;
@@ -102,6 +104,8 @@ import org.firstinspires.ftc.teamcode.library.event.gp2_right_trigger.Gp2_Right_
 import org.firstinspires.ftc.teamcode.library.event.gp2_right_trigger.Gp2_Right_Trigger_Handler;
 import org.firstinspires.ftc.teamcode.library.event.gp2_right_trigger_down.Gp2_Right_Trigger_DownEvent;
 import org.firstinspires.ftc.teamcode.library.event.gp2_right_trigger_down.Gp2_Right_Trigger_DownHandler;
+import org.firstinspires.ftc.teamcode.library.event.gp2_right_trigger_up.Gp2_Right_Trigger_UpEvent;
+import org.firstinspires.ftc.teamcode.library.event.gp2_right_trigger_up.Gp2_Right_Trigger_UpHandler;
 import org.firstinspires.ftc.teamcode.library.event.gp2_x_press.Gp2_X_PressEvent;
 import org.firstinspires.ftc.teamcode.library.event.gp2_x_press.Gp2_X_PressHandler;
 import org.firstinspires.ftc.teamcode.library.event.gp2_y_press.Gp2_Y_PressEvent;
@@ -228,6 +232,24 @@ public abstract class Component implements IComponent {
      */
     public HandlerRegistration addGp2_Right_Trigger_DownHandler (Gp2_Right_Trigger_DownHandler handler) {
         return EventBus.getInstance().addHandler(Gp2_Right_Trigger_DownEvent.TYPE, handler);
+    }
+
+    /**
+     *
+     * @param handler
+     * @return
+     */
+    public HandlerRegistration addGp2_Left_Trigger_UpHandler (Gp2_Left_Trigger_UpHandler handler) {
+        return EventBus.getInstance().addHandler(Gp2_Left_Trigger_UpEvent.TYPE, handler);
+    }
+
+    /**
+     *
+     * @param handler
+     * @return
+     */
+    public HandlerRegistration addGp2_Right_Trigger_UpHandler (Gp2_Right_Trigger_UpHandler handler) {
+        return EventBus.getInstance().addHandler(Gp2_Right_Trigger_UpEvent.TYPE, handler);
     }
 
     /**
