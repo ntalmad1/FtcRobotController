@@ -2,6 +2,8 @@ package org.firstinspires.ftc.teamcode.library.drivetrain;
 
 import com.qualcomm.robotcore.hardware.DcMotor;
 
+import org.firstinspires.ftc.teamcode.library.IsaacBot;
+
 /**
  *
  */
@@ -34,5 +36,19 @@ public class MecanumDriveTrainConfig extends AbstractDriveTrainConfig
     /**
      */
     public boolean alwaysForwards = true;
+
+    public MecanumDriveTrainConfig() {
+        super();
+    }
+
+    /**
+     *
+     * @param robot
+     */
+    public MecanumDriveTrainConfig(IsaacBot robot) {
+        super();
+
+        this.robot = robot;
+    }
 
 }

@@ -90,7 +90,7 @@ public class MecanumDriveTrain extends AbstractDriveTrain
         this.rightRearMotor.setPower(backRightPower);
         this.leftRearMotor.setPower(backLeftPower);
 
-        if (this.getConfig().isDebug())
+        if (this.isDebug())
         {
             this.robot.telemetry.addData("Rotated Y: ", "%.2f", y);
             this.robot.telemetry.addData("Rotated X: ", "%.2f", x);
@@ -102,7 +102,7 @@ public class MecanumDriveTrain extends AbstractDriveTrain
             this.robot.telemetry.addData("backRightPower: ", "%.2f", backRightPower);
             this.robot.telemetry.addData("Max Power: ", "%.2f", this.maxPower);
             //this.robot.telemetry.addData("Left Bumper Timer: ", "%.2f", this.leftBumperRuntime.milliseconds());
-            this.robot.telemetry.update();
+            //this.robot.telemetry.update();
         }
     }
 

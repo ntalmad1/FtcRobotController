@@ -14,4 +14,16 @@ public class FlapperBars extends ServoComponent {
     public FlapperBars(FlapperBarsConfig config) {
         super(config);
     }
+
+    /**
+     *
+     */
+    @Override
+    public void run() {
+        super.run();
+
+        if (this.isDebug()) {
+            telemetry.addData("Flappers Servo Pos", this.getPosition());
+        }
+    }
 }

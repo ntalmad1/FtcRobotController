@@ -20,4 +20,16 @@ public class Winch extends EncodedMotor {
     public WinchConfig getConfig() {
         return (WinchConfig) super.getConfig();
     }
+
+    /**
+     *
+     */
+    @Override
+    public void run() {
+        super.run();
+
+        if (this.isDebug()) {
+            telemetry.addData("Winch Pos:", this.getCurrentPosition());
+        }
+    }
 }

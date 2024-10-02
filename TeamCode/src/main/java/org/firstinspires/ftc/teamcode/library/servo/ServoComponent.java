@@ -175,6 +175,14 @@ public class ServoComponent extends Component {
                 }
                 ServoComponent.this.move(position, ServoComponent.this.maxIncrement, ServoComponent.this.config.minPosition, ServoComponent.this.config.maxPosition);
             });
+        } else if (config.controllerInputMethod.equals(Control.Gp1_RightStickX)) {
+            this.addGp1_RightStick_X_Handler(event -> {
+                double position = event.getPosition();
+                if (ServoComponent.this.config.invertInput) {
+                    position = -position;
+                }
+                ServoComponent.this.move(position, ServoComponent.this.maxIncrement, ServoComponent.this.config.minPosition, ServoComponent.this.config.maxPosition);
+            });
         } else if (config.controllerInputMethod.equals(Control.Gp2_RightStickY)) {
             this.addGp2_RightStick_Y_Handler(event -> {
                 double position = event.getPosition();
@@ -297,16 +305,24 @@ public class ServoComponent extends Component {
      *
      * @param inverted True to invert forwards vs backwards for calculation position in degrees
      */
-    public void setInverted (boolean inverted)
+    public void setInverted(boolean inverted)
     {
         this.inverted = inverted;
     }
 
     /**
      *
+     * @param position
+     */
+    public void setPosition(double position) {
+        this.setServoPosition(position);
+    }
+
+    /**
+     *
      * @param position the position to set the servo to
      */
-    private void setServoPosition (double position) {
+    private void setServoPosition(double position) {
         this.servo.setPosition(position);
         if (this.config.isDualServo) {
             this.secondaryServo.setPosition(1 - this.config.secondaryServoOffset - position);

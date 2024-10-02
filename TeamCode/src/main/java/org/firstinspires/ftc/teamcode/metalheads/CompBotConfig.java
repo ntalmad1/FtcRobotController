@@ -1,7 +1,11 @@
 package org.firstinspires.ftc.teamcode.metalheads;
 
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
+
+import org.firstinspires.ftc.teamcode.archive.competition.config.MecanumDriveCompConfig;
 import org.firstinspires.ftc.teamcode.library.IsaacBot;
 import org.firstinspires.ftc.teamcode.library.continuousservo.ContinuousServoConfig;
+import org.firstinspires.ftc.teamcode.library.drivetrain.MecanumDriveTrainConfig;
 import org.firstinspires.ftc.teamcode.library.encodedmotor.EncodedMotorConfig;
 import org.firstinspires.ftc.teamcode.library.rotator.RotatorConfig;
 import org.firstinspires.ftc.teamcode.library.servo.ServoComponentConfig;
@@ -44,11 +48,19 @@ public class CompBotConfig {
 
     /**
      */
+    public MecanumDriveTrainConfig driveTrainConfig;
+
+    /**
+     */
     public WinchConfig winchConfig;
 
     /**
      */
     public boolean debugAll = false;
+
+    /**
+     */
+    public boolean debugDriveTrain = false;
 
     /**
      */
@@ -82,6 +94,23 @@ public class CompBotConfig {
     public CompBotConfig(IsaacBot robot) {
         this.robot = robot;
 
+        // driveTrain
+        this.driveTrainConfig = new MecanumDriveTrainConfig(robot);
+        this.driveTrainConfig.leftFrontDeviceName   = "leftFront";
+        this.driveTrainConfig.rightFrontDeviceName  = "rightFront";
+        this.driveTrainConfig.rightRearDeviceName   = "rightRear";
+        this.driveTrainConfig.leftRearDeviceName    = "leftRear";
+        this.driveTrainConfig.accelerationIncrement = 1;
+        this.driveTrainConfig.maxPower = 1;
+        this.driveTrainConfig.yawOffset = 0;
+        this.driveTrainConfig.incrementalDeceleration = false;
+        this.driveTrainConfig.leftFrontMotorDirection  = DcMotorSimple.Direction.REVERSE;
+        this.driveTrainConfig.rightFrontMotorDirection = DcMotorSimple.Direction.FORWARD;
+        this.driveTrainConfig.leftRearMotorDirection  =  DcMotorSimple.Direction.REVERSE;
+        this.driveTrainConfig.rightRearMotorDirection  = DcMotorSimple.Direction.FORWARD;
+        this.driveTrainConfig.imuName = "imuExternal";
+
+
         // arm
         this.armConfig = new ArmConfig(robot);
         this.armConfig.viperSlideConfig = new EncodedMotorConfig(robot);
@@ -101,6 +130,21 @@ public class CompBotConfig {
 
         // claw
         this.clawConfig = new ClawConfig(robot);
+        this.clawConfig.pincherConfig = new ServoComponentConfig(robot);
+        this.clawConfig.pincherConfig.servoName = "pincherServo";
+        this.clawConfig.pincherConfig.homePosition = 0.5;
+        this.clawConfig.pincherConfig.zeroDegreePosition = 0.5;
+        this.clawConfig.pincherConfig.minPosition = 0.484;
+        this.clawConfig.pincherConfig.maxPosition = 0.65;
+        //this.clawConfig.pincherConfig.controllerInputMethod = Control.Gp1_RightStickX;
+
+        this.clawConfig.clawRotatorConfig = new RotatorConfig(robot);
+        this.clawConfig.clawRotatorConfig.servoName = "clawRotate";
+        this.clawConfig.clawRotatorConfig.homePosition = 0;
+        this.clawConfig.clawRotatorConfig.zeroDegreePosition = 0;
+        this.clawConfig.clawRotatorConfig.minPosition = 0;
+        this.clawConfig.clawRotatorConfig.maxPosition = 1;
+        //this.clawConfig.clawRotatorConfig.controllerInputMethod = Control.Gp1_RightStickY;
 
         // double hooks
         this.doubleHooksConfig = new DoubleHooksConfig(robot);
@@ -141,7 +185,7 @@ public class CompBotConfig {
 
         this.intakeConfig.hServoConfig = new RotatorConfig(robot);
         this.intakeConfig.hServoConfig.servoName = "intakeHorizontal";
-        this.intakeConfig.hServoConfig.controllerInputMethod = Control.Gp1_LeftStickX;
+        //this.intakeConfig.hServoConfig.controllerInputMethod = Control.Gp1_LeftStickX;
         this.intakeConfig.hServoConfig.zeroDegreePosition = 0.5;
         this.intakeConfig.hServoConfig.homePosition = 0.5;
         this.intakeConfig.hServoConfig.minPosition = 0.15;
@@ -149,7 +193,7 @@ public class CompBotConfig {
 
         this.intakeConfig.vServoConfig = new RotatorConfig(robot);
         this.intakeConfig.vServoConfig.servoName = "intakeVertical";
-        this.intakeConfig.vServoConfig.controllerInputMethod = Control.Gp1_LeftStickY;
+        //this.intakeConfig.vServoConfig.controllerInputMethod = Control.Gp1_LeftStickY;
         this.intakeConfig.vServoConfig.zeroDegreePosition = 0.5;
         this.intakeConfig.vServoConfig.homePosition = 0.5;
         this.intakeConfig.vServoConfig.minPosition = 0.233;
@@ -157,11 +201,11 @@ public class CompBotConfig {
 
         // winch
         this.winchConfig = new WinchConfig(robot);
-        this.winchConfig.control = Control.Gp1_RightStickY;
+        //this.winchConfig.control = Control.Gp1_RightStickY;
         this.winchConfig.motorName = "winch";
-        this.winchConfig.minTics = 0;
-        this.winchConfig.maxTics = 9999;
-        this.winchConfig.increment = 10000;
+        this.winchConfig.minTics = -40000;
+        this.winchConfig.maxTics = 40000;
+        this.winchConfig.increment = 100000;
 
     }
 }
