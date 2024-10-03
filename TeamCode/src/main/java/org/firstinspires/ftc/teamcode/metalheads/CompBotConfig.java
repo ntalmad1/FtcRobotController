@@ -110,7 +110,6 @@ public class CompBotConfig {
         this.driveTrainConfig.rightRearMotorDirection  = DcMotorSimple.Direction.FORWARD;
         this.driveTrainConfig.imuName = "imuExternal";
 
-
         // arm
         this.armConfig = new ArmConfig(robot);
         this.armConfig.viperSlideConfig = new EncodedMotorConfig(robot);

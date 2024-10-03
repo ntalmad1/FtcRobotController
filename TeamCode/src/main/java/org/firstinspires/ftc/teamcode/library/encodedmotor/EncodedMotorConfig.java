@@ -44,7 +44,7 @@ public class EncodedMotorConfig {
 
     /**
      */
-    public Control control = Control.Gp2_RightStickX;
+    public Control control = null;
 
     /**
      *

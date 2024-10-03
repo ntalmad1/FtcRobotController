@@ -609,24 +609,10 @@ public abstract class  IsaacBot extends LinearOpMode implements IComponent
 
         /**
          *
-         */
-        @Override
-        public void init() {
-            this.setInitialized(true);
-        }
-
-        /**
-         *
-         * @param telemetryPacket
          * @return
          */
         @Override
-        public boolean run(TelemetryPacket telemetryPacket) {
-
-            if (!this.isInitialized()) {
-                this.init();
-            }
-
+        public boolean run() {
             IsaacBot.this.getEventBus().run();
             IsaacBot.this.robotComponent.run();
             IsaacBot.this.run();

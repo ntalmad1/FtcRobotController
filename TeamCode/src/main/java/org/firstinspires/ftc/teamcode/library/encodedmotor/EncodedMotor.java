@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode.library.encodedmotor;
 
+import com.acmerobotics.roadrunner.Action;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 
@@ -85,10 +86,28 @@ public class EncodedMotor extends Component {
     /**
      *
      * @param position
+     */
+    public Action gotoPositionAction (int position) {
+        return this.gotoPositionAction(position, 1);
+    }
+
+    /**
+     *
+     * @param position
      * @param power
      */
     public void gotoPosition (int position, double power) {
         this.addCommand(new EncodedMotorGoToPositionCommand(this, position, power));
+    }
+
+    /**
+     *
+     * @param position
+     * @param power
+     * @return
+     */
+    public Action gotoPositionAction (int position, double power) {
+        return new EncodedMotorGoToPositionAction(this, position, power);
     }
 
     /**
@@ -156,8 +175,16 @@ public class EncodedMotor extends Component {
      *
      * @return
      */
-    public boolean isBusy () {
+    public boolean isBusy() {
         return this.motor.isBusy();
+    }
+
+    /**
+     *
+     * @return
+     */
+    public boolean isHolding() {
+        return this.holding;
     }
 
     /**
@@ -179,12 +206,19 @@ public class EncodedMotor extends Component {
      * @param power
      */
     public void move (double power, int increment) {
+        int targetPosition = this.motor.getCurrentPosition() + increment * (power < 0 ? -1 : 1);
+        this.moveToPosition(power, targetPosition);
+    }
 
+    /**
+     *
+     * @param power
+     * @param targetPosition
+     */
+    public void moveToPosition (double power, int targetPosition) {
         if (previousPower == 0 && power == 0) {
             return;
         }
-
-        int targetPosition = this.motor.getCurrentPosition() + increment * (power < 0 ? -1 : 1);
 
         if (power > 0 && targetPosition > this.config.maxTics) {
             targetPosition = this.config.maxTics;
@@ -211,8 +245,6 @@ public class EncodedMotor extends Component {
                 power = 1;
             }
         }
-
-
 
         this.motor.setTargetPosition(targetPosition);
         this.motor.setMode(DcMotor.RunMode.RUN_TO_POSITION);

@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode.library.action;
 
+import com.acmerobotics.dashboard.telemetry.TelemetryPacket;
 import com.acmerobotics.roadrunner.Action;
 
 import org.firstinspires.ftc.teamcode.library.event.Event;
@@ -105,4 +106,24 @@ public abstract class AbstractAction implements Action {
     public void init () {
         this.setInitialized(true);
     };
+
+    /**
+     *
+     * @param tp
+     * @return
+     */
+    public boolean run(TelemetryPacket tp) {
+        if (!this.initialized) {
+            this.init();
+            this.setInitialized(true);
+        }
+
+        return this.run();
+    }
+
+    /**
+     *
+     * @return
+     */
+    public abstract boolean run();
 }

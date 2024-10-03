@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode.library.rotator;
 
+import com.acmerobotics.roadrunner.Action;
 import com.qualcomm.robotcore.hardware.Servo;
 
 import org.firstinspires.ftc.teamcode.library.component.Component;
@@ -132,9 +133,35 @@ public class Rotator extends Component {
         this.gotoPosition(targetPosition, this.getMaxIncrement());
     }
 
+    /**
+     *
+     * @param targetPosition
+     * @return
+     */
+    public Action gotoPositionAction (double targetPosition)
+    {
+        return this.gotoPositionAction(targetPosition, this.getMaxIncrement());
+    }
+
+    /**
+     *
+     * @param targetPosition
+     * @param maxIncrement
+     */
     public void gotoPosition (double targetPosition, double maxIncrement) {
         double startPosition = this.servo.getPosition();
         this.addCommand(new RotatorGoToPositionCommand(this, maxIncrement, startPosition, targetPosition));
+    }
+
+    /**
+     *
+     * @param targetPosition
+     * @param maxIncrement
+     * @return
+     */
+    public Action gotoPositionAction (double targetPosition, double maxIncrement) {
+        double startPosition = this.servo.getPosition();
+        return new RotatorGoToPositionAction(this, maxIncrement, startPosition, targetPosition);
     }
 
     /**

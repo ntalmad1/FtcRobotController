@@ -17,15 +17,15 @@ public class Intake extends Component {
 
     /**
      */
-    private Rotator hServo;
+    public Rotator hServo;
 
     /**
      */
-    private Rotator vServo;
+    public Rotator vServo;
 
     /**
      */
-    private ContinuousServo roller;
+    public ContinuousServo roller;
 
     /**
      * Constructor

@@ -34,13 +34,12 @@ public class WaitAction extends AbstractAction {
             this.timer = new ElapsedTime();
             this.timer.reset();
         }
-        this.setInitialized(true);
     }
 
     /**
      *
      */
-    public boolean run (TelemetryPacket telemetryPacket) {
+    public boolean run() {
 
         if (!this.isInitialized()) {
             this.init();
@@ -64,7 +63,7 @@ public class WaitAction extends AbstractAction {
      *
      * @return
      */
-    public String toString () {
+    public String toString() {
         return this.getClass() + ": " + this.duration;
     }
 
