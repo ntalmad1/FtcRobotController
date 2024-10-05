@@ -175,7 +175,7 @@ public class CompBotConfig {
         this.flapperBarsConfig.minPosition = 0;
         this.flapperBarsConfig.maxPosition = 1;
         this.flapperBarsConfig.secondaryServoName = "rightFlapper";
-        this.flapperBarsConfig.controllerInputMethod = Control.Gp2_RightStickY;
+        this.flapperBarsConfig.maxIncrement = 0.001;
 
         // intake
         this.intakeConfig = new IntakeConfig(robot);
@@ -200,10 +200,9 @@ public class CompBotConfig {
 
         // winch
         this.winchConfig = new WinchConfig(robot);
-        //this.winchConfig.control = Control.Gp1_RightStickY;
         this.winchConfig.motorName = "winch";
-        this.winchConfig.minTics = -40000;
-        this.winchConfig.maxTics = 40000;
+        this.winchConfig.minTics = -90000;
+        this.winchConfig.maxTics = 90000;
         this.winchConfig.increment = 100000;
 
     }

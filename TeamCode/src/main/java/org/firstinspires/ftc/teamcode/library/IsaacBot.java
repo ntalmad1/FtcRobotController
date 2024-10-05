@@ -31,10 +31,18 @@ import org.firstinspires.ftc.teamcode.library.event.gp1_dpad_down.gp1_dpad_up_do
 import org.firstinspires.ftc.teamcode.library.event.gp1_dpad_press.gp1_dpad_left_press.Gp1_Dpad_Left_PressHandler;
 import org.firstinspires.ftc.teamcode.library.event.gp1_dpad_press.gp1_dpad_right_press.Gp1_Dpad_Right_PressHandler;
 import org.firstinspires.ftc.teamcode.library.event.gp1_dpad_press.gp1_dpad_up_press.Gp1_Dpad_Up_PressHandler;
+import org.firstinspires.ftc.teamcode.library.event.gp1_left_bumper_down.Gp1_Left_Bumper_DownHandler;
+import org.firstinspires.ftc.teamcode.library.event.gp1_left_bumper_up.Gp1_Left_Bumper_UpHandler;
 import org.firstinspires.ftc.teamcode.library.event.gp1_left_stick_x.Gp1_LeftStick_X_Handler;
 import org.firstinspires.ftc.teamcode.library.event.gp1_left_stick_y.Gp1_LeftStick_Y_Handler;
+import org.firstinspires.ftc.teamcode.library.event.gp1_left_trigger_down.Gp1_Left_Trigger_DownHandler;
+import org.firstinspires.ftc.teamcode.library.event.gp1_left_trigger_up.Gp1_Left_Trigger_UpHandler;
+import org.firstinspires.ftc.teamcode.library.event.gp1_right_bumper_down.Gp1_Right_Bumper_DownHandler;
+import org.firstinspires.ftc.teamcode.library.event.gp1_right_bumper_up.Gp1_Right_Bumper_UpHandler;
 import org.firstinspires.ftc.teamcode.library.event.gp1_right_stick_x.Gp1_RightStick_X_Handler;
 import org.firstinspires.ftc.teamcode.library.event.gp1_right_stick_y.Gp1_RightStick_Y_Handler;
+import org.firstinspires.ftc.teamcode.library.event.gp1_right_trigger_down.Gp1_Right_Trigger_DownHandler;
+import org.firstinspires.ftc.teamcode.library.event.gp1_right_trigger_up.Gp1_Right_Trigger_UpHandler;
 import org.firstinspires.ftc.teamcode.library.event.gp1_x_press.Gp1_X_PressHandler;
 import org.firstinspires.ftc.teamcode.library.event.gp1_y_press.Gp1_Y_PressHandler;
 import org.firstinspires.ftc.teamcode.library.event.gp2_a_press.Gp2_A_PressHandler;
@@ -188,6 +196,26 @@ public abstract class  IsaacBot extends LinearOpMode implements IComponent
     public HandlerRegistration addGp1_Y_PressHandler (Gp1_Y_PressHandler handler) {
         return this.robotComponent.addGp1_Y_PressHandler(handler);
     }
+
+    //----------------------------------------------------------------------------------------------
+
+    public HandlerRegistration addGp1_Left_Bumper_DownHandler (Gp1_Left_Bumper_DownHandler handler) {
+        return this.robotComponent.addGp1_Left_Bumper_DownHandler(handler);
+    }
+
+    public HandlerRegistration addGp1_Left_Bumper_UpHandler (Gp1_Left_Bumper_UpHandler handler) {
+        return this.robotComponent.addGp1_Left_Bumper_UpHandler(handler);
+    }
+
+    public HandlerRegistration addGp1_Right_Bumper_DownHandler (Gp1_Right_Bumper_DownHandler handler) {
+        return this.robotComponent.addGp1_Right_Bumper_DownHandler(handler);
+    }
+
+    public HandlerRegistration addGp1_Right_Bumper_UpHandler (Gp1_Right_Bumper_UpHandler handler) {
+        return this.robotComponent.addGp1_Right_Bumper_UpHandler(handler);
+    }
+
+    //----------------------------------------------------------------------------------------------
 
     /**
      *
@@ -433,6 +461,44 @@ public abstract class  IsaacBot extends LinearOpMode implements IComponent
      */
     public HandlerRegistration addGp2_RightStick_Y_Handler (Gp2_RightStick_Y_Handler handler) {
         return this.robotComponent.addGp2_RightStick_Y_Handler(handler);
+    }
+
+    //----------------------------------------------------------------------------------------------
+
+    /**
+     *
+     * @param handler
+     * @return
+     */
+    public HandlerRegistration addGp1_RightTrigger_DownHandler(Gp1_Right_Trigger_DownHandler handler) {
+        return this.robotComponent.addGp1_Right_Trigger_DownHandler(handler);
+    }
+
+    /**
+     *
+     * @param handler
+     * @return
+     */
+    public HandlerRegistration addGp1_RightTrigger_UpHandler(Gp1_Right_Trigger_UpHandler handler) {
+        return this.robotComponent.addGp1_Right_Trigger_UpHandler(handler);
+    }
+
+    /**
+     *
+     * @param handler
+     * @return
+     */
+    public HandlerRegistration addGp1_LeftTrigger_DownHandler(Gp1_Left_Trigger_DownHandler handler) {
+        return this.robotComponent.addGp1_Left_Trigger_DownHandler(handler);
+    }
+
+    /**
+     *
+     * @param handler
+     * @return
+     */
+    public HandlerRegistration addGp1_LeftTrigger_UpHandler(Gp1_Left_Trigger_UpHandler handler) {
+        return this.robotComponent.addGp1_Left_Trigger_UpHandler(handler);
     }
 
     //endregion

@@ -86,7 +86,9 @@ public class Intake extends Component {
         this.vServo.run();
         this.roller.run();
 
-        telemetry.addData("Intake H Servo Pos:", this.hServo.getPosition());
-        telemetry.addData("Intake V Servo Pos:", this.vServo.getPosition());
+        if (this.isDebug()) {
+            telemetry.addData("Intake H Servo Pos:", this.hServo.getPosition());
+            telemetry.addData("Intake V Servo Pos:", this.vServo.getPosition());
+        }
     }
 }

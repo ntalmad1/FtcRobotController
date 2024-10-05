@@ -120,6 +120,38 @@ public class CompBot extends IsaacBot {
         this.intake.init();
         this.winch.init();
 
+        this.addGp1_RightTrigger_DownHandler(event -> {
+            winch.move(1);
+        });
+
+        this.addGp1_RightTrigger_UpHandler(event -> {
+            winch.move(0);
+        });
+
+        this.addGp1_LeftTrigger_DownHandler(event -> {
+            winch.move(-1);
+        });
+
+        this.addGp1_LeftTrigger_UpHandler(event -> {
+            winch.move(0);
+        });
+
+        this.addGp1_Left_Bumper_DownHandler(event -> {
+            flapperBars.move(-1);
+        });
+
+        this.addGp1_Left_Bumper_UpHandler(event -> {
+            flapperBars.move(0);
+        });
+
+        this.addGp1_Right_Bumper_DownHandler(event -> {
+            flapperBars.move(1);
+        });
+
+        this.addGp1_Right_Bumper_UpHandler(event -> {
+            flapperBars.move(0);
+        });
+
         this.addGp2_A_PressHandler(event -> {
             runAction(new SequentialAction(
                             new ParallelAction(
@@ -142,6 +174,8 @@ public class CompBot extends IsaacBot {
 
             ));
         });
+
+
     }
 
     /**

@@ -246,6 +246,18 @@ public class ServoComponent extends Component {
 
     /**
      *
+     * @return
+     */
+    public boolean move (double input) {
+        return this.move(
+                input,
+                this.getConfig().maxIncrement,
+                this.getConfig().maxIncrement,
+                this.getConfig().maxPosition);
+    }
+
+    /**
+     *
      * @param input the value of the game pad stick
      * @param maxIncrement the amount to increment or decrement the servo position by each cycle
      * @param minPosition the min position of the servo
