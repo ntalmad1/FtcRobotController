@@ -5,6 +5,7 @@ import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import org.firstinspires.ftc.teamcode.library.component.Component;
 import org.firstinspires.ftc.teamcode.library.continuousservo.ContinuousServo;
 import org.firstinspires.ftc.teamcode.library.rotator.Rotator;
+import org.firstinspires.ftc.teamcode.library.servo.ServoComponent;
 
 /**
  *
@@ -25,7 +26,8 @@ public class Intake extends Component {
 
     /**
      */
-    public ContinuousServo roller;
+    // public ContinuousServo roller;
+    public ServoComponent pincher;
 
     /**
      * Constructor
@@ -40,26 +42,34 @@ public class Intake extends Component {
         this.hServo = new Rotator(this.config.hServoConfig);
         this.vServo = new Rotator(this.config.vServoConfig);
 
-        this.roller = new ContinuousServo(this.config.rollerConfig);
+        this.pincher = new ServoComponent(this.config.pincherConfig);
 
-        this.addGp2_Right_Trigger_DownHandler(event -> {
-            this.roller.setDirection(DcMotorSimple.Direction.REVERSE);
-            this.roller.setPower(1);
+        this.addGp2_Right_Trigger_Handler(event -> {
+            this.pincher.setPosition(this.config.pincherConfig.maxPosition);
         });
 
-        this.addGp2_Right_Trigger_UpHandler(event -> {
-            this.roller.stop();
-
+        this.addGp2_Left_Trigger_Handler(event -> {
+            this.pincher.setPosition(this.config.pincherConfig.minPosition);
         });
 
-        this.addGp2_Left_Trigger_DownHandler(event -> {
-            this.roller.setDirection(DcMotorSimple.Direction.FORWARD);
-            this.roller.setPower(1);
-        });
-
-        this.addGp2_Left_Trigger_UpHandler(event -> {
-            this.roller.stop();
-        });
+//        this.addGp2_Right_Trigger_DownHandler(event -> {
+//            this.roller.setDirection(DcMotorSimple.Direction.REVERSE);
+//            this.roller.setPower(1);
+//        });
+//
+//        this.addGp2_Right_Trigger_UpHandler(event -> {
+//            this.roller.stop();
+//
+//        });
+//
+//        this.addGp2_Left_Trigger_DownHandler(event -> {
+//            this.roller.setDirection(DcMotorSimple.Direction.FORWARD);
+//            this.roller.setPower(1);
+//        });
+//
+//        this.addGp2_Left_Trigger_UpHandler(event -> {
+//            this.roller.stop();
+//        });
     }
 
 
@@ -72,7 +82,7 @@ public class Intake extends Component {
 
        this.hServo.init();
        this.vServo.init();
-       this.roller.init();
+       this.pincher.init();
     }
 
     /**
@@ -84,11 +94,12 @@ public class Intake extends Component {
 
         this.hServo.run();
         this.vServo.run();
-        this.roller.run();
+        this.pincher.run();
 
         if (this.isDebug()) {
             telemetry.addData("Intake H Servo Pos:", this.hServo.getPosition());
             telemetry.addData("Intake V Servo Pos:", this.vServo.getPosition());
+            telemetry.addData("Intake Pincher Pos:", this.pincher.getPosition());
         }
     }
 }
