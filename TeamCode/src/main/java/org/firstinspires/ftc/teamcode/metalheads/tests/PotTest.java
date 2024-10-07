@@ -13,7 +13,7 @@ public class PotTest extends LinearOpMode {
     double currentVoltage;
     double currentPosition; //In percentage
 
-    final double maxVoltage = 10.3;
+    final double maxVoltage = 3.327;
 
     public void runOpMode() {
 
@@ -24,9 +24,10 @@ public class PotTest extends LinearOpMode {
 
             currentVoltage = pot.getVoltage();
 
-            currentPosition = currentVoltage / maxVoltage;
+            currentPosition = 100.0 * (currentVoltage / maxVoltage);
 
-            telemetry.addData("CurrentPosition : %", currentPosition);
+            telemetry.addData("CurrentPosition: %", currentPosition);
+            telemetry.addData("CurrentVoltage: ", currentVoltage);
             telemetry.update();
 
         }
