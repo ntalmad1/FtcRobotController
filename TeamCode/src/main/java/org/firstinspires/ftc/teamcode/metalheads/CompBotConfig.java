@@ -179,20 +179,28 @@ public class CompBotConfig {
 
         // intake
         this.intakeConfig = new IntakeConfig(robot);
-        intakeConfig.rollerConfig = new ContinuousServoConfig(robot);
-        intakeConfig.rollerConfig.servoName = "intake";
+        //intakeConfig.rollerConfig = new ContinuousServoConfig(robot);
+        //intakeConfig.rollerConfig.servoName = "intake";
+        this.intakeConfig.pincherConfig = new ServoComponentConfig(robot);
+        this.intakeConfig.pincherConfig.servoName = "intake";
+        this.intakeConfig.pincherConfig.homePosition = 0.5;
+        this.intakeConfig.pincherConfig.zeroDegreePosition = 0.5;
+        this.intakeConfig.pincherConfig.minPosition = 0.373;
+        this.intakeConfig.pincherConfig.maxPosition = 0.544;
+
+
 
         this.intakeConfig.hServoConfig = new RotatorConfig(robot);
         this.intakeConfig.hServoConfig.servoName = "intakeHorizontal";
-        //this.intakeConfig.hServoConfig.controllerInputMethod = Control.Gp1_LeftStickX;
+        this.intakeConfig.hServoConfig.controllerInputMethod = Control.Gp1_LeftStickX;
         this.intakeConfig.hServoConfig.zeroDegreePosition = 0.5;
-        this.intakeConfig.hServoConfig.homePosition = 0.5;
+        this.intakeConfig.hServoConfig.homePosition = 0.5011;
         this.intakeConfig.hServoConfig.minPosition = 0.15;
         this.intakeConfig.hServoConfig.maxPosition = 0.80;
 
         this.intakeConfig.vServoConfig = new RotatorConfig(robot);
         this.intakeConfig.vServoConfig.servoName = "intakeVertical";
-        //this.intakeConfig.vServoConfig.controllerInputMethod = Control.Gp1_LeftStickY;
+        this.intakeConfig.vServoConfig.controllerInputMethod = Control.Gp1_LeftStickY;
         this.intakeConfig.vServoConfig.zeroDegreePosition = 0.5;
         this.intakeConfig.vServoConfig.homePosition = 0.5;
         this.intakeConfig.vServoConfig.minPosition = 0.233;

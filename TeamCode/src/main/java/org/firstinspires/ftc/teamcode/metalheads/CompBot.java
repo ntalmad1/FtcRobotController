@@ -49,7 +49,7 @@ public class CompBot extends IsaacBot {
 
     /**
      */
-    private MecanumDriveTrain driveTrain;
+    //private MecanumDriveTrain driveTrain;
 
     /**
      */
@@ -88,7 +88,7 @@ public class CompBot extends IsaacBot {
 
         this.config.debugAll = false;
 
-        this.driveTrain = new MecanumDriveTrain(this.config.driveTrainConfig);
+        //this.driveTrain = new MecanumDriveTrain(this.config.driveTrainConfig);
         this.arm = new Arm(this.config.armConfig);
         this.claw = new Claw(this.config.clawConfig);
         this.doubleHooks = new DoubleHooks(this.config.doubleHooksConfig);
@@ -112,7 +112,7 @@ public class CompBot extends IsaacBot {
 
         roadrunner = new MecanumDrive(hardwareMap, beginPose);
 
-        this.driveTrain.init();
+        //this.driveTrain.init();
         this.arm.init();
         this.claw.init();
         this.doubleHooks.init();
@@ -155,11 +155,11 @@ public class CompBot extends IsaacBot {
         this.addGp2_A_PressHandler(event -> {
             runAction(new SequentialAction(
                             new ParallelAction(
-                                CompBot.this.intake.hServo.gotoPositionAction(0.485, 1),
+                                CompBot.this.intake.hServo.gotoPositionAction(0.5011, 1),
                                 CompBot.this.intake.vServo.gotoPositionAction(0.6356, 1),
-                                CompBot.this.arm.viperSlide.gotoPositionAction(1264),
+                                CompBot.this.arm.viperSlide.gotoPositionAction(533),
                             new WaitAction(1000),
-                            CompBot.this.arm.mainBoom.gotoPositionAction(-736, 0.5))
+                            CompBot.this.arm.mainBoom.gotoPositionAction(-714, 0.5))
 
             ));
         });
@@ -168,7 +168,7 @@ public class CompBot extends IsaacBot {
             runAction(new SequentialAction(
                         CompBot.this.arm.mainBoom.gotoPositionAction(0, 0.5),
                         new ParallelAction(
-                            CompBot.this.intake.hServo.gotoPositionAction(0.5, 1),
+                            CompBot.this.intake.hServo.gotoPositionAction(0.5011, 1),
                             CompBot.this.intake.vServo.gotoPositionAction(0.5, 1),
                             CompBot.this.arm.viperSlide.gotoPositionAction(0))
 
@@ -193,7 +193,7 @@ public class CompBot extends IsaacBot {
     public void run() {
         super.run();
 
-        this.driveTrain.run(this.config.debugDriveTrain || this.config.debugAll);
+        //this.driveTrain.run(this.config.debugDriveTrain || this.config.debugAll);
         this.arm.run(this.config.debugArm || this.config.debugAll);
         this.claw.run(this.config.debugClaw || this.config.debugAll);
         this.doubleHooks.run(this.config.debugDoubleHooks || this.config.debugAll);

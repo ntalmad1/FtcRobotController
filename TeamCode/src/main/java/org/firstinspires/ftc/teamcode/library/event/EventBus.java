@@ -161,6 +161,8 @@ public class EventBus extends HandlerManager {
      */
     public void run ()
     {
+        //this.robot.telemetry.log().add("EventBus.run()");
+
         boolean current_gp1_right_bumper_down = this.robot.gamepad1.right_bumper;
         if (this.gp1_right_bumper_down && !current_gp1_right_bumper_down) {
             this.gp1_right_bumper_down = false;
