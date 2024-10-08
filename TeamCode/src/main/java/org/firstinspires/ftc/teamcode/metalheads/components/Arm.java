@@ -2,6 +2,8 @@ package org.firstinspires.ftc.teamcode.metalheads.components;
 
 import org.firstinspires.ftc.teamcode.library.component.Component;
 import org.firstinspires.ftc.teamcode.library.encodedmotor.EncodedMotor;
+import org.firstinspires.ftc.teamcode.library.potentiometer.Potentiometer;
+import org.firstinspires.ftc.teamcode.library.potentiometermotor.PotentiometerMotor;
 
 /**
  *
@@ -18,7 +20,7 @@ public class Arm extends Component {
 
     /**
      */
-    public EncodedMotor viperSlide;
+    public PotentiometerMotor viperSlide;
 
     /**
      * Constructor
@@ -31,7 +33,7 @@ public class Arm extends Component {
         this.config = armConfig;
 
         this.mainBoom = new EncodedMotor(this.config.mainBoomConfig);
-        this.viperSlide = new EncodedMotor(this.config.viperSlideConfig);
+        this.viperSlide = new PotentiometerMotor(this.config.viperSlideConfig);
     }
 
     /**
@@ -58,7 +60,7 @@ public class Arm extends Component {
         if (this.isDebug()) {
             telemetry.addData("Main Boom Position:", this.mainBoom.getCurrentPosition());
             telemetry.addData("Viper Slide Position:", this.viperSlide.getCurrentPosition());
-            //telemetry.addData("VS ZeroPower Behav:", this.viperSlide.getZeroPowerBehavior());
+            telemetry.addData("Potentiometer Volts:", this.viperSlide.getVoltage());
         }
     }
 }

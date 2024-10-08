@@ -17,7 +17,6 @@ public class ArmCompConfig extends ArmConfig {
         encodedMotorConfig.motorName = "actuatorMotor";
         encodedMotorConfig.minTics = -10000;
         encodedMotorConfig.maxTics = 3400;
-        encodedMotorConfig.increment = 200;
         encodedMotorConfig.debug = false;
         encodedMotorConfig.brakeOn = false;
         encodedMotorConfig.control = Control.Gp2_RightStickX;

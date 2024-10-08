@@ -157,7 +157,7 @@ public class CompBot extends IsaacBot {
                             new ParallelAction(
                                 CompBot.this.intake.hServo.gotoPositionAction(0.5011, 1),
                                 CompBot.this.intake.vServo.gotoPositionAction(0.6356, 1),
-                                CompBot.this.arm.viperSlide.gotoPositionAction(533),
+                                CompBot.this.arm.viperSlide.gotoVoltageAction(0.695),
                             new WaitAction(1000),
                             CompBot.this.arm.mainBoom.gotoPositionAction(-714, 0.5))
 
@@ -170,7 +170,7 @@ public class CompBot extends IsaacBot {
                         new ParallelAction(
                             CompBot.this.intake.hServo.gotoPositionAction(0.5011, 1),
                             CompBot.this.intake.vServo.gotoPositionAction(0.5, 1),
-                            CompBot.this.arm.viperSlide.gotoPositionAction(0))
+                            CompBot.this.arm.viperSlide.gotoVoltageAction(0.586))
 
             ));
         });

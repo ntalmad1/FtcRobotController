@@ -227,7 +227,7 @@ public class CompBot extends IsaacBot {
                     }
                 });
 
-        final ICommand constantPressureCommand = new ConstantPressureWinchCommand(this.winch, this.trolleySensor,-1, 200);
+        final ICommand constantPressureCommand = new ConstantPressureWinchCommand(this.winch, this.trolleySensor,-1);
 
         this.arm.addCommand(constantPressureCommand);
 

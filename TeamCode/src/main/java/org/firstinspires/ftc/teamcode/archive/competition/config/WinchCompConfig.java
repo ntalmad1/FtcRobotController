@@ -22,7 +22,6 @@ public class WinchCompConfig extends WinchConfig {
         encodedMotorConfig.initialMotorDirection = DcMotorSimple.Direction.FORWARD;
         encodedMotorConfig.minTics = -100000;
         encodedMotorConfig.maxTics = 100000;
-        encodedMotorConfig.increment = 100;
         encodedMotorConfig.brakeOn = false;
         encodedMotorConfig.control = null;
 

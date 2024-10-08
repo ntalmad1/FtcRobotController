@@ -50,7 +50,7 @@ public class EncodedMotorGoToPositionCommand extends AbstractSynchronousCommand 
     public void run() {
         if (this.motor.isBusy())
         {
-            if (this.motor.getConfig().debug == true) {
+            if (this.motor.getConfig().debug) {
                 this.motor.getRobot().telemetry.addData("Running to: ",  " %7d", position);
                 this.motor.getRobot().telemetry.addData("Currently at: ",  " at %7d", this.motor.getCurrentPosition());
                 this.motor.getRobot().telemetry.addData("Motor Power: ", " %f", this.motor.getPower());

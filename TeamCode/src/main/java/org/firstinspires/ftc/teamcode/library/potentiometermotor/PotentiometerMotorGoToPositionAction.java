@@ -1,16 +1,11 @@
-package org.firstinspires.ftc.teamcode.library.encodedmotor;
+package org.firstinspires.ftc.teamcode.library.potentiometermotor;
 
-import com.acmerobotics.dashboard.telemetry.TelemetryPacket;
-import com.qualcomm.robotcore.hardware.DcMotor;
-
-import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.teamcode.library.action.AbstractAction;
-import org.firstinspires.ftc.teamcode.library.command.AbstractSynchronousCommand;
 
 /**
  *
  */
-public class EncodedMotorGoToPositionAction extends AbstractAction {
+public class PotentiometerMotorGoToPositionAction extends AbstractAction {
 
     /**
      */
@@ -18,22 +13,22 @@ public class EncodedMotorGoToPositionAction extends AbstractAction {
 
     /**
      */
-    private int position;
+    private double voltage;
 
     /**
      */
-    private EncodedMotor motor;
+    private PotentiometerMotor motor;
 
 
     /**
      *
      * @param motor
-     * @param position
+     * @param voltage
      * @param power
      */
-    public EncodedMotorGoToPositionAction(EncodedMotor motor, int position, double power) {
+    public PotentiometerMotorGoToPositionAction(PotentiometerMotor motor, double voltage, double power) {
         this.motor = motor;
-        this.position = position;
+        this.voltage = voltage;
         this.power = power;
     }
 
@@ -41,7 +36,7 @@ public class EncodedMotorGoToPositionAction extends AbstractAction {
      *
      */
     public void init () {
-        this.motor.moveToPosition(power, position);
+        this.motor.moveToVoltage(power, voltage);
     }
 
     /**
@@ -53,7 +48,7 @@ public class EncodedMotorGoToPositionAction extends AbstractAction {
         if (this.motor.isBusy() && !this.motor.isHolding())
         {
             if (this.motor.getConfig().debug) {
-                this.motor.getRobot().telemetry.addData("Running to: ",  " %7d", position);
+                this.motor.getRobot().telemetry.addData("Running to Volt: ",  " %7d", voltage);
                 this.motor.getRobot().telemetry.addData("Currently at: ",  " at %7d", this.motor.getCurrentPosition());
                 this.motor.getRobot().telemetry.addData("Motor Power: ", " %f", this.motor.getPower());
                 this.motor.getRobot().telemetry.update();

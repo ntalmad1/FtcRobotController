@@ -1,36 +1,42 @@
 package org.firstinspires.ftc.teamcode.metalheads.tests;
 
-import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import org.firstinspires.ftc.teamcode.library.IsaacBot;
 import org.firstinspires.ftc.teamcode.library.encodedmotor.EncodedMotor;
 import org.firstinspires.ftc.teamcode.library.encodedmotor.EncodedMotorConfig;
+import org.firstinspires.ftc.teamcode.library.potentiometer.PotentiometerConfig;
+import org.firstinspires.ftc.teamcode.library.potentiometermotor.PotentiometerMotor;
+import org.firstinspires.ftc.teamcode.library.potentiometermotor.PotentiometerMotorConfig;
 import org.firstinspires.ftc.teamcode.library.utility.Control;
 
-@TeleOp(name="EncodedMotorTest", group="Tests")
-@Disabled
-public class EncodedMotorTest extends IsaacBot {
+@TeleOp(name="PotentiometerMotorTest", group="Tests")
+//@Disabled
+public class PotentiometerMotorTest extends IsaacBot {
 
     /**
      */
-    private EncodedMotor motor;
+    private PotentiometerMotor motor;
 
     /**
      */
     private String motorName;
 
-    public EncodedMotorTest() {
+    public PotentiometerMotorTest() {
         super();
 
-        EncodedMotorConfig config = new EncodedMotorConfig(this);
+        PotentiometerMotorConfig config = new PotentiometerMotorConfig(this);
         config.brakeOn = true;
-        config.maxTics = 10000;
-        config.minTics = 0;
-        config.motorName = "motor0";
+        config.minTics = 100;
+        config.maxTics = 2900;
+        config.minVolts = 0.586;
+        config.maxVolts = 1.129;
+        config.motorName = "viperSlide";
+        config.potentiometerConfig = new PotentiometerConfig(this);
+        config.potentiometerConfig.potentiometerName = "pot";
         config.control = Control.Gp1_LeftStickY;
 
-        motor = new EncodedMotor(config);
+        motor = new PotentiometerMotor(config);
     }
 
     /**
@@ -48,7 +54,7 @@ public class EncodedMotorTest extends IsaacBot {
     @Override
     public void go() {
 
-        this.motor.gotoPosition(5000, 1);
+        //this.motor.gotoPosition(5000, 1);
 
     }
 
@@ -64,6 +70,7 @@ public class EncodedMotorTest extends IsaacBot {
         this.telemetry.addData("Position:", this.motor.getCurrentPosition());
         this.telemetry.addData("TargetPosition:", this.motor.getTargetPosition());
         this.telemetry.addData("Power:", this.motor.getPower());
+        this.telemetry.addData("Voltage:", this.motor.getVoltage());
         this.telemetry.update();
     }
 

@@ -7,6 +7,8 @@ import org.firstinspires.ftc.teamcode.library.IsaacBot;
 import org.firstinspires.ftc.teamcode.library.continuousservo.ContinuousServoConfig;
 import org.firstinspires.ftc.teamcode.library.drivetrain.MecanumDriveTrainConfig;
 import org.firstinspires.ftc.teamcode.library.encodedmotor.EncodedMotorConfig;
+import org.firstinspires.ftc.teamcode.library.potentiometer.PotentiometerConfig;
+import org.firstinspires.ftc.teamcode.library.potentiometermotor.PotentiometerMotorConfig;
 import org.firstinspires.ftc.teamcode.library.rotator.RotatorConfig;
 import org.firstinspires.ftc.teamcode.library.servo.ServoComponentConfig;
 import org.firstinspires.ftc.teamcode.library.utility.Control;
@@ -112,20 +114,25 @@ public class CompBotConfig {
 
         // arm
         this.armConfig = new ArmConfig(robot);
-        this.armConfig.viperSlideConfig = new EncodedMotorConfig(robot);
-        this.armConfig.viperSlideConfig.increment = 10000;
+        this.armConfig.viperSlideConfig = new PotentiometerMotorConfig(robot);
         this.armConfig.viperSlideConfig.motorName = "viperSlide";
         this.armConfig.viperSlideConfig.minTics = 100;
         this.armConfig.viperSlideConfig.maxTics = 2900;
+        this.armConfig.viperSlideConfig.minVolts = 0.586;
+        this.armConfig.viperSlideConfig.maxVolts = 1.129;
         this.armConfig.viperSlideConfig.brakeOn = true;
         this.armConfig.viperSlideConfig.control = Control.Gp2_RightStickX;
 
+        this.armConfig.viperSlideConfig.potentiometerConfig = new PotentiometerConfig(robot);
+        this.armConfig.viperSlideConfig.potentiometerConfig.potentiometerName = "pot";
+
         this.armConfig.mainBoomConfig = new EncodedMotorConfig(robot);
-        this.armConfig.mainBoomConfig.increment = 10000;
         this.armConfig.mainBoomConfig.motorName = "arm";
         this.armConfig.mainBoomConfig.minTics = -736;
         this.armConfig.mainBoomConfig.maxTics = 5000;
         this.armConfig.mainBoomConfig.control = Control.Gp2_LeftStickY;
+
+
 
         // claw
         this.clawConfig = new ClawConfig(robot);
@@ -149,7 +156,6 @@ public class CompBotConfig {
         this.doubleHooksConfig = new DoubleHooksConfig(robot);
         this.doubleHooksConfig.linearActuatorConfig = new EncodedMotorConfig(robot);
         this.doubleHooksConfig.linearActuatorConfig.motorName = "linearActuator";
-        this.doubleHooksConfig.linearActuatorConfig.increment = 10000;
         this.doubleHooksConfig.linearActuatorConfig.minTics = 0;
         this.doubleHooksConfig.linearActuatorConfig.maxTics = 8574;
         this.doubleHooksConfig.linearActuatorConfig.control = Control.Gp2_Dpad_UpDown;
@@ -211,7 +217,5 @@ public class CompBotConfig {
         this.winchConfig.motorName = "winch";
         this.winchConfig.minTics = -90000;
         this.winchConfig.maxTics = 90000;
-        this.winchConfig.increment = 100000;
-
     }
 }

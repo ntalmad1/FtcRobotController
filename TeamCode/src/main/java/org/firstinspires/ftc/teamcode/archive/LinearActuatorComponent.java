@@ -26,7 +26,6 @@ public class LinearActuatorComponent extends IsaacBot {
         config.motorName = "actuatorMotor";
         config.minTics = 0;
         config.maxTics = 3400;
-        config.increment = 200;
         config.debug = true;
         config.brakeOn = false;
         config.control = Control.Gp2_RightStickX;

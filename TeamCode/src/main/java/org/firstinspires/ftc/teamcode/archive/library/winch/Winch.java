@@ -189,9 +189,8 @@ public class Winch extends Component {
     /**
      *
      * @param power
-     * @param increment
      */
-    public void move (double power, int increment) {
-        this.motor.move(power, increment);
+    public void move(double power) {
+        this.motor.move(power);
     }
 }

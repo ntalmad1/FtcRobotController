@@ -29,13 +29,12 @@ public class ConstantPressureWinchCommand extends AbstractRepeatingCommand {
      * Constructor
      *
      */
-    public ConstantPressureWinchCommand (Winch winch, TouchSensor sensor, double power, int increment) {
+    public ConstantPressureWinchCommand (Winch winch, TouchSensor sensor, double power) {
         super ();
 
         this.winch = winch;
         this.sensor = sensor;
         this.power = power;
-        this.increment = increment;
     }
 
 
@@ -53,7 +52,7 @@ public class ConstantPressureWinchCommand extends AbstractRepeatingCommand {
         if (this.sensor.isPressed()) {
             this.winch.stop();
         } else {
-            this.winch.move(this.power, this.increment);
+            this.winch.move(this.power);
         }
     }
 }

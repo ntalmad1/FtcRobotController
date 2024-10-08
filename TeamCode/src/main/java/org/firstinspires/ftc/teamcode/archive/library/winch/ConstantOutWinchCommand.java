@@ -51,7 +51,7 @@ public class ConstantOutWinchCommand extends AbstractRepeatingCommand {
     public void run() {
 
         if (this.sensor.isPressed()) {
-            this.winch.move(this.power, this.increment);
+            this.winch.move(this.power);
         } else {
             this.winch.stop();
         }
