@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode.library.event;
 import org.firstinspires.ftc.teamcode.library.IsaacBot;
 import org.firstinspires.ftc.teamcode.library.event.gp1_a_press.Gp1_A_PressEvent;
 import org.firstinspires.ftc.teamcode.library.event.gp1_b_press.Gp1_B_PressEvent;
+import org.firstinspires.ftc.teamcode.library.event.gp1_back_press.Gp1_Back_PressEvent;
 import org.firstinspires.ftc.teamcode.library.event.gp1_dpad_down.gp1_dpad_down_down.Gp1_Dpad_Down_DownEvent;
 import org.firstinspires.ftc.teamcode.library.event.gp1_dpad_down.gp1_dpad_left_down.Gp1_Dpad_Left_DownEvent;
 import org.firstinspires.ftc.teamcode.library.event.gp1_dpad_down.gp1_dpad_right_down.Gp1_Dpad_Right_DownEvent;
@@ -23,10 +24,12 @@ import org.firstinspires.ftc.teamcode.library.event.gp1_right_stick_x.Gp1_RightS
 import org.firstinspires.ftc.teamcode.library.event.gp1_right_stick_y.Gp1_RightStick_Y_Event;
 import org.firstinspires.ftc.teamcode.library.event.gp1_right_trigger_down.Gp1_Right_Trigger_DownEvent;
 import org.firstinspires.ftc.teamcode.library.event.gp1_right_trigger_up.Gp1_Right_Trigger_UpEvent;
+import org.firstinspires.ftc.teamcode.library.event.gp1_start_press.Gp1_Start_PressEvent;
 import org.firstinspires.ftc.teamcode.library.event.gp1_x_press.Gp1_X_PressEvent;
 import org.firstinspires.ftc.teamcode.library.event.gp1_y_press.Gp1_Y_PressEvent;
 import org.firstinspires.ftc.teamcode.library.event.gp2_a_press.Gp2_A_PressEvent;
 import org.firstinspires.ftc.teamcode.library.event.gp2_b_press.Gp2_B_PressEvent;
+import org.firstinspires.ftc.teamcode.library.event.gp2_back_press.Gp2_Back_PressEvent;
 import org.firstinspires.ftc.teamcode.library.event.gp2_dpad_down.gp2_dpad_down_down.Gp2_Dpad_Down_DownEvent;
 import org.firstinspires.ftc.teamcode.library.event.gp2_dpad_down.gp2_dpad_left_down.Gp2_Dpad_Left_DownEvent;
 import org.firstinspires.ftc.teamcode.library.event.gp2_dpad_down.gp2_dpad_right_down.Gp2_Dpad_Right_DownEvent;
@@ -51,6 +54,7 @@ import org.firstinspires.ftc.teamcode.library.event.gp2_right_stick_y.Gp2_RightS
 import org.firstinspires.ftc.teamcode.library.event.gp2_right_trigger.Gp2_Right_Trigger_Event;
 import org.firstinspires.ftc.teamcode.library.event.gp2_right_trigger_down.Gp2_Right_Trigger_DownEvent;
 import org.firstinspires.ftc.teamcode.library.event.gp2_right_trigger_up.Gp2_Right_Trigger_UpEvent;
+import org.firstinspires.ftc.teamcode.library.event.gp2_start_press.Gp2_Start_PressEvent;
 import org.firstinspires.ftc.teamcode.library.event.gp2_x_press.Gp2_X_PressEvent;
 import org.firstinspires.ftc.teamcode.library.event.gp2_y_press.Gp2_Y_PressEvent;
 
@@ -122,6 +126,9 @@ public class EventBus extends HandlerManager {
     private boolean gp1_x_down;
     private boolean gp1_y_down;
 
+    private boolean gp1_back_down;
+    private boolean gp1_start_down;
+
     /**
      *
      */
@@ -129,6 +136,10 @@ public class EventBus extends HandlerManager {
     private boolean gp2_b_down;
     private boolean gp2_x_down;
     private boolean gp2_y_down;
+
+    private boolean gp2_back_down;
+    private boolean gp2_start_down;
+
     private boolean gp2_left_bumper_down;
     private boolean gp2_right_bumper_down;
 
@@ -481,6 +492,18 @@ public class EventBus extends HandlerManager {
         }
         this.gp2_y_down = current_gp2_y;
 
+        boolean current_gp2_back = this.robot.gamepad2.back;
+        if (this.gp2_back_down && !current_gp2_back) {
+            this.fireEvent(new Gp2_Back_PressEvent());
+        }
+        this.gp2_back_down = current_gp2_back;
+
+        boolean current_gp2_start = this.robot.gamepad2.start;
+        if (this.gp2_start_down && !current_gp2_start) {
+            this.fireEvent(new Gp2_Start_PressEvent());
+        }
+        this.gp2_start_down = current_gp2_start;
+
         //------------------------------------------------------------------------------------
 
         boolean current_gp1_a = this.robot.gamepad1.a;
@@ -507,6 +530,17 @@ public class EventBus extends HandlerManager {
         }
         this.gp1_y_down = current_gp1_y;
 
+        boolean current_gp1_back = this.robot.gamepad1.back;
+        if (this.gp1_back_down && !current_gp1_back) {
+            this.fireEvent(new Gp1_Back_PressEvent());
+        }
+        this.gp1_back_down = current_gp1_back;
+
+        boolean current_gp1_start = this.robot.gamepad1.start;
+        if (this.gp1_start_down && !current_gp1_start) {
+            this.fireEvent(new Gp1_Start_PressEvent());
+        }
+        this.gp1_start_down = current_gp1_start;
 
         //--------------------------------------------------------------------------
 

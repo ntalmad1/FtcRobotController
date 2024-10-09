@@ -14,6 +14,8 @@ import org.firstinspires.ftc.teamcode.library.event.gp1_a_press.Gp1_A_PressEvent
 import org.firstinspires.ftc.teamcode.library.event.gp1_a_press.Gp1_A_PressHandler;
 import org.firstinspires.ftc.teamcode.library.event.gp1_b_press.Gp1_B_PressEvent;
 import org.firstinspires.ftc.teamcode.library.event.gp1_b_press.Gp1_B_PressHandler;
+import org.firstinspires.ftc.teamcode.library.event.gp1_back_press.Gp1_Back_PressEvent;
+import org.firstinspires.ftc.teamcode.library.event.gp1_back_press.Gp1_Back_PressHandler;
 import org.firstinspires.ftc.teamcode.library.event.gp1_dpad_down.gp1_dpad_down_down.Gp1_Dpad_Down_DownEvent;
 import org.firstinspires.ftc.teamcode.library.event.gp1_dpad_down.gp1_dpad_down_down.Gp1_Dpad_Down_DownHandler;
 import org.firstinspires.ftc.teamcode.library.event.gp1_dpad_down.gp1_dpad_left_down.Gp1_Dpad_Left_DownEvent;
@@ -54,6 +56,8 @@ import org.firstinspires.ftc.teamcode.library.event.gp1_right_trigger_down.Gp1_R
 import org.firstinspires.ftc.teamcode.library.event.gp1_right_trigger_down.Gp1_Right_Trigger_DownHandler;
 import org.firstinspires.ftc.teamcode.library.event.gp1_right_trigger_up.Gp1_Right_Trigger_UpEvent;
 import org.firstinspires.ftc.teamcode.library.event.gp1_right_trigger_up.Gp1_Right_Trigger_UpHandler;
+import org.firstinspires.ftc.teamcode.library.event.gp1_start_press.Gp1_Start_PressEvent;
+import org.firstinspires.ftc.teamcode.library.event.gp1_start_press.Gp1_Start_PressHandler;
 import org.firstinspires.ftc.teamcode.library.event.gp1_x_press.Gp1_X_PressEvent;
 import org.firstinspires.ftc.teamcode.library.event.gp1_x_press.Gp1_X_PressHandler;
 import org.firstinspires.ftc.teamcode.library.event.gp1_y_press.Gp1_Y_PressEvent;
@@ -62,6 +66,8 @@ import org.firstinspires.ftc.teamcode.library.event.gp2_a_press.Gp2_A_PressEvent
 import org.firstinspires.ftc.teamcode.library.event.gp2_a_press.Gp2_A_PressHandler;
 import org.firstinspires.ftc.teamcode.library.event.gp2_b_press.Gp2_B_PressEvent;
 import org.firstinspires.ftc.teamcode.library.event.gp2_b_press.Gp2_B_PressHandler;
+import org.firstinspires.ftc.teamcode.library.event.gp2_back_press.Gp2_Back_PressEvent;
+import org.firstinspires.ftc.teamcode.library.event.gp2_back_press.Gp2_Back_PressHandler;
 import org.firstinspires.ftc.teamcode.library.event.gp2_dpad_down.gp2_dpad_down_down.Gp2_Dpad_Down_DownEvent;
 import org.firstinspires.ftc.teamcode.library.event.gp2_dpad_down.gp2_dpad_down_down.Gp2_Dpad_Down_DownHandler;
 import org.firstinspires.ftc.teamcode.library.event.gp2_dpad_down.gp2_dpad_left_down.Gp2_Dpad_Left_DownEvent;
@@ -110,6 +116,8 @@ import org.firstinspires.ftc.teamcode.library.event.gp2_right_trigger_down.Gp2_R
 import org.firstinspires.ftc.teamcode.library.event.gp2_right_trigger_down.Gp2_Right_Trigger_DownHandler;
 import org.firstinspires.ftc.teamcode.library.event.gp2_right_trigger_up.Gp2_Right_Trigger_UpEvent;
 import org.firstinspires.ftc.teamcode.library.event.gp2_right_trigger_up.Gp2_Right_Trigger_UpHandler;
+import org.firstinspires.ftc.teamcode.library.event.gp2_start_press.Gp2_Start_PressEvent;
+import org.firstinspires.ftc.teamcode.library.event.gp2_start_press.Gp2_Start_PressHandler;
 import org.firstinspires.ftc.teamcode.library.event.gp2_x_press.Gp2_X_PressEvent;
 import org.firstinspires.ftc.teamcode.library.event.gp2_x_press.Gp2_X_PressHandler;
 import org.firstinspires.ftc.teamcode.library.event.gp2_y_press.Gp2_Y_PressEvent;
@@ -461,6 +469,24 @@ public abstract class Component implements IComponent {
 
     public HandlerRegistration addGp2_RightStick_Y_Handler (Gp2_RightStick_Y_Handler handler) {
         return EventBus.getInstance().addHandler(Gp2_RightStick_Y_Event.TYPE, handler);
+    }
+
+    //----------------------------------------------------------------------------------------------
+
+    public HandlerRegistration addGp1_Back_PressHandler (Gp1_Back_PressHandler handler) {
+        return EventBus.getInstance().addHandler(Gp1_Back_PressEvent.TYPE, handler);
+    }
+
+    public HandlerRegistration addGp2_Back_PressHandler (Gp2_Back_PressHandler handler) {
+        return EventBus.getInstance().addHandler(Gp2_Back_PressEvent.TYPE, handler);
+    }
+
+    public HandlerRegistration addGp1_Start_PressHandler (Gp1_Start_PressHandler handler) {
+        return EventBus.getInstance().addHandler(Gp1_Start_PressEvent.TYPE, handler);
+    }
+
+    public HandlerRegistration addGp2_Start_PressHandler (Gp2_Start_PressHandler handler) {
+        return EventBus.getInstance().addHandler(Gp2_Start_PressEvent.TYPE, handler);
     }
 
     //----------------------------------------------------------------------------------------------

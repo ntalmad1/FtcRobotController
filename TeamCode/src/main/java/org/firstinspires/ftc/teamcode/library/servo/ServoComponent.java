@@ -1,6 +1,9 @@
 package org.firstinspires.ftc.teamcode.library.servo;
 
+import com.acmerobotics.roadrunner.Action;
+
 import org.firstinspires.ftc.teamcode.library.component.Component;
+import org.firstinspires.ftc.teamcode.library.rotator.RotatorGoToPositionAction;
 import org.firstinspires.ftc.teamcode.library.utility.Control;
 
 /**
@@ -130,9 +133,25 @@ public class ServoComponent extends Component {
         this.gotoPosition(targetPosition, this.getMaxIncrement());
     }
 
+    /**
+     *
+     * @param targetPosition
+     * @param maxIncrement
+     */
     public void gotoPosition (double targetPosition, double maxIncrement) {
         double startPosition = this.servo.getPosition();
         this.addCommand(new ServoGoToPositionCommand(this, maxIncrement, startPosition, targetPosition));
+    }
+
+    /**
+     *
+     * @param targetPosition
+     * @param maxIncrement
+     * @return
+     */
+    public Action gotoPositionAction (double targetPosition, double maxIncrement) {
+        double startPosition = this.servo.getPosition();
+        return new ServoGoToPositionAction(this, maxIncrement, startPosition, targetPosition);
     }
 
     /**

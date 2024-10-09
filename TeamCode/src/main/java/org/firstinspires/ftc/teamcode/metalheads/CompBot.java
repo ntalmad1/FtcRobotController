@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode.metalheads;
 
+import com.acmerobotics.roadrunner.Action;
 import com.acmerobotics.roadrunner.ParallelAction;
 import com.acmerobotics.roadrunner.Pose2d;
 import com.acmerobotics.roadrunner.SequentialAction;
@@ -45,6 +46,8 @@ public class CompBot extends IsaacBot {
      */
     private Intake intake;
 
+    /**
+     */
     private MecanumDrive roadrunner;
 
     /**
@@ -54,6 +57,8 @@ public class CompBot extends IsaacBot {
     /**
      */
     private Winch winch;
+
+    private ActionFactory actionFactory;
 
     /**
      * Constructor
@@ -96,9 +101,7 @@ public class CompBot extends IsaacBot {
         this.intake = new Intake(this.config.intakeConfig);
         this.winch = new Winch(this.config.winchConfig);
 
-        this.addGp1_B_PressHandler(event -> {
-            this.winch.resetEncoder();
-        });
+        this.actionFactory = new ActionFactory();
     }
 
     Pose2d beginPose = new Pose2d(0, 0, 0);
@@ -153,15 +156,7 @@ public class CompBot extends IsaacBot {
         });
 
         this.addGp2_A_PressHandler(event -> {
-            runAction(new SequentialAction(
-                            new ParallelAction(
-                                CompBot.this.intake.hServo.gotoPositionAction(0.5011, 1),
-                                CompBot.this.intake.vServo.gotoPositionAction(0.6356, 1),
-                                CompBot.this.arm.viperSlide.gotoVoltageAction(0.695),
-                            new WaitAction(1000),
-                            CompBot.this.arm.mainBoom.gotoPositionAction(-714, 0.5))
-
-            ));
+            runAction(actionFactory.moveArmToSampleReady());
         });
 
         this.addGp2_B_PressHandler(event -> {
@@ -219,5 +214,27 @@ public class CompBot extends IsaacBot {
     @Override
     public void onStop() {
 
+    }
+
+    /**
+     */
+    private class ActionFactory {
+
+        public Action moveArmToSampleReady() {
+            return new SequentialAction(
+                    new ParallelAction(
+                            intake.hServo.gotoPositionAction(Constants.SAMPLE_READY_H_SERVO_POS, 1),
+                            intake.vServo.gotoPositionAction(Constants.SAMPLE_READY_V_SERVO_POS, 1),
+                            arm.viperSlide.gotoVoltageAction(Constants.SAMPLE_READY_VIPER_SLIDE_VOLTS),
+                            new WaitAction(1000),
+                            intake.pincher.gotoPositionAction(Constants.INTAKE_PINCHER_OPEN_POS, 1),
+                            arm.mainBoom.gotoPositionAction(Constants.SAMPLE_READY_MAIN_BOOM_POS, 0.5)));
+        }
+
+        /**
+         * Hidden constructor to make class static
+         */
+        protected ActionFactory() {
+        }
     }
 }
