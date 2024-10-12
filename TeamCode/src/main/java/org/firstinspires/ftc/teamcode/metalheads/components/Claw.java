@@ -15,7 +15,7 @@ public class Claw extends Component {
 
     /**
      */
-    private Rotator clawRotator;
+    public Rotator clawRotator;
 
     /**
      */

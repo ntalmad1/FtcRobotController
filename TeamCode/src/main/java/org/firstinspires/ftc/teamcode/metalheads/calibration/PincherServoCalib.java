@@ -14,7 +14,7 @@ import org.firstinspires.ftc.teamcode.library.event.gp1_dpad_press.gp1_dpad_up_p
  *
  */
 @TeleOp(name="PincherServoCalibration", group="Calibration")
-@Disabled
+//@Disabled
 public class PincherServoCalib extends IsaacBot {
 
     /**
@@ -45,8 +45,8 @@ public class PincherServoCalib extends IsaacBot {
         gamePadIncrement = 0.002;
         servoName = "pincherServo";
         servoInitPos = 0.5;
-        servoMinPos = 0.484;
-        servoMaxPos = 0.65;
+        servoMinPos = 0;
+        servoMaxPos = 1;
 
 
         servo = this.hardwareMap.get(Servo.class, servoName);

@@ -58,6 +58,34 @@ public class CompBotConfig {
 
     /**
      */
+    public boolean useDriveTrain = true;
+
+    /**
+     */
+    public boolean useArm = true;
+
+    /**
+     */
+    public boolean useClaw = true;
+
+    /**
+     */
+    public boolean useDoubleHooks = true;
+
+    /**
+     */
+    public boolean useFlapperBars = true;
+
+    /**
+     */
+    public boolean useIntake = true;
+
+    /**
+     */
+    public boolean useWinch = true;
+
+    /**
+     */
     public boolean debugAll = false;
 
     /**
@@ -87,6 +115,10 @@ public class CompBotConfig {
     /**
      */
     public boolean debugWinch = false;
+
+    /**
+     */
+    public boolean debugRoadrunner = false;
 
     /**
      * Constructor
@@ -183,7 +215,7 @@ public class CompBotConfig {
         this.clawConfig = new ClawConfig(robot);
         this.clawConfig.pincherConfig = new ServoComponentConfig(robot);
         this.clawConfig.pincherConfig.servoName = "pincherServo";
-        this.clawConfig.pincherConfig.homePosition = 0.5;
+        this.clawConfig.pincherConfig.homePosition = 0.484;
         this.clawConfig.pincherConfig.zeroDegreePosition = 0.5;
         this.clawConfig.pincherConfig.minPosition = 0.484;
         this.clawConfig.pincherConfig.maxPosition = 0.65;
