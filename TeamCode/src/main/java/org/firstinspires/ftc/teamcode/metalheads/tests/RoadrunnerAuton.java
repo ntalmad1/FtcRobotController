@@ -11,7 +11,9 @@ import com.acmerobotics.roadrunner.SequentialAction;
 import com.acmerobotics.roadrunner.Trajectory;
 import com.acmerobotics.roadrunner.TrajectoryActionBuilder;
 import com.acmerobotics.roadrunner.TrajectoryBuilder;
+import com.acmerobotics.roadrunner.TranslationalVelConstraint;
 import com.acmerobotics.roadrunner.Vector2d;
+import com.acmerobotics.roadrunner.VelConstraint;
 import com.acmerobotics.roadrunner.ftc.Actions;
 
 // Non-RR imports
@@ -36,14 +38,15 @@ public class RoadrunnerAuton extends LinearOpMode {
     @Override
     public void runOpMode() throws InterruptedException {
         // instantiate your MecanumDrive at a particular pose.
-        initialPose = new Pose2d(10.3, -61, Math.toRadians(90));
+        //initialPose = new Pose2d(10.3, -61, Math.toRadians(90)); //Inner Tile
+        initialPose = new Pose2d(35.5, -61, Math.toRadians(90));  //outer tile
         drive = new MecanumDrive(hardwareMap, initialPose);
 
         this.trajectoryFactory = new TrajectoryFactory();
 
         waitForStart();
 
-        Actions.runBlocking(trajectoryFactory.getTab1().build());
+        Actions.runBlocking(trajectoryFactory.getTab2().build());
 
 //        Actions.runBlocking(
 //                    drive.actionBuilder(initialPose)
@@ -82,21 +85,51 @@ public class RoadrunnerAuton extends LinearOpMode {
          * @return tab2
          */
         public TrajectoryActionBuilder getTab2() {
+            double velocityLow = 25;
+
             TrajectoryActionBuilder tab2 = drive.actionBuilder(initialPose)
                     .strafeTo(new Vector2d(8, -40)) //Go infront of bar to hang specimen
 
                     //hang specimen
                     .setTangent(Math.toRadians(0))
                     .strafeTo(new Vector2d(26, -40)) //Go towards sample
-                    //first specimen
-                    .splineToConstantHeading(new Vector2d(41, -12), Math.toRadians(0)) //left side of arc
-                    .splineToConstantHeading(new Vector2d(46, -30), Math.toRadians(270)) //right side
-                    .lineToYConstantHeading(-60)
-                    //second specimen
-                    .splineToConstantHeading(new Vector2d(49, -12), Math.toRadians(0)) //left side of arc
-                    .splineToConstantHeading(new Vector2d(56.5, -30), Math.toRadians(270)) //right side
-                    .lineToYConstantHeading(-60);
-                    //Nothing yet for 3rd specimen
+
+
+                    /**
+                     * First Specimen
+                     */
+                    .splineToConstantHeading(new Vector2d(41, -12), Math.toRadians(0), //left side of arc
+                        new TranslationalVelConstraint(velocityLow))
+
+                    .splineToConstantHeading(new Vector2d(49, -30), Math.toRadians(270), //right side of arc
+                            new TranslationalVelConstraint(velocityLow))
+
+                    .lineToYConstantHeading(-50) //Go to Observation zone
+
+
+                    /**
+                     * Second Specimen
+                     */
+                    .splineToConstantHeading(new Vector2d(51, -12), Math.toRadians(0), //left side of arc
+                            new TranslationalVelConstraint(velocityLow))
+
+                    .splineToConstantHeading(new Vector2d(58, -30), Math.toRadians(270), //right side of arc
+                            new TranslationalVelConstraint(velocityLow))
+
+                    .lineToYConstantHeading(-57.5) //Go to Observation zone
+
+
+                    /**
+                     * 3rd Specimen
+                     */
+                    .lineToY(-21)
+                    .splineTo(new Vector2d(62, -12), Math.toRadians(0),
+                            new TranslationalVelConstraint(15))
+                    .waitSeconds(6)
+                    .strafeTo(new Vector2d(62, -54))
+                    .splineToConstantHeading(new Vector2d(27, -10), Math.toRadians(180),
+                        new TranslationalVelConstraint(velocityLow))
+                    ;
 
             return tab2;
         }
