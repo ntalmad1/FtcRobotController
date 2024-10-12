@@ -61,6 +61,10 @@ public class RoadrunnerAuton extends LinearOpMode {
      */
     private class TrajectoryFactory {
 
+        /**
+         * Original test for sample pusher
+         * @return tab1
+         */
         public TrajectoryActionBuilder getTab1() {
             TrajectoryActionBuilder tab1 = drive.actionBuilder(initialPose)
                     .splineTo(new Vector2d(34, -32), Math.toRadians(90))
@@ -71,6 +75,30 @@ public class RoadrunnerAuton extends LinearOpMode {
             //.splineToConstantHeading(new Vector2d(47.5, -12), Math.toRadians(90))
 
             return tab1;
+        }
+
+        /**
+         * Current Sample pusher
+         * @return tab2
+         */
+        public TrajectoryActionBuilder getTab2() {
+            TrajectoryActionBuilder tab2 = drive.actionBuilder(initialPose)
+                    .strafeTo(new Vector2d(8, -40)) //Go infront of bar to hang specimen
+
+                    //hang specimen
+                    .setTangent(Math.toRadians(0))
+                    .strafeTo(new Vector2d(26, -40)) //Go towards sample
+                    //first specimen
+                    .splineToConstantHeading(new Vector2d(41, -12), Math.toRadians(0)) //left side of arc
+                    .splineToConstantHeading(new Vector2d(46, -30), Math.toRadians(270)) //right side
+                    .lineToYConstantHeading(-60)
+                    //second specimen
+                    .splineToConstantHeading(new Vector2d(49, -12), Math.toRadians(0)) //left side of arc
+                    .splineToConstantHeading(new Vector2d(56.5, -30), Math.toRadians(270)) //right side
+                    .lineToYConstantHeading(-60);
+                    //Nothing yet for 3rd specimen
+
+            return tab2;
         }
 
     }
