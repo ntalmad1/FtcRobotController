@@ -11,15 +11,15 @@ public class Claw extends Component {
 
     /**
      */
+    public ServoComponent pincher;
+
+    /**
+     */
     private Rotator clawRotator;
 
     /**
      */
     private ClawConfig config;
-
-    /**
-     */
-    private ServoComponent pincher;
 
     /**
      * Constructor

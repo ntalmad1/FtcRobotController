@@ -132,25 +132,8 @@ public class CompBotConfig {
         this.armConfig.mainBoomConfig.maxTics = 5000;
         this.armConfig.mainBoomConfig.control = Control.Gp2_LeftStickY;
 
-
-
         // claw
-        this.clawConfig = new ClawConfig(robot);
-        this.clawConfig.pincherConfig = new ServoComponentConfig(robot);
-        this.clawConfig.pincherConfig.servoName = "pincherServo";
-        this.clawConfig.pincherConfig.homePosition = 0.5;
-        this.clawConfig.pincherConfig.zeroDegreePosition = 0.5;
-        this.clawConfig.pincherConfig.minPosition = 0.484;
-        this.clawConfig.pincherConfig.maxPosition = 0.65;
-        //this.clawConfig.pincherConfig.controllerInputMethod = Control.Gp1_RightStickX;
-
-        this.clawConfig.clawRotatorConfig = new RotatorConfig(robot);
-        this.clawConfig.clawRotatorConfig.servoName = "clawRotate";
-        this.clawConfig.clawRotatorConfig.homePosition = 0;
-        this.clawConfig.clawRotatorConfig.zeroDegreePosition = 0;
-        this.clawConfig.clawRotatorConfig.minPosition = 0;
-        this.clawConfig.clawRotatorConfig.maxPosition = 1;
-        //this.clawConfig.clawRotatorConfig.controllerInputMethod = Control.Gp1_RightStickY;
+        this.configureClaw();
 
         // double hooks
         this.doubleHooksConfig = new DoubleHooksConfig(robot);
@@ -196,6 +179,28 @@ public class CompBotConfig {
     /**
      *
      */
+    private void configureClaw() {
+        this.clawConfig = new ClawConfig(robot);
+        this.clawConfig.pincherConfig = new ServoComponentConfig(robot);
+        this.clawConfig.pincherConfig.servoName = "pincherServo";
+        this.clawConfig.pincherConfig.homePosition = 0.5;
+        this.clawConfig.pincherConfig.zeroDegreePosition = 0.5;
+        this.clawConfig.pincherConfig.minPosition = 0.484;
+        this.clawConfig.pincherConfig.maxPosition = 0.65;
+        //this.clawConfig.pincherConfig.controllerInputMethod = Control.Gp1_RightStickX;
+
+        this.clawConfig.clawRotatorConfig = new RotatorConfig(robot);
+        this.clawConfig.clawRotatorConfig.servoName = "clawRotate";
+        this.clawConfig.clawRotatorConfig.homePosition = 0;
+        this.clawConfig.clawRotatorConfig.zeroDegreePosition = 0;
+        this.clawConfig.clawRotatorConfig.minPosition = 0;
+        this.clawConfig.clawRotatorConfig.maxPosition = 1;
+        this.clawConfig.clawRotatorConfig.controllerInputMethod = Control.Gp1_RightStickY;
+    }
+
+    /**
+     *
+     */
     private void configureIntake() {
 
         this.intakeConfig = new IntakeConfig(robot);
@@ -219,7 +224,7 @@ public class CompBotConfig {
         this.intakeConfig.vServoConfig.controllerInputMethod = Control.Gp1_LeftStickY;
         this.intakeConfig.vServoConfig.zeroDegreePosition = 0.5;
         this.intakeConfig.vServoConfig.homePosition = Constants.INTAKE_V_SERVO_INIT_POS;
-        this.intakeConfig.vServoConfig.minPosition = 0.233;
+        this.intakeConfig.vServoConfig.minPosition = 0.0;
         this.intakeConfig.vServoConfig.maxPosition = 0.674;
 
 

@@ -170,7 +170,13 @@ public class CompBot extends IsaacBot {
             ));
         });
 
+        this.addGp2_Right_Bumper_PressHandler(event -> {
+            claw.pincher.setPosition(config.clawConfig.pincherConfig.maxPosition);
+        });
 
+        this.addGp2_Left_Bumper_PressHandler(event -> {
+            claw.pincher.setPosition(config.clawConfig.pincherConfig.minPosition);
+        });
     }
 
     /**
