@@ -24,13 +24,26 @@ public class Constants {
 
     /**
      */
-    public static final CompBot.PositionConstants SAMPLE_READY = new CompBot.PositionConstants(){
+    public static final CompBot.PositionConstants SAMPLE_PICK_READY = new CompBot.PositionConstants(){
         @Override
         public void setValues() {
             hServoPos = new ServoPos(0.5033);
             vServoPos = new ServoPos(0.5044);
             vSlideVolts = 0.7;
             mainBoomPos = new MotorPos(-703);
+        }
+    };
+
+    /**
+     */
+    public static final CompBot.PositionConstants SAMPLE_PICK_LEFT_READY = new CompBot.PositionConstants() {
+        @Override
+        public void setValues() {
+            mainBoomPos = new MotorPos(-736, 0.5);
+            vSlideVolts = 0.694;
+            hServoPos = new ServoPos(0.8633);
+            vServoPos = new ServoPos(0.4606);
+            intakePincherPos = new ServoPos(INTAKE_PINCHER_OPEN_POS, 1);
         }
     };
 
@@ -46,6 +59,8 @@ public class Constants {
             clawRotatorPos = new ServoPos(0.445);
         }
     };
+
+
 
 
     /**
