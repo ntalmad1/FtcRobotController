@@ -5,13 +5,13 @@ import org.firstinspires.ftc.teamcode.library.IsaacBot;
 /**
  *
  */
-public class TeleOpBotConfig extends CompBotConfig{
+public class TeBotConfig extends CompBotConfig{
 
     /**
      *
      * @param robot
      */
-    public TeleOpBotConfig(IsaacBot robot) {
+    public TeBotConfig(IsaacBot robot) {
         super(robot);
     }
 }

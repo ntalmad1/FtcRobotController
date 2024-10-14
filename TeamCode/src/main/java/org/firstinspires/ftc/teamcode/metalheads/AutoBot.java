@@ -7,7 +7,6 @@ import com.acmerobotics.roadrunner.TrajectoryActionBuilder;
 import com.acmerobotics.roadrunner.TranslationalVelConstraint;
 import com.acmerobotics.roadrunner.Vector2d;
 import com.acmerobotics.roadrunner.ftc.Actions;
-import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import org.firstinspires.ftc.teamcode.roadrunner.MecanumDrive;
@@ -45,7 +44,7 @@ public class AutoBot extends CompBot {
         super.go();
 
         Actions.runBlocking(new ParallelAction(
-           this.getActionFactory().moveArmToSpecimenPlaceHighReady(),
+           this.getActionFactory().moveArmToSpecimenPlaceReadyHigh(),
            this.trajectoryFactory.splineToRedChamber(this.getRoadrunner(), initialPose).build()
         ));
 

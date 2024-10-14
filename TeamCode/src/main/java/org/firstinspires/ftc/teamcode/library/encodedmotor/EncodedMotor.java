@@ -4,6 +4,7 @@ import com.acmerobotics.roadrunner.Action;
 import com.qualcomm.robotcore.hardware.DcMotor;
 
 import org.firstinspires.ftc.teamcode.library.dcmotor.DcMotorComponent;
+import org.firstinspires.ftc.teamcode.library.dcmotor.MotorPos;
 import org.firstinspires.ftc.teamcode.library.event.command_callback.CommandCallbackHandler;
 
 /**
@@ -58,6 +59,23 @@ public class EncodedMotor extends DcMotorComponent {
      */
     public void gotoPosition (int position, double power) {
         this.addCommand(new EncodedMotorGoToPositionCommand(this, position, power));
+    }
+
+    /**
+     *
+     * @param motorPos
+     * @return
+     */
+    public Action gotoPositionAction(MotorPos motorPos) {
+        if (motorPos == null) {
+            return this.gotoPositionAction(this.getCurrentPosition(), 1);
+        }
+
+        if (motorPos.getPos() == null) {
+            return this.gotoPositionAction(this.getCurrentPosition(), motorPos.getPower());
+        }
+
+        return this.gotoPositionAction(motorPos.getPos(), motorPos.getPower());
     }
 
     /**

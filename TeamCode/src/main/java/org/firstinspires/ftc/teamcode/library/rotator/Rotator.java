@@ -4,6 +4,7 @@ import com.acmerobotics.roadrunner.Action;
 import com.qualcomm.robotcore.hardware.Servo;
 
 import org.firstinspires.ftc.teamcode.library.component.Component;
+import org.firstinspires.ftc.teamcode.library.servo.ServoPos;
 import org.firstinspires.ftc.teamcode.library.utility.Control;
 
 /**
@@ -131,6 +132,23 @@ public class Rotator extends Component {
     public void gotoPosition (double targetPosition)
     {
         this.gotoPosition(targetPosition, this.getMaxIncrement());
+    }
+
+    /**
+     *
+     * @param servoPos
+     * @return
+     */
+    public Action gotoPositionAction(ServoPos servoPos) {
+        if (servoPos == null) {
+            return this.gotoPositionAction(this.getPosition(), 1);
+        }
+
+        if (servoPos.getPos() == null) {
+            return this.gotoPositionAction(this.getPosition(), servoPos.getIncrement());
+        }
+
+        return this.gotoPositionAction(servoPos.getPos(), servoPos.getIncrement());
     }
 
     /**

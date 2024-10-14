@@ -4,12 +4,12 @@ import com.acmerobotics.roadrunner.Action;
 import com.acmerobotics.roadrunner.ParallelAction;
 import com.acmerobotics.roadrunner.Pose2d;
 import com.acmerobotics.roadrunner.SequentialAction;
-import com.acmerobotics.roadrunner.ftc.Actions;
-import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import org.firstinspires.ftc.teamcode.library.IsaacBot;
 import org.firstinspires.ftc.teamcode.library.action.WaitAction;
+import org.firstinspires.ftc.teamcode.library.dcmotor.MotorPos;
 import org.firstinspires.ftc.teamcode.library.drivetrain.MecanumDriveTrain;
+import org.firstinspires.ftc.teamcode.library.servo.ServoPos;
 import org.firstinspires.ftc.teamcode.metalheads.components.Arm;
 import org.firstinspires.ftc.teamcode.metalheads.components.Claw;
 import org.firstinspires.ftc.teamcode.metalheads.components.DoubleHooks;
@@ -345,6 +345,26 @@ public abstract class CompBot extends IsaacBot {
     }
 
     /**
+     *
+     * @param positions
+     * @return
+     */
+    public ParallelAction moveArmAction(PositionConstants positions) {
+
+        return new ParallelAction(
+                intake.hServo.gotoPositionAction(positions.hServoPos),
+                intake.vServo.gotoPositionAction(positions.vServoPos),
+                intake.pincher.gotoPositionAction(positions.intakePincherPos),
+                arm.viperSlide.gotoVoltageAction(positions.vSlideVolts),
+                arm.mainBoom.gotoPositionAction(positions.mainBoomPos),
+                claw.clawRotator.gotoPositionAction(positions.clawRotatorPos),
+                claw.pincher.gotoPositionAction(positions.clawPincherPos)
+        );
+
+    }
+
+    /**
+     * Internal Class
      */
     public class ActionFactory {
 
@@ -353,22 +373,19 @@ public abstract class CompBot extends IsaacBot {
          */
         public Action moveArmToSampleReady() {
             return new ParallelAction(
-                            intake.hServo.gotoPositionAction(Constants.SAMPLE_READY_H_SERVO_POS, 1),
-                            intake.vServo.gotoPositionAction(Constants.SAMPLE_READY_V_SERVO_POS, 1),
-                            arm.viperSlide.gotoVoltageAction(Constants.SAMPLE_READY_VIPER_SLIDE_VOLTS),
+                            intake.hServo.gotoPositionAction(Constants.SAMPLE_READY.hServoPos),
+                            intake.vServo.gotoPositionAction(Constants.SAMPLE_READY.vServoPos),
+                            arm.viperSlide.gotoVoltageAction(Constants.SAMPLE_READY.vSlideVolts),
                             new WaitAction(1000),
-                            intake.pincher.gotoPositionAction(Constants.INTAKE_PINCHER_OPEN_POS, 1),
-                            arm.mainBoom.gotoPositionAction(Constants.SAMPLE_READY_MAIN_BOOM_POS, 0.5));
+                            intake.openPincherAction(),
+                            arm.mainBoom.gotoPositionAction(Constants.SAMPLE_READY.mainBoomPos.getPos(), 0.5));
         }
 
-        public Action moveArmToSpecimenPlaceHighReady() {
-            return new ParallelAction(
-                    claw.pincher.gotoPositionAction(Constants.CLAW_PINCHER_CLOSE_POS, 1),
-                    intake.hServo.gotoPositionAction(Constants.SPECIMEN_PL_READY_HIGH_H_SERVO_POS, 1),
-                    intake.vServo.gotoPositionAction(Constants.SPECIMEN_PL_READY_HIGH_V_SERVO_POS, 1),
-                    arm.viperSlide.gotoVoltageAction(Constants.SPECIMEN_PL_READY_VIPER_SLIDE_VOLTS),
-                    arm.mainBoom.gotoPositionAction(Constants.SPECIMEN_PL_READY_MAIN_BOOM_POS, 0.75),
-                    claw.clawRotator.gotoPositionAction(Constants.SPECIMEN_PL_READY_CLAW_ROTATOR_POS, 1));
+        /**
+         * @return
+         */
+        public Action moveArmToSpecimenPlaceReadyHigh() {
+            return CompBot.this.moveArmAction(Constants.SPECIMEN_PLACE_READY_HIGH);
         }
 
         /**
@@ -376,5 +393,34 @@ public abstract class CompBot extends IsaacBot {
          */
         protected ActionFactory() {
         }
+    }
+
+    /**
+     * Internal Class
+     */
+    public static abstract class PositionConstants {
+
+        public ServoPos hServoPos;
+
+        public ServoPos vServoPos;
+
+        public ServoPos intakePincherPos;
+
+        public Double vSlideVolts;
+
+        public MotorPos mainBoomPos;
+
+        public ServoPos clawRotatorPos;
+
+        public ServoPos clawPincherPos;
+
+        public PositionConstants () {
+
+        }
+
+        /**
+         *
+         */
+        public abstract void setValues();
     }
 }
