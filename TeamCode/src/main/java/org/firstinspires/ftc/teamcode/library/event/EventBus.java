@@ -198,6 +198,7 @@ public class EventBus extends HandlerManager {
         if (this.gp2_right_bumper_down && !current_gp2_right_bumper_down) {
             this.gp2_right_bumper_down = false;
             this.fireEvent(new Gp2_Right_Bumper_UpEvent());
+            this.fireEvent(new Gp2_Right_Bumper_PressEvent());
         }
         else if (current_gp2_right_bumper_down && !this.gp2_right_bumper_down) {
             this.gp2_right_bumper_down = true;
@@ -208,23 +209,12 @@ public class EventBus extends HandlerManager {
         if (this.gp2_left_bumper_down && !current_gp2_left_bumper_down) {
             this.gp2_left_bumper_down = false;
             this.fireEvent(new Gp2_Left_Bumper_UpEvent());
+            this.fireEvent(new Gp2_Left_Bumper_PressEvent());
         }
         else if (current_gp2_left_bumper_down && !this.gp2_left_bumper_down) {
             this.gp2_left_bumper_down = true;
             this.fireEvent(new Gp2_Left_Bumper_DownEvent());
         }
-
-        boolean current_gp2_left_bumper = this.robot.gamepad2.left_bumper;
-        if (this.gp2_left_bumper_down && !current_gp2_left_bumper) {
-            this.fireEvent(new Gp2_Left_Bumper_PressEvent());
-        }
-        this.gp2_left_bumper_down = current_gp2_left_bumper;
-
-        boolean current_gp2_right_bumper = this.robot.gamepad2.right_bumper;
-        if (this.gp2_right_bumper_down && !current_gp2_right_bumper) {
-            this.fireEvent(new Gp2_Right_Bumper_PressEvent());
-        }
-        this.gp2_right_bumper_down = current_gp2_right_bumper;
 
         //------------------------------------------------------------------------------------------
 

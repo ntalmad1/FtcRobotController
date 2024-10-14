@@ -145,6 +145,23 @@ public class ServoComponent extends Component {
 
     /**
      *
+     * @param servoPos
+     * @return
+     */
+    public Action gotoPositionAction(ServoPos servoPos) {
+        if (servoPos == null) {
+            return this.gotoPositionAction(this.getPosition(), 1);
+        }
+
+        if (servoPos.getPos() == null) {
+            return this.gotoPositionAction(this.getPosition(), servoPos.getIncrement());
+        }
+
+        return this.gotoPositionAction(servoPos.getPos(), servoPos.getIncrement());
+    }
+
+    /**
+     *
      * @param targetPosition
      * @param maxIncrement
      * @return

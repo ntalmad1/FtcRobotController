@@ -1,11 +1,13 @@
 package org.firstinspires.ftc.teamcode.metalheads.components;
 
+import com.acmerobotics.roadrunner.Action;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 
 import org.firstinspires.ftc.teamcode.library.component.Component;
 import org.firstinspires.ftc.teamcode.library.continuousservo.ContinuousServo;
 import org.firstinspires.ftc.teamcode.library.rotator.Rotator;
 import org.firstinspires.ftc.teamcode.library.servo.ServoComponent;
+import org.firstinspires.ftc.teamcode.metalheads.Constants;
 
 /**
  *
@@ -101,5 +103,21 @@ public class Intake extends Component {
             telemetry.addData("Intake V Servo Pos:", this.vServo.getPosition());
             telemetry.addData("Intake Pincher Pos:", this.pincher.getPosition());
         }
+    }
+
+    /**
+     *
+     * @return
+     */
+    public Action closePincherAction() {
+        return this.pincher.gotoPositionAction(Constants.INTAKE_PINCHER_CLOSE_POS, 1);
+    }
+
+    /**
+     *
+     * @return
+     */
+    public Action openPincherAction() {
+        return this.pincher.gotoPositionAction(Constants.INTAKE_PINCHER_OPEN_POS, 1);
     }
 }
