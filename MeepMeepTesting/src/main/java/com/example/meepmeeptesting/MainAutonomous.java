@@ -24,10 +24,12 @@ public class MainAutonomous {
                         //hang specimen
                         .setTangent(Math.toRadians(0))
                         .lineTo(new Vector2d(26, -40)) //Go towards sample
+
                         //first specimen
                         .splineToConstantHeading(new Vector2d(41, -12), Math.toRadians(0)) //left side of arc
                         .splineToConstantHeading(new Vector2d(49, -30), Math.toRadians(270)) //right side
                         .lineToConstantHeading(new Vector2d(49, -55))
+
                         //second specimen
                         .splineToConstantHeading(new Vector2d(51, -12), Math.toRadians(0)) //left side of arc
                         .splineToConstantHeading(new Vector2d(58, -30), Math.toRadians(270)) //right side
@@ -36,11 +38,8 @@ public class MainAutonomous {
                         //3rd specimem
 
                         .lineTo(new Vector2d(58, -21))
-                        .splineTo(new Vector2d(62, -12), Math.toRadians(0))
-                        .waitSeconds(6)
-                        .strafeTo(new Vector2d(62, -50))
-
-                        .splineTo(new Vector2d(27, -10), Math.toRadians(180))
+                        .splineTo(new Vector2d(61.5, -12), Math.toRadians(0))
+                        .strafeTo(new Vector2d(61.3, -57))
 
                         .build());
 
