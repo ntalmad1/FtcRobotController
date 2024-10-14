@@ -172,7 +172,7 @@ public abstract class CompBot extends IsaacBot {
             this.arm.init();
 
             this.addGp2_A_PressHandler(event -> {
-                runAction(actionFactory.moveArmToSampleReady());
+                runAction(actionFactory.moveArmToSamplePickReady());
             });
 
             this.addGp2_B_PressHandler(event -> {
@@ -371,21 +371,40 @@ public abstract class CompBot extends IsaacBot {
         /**
          * @return
          */
-        public Action moveArmToSampleReady() {
+        public Action moveArmToSamplePickReady() {
             return new ParallelAction(
-                            intake.hServo.gotoPositionAction(Constants.SAMPLE_READY.hServoPos),
-                            intake.vServo.gotoPositionAction(Constants.SAMPLE_READY.vServoPos),
-                            arm.viperSlide.gotoVoltageAction(Constants.SAMPLE_READY.vSlideVolts),
+                            intake.hServo.gotoPositionAction(Constants.SAMPLE_PICK_READY.hServoPos),
+                            intake.vServo.gotoPositionAction(Constants.SAMPLE_PICK_READY.vServoPos),
+                            arm.viperSlide.gotoVoltageAction(Constants.SAMPLE_PICK_READY.vSlideVolts),
                             new WaitAction(1000),
                             intake.openPincherAction(),
-                            arm.mainBoom.gotoPositionAction(Constants.SAMPLE_READY.mainBoomPos.getPos(), 0.5));
+                            arm.mainBoom.gotoPositionAction(Constants.SAMPLE_PICK_READY.mainBoomPos.getPos(), 0.5));
         }
 
         /**
          * @return
          */
-        public Action moveArmToSpecimenPlaceReadyHigh() {
-            return CompBot.this.moveArmAction(Constants.SPECIMEN_PLACE_READY_HIGH);
+        public Action moveArmToSamplePickLeftReady() {
+            return CompBot.this.moveArmAction(Constants.SAMPLE_PICK_LEFT_READY);
+        }
+
+        /**
+         * @return
+         */
+        public Action moveArmToSamplePickRightReady() {
+            return CompBot.this.moveArmAction(Constants.SAMPLE_PICK_RIGHT_READY);
+        }
+
+        
+
+        //------------------------------------------------------------------------------------------
+        //------------------------------------------------------------------------------------------
+
+        /**
+         * @return
+         */
+        public Action moveArmToSpecimenPlaceHighReady() {
+            return CompBot.this.moveArmAction(Constants.SPECIMEN_PLACE_HIGH_READY);
         }
 
         /**

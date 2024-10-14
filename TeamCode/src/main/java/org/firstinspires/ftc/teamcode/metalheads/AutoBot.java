@@ -44,7 +44,7 @@ public class AutoBot extends CompBot {
         super.go();
 
         Actions.runBlocking(new ParallelAction(
-           this.getActionFactory().moveArmToSpecimenPlaceReadyHigh(),
+           this.getActionFactory().moveArmToSpecimenPlaceHighReady(),
            this.trajectoryFactory.splineToRedChamber(this.getRoadrunner(), initialPose).build()
         ));
 

@@ -2,9 +2,7 @@ package org.firstinspires.ftc.teamcode.metalheads;
 
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 
-import org.firstinspires.ftc.teamcode.archive.competition.config.MecanumDriveCompConfig;
 import org.firstinspires.ftc.teamcode.library.IsaacBot;
-import org.firstinspires.ftc.teamcode.library.continuousservo.ContinuousServoConfig;
 import org.firstinspires.ftc.teamcode.library.drivetrain.MecanumDriveTrainConfig;
 import org.firstinspires.ftc.teamcode.library.encodedmotor.EncodedMotorConfig;
 import org.firstinspires.ftc.teamcode.library.potentiometer.PotentiometerConfig;
