@@ -1,9 +1,13 @@
 package org.firstinspires.ftc.teamcode.metalheads;
 
+import com.acmerobotics.dashboard.FtcDashboard;
+import com.acmerobotics.dashboard.telemetry.TelemetryPacket;
 import com.acmerobotics.roadrunner.Action;
 import com.acmerobotics.roadrunner.ParallelAction;
 import com.acmerobotics.roadrunner.Pose2d;
+import com.acmerobotics.roadrunner.PoseVelocity2d;
 import com.acmerobotics.roadrunner.SequentialAction;
+import com.acmerobotics.roadrunner.Vector2d;
 
 import org.firstinspires.ftc.teamcode.library.IsaacBot;
 import org.firstinspires.ftc.teamcode.library.action.WaitAction;
@@ -17,6 +21,7 @@ import org.firstinspires.ftc.teamcode.metalheads.components.DoubleHooks;
 import org.firstinspires.ftc.teamcode.metalheads.components.FlapperBars;
 import org.firstinspires.ftc.teamcode.metalheads.components.Intake;
 import org.firstinspires.ftc.teamcode.metalheads.components.Winch;
+import org.firstinspires.ftc.teamcode.roadrunner.Drawing;
 import org.firstinspires.ftc.teamcode.roadrunner.MecanumDrive;
 
 /**
@@ -70,7 +75,8 @@ public abstract class CompBot extends IsaacBot {
 
     /**
      */
-    private MecanumDriveTrain driveTrain;
+    //private MecanumDriveTrain driveTrain;
+
     /**
      */
     private FlapperBars flapperBars;
@@ -122,7 +128,7 @@ public abstract class CompBot extends IsaacBot {
             this.config = new CompBotConfig(this);
         }
 
-        this.config.debugDriveTrain = false;
+        //this.config.debugDriveTrain = false;
         this.config.debugArm = true;
         this.config.debugClaw = true;
         this.config.debugDoubleHooks = true;
@@ -133,9 +139,9 @@ public abstract class CompBot extends IsaacBot {
 
         this.config.debugAll = false;
 
-        if (this.config.useDriveTrain) {
-            this.driveTrain = new MecanumDriveTrain(this.config.driveTrainConfig);
-        }
+//        if (this.config.useDriveTrain) {
+//            this.driveTrain = new MecanumDriveTrain(this.config.driveTrainConfig);
+//        }
 
         if (this.config.useArm) {
             this.arm = new Arm(this.config.armConfig);
@@ -162,6 +168,9 @@ public abstract class CompBot extends IsaacBot {
         }
 
         this.actionFactory = new ActionFactory();
+
+        // TODO: set initial position
+        this.initialPose = new Pose2d(0, 0, 0);
     }
 
     /**
@@ -173,9 +182,9 @@ public abstract class CompBot extends IsaacBot {
 
         roadrunner = new MecanumDrive(hardwareMap, initialPose);
 
-        if (this.config.useDriveTrain) {
-            this.driveTrain.init();
-        }
+//        if (this.config.useDriveTrain) {
+//            this.driveTrain.init();
+//        }
 
         if (this.config.useArm) {
             this.arm.init();
@@ -218,6 +227,8 @@ public abstract class CompBot extends IsaacBot {
 
         // arm
         if (this.getConfig().useArm) {
+
+            // clear and re-init
             this.addGp1_Start_PressHandler(event -> {
                 this.setMode(Mode.NONE);
                 this.setArmPos(ArmPos.INIT);
@@ -253,7 +264,7 @@ public abstract class CompBot extends IsaacBot {
         // winch
         if (this.getConfig().useWinch) {
             this.addGp1_RightTrigger_DownHandler(event -> {
-                winch.move(1);
+                winch.move(-1);
             });
 
             this.addGp1_RightTrigger_UpHandler(event -> {
@@ -261,7 +272,7 @@ public abstract class CompBot extends IsaacBot {
             });
 
             this.addGp1_LeftTrigger_DownHandler(event -> {
-                winch.move(-1);
+                winch.move(1);
             });
 
             this.addGp1_LeftTrigger_UpHandler(event -> {
@@ -281,6 +292,50 @@ public abstract class CompBot extends IsaacBot {
             this.terminateOpModeNow();
         });
 
+        // arm
+        if (this.getConfig().useArm) {
+
+            // clear and re-init
+            this.addGp1_Start_PressHandler(event -> {
+                this.setMode(Mode.NONE);
+                this.setArmPos(ArmPos.INIT);
+                this.runAction(this.actionFactory.moveArmToInitPos());
+            });
+        }
+
+        // claw
+        if (this.getConfig().useClaw) {
+
+            this.claw.addGp2_Right_Trigger_Handler(event -> {
+                if (Mode.SPECIMEN_MODE.equals(this.getMode())) {
+                    this.claw.pincher.setPosition(Constants.CLAW_PINCHER_CLOSE_POS);
+                }
+            });
+
+            this.claw.addGp2_Left_Trigger_Handler(event -> {
+                if (Mode.SPECIMEN_MODE.equals(this.getMode())) {
+                    this.claw.pincher.setPosition(Constants.CLAW_PINCHER_OPEN_POS);
+                }
+            });
+        }
+
+
+        // intake
+        if (this.getConfig().useIntake) {
+
+            this.intake.addGp2_Right_Trigger_Handler(event -> {
+                if (Mode.SAMPLE_MODE.equals(this.getMode())) {
+                    this.intake.pincher.setPosition(Constants.INTAKE_PINCHER_CLOSE_POS);
+                }
+            });
+
+            this.intake.addGp2_Left_Trigger_Handler(event -> {
+                if (Mode.SAMPLE_MODE.equals(this.getMode())) {
+                    this.intake.pincher.setPosition(Constants.INTAKE_PINCHER_OPEN_POS);
+                }
+            });
+        }
+
 //        this.addGp2_A_PressHandler(event -> {
 //            runAction(actionFactory.moveArmToSamplePickReady());
 //        });
@@ -298,13 +353,7 @@ public abstract class CompBot extends IsaacBot {
 //            claw.pincher.setPosition(config.clawConfig.pincherConfig.maxPosition);
 //        });
 
-//        this.addGp2_Right_Trigger_Handler(event -> {
-//            this.pincher.setPosition(this.config.pincherConfig.maxPosition);
-//        });
-//
-//        this.addGp2_Left_Trigger_Handler(event -> {
-//            this.pincher.setPosition(this.config.pincherConfig.minPosition);
-//        });
+
 
     }
 
@@ -323,8 +372,25 @@ public abstract class CompBot extends IsaacBot {
     public void run() {
         super.run();
 
-        if (this.config.useDriveTrain) {
-            this.driveTrain.run(this.config.debugDriveTrain || this.config.debugAll);
+//        if (this.config.useDriveTrain) {
+//            this.driveTrain.run(this.config.debugDriveTrain || this.config.debugAll);
+//        }
+
+        this.roadrunner.setDrivePowers(new PoseVelocity2d(
+                new Vector2d(
+                        -gamepad1.left_stick_y,
+                        -gamepad1.left_stick_x
+                ),
+                -gamepad1.right_stick_x
+        ));
+
+        this.roadrunner.updatePoseEstimate();
+
+        if (this.config.debugRoadrunner) {
+            TelemetryPacket packet = new TelemetryPacket();
+            packet.fieldOverlay().setStroke("#3F51B5");
+            Drawing.drawRobot(packet.fieldOverlay(), this.roadrunner.pose);
+            FtcDashboard.getInstance().sendTelemetryPacket(packet);
         }
 
         if (this.config.useArm) {
@@ -352,14 +418,15 @@ public abstract class CompBot extends IsaacBot {
         }
 
         if (this.config.debugRoadrunner && this.roadrunner != null) {
-
-            telemetry.addData("Roadrunner x", this.roadrunner.pose.position.x);
-            telemetry.addData("Roadrunner y", this.roadrunner.pose.position.y);
-            telemetry.addData("Roadrunner heading (deg)", Math.toDegrees(this.roadrunner.pose.heading.toDouble()));
+            if (this.roadrunner.pose != null) {
+                telemetry.addData("Roadrunner x", this.roadrunner.pose.position.x);
+                telemetry.addData("Roadrunner y", this.roadrunner.pose.position.y);
+                telemetry.addData("Roadrunner heading (deg)", Math.toDegrees(this.roadrunner.pose.heading.toDouble()));
+            }
         }
 
         if (this.config.debugAll
-            || this.config.debugDriveTrain
+            //|| this.config.debugDriveTrain
             || this.config.debugArm
             || this.config.debugClaw
             || this.config.debugDoubleHooks
@@ -369,8 +436,6 @@ public abstract class CompBot extends IsaacBot {
             || this.config.debugRoadrunner) {
             telemetry.update();
         }
-
-        this.terminateOpModeNow();
     }
 
     /**

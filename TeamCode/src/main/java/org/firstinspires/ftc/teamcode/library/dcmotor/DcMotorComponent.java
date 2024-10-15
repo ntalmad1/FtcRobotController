@@ -80,6 +80,14 @@ public class DcMotorComponent extends Component {
             this.addGp2_Dpad_Down_DownHandler(event -> { DcMotorComponent.this.move(-1); });
             this.addGp2_Dpad_Down_PressHandler(event -> { DcMotorComponent.this.move(0); });
         }
+
+        if (Control.Gp1_Dpad_UpDown.equals(control)) {
+            this.addGp1_Dpad_Up_DownHandler(event -> { DcMotorComponent.this.move(1); });
+            this.addGp1_Dpad_Up_PressHandler(event -> { DcMotorComponent.this.move(0); });
+
+            this.addGp1_Dpad_Down_DownHandler(event -> { DcMotorComponent.this.move(-1); });
+            this.addGp1_Dpad_Down_PressHandler(event -> { DcMotorComponent.this.move(0); });
+        }
     }
 
     /**

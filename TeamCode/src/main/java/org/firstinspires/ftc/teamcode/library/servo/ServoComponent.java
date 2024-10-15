@@ -299,9 +299,31 @@ public class ServoComponent extends Component {
 
         if (Control.Gp2_Dpad_Right.equals(control)
             || Control.Gp2_Dpad_LeftRight.equals(control)
-            ||Control.Gp1_Dpad_Right.equals(control)
+            || Control.Gp1_Dpad_Right.equals(control)
             || Control.Gp1_Dpad_LeftRight.equals(control)) {
             this.addGp2_Dpad_Right_DownHandler(event -> {
+                double position = 1;
+                if (ServoComponent.this.config.invertInput) {
+                    position = -position;
+                }
+                ServoComponent.this.move(position, ServoComponent.this.maxIncrement, ServoComponent.this.config.minPosition, ServoComponent.this.config.maxPosition);
+            });
+        }
+
+        if (Control.Gp1_Dpad_Left.equals(control)
+                || Control.Gp1_Dpad_LeftRight.equals(control)) {
+            this.addGp1_Dpad_Left_DownHandler(event -> {
+                double position = -1;
+                if (ServoComponent.this.config.invertInput) {
+                    position = -position;
+                }
+                ServoComponent.this.move(position, ServoComponent.this.maxIncrement, ServoComponent.this.config.minPosition, ServoComponent.this.config.maxPosition);
+            });
+        }
+
+        if (Control.Gp1_Dpad_Right.equals(control)
+                || Control.Gp1_Dpad_LeftRight.equals(control)) {
+            this.addGp1_Dpad_Right_DownHandler(event -> {
                 double position = 1;
                 if (ServoComponent.this.config.invertInput) {
                     position = -position;

@@ -48,7 +48,7 @@ public class CompBotConfig {
 
     /**
      */
-    public MecanumDriveTrainConfig driveTrainConfig;
+    // public MecanumDriveTrainConfig driveTrainConfig;
 
     /**
      */
@@ -88,7 +88,7 @@ public class CompBotConfig {
 
     /**
      */
-    public boolean debugDriveTrain = false;
+    // public boolean debugDriveTrain = false;
 
     /**
      */
@@ -127,7 +127,7 @@ public class CompBotConfig {
         this.robot = robot;
 
         // driveTrain
-        this.configureDriveTrain(robot);
+        //this.configureDriveTrain(robot);
 
         // arm
         this.configureArm(robot);
@@ -220,26 +220,26 @@ public class CompBotConfig {
         this.armConfig.mainBoomConfig.maxTics = 5000;
     }
 
-    /**
-     *
-     * @param robot
-     */
-    private void configureDriveTrain(IsaacBot robot) {
-        this.driveTrainConfig = new MecanumDriveTrainConfig(robot);
-        this.driveTrainConfig.leftFrontDeviceName   = "leftFront";
-        this.driveTrainConfig.rightFrontDeviceName  = "rightFront";
-        this.driveTrainConfig.rightRearDeviceName   = "rightRear";
-        this.driveTrainConfig.leftRearDeviceName    = "leftRear";
-        this.driveTrainConfig.accelerationIncrement = 1;
-        this.driveTrainConfig.maxPower = 1;
-        this.driveTrainConfig.yawOffset = 0;
-        this.driveTrainConfig.incrementalDeceleration = false;
-        this.driveTrainConfig.leftFrontMotorDirection  = DcMotorSimple.Direction.REVERSE;
-        this.driveTrainConfig.rightFrontMotorDirection = DcMotorSimple.Direction.FORWARD;
-        this.driveTrainConfig.leftRearMotorDirection  =  DcMotorSimple.Direction.REVERSE;
-        this.driveTrainConfig.rightRearMotorDirection  = DcMotorSimple.Direction.FORWARD;
-        this.driveTrainConfig.imuName = "imuExternal";
-    }
+//    /**
+//     *
+//     * @param robot
+//     */
+//    private void configureDriveTrain(IsaacBot robot) {
+//        this.driveTrainConfig = new MecanumDriveTrainConfig(robot);
+//        this.driveTrainConfig.leftFrontDeviceName   = "leftFront";
+//        this.driveTrainConfig.rightFrontDeviceName  = "rightFront";
+//        this.driveTrainConfig.rightRearDeviceName   = "rightRear";
+//        this.driveTrainConfig.leftRearDeviceName    = "leftRear";
+//        this.driveTrainConfig.accelerationIncrement = 1;
+//        this.driveTrainConfig.maxPower = 1;
+//        this.driveTrainConfig.yawOffset = 0;
+//        this.driveTrainConfig.incrementalDeceleration = false;
+//        this.driveTrainConfig.leftFrontMotorDirection  = DcMotorSimple.Direction.REVERSE;
+//        this.driveTrainConfig.rightFrontMotorDirection = DcMotorSimple.Direction.FORWARD;
+//        this.driveTrainConfig.leftRearMotorDirection  =  DcMotorSimple.Direction.REVERSE;
+//        this.driveTrainConfig.rightRearMotorDirection  = DcMotorSimple.Direction.FORWARD;
+//        this.driveTrainConfig.imuName = "imuExternal";
+//    }
 
     /**
      *
@@ -252,7 +252,6 @@ public class CompBotConfig {
         this.clawConfig.pincherConfig.zeroDegreePosition = 0.5;
         this.clawConfig.pincherConfig.minPosition = 0.484;
         this.clawConfig.pincherConfig.maxPosition = 0.65;
-        //this.clawConfig.pincherConfig.controllerInputMethod = Control.Gp1_RightStickX;
 
         this.clawConfig.clawRotatorConfig = new RotatorConfig(robot);
         this.clawConfig.clawRotatorConfig.servoName = "clawRotate";
@@ -260,7 +259,6 @@ public class CompBotConfig {
         this.clawConfig.clawRotatorConfig.zeroDegreePosition = 0;
         this.clawConfig.clawRotatorConfig.minPosition = 0;
         this.clawConfig.clawRotatorConfig.maxPosition = 1;
-        this.clawConfig.clawRotatorConfig.controllerInputMethod = Control.Gp1_RightStickY;
     }
 
     /**
@@ -291,7 +289,5 @@ public class CompBotConfig {
         this.intakeConfig.vServoConfig.homePosition = Constants.INTAKE_V_SERVO_INIT_POS;
         this.intakeConfig.vServoConfig.minPosition = 0.0;
         this.intakeConfig.vServoConfig.maxPosition = 0.674;
-
-
     }
 }

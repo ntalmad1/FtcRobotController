@@ -2,7 +2,7 @@ package org.firstinspires.ftc.teamcode.metalheads;
 
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
-@TeleOp(name = "TeleOpBot", group = "Tests")
+@TeleOp(name = "TeleBot", group = "Tests")
 public class TeleBot extends CompBot {
 
     /**
@@ -14,6 +14,13 @@ public class TeleBot extends CompBot {
 
         this.setConfig(new TeleBotConfig(this));
         this.configureBot();
+    }
 
+    /**
+     *
+     */
+    @Override
+    protected void configureBot() {
+        super.configureBot();
     }
 }
