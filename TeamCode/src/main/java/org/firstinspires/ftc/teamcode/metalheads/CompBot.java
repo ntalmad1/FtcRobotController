@@ -18,7 +18,39 @@ import org.firstinspires.ftc.teamcode.metalheads.components.Intake;
 import org.firstinspires.ftc.teamcode.metalheads.components.Winch;
 import org.firstinspires.ftc.teamcode.roadrunner.MecanumDrive;
 
+/**
+ *
+ */
 public abstract class CompBot extends IsaacBot {
+
+    /**
+     *
+     */
+    public enum Mode {
+        NONE,
+        SAMPLE_MODE,
+        SPECIMEN_MODE
+    }
+
+    /**
+     *
+     */
+    public enum ArmPos {
+        INIT
+    }
+
+    /**
+     */
+    protected Arm arm;
+
+    /**
+     */
+    protected ArmPos armPos = ArmPos.INIT;
+
+    /**
+     */
+    protected Mode mode = Mode.NONE;
+
 
     /**
      */
@@ -26,8 +58,7 @@ public abstract class CompBot extends IsaacBot {
 
     /**
      */
-    protected Arm arm;
-
+    private ActionFactory actionFactory;
     /**
      */
     private Claw claw;
@@ -36,6 +67,9 @@ public abstract class CompBot extends IsaacBot {
      */
     private DoubleHooks doubleHooks;
 
+    /**
+     */
+    private MecanumDriveTrain driveTrain;
     /**
      */
     private FlapperBars flapperBars;
@@ -48,17 +82,11 @@ public abstract class CompBot extends IsaacBot {
      */
     private MecanumDrive roadrunner;
 
-    /**
-     */
-    private MecanumDriveTrain driveTrain;
 
     /**
      */
     private Winch winch;
 
-    /**
-     */
-    private ActionFactory actionFactory;
 
     /**
      */
@@ -132,27 +160,7 @@ public abstract class CompBot extends IsaacBot {
             this.winch = new Winch(this.config.winchConfig);
         }
 
-        this.addGp1_X_PressHandler(event -> {
-            roadrunner.updatePoseEstimate();
-        });
-
         this.actionFactory = new ActionFactory();
-    }
-
-    /**
-     *
-     * @param config
-     */
-    public void setConfig(CompBotConfig config) {
-        this.config = config;
-    }
-
-    /**
-     *
-     * @param pos
-     */
-    public void setInitialPose(Pose2d pos) {
-        this.initialPose = pos;
     }
 
     /**
@@ -170,34 +178,11 @@ public abstract class CompBot extends IsaacBot {
 
         if (this.config.useArm) {
             this.arm.init();
-
-            this.addGp2_A_PressHandler(event -> {
-                runAction(actionFactory.moveArmToSamplePickReady());
-            });
-
-            this.addGp2_B_PressHandler(event -> {
-                runAction(new SequentialAction(
-                        CompBot.this.arm.mainBoom.gotoPositionAction(0, 0.5),
-                        new ParallelAction(
-                                CompBot.this.intake.hServo.gotoPositionAction(0.5011, 1),
-                                CompBot.this.intake.vServo.gotoPositionAction(0.5, 1)),
-                        new WaitAction(1000),
-                        CompBot.this.arm.viperSlide.gotoVoltageAction(0.586)
-                ));
-            });
         }
 
         if (this.config.useClaw) {
             this.claw.init();
             this.claw.pincher.setPosition(config.clawConfig.pincherConfig.homePosition);
-
-            this.addGp2_Right_Bumper_PressHandler(event -> {
-                claw.pincher.setPosition(config.clawConfig.pincherConfig.minPosition);
-            });
-
-            this.addGp2_Left_Bumper_PressHandler(event -> {
-                claw.pincher.setPosition(config.clawConfig.pincherConfig.maxPosition);
-            });
         }
 
         if (this.config.useDoubleHooks) {
@@ -206,22 +191,6 @@ public abstract class CompBot extends IsaacBot {
 
         if (this.config.useFlapperBars) {
             this.flapperBars.init();
-
-            this.addGp1_Left_Bumper_DownHandler(event -> {
-                flapperBars.move(-1);
-            });
-
-            this.addGp1_Left_Bumper_UpHandler(event -> {
-                flapperBars.move(0);
-            });
-
-            this.addGp1_Right_Bumper_DownHandler(event -> {
-                flapperBars.move(1);
-            });
-
-            this.addGp1_Right_Bumper_UpHandler(event -> {
-                flapperBars.move(0);
-            });
         }
 
         if (this.config.useIntake) {
@@ -230,47 +199,83 @@ public abstract class CompBot extends IsaacBot {
 
         if (this.config.useWinch) {
             this.winch.init();
-
-            this.addGp1_RightTrigger_DownHandler(event -> {
-                winch.move(1);
-            });
-
-            this.addGp1_RightTrigger_UpHandler(event -> {
-                winch.move(0);
-            });
-
-            this.addGp1_LeftTrigger_DownHandler(event -> {
-                winch.move(-1);
-            });
-
-            this.addGp1_LeftTrigger_UpHandler(event -> {
-                winch.move(0);
-            });
         }
+
+        this.configureGamePad1();
+        this.configureGamePad2();
     }
 
     /**
      *
-     * @return
      */
-    public ActionFactory getActionFactory() {
-        return this.actionFactory;
+    private void configureGamePad1() {
+
+        // Panic Button / Kill Switch
+        this.addGp1_Back_PressHandler(event -> {
+            this.terminateOpModeNow();
+        });
+
+        this.addGp1_Left_Bumper_DownHandler(event -> {
+            flapperBars.move(-1);
+        });
+
+        this.addGp1_Left_Bumper_UpHandler(event -> {
+            flapperBars.move(0);
+        });
+
+        this.addGp1_Right_Bumper_DownHandler(event -> {
+            flapperBars.move(1);
+        });
+
+        this.addGp1_Right_Bumper_UpHandler(event -> {
+            flapperBars.move(0);
+        });
+
+        this.addGp1_RightTrigger_DownHandler(event -> {
+            winch.move(1);
+        });
+
+        this.addGp1_RightTrigger_UpHandler(event -> {
+            winch.move(0);
+        });
+
+        this.addGp1_LeftTrigger_DownHandler(event -> {
+            winch.move(-1);
+        });
+
+        this.addGp1_LeftTrigger_UpHandler(event -> {
+            winch.move(0);
+        });
+
     }
 
     /**
      *
-     * @return
      */
-    public CompBotConfig getConfig() {
-        return this.config == null ? null : this.config;
-    }
+    private void configureGamePad2() {
 
-    /**
-     *
-     * @return
-     */
-    public MecanumDrive getRoadrunner() {
-        return this.roadrunner;
+        // Panic Button / Kill Switch
+        this.addGp2_Back_PressHandler(event -> {
+            this.terminateOpModeNow();
+        });
+
+//        this.addGp2_A_PressHandler(event -> {
+//            runAction(actionFactory.moveArmToSamplePickReady());
+//        });
+//
+//        this.addGp2_B_PressHandler(event -> {
+//            runAction(actionFactory.moveArmToInitPos());
+//        });
+
+
+//        this.addGp2_Right_Bumper_PressHandler(event -> {
+//            claw.pincher.setPosition(config.clawConfig.pincherConfig.minPosition);
+//        });
+//
+//        this.addGp2_Left_Bumper_PressHandler(event -> {
+//            claw.pincher.setPosition(config.clawConfig.pincherConfig.maxPosition);
+//        });
+
     }
 
     /**
@@ -334,6 +339,8 @@ public abstract class CompBot extends IsaacBot {
             || this.config.debugRoadrunner) {
             telemetry.update();
         }
+
+        this.terminateOpModeNow();
     }
 
     /**
@@ -346,10 +353,66 @@ public abstract class CompBot extends IsaacBot {
 
     /**
      *
+     * @return
+     */
+    public MecanumDrive getRoadrunner() {
+        return this.roadrunner;
+    }
+
+    /**
+     *
+     * @return
+     */
+    public CompBotConfig getConfig() {
+        return this.config == null ? null : this.config;
+    }
+
+    /**
+     *
+     * @return
+     */
+    public ActionFactory getActionFactory() {
+        return this.actionFactory;
+    }
+
+    /**
+     *
+     * @param pos
+     */
+    public void setInitialPose(Pose2d pos) {
+        this.initialPose = pos;
+    }
+
+    /**
+     *
+     * @param config
+     */
+    public void setConfig(CompBotConfig config) {
+        this.config = config;
+    }
+
+    /**
+     *
+     * @return
+     */
+    protected ArmPos getArmPos() {
+        return this.armPos;
+    }
+
+    /**
+     *
+     * @return
+     */
+    protected Mode getMode() {
+        return this.mode;
+    }
+
+    /**
+     *
      * @param positions
      * @return
      */
-    public ParallelAction moveArmAction(PositionConstants positions) {
+    protected ParallelAction moveArmAction(PositionConstants positions) {
 
         return new ParallelAction(
                 intake.hServo.gotoPositionAction(positions.hServoPos),
@@ -364,9 +427,40 @@ public abstract class CompBot extends IsaacBot {
     }
 
     /**
+     *
+     * @param pos
+     */
+    protected void setArmPos(ArmPos pos) {
+        this.armPos = pos;
+    }
+
+    /**
+     *
+     * @param mode
+     */
+    protected void setMode(Mode mode) {
+        this.mode = mode;
+    }
+
+    /**
      * Internal Class
      */
     public class ActionFactory {
+
+        public Action moveArmToInitPos() {
+            return new SequentialAction(
+                    CompBot.this.arm.mainBoom.gotoPositionAction(0, 0.5),
+                    new ParallelAction(
+                            CompBot.this.intake.hServo.gotoPositionAction(0.5011, 1),
+                            CompBot.this.intake.vServo.gotoPositionAction(0.5, 1),
+                            CompBot.this.claw.closeClawAction(),
+                            CompBot.this.claw.clawRotator.gotoPositionAction(0, 1)
+                    ),
+                    new WaitAction(1000),
+                    CompBot.this.arm.viperSlide.gotoVoltageAction(0.586)
+            );
+        }
+
 
         /**
          * @return
@@ -395,10 +489,71 @@ public abstract class CompBot extends IsaacBot {
             return CompBot.this.moveArmAction(Constants.SAMPLE_PICK_RIGHT_READY);
         }
 
-        
+        /**
+         * @return
+         */
+        public Action moveArmToSamplePickReadyMax() {
+            return CompBot.this.moveArmAction(Constants.SAMPLE_PICK_READY_MAX);
+        }
+
+        /**
+         * @return
+         */
+        public Action moveArmToSamplePickLeftReadyMax() {
+            return CompBot.this.moveArmAction(Constants.SAMPLE_PICK_LEFT_READY_MAX);
+        }
+
+        /**
+         * @return
+         */
+        public Action moveArmToSamplePickRightReadyMax() {
+            return CompBot.this.moveArmAction(Constants.SAMPLE_PICK_RIGHT_READY_MAX);
+        }
+
+        /**
+         * @return
+         */
+        public Action moveArmToSampleCarry() {
+            return CompBot.this.moveArmAction(Constants.SAMPLE_CARRY);
+        }
+
+        /**
+         * @return
+         */
+        public Action moveArmToSampeDropExtendReady() {
+            return CompBot.this.moveArmAction(Constants.SAMPLE_DROP_EXTEND_READY);
+        }
+
+        /**
+         * @return
+         */
+        public Action moveArmToSampleBasketLowReady() {
+            return CompBot.this.moveArmAction(Constants.SAMPLE_BASKET_LOW_READY);
+        }
+
+        /**
+         * @return
+         */
+        public Action moveArmToSampleBasketHighReady() {
+            return CompBot.this.moveArmAction(Constants.SAMPLE_BASKET_HIGH_READY);
+        }
 
         //------------------------------------------------------------------------------------------
         //------------------------------------------------------------------------------------------
+
+        /**
+         * @return
+         */
+        public Action moveArmToSpecimenPickready() {
+            return CompBot.this.moveArmAction(Constants.SPECIMEN_PICK_READY);
+        }
+
+        /**
+         * @return
+         */
+        public Action moveArmToSpecimenPick() {
+            return CompBot.this.moveArmAction(Constants.SPECIMEN_PICK);
+        }
 
         /**
          * @return
@@ -408,6 +563,29 @@ public abstract class CompBot extends IsaacBot {
         }
 
         /**
+         * @return
+         */
+        public Action moveArmToSpecimenPlaceHigh() {
+            return CompBot.this.moveArmAction(Constants.SPECIMEN_PLACE_HIGH);
+        }
+
+        /**
+         * @return
+         */
+        public Action moveArmToSpecimentPlaceLowready() {
+            return CompBot.this.moveArmAction(Constants.SPECIMEN_PLACE_LOW_READY);
+        }
+
+        /**
+         * @return
+         */
+        public Action moveArmToSpecimenPlaceLow() {
+            return CompBot.this.moveArmAction(Constants.SPECIMEN_PLACE_LOW);
+        }
+
+
+
+/**
          * Hidden constructor to make class static
          */
         protected ActionFactory() {

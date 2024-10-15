@@ -127,6 +127,104 @@ public class CompBotConfig {
         this.robot = robot;
 
         // driveTrain
+        this.configureDriveTrain(robot);
+
+        // arm
+        this.configureArm(robot);
+
+        // claw
+        this.configureClaw();
+
+        // double hooks
+        this.configureDoubleHooks(robot);
+
+        // flapper bars
+        this.configureFlapperBars(robot);
+
+        // intake
+        this.configureIntake();
+
+        // winch
+        this.configureWinch(robot);
+    }
+
+    /**
+     *
+     * @param robot
+     */
+    private void configureWinch(IsaacBot robot) {
+        this.winchConfig = new WinchConfig(robot);
+        this.winchConfig.motorName = "winch";
+        this.winchConfig.minTics = -90000;
+        this.winchConfig.maxTics = 90000;
+    }
+
+    /**
+     *
+     * @param robot
+     */
+    private void configureFlapperBars(IsaacBot robot) {
+        this.flapperBarsConfig = new FlapperBarsConfig(robot);
+        this.flapperBarsConfig.isDualServo = true;
+        this.flapperBarsConfig.servoName = "leftFlapper";
+        this.flapperBarsConfig.zeroDegreePosition = 0;
+        this.flapperBarsConfig.homePosition = 0;
+        this.flapperBarsConfig.minPosition = 0;
+        this.flapperBarsConfig.maxPosition = 1;
+        this.flapperBarsConfig.secondaryServoName = "rightFlapper";
+        this.flapperBarsConfig.maxIncrement = 0.001;
+    }
+
+    /**
+     *
+     * @param robot
+     */
+    private void configureDoubleHooks(IsaacBot robot) {
+        this.doubleHooksConfig = new DoubleHooksConfig(robot);
+        this.doubleHooksConfig.linearActuatorConfig = new EncodedMotorConfig(robot);
+        this.doubleHooksConfig.linearActuatorConfig.motorName = "linearActuator";
+        this.doubleHooksConfig.linearActuatorConfig.minTics = 0;
+        this.doubleHooksConfig.linearActuatorConfig.maxTics = 8574;
+
+        this.doubleHooksConfig.doubleServosConfig = new ServoComponentConfig(robot);
+        this.doubleHooksConfig.doubleServosConfig.isDualServo = true;
+        this.doubleHooksConfig.doubleServosConfig.servoName = "leftActuatorArm";
+        this.doubleHooksConfig.doubleServosConfig.homePosition = 0;
+        this.doubleHooksConfig.doubleServosConfig.minPosition = 0;
+        this.doubleHooksConfig.doubleServosConfig.maxPosition = 0.336;
+        this.doubleHooksConfig.doubleServosConfig.zeroDegreePosition = 0;
+        this.doubleHooksConfig.doubleServosConfig.secondaryServoName = "rightActuatorArm";
+        this.doubleHooksConfig.doubleServosConfig.secondaryServoOffset = 1 - 0.979;
+    }
+
+    /**
+     *
+     * @param robot
+     */
+    private void configureArm(IsaacBot robot) {
+        this.armConfig = new ArmConfig(robot);
+        this.armConfig.viperSlideConfig = new PotentiometerMotorConfig(robot);
+        this.armConfig.viperSlideConfig.motorName = "viperSlide";
+        this.armConfig.viperSlideConfig.minTics = 100;
+        this.armConfig.viperSlideConfig.maxTics = 2900;
+        this.armConfig.viperSlideConfig.minVolts = 0.586;
+        this.armConfig.viperSlideConfig.maxVolts = 1.129;
+        this.armConfig.viperSlideConfig.brakeOn = true;
+
+        this.armConfig.viperSlideConfig.potentiometerConfig = new PotentiometerConfig(robot);
+        this.armConfig.viperSlideConfig.potentiometerConfig.potentiometerName = "pot";
+
+        this.armConfig.mainBoomConfig = new EncodedMotorConfig(robot);
+        this.armConfig.mainBoomConfig.motorName = "arm";
+        this.armConfig.mainBoomConfig.minTics = -736;
+        this.armConfig.mainBoomConfig.maxTics = 5000;
+    }
+
+    /**
+     *
+     * @param robot
+     */
+    private void configureDriveTrain(IsaacBot robot) {
         this.driveTrainConfig = new MecanumDriveTrainConfig(robot);
         this.driveTrainConfig.leftFrontDeviceName   = "leftFront";
         this.driveTrainConfig.rightFrontDeviceName  = "rightFront";
@@ -141,69 +239,6 @@ public class CompBotConfig {
         this.driveTrainConfig.leftRearMotorDirection  =  DcMotorSimple.Direction.REVERSE;
         this.driveTrainConfig.rightRearMotorDirection  = DcMotorSimple.Direction.FORWARD;
         this.driveTrainConfig.imuName = "imuExternal";
-
-        // arm
-        this.armConfig = new ArmConfig(robot);
-        this.armConfig.viperSlideConfig = new PotentiometerMotorConfig(robot);
-        this.armConfig.viperSlideConfig.motorName = "viperSlide";
-        this.armConfig.viperSlideConfig.minTics = 100;
-        this.armConfig.viperSlideConfig.maxTics = 2900;
-        this.armConfig.viperSlideConfig.minVolts = 0.586;
-        this.armConfig.viperSlideConfig.maxVolts = 1.129;
-        this.armConfig.viperSlideConfig.brakeOn = true;
-        this.armConfig.viperSlideConfig.control = Control.Gp2_RightStickX;
-
-        this.armConfig.viperSlideConfig.potentiometerConfig = new PotentiometerConfig(robot);
-        this.armConfig.viperSlideConfig.potentiometerConfig.potentiometerName = "pot";
-
-        this.armConfig.mainBoomConfig = new EncodedMotorConfig(robot);
-        this.armConfig.mainBoomConfig.motorName = "arm";
-        this.armConfig.mainBoomConfig.minTics = -736;
-        this.armConfig.mainBoomConfig.maxTics = 5000;
-        this.armConfig.mainBoomConfig.control = Control.Gp2_LeftStickY;
-
-        // claw
-        this.configureClaw();
-
-        // double hooks
-        this.doubleHooksConfig = new DoubleHooksConfig(robot);
-        this.doubleHooksConfig.linearActuatorConfig = new EncodedMotorConfig(robot);
-        this.doubleHooksConfig.linearActuatorConfig.motorName = "linearActuator";
-        this.doubleHooksConfig.linearActuatorConfig.minTics = 0;
-        this.doubleHooksConfig.linearActuatorConfig.maxTics = 8574;
-        this.doubleHooksConfig.linearActuatorConfig.control = Control.Gp2_Dpad_UpDown;
-
-        this.doubleHooksConfig.doubleServosConfig = new ServoComponentConfig(robot);
-        this.doubleHooksConfig.doubleServosConfig.isDualServo = true;
-        this.doubleHooksConfig.doubleServosConfig.servoName = "leftActuatorArm";
-        this.doubleHooksConfig.doubleServosConfig.homePosition = 0;
-        this.doubleHooksConfig.doubleServosConfig.minPosition = 0;
-        this.doubleHooksConfig.doubleServosConfig.maxPosition = 0.336;
-        this.doubleHooksConfig.doubleServosConfig.zeroDegreePosition = 0;
-        this.doubleHooksConfig.doubleServosConfig.secondaryServoName = "rightActuatorArm";
-        this.doubleHooksConfig.doubleServosConfig.secondaryServoOffset = 1 - 0.979;
-        this.doubleHooksConfig.doubleServosConfig.controllerInputMethod = Control.Gp2_Dpad_Left;
-        this.doubleHooksConfig.doubleServosConfig.controllerInputMethod2 = Control.Gp2_Dpad_Right;
-
-        // flapper bars
-        this.flapperBarsConfig = new FlapperBarsConfig(robot);
-        this.flapperBarsConfig.isDualServo = true;
-        this.flapperBarsConfig.servoName = "leftFlapper";
-        this.flapperBarsConfig.zeroDegreePosition = 0;
-        this.flapperBarsConfig.homePosition = 0;
-        this.flapperBarsConfig.minPosition = 0;
-        this.flapperBarsConfig.maxPosition = 1;
-        this.flapperBarsConfig.secondaryServoName = "rightFlapper";
-        this.flapperBarsConfig.maxIncrement = 0.001;
-
-        // intake
-        this.configureIntake();
-
-        // winch
-        this.winchConfig = new WinchConfig(robot);
-        this.winchConfig.motorName = "winch";
-        this.winchConfig.minTics = -90000;
-        this.winchConfig.maxTics = 90000;
     }
 
     /**

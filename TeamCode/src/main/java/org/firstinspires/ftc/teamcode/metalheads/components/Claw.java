@@ -1,5 +1,7 @@
 package org.firstinspires.ftc.teamcode.metalheads.components;
 
+import com.acmerobotics.roadrunner.Action;
+
 import org.firstinspires.ftc.teamcode.library.component.Component;
 import org.firstinspires.ftc.teamcode.library.rotator.Rotator;
 import org.firstinspires.ftc.teamcode.library.servo.ServoComponent;
@@ -43,6 +45,22 @@ public class Claw extends Component {
 //            }
 //
 //        });
+    }
+
+    /**
+     *
+     * @return
+     */
+    public Action closeClawAction() {
+        return this.pincher.gotoPositionAction(config.pincherConfig.maxPosition, 1);
+    }
+
+    /**
+     *
+     * @return
+     */
+    public Action openClawAction() {
+        return this.pincher.gotoPositionAction(config.pincherConfig.minPosition, 1);
     }
 
     /**

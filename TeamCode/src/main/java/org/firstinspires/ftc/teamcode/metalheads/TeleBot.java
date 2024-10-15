@@ -3,16 +3,16 @@ package org.firstinspires.ftc.teamcode.metalheads;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 @TeleOp(name = "TeleOpBot", group = "Tests")
-public class TeBot extends CompBot {
+public class TeleBot extends CompBot {
 
     /**
      * Constructor
      *
      */
-    public TeBot() {
+    public TeleBot() {
         super();
 
-        this.setConfig(new TeBotConfig(this));
+        this.setConfig(new TeleBotConfig(this));
         this.configureBot();
 
     }
