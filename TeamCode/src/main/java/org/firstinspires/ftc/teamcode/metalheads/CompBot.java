@@ -285,6 +285,54 @@ public abstract class CompBot extends IsaacBot {
                 this.setArmPos(ArmPos.INIT);
                 this.runAction(this.actionFactory.moveArmToInitPos());
             });
+
+            // manually move main boom
+            this.arm.mainBoom.addControl(Control.Gp2_LeftStickY);
+            this.arm.mainBoom.addControl(Control.Gp2_LeftStickX);
+
+            // manually move viper slide
+            this.arm.mainBoom.addControl(Control.Gp2_RightStickY);
+            this.arm.mainBoom.addControl(Control.Gp2_RightStickX);
+
+            // dpad up
+            this.addGp2_Dpad_Up_DownHandler(event -> {
+                if (Mode.SAMPLE_MODE.equals(this.getMode())) {
+                    CompBot.this.intake.vServo.move(1);
+                }
+                else if (Mode.SPECIMEN_MODE.equals(this.getMode())) {
+                    CompBot.this.claw.clawRotator.move(-1);
+                }
+            });
+
+            // dpad down
+            this.addGp2_Dpad_Down_DownHandler(event -> {
+                if (Mode.SAMPLE_MODE.equals(this.getMode())) {
+                    CompBot.this.intake.vServo.move(-1);
+                }
+                else if (Mode.SPECIMEN_MODE.equals(this.getMode())) {
+                    CompBot.this.claw.clawRotator.move(1);
+                }
+            });
+
+            // dpad left
+            this.addGp2_Dpad_Left_DownHandler(event -> {
+                if (Mode.SAMPLE_MODE.equals(this.getMode())) {
+                    CompBot.this.intake.hServo.move(-1);
+                }
+                else if (Mode.SPECIMEN_MODE.equals(this.getMode())) {
+                    CompBot.this.claw.clawRotator.move(-1);
+                }
+            });
+
+            // dpad right
+            this.addGp2_Dpad_Right_DownHandler(event -> {
+                if (Mode.SAMPLE_MODE.equals(this.getMode())) {
+                    CompBot.this.intake.hServo.move(1);
+                }
+                else if (Mode.SPECIMEN_MODE.equals(this.getMode())) {
+                    CompBot.this.claw.clawRotator.move(1);
+                }
+            });
         }
 
         // claw

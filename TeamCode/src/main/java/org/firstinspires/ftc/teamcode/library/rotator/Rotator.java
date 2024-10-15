@@ -323,6 +323,15 @@ public class Rotator extends Component {
 
     /**
      *
+     * @param input
+     * @return
+     */
+    public boolean move (double input) {
+        return Rotator.this.move(input, Rotator.this.maxIncrement, Rotator.this.config.minPosition, Rotator.this.config.maxPosition);
+    }
+
+    /**
+     *
      * @param input the value of the game pad stick
      * @param maxIncrement the amount to increment or decrement the servo position by each cycle
      * @param minPosition the min position of the servo

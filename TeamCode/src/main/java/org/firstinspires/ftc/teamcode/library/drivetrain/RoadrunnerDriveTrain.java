@@ -51,6 +51,7 @@ public class RoadrunnerDriveTrain extends Component
         super.init();
 
         this.robot.setImuName(this.getConfig().imuName);
+        this.robot.initImu(this.getConfig().imuName);
 
         drive = new RoadrunnerDrive(this.robot.hardwareMap, initialPose);
     }
