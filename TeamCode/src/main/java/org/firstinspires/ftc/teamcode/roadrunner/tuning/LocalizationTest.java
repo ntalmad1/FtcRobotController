@@ -63,7 +63,9 @@ public class LocalizationTest extends LinearOpMode {
                         -gamepad1.right_stick_x
                 ));
 
-                drive.updatePoseEstimate();
+                if (gamepad1.a) {
+                    drive.updatePoseEstimate();
+                }
 
                 telemetry.addData("x", drive.pose.position.x);
                 telemetry.addData("y", drive.pose.position.y);
