@@ -1,18 +1,14 @@
 package org.firstinspires.ftc.teamcode.metalheads;
 
-import com.acmerobotics.dashboard.FtcDashboard;
-import com.acmerobotics.dashboard.telemetry.TelemetryPacket;
 import com.acmerobotics.roadrunner.Action;
 import com.acmerobotics.roadrunner.ParallelAction;
 import com.acmerobotics.roadrunner.Pose2d;
-import com.acmerobotics.roadrunner.PoseVelocity2d;
 import com.acmerobotics.roadrunner.SequentialAction;
-import com.acmerobotics.roadrunner.Vector2d;
 
 import org.firstinspires.ftc.teamcode.library.IsaacBot;
 import org.firstinspires.ftc.teamcode.library.action.WaitAction;
 import org.firstinspires.ftc.teamcode.library.dcmotor.MotorPos;
-import org.firstinspires.ftc.teamcode.library.drivetrain.MecanumDriveTrain;
+import org.firstinspires.ftc.teamcode.library.drivetrain.RoadrunnerDriveTrain;
 import org.firstinspires.ftc.teamcode.library.servo.ServoPos;
 import org.firstinspires.ftc.teamcode.library.utility.Control;
 import org.firstinspires.ftc.teamcode.metalheads.components.Arm;
@@ -21,8 +17,6 @@ import org.firstinspires.ftc.teamcode.metalheads.components.DoubleHooks;
 import org.firstinspires.ftc.teamcode.metalheads.components.FlapperBars;
 import org.firstinspires.ftc.teamcode.metalheads.components.Intake;
 import org.firstinspires.ftc.teamcode.metalheads.components.Winch;
-import org.firstinspires.ftc.teamcode.roadrunner.Drawing;
-import org.firstinspires.ftc.teamcode.roadrunner.MecanumDrive;
 
 /**
  *
@@ -75,7 +69,7 @@ public abstract class CompBot extends IsaacBot {
 
     /**
      */
-    //private MecanumDriveTrain driveTrain;
+    private RoadrunnerDriveTrain driveTrain;
 
     /**
      */
@@ -87,13 +81,7 @@ public abstract class CompBot extends IsaacBot {
 
     /**
      */
-    private MecanumDrive roadrunner;
-
-
-    /**
-     */
     private Winch winch;
-
 
     /**
      */
@@ -128,20 +116,18 @@ public abstract class CompBot extends IsaacBot {
             this.config = new CompBotConfig(this);
         }
 
-        //this.config.debugDriveTrain = false;
+        this.config.debugDriveTrain = true;
         this.config.debugArm = true;
         this.config.debugClaw = true;
         this.config.debugDoubleHooks = true;
         this.config.debugFlapperBars = true;
         this.config.debugIntake = true;
         this.config.debugWinch = true;
-        this.config.debugRoadrunner = true;
-
         this.config.debugAll = false;
 
-//        if (this.config.useDriveTrain) {
-//            this.driveTrain = new MecanumDriveTrain(this.config.driveTrainConfig);
-//        }
+        if (this.config.useDriveTrain) {
+            this.driveTrain = new RoadrunnerDriveTrain(this.config.driveTrainConfig);
+        }
 
         if (this.config.useArm) {
             this.arm = new Arm(this.config.armConfig);
@@ -180,11 +166,9 @@ public abstract class CompBot extends IsaacBot {
     public void initBot(){
         super.initBot();
 
-        roadrunner = new MecanumDrive(hardwareMap, initialPose);
-
-//        if (this.config.useDriveTrain) {
-//            this.driveTrain.init();
-//        }
+        if (this.config.useDriveTrain) {
+            this.driveTrain.init(this.initialPose);
+        }
 
         if (this.config.useArm) {
             this.arm.init();
@@ -372,25 +356,8 @@ public abstract class CompBot extends IsaacBot {
     public void run() {
         super.run();
 
-//        if (this.config.useDriveTrain) {
-//            this.driveTrain.run(this.config.debugDriveTrain || this.config.debugAll);
-//        }
-
-        this.roadrunner.setDrivePowers(new PoseVelocity2d(
-                new Vector2d(
-                        -gamepad1.left_stick_y,
-                        -gamepad1.left_stick_x
-                ),
-                -gamepad1.right_stick_x
-        ));
-
-        this.roadrunner.updatePoseEstimate();
-
-        if (this.config.debugRoadrunner) {
-            TelemetryPacket packet = new TelemetryPacket();
-            packet.fieldOverlay().setStroke("#3F51B5");
-            Drawing.drawRobot(packet.fieldOverlay(), this.roadrunner.pose);
-            FtcDashboard.getInstance().sendTelemetryPacket(packet);
+        if (this.config.useDriveTrain) {
+            this.driveTrain.run(this.config.debugDriveTrain || this.config.debugAll);
         }
 
         if (this.config.useArm) {
@@ -417,23 +384,14 @@ public abstract class CompBot extends IsaacBot {
             this.winch.run(this.config.debugWinch || this.config.debugAll);
         }
 
-        if (this.config.debugRoadrunner && this.roadrunner != null) {
-            if (this.roadrunner.pose != null) {
-                telemetry.addData("Roadrunner x", this.roadrunner.pose.position.x);
-                telemetry.addData("Roadrunner y", this.roadrunner.pose.position.y);
-                telemetry.addData("Roadrunner heading (deg)", Math.toDegrees(this.roadrunner.pose.heading.toDouble()));
-            }
-        }
-
         if (this.config.debugAll
-            //|| this.config.debugDriveTrain
+            || this.config.debugDriveTrain
             || this.config.debugArm
             || this.config.debugClaw
             || this.config.debugDoubleHooks
             || this.config.debugFlapperBars
             || this.config.debugIntake
-            || this.config.debugWinch
-            || this.config.debugRoadrunner) {
+            || this.config.debugWinch) {
             telemetry.update();
         }
     }
@@ -444,14 +402,6 @@ public abstract class CompBot extends IsaacBot {
     @Override
     public void onStop() {
 
-    }
-
-    /**
-     *
-     * @return
-     */
-    public MecanumDrive getRoadrunner() {
-        return this.roadrunner;
     }
 
     /**

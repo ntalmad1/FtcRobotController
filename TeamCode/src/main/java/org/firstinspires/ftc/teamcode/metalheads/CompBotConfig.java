@@ -1,9 +1,7 @@
 package org.firstinspires.ftc.teamcode.metalheads;
 
-import com.qualcomm.robotcore.hardware.DcMotorSimple;
-
 import org.firstinspires.ftc.teamcode.library.IsaacBot;
-import org.firstinspires.ftc.teamcode.library.drivetrain.MecanumDriveTrainConfig;
+import org.firstinspires.ftc.teamcode.library.drivetrain.RoadrunnerDriveTrainConfig;
 import org.firstinspires.ftc.teamcode.library.encodedmotor.EncodedMotorConfig;
 import org.firstinspires.ftc.teamcode.library.potentiometer.PotentiometerConfig;
 import org.firstinspires.ftc.teamcode.library.potentiometermotor.PotentiometerMotorConfig;
@@ -48,7 +46,7 @@ public class CompBotConfig {
 
     /**
      */
-    // public MecanumDriveTrainConfig driveTrainConfig;
+    public RoadrunnerDriveTrainConfig driveTrainConfig;
 
     /**
      */
@@ -88,7 +86,7 @@ public class CompBotConfig {
 
     /**
      */
-    // public boolean debugDriveTrain = false;
+    public boolean debugDriveTrain = false;
 
     /**
      */
@@ -115,10 +113,6 @@ public class CompBotConfig {
     public boolean debugWinch = false;
 
     /**
-     */
-    public boolean debugRoadrunner = false;
-
-    /**
      * Constructor
      *
      * @param robot
@@ -127,13 +121,13 @@ public class CompBotConfig {
         this.robot = robot;
 
         // driveTrain
-        //this.configureDriveTrain(robot);
+        this.configureDriveTrain(robot);
 
         // arm
         this.configureArm(robot);
 
         // claw
-        this.configureClaw();
+        this.configureClaw(robot);
 
         // double hooks
         this.configureDoubleHooks(robot);
@@ -142,7 +136,7 @@ public class CompBotConfig {
         this.configureFlapperBars(robot);
 
         // intake
-        this.configureIntake();
+        this.configureIntake(robot);
 
         // winch
         this.configureWinch(robot);
@@ -220,31 +214,20 @@ public class CompBotConfig {
         this.armConfig.mainBoomConfig.maxTics = 5000;
     }
 
-//    /**
-//     *
-//     * @param robot
-//     */
-//    private void configureDriveTrain(IsaacBot robot) {
-//        this.driveTrainConfig = new MecanumDriveTrainConfig(robot);
-//        this.driveTrainConfig.leftFrontDeviceName   = "leftFront";
-//        this.driveTrainConfig.rightFrontDeviceName  = "rightFront";
-//        this.driveTrainConfig.rightRearDeviceName   = "rightRear";
-//        this.driveTrainConfig.leftRearDeviceName    = "leftRear";
-//        this.driveTrainConfig.accelerationIncrement = 1;
-//        this.driveTrainConfig.maxPower = 1;
-//        this.driveTrainConfig.yawOffset = 0;
-//        this.driveTrainConfig.incrementalDeceleration = false;
-//        this.driveTrainConfig.leftFrontMotorDirection  = DcMotorSimple.Direction.REVERSE;
-//        this.driveTrainConfig.rightFrontMotorDirection = DcMotorSimple.Direction.FORWARD;
-//        this.driveTrainConfig.leftRearMotorDirection  =  DcMotorSimple.Direction.REVERSE;
-//        this.driveTrainConfig.rightRearMotorDirection  = DcMotorSimple.Direction.FORWARD;
-//        this.driveTrainConfig.imuName = "imuExternal";
-//    }
+    /**
+     *
+     * @param robot
+     */
+    private void configureDriveTrain(IsaacBot robot) {
+        this.driveTrainConfig = new RoadrunnerDriveTrainConfig(robot);
+        this.driveTrainConfig.yawOffset = 0;
+        this.driveTrainConfig.imuName = "imuExternal";
+    }
 
     /**
      *
      */
-    private void configureClaw() {
+    private void configureClaw(IsaacBot robot) {
         this.clawConfig = new ClawConfig(robot);
         this.clawConfig.pincherConfig = new ServoComponentConfig(robot);
         this.clawConfig.pincherConfig.servoName = "pincherServo";
@@ -264,7 +247,7 @@ public class CompBotConfig {
     /**
      *
      */
-    private void configureIntake() {
+    private void configureIntake(IsaacBot robot) {
 
         this.intakeConfig = new IntakeConfig(robot);
         this.intakeConfig.pincherConfig = new ServoComponentConfig(robot);
