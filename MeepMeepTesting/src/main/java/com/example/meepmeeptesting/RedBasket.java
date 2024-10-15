@@ -9,7 +9,7 @@ import org.rowlandhall.meepmeep.roadrunner.entity.RoadRunnerBotEntity;
 
 import java.io.IOException;
 
-public class MainAutonomous {
+public class RedBasket {
     public static void main(String[] args) throws IOException {
         MeepMeep meepMeep = new MeepMeep(800);
 
@@ -18,28 +18,39 @@ public class MainAutonomous {
                 .setConstraints(60, 60, Math.toRadians(180), Math.toRadians(180), 15)
 //                .followTrajectorySequence(drive -> drive.trajectorySequenceBuilder(new Pose2d(35, -61, Math.toRadians(90)))
 //                .followTrajectorySequence(drive -> drive.trajectorySequenceBuilder(new Pose2d(35.5, -61, Math.toRadians(90)))
-                .followTrajectorySequence(drive -> drive.trajectorySequenceBuilder(new Pose2d(35.5, -61, Math.toRadians(90)))
-                        .strafeTo(new Vector2d(8, -40)) //Go infront of bar to hang specimen
+                .followTrajectorySequence(drive -> drive.trajectorySequenceBuilder(new Pose2d(-31.35, -61, Math.toRadians(90)))
 
-                        //hang specimen
+                        //Go to first sample
+                        .setTangent(0)
+                        .lineToSplineHeading(new Pose2d(-43, -48, Math.toRadians(90)))
+                        .strafeTo(new Vector2d(-50, -48))
+                        // TODO: Pickup Sample 1
+
+                        //GoToBucket
+                        .lineToSplineHeading(new Pose2d(-55, -55, Math.toRadians(225)))
+                        // TODO: Drop Sample
+
+                        //Go To Sample 2
                         .setTangent(Math.toRadians(0))
-                        .lineTo(new Vector2d(26, -40)) //Go towards sample
+                        .lineToSplineHeading(new Pose2d(-55, -48, Math.toRadians(90)))
+                        .strafeTo(new Vector2d(-61,-48))
+                        // TODO: Pickup Sample 2
 
-                        //first specimen
-                        .splineToConstantHeading(new Vector2d(41, -12), Math.toRadians(0)) //left side of arc
-                        .splineToConstantHeading(new Vector2d(49, -30), Math.toRadians(270)) //right side
-                        .lineToConstantHeading(new Vector2d(49, -55))
+                        //GoToBucket
+                        .lineToSplineHeading(new Pose2d(-55, -55, Math.toRadians(225)))
+                        // TODO: Drop Sample
 
-                        //second specimen
-                        .splineToConstantHeading(new Vector2d(51, -12), Math.toRadians(0)) //left side of arc
-                        .splineToConstantHeading(new Vector2d(58, -30), Math.toRadians(270)) //right side
-                        .lineToConstantHeading(new Vector2d(58, -57.5))
+                        //Go To Sample 3
+                        .splineToLinearHeading(new Pose2d(-44, -24, Math.toRadians(180)), Math.toRadians(180))
+                        // TODO: Pickup Sample 3
 
-                        //3rd specimem
+                        //GoToBucket
+                        .lineToSplineHeading(new Pose2d(-55, -55, Math.toRadians(225)))
+                        // TODO: Drop Sample
 
-                        .lineTo(new Vector2d(58, -21))
-                        .splineTo(new Vector2d(61.5, -12), Math.toRadians(0))
-                        .strafeTo(new Vector2d(61.3, -57))
+                        //Park
+                        .setTangent(90)
+                        .splineToLinearHeading(new Pose2d(-27, -8.5, Math.toRadians(0)), Math.toRadians(0))
 
                         .build());
 
