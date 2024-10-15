@@ -34,17 +34,6 @@ public class Claw extends Component {
 
         this.clawRotator = new Rotator(this.config.clawRotatorConfig);
         this.pincher = new ServoComponent(this.config.pincherConfig);
-
-//        this.addGp1_A_PressHandler(event -> {
-//
-//            if (pincher.getPosition() > 0.5) {
-//                pincher.setPosition(config.pincherConfig.minPosition);
-//            }
-//            else {
-//                pincher.setPosition(config.pincherConfig.maxPosition);
-//            }
-//
-//        });
     }
 
     /**

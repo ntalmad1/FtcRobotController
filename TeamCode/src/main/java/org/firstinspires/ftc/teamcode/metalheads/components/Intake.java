@@ -45,33 +45,6 @@ public class Intake extends Component {
         this.vServo = new Rotator(this.config.vServoConfig);
 
         this.pincher = new ServoComponent(this.config.pincherConfig);
-
-        this.addGp2_Right_Trigger_Handler(event -> {
-            this.pincher.setPosition(this.config.pincherConfig.maxPosition);
-        });
-
-        this.addGp2_Left_Trigger_Handler(event -> {
-            this.pincher.setPosition(this.config.pincherConfig.minPosition);
-        });
-
-//        this.addGp2_Right_Trigger_DownHandler(event -> {
-//            this.roller.setDirection(DcMotorSimple.Direction.REVERSE);
-//            this.roller.setPower(1);
-//        });
-//
-//        this.addGp2_Right_Trigger_UpHandler(event -> {
-//            this.roller.stop();
-//
-//        });
-//
-//        this.addGp2_Left_Trigger_DownHandler(event -> {
-//            this.roller.setDirection(DcMotorSimple.Direction.FORWARD);
-//            this.roller.setPower(1);
-//        });
-//
-//        this.addGp2_Left_Trigger_UpHandler(event -> {
-//            this.roller.stop();
-//        });
     }
 
 

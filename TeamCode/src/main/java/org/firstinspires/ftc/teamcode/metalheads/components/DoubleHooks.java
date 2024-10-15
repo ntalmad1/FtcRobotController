@@ -15,11 +15,11 @@ public class DoubleHooks extends Component {
 
     /**
      */
-    private EncodedMotor linearActuator;
+    public EncodedMotor linearActuator;
 
     /**
      */
-    private ServoComponent doubleServos;
+    public ServoComponent doubleServos;
 
     /**
      */

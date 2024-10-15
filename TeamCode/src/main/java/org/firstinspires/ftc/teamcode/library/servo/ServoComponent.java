@@ -3,7 +3,6 @@ package org.firstinspires.ftc.teamcode.library.servo;
 import com.acmerobotics.roadrunner.Action;
 
 import org.firstinspires.ftc.teamcode.library.component.Component;
-import org.firstinspires.ftc.teamcode.library.rotator.RotatorGoToPositionAction;
 import org.firstinspires.ftc.teamcode.library.utility.Control;
 
 /**
@@ -187,7 +186,7 @@ public class ServoComponent extends Component {
             this.secondaryServo.setDirection(this.config.direction);
         }
 
-        if (config.controllerInputMethod.equals(Control.Gp2_LeftStickX)) {
+        if (Control.Gp2_LeftStickX.equals(config.controllerInputMethod)) {
             this.addGp2_LeftStick_X_Handler(event -> {
                 double position = event.getPosition();
                 if (ServoComponent.this.config.invertInput) {
@@ -195,7 +194,7 @@ public class ServoComponent extends Component {
                 }
                 ServoComponent.this.move(position, ServoComponent.this.maxIncrement, ServoComponent.this.config.minPosition, ServoComponent.this.config.maxPosition);
             });
-        } else if (config.controllerInputMethod.equals(Control.Gp2_LeftStickY)) {
+        } else if (Control.Gp2_LeftStickY.equals(config.controllerInputMethod)) {
             this.addGp2_LeftStick_Y_Handler(event -> {
                 double position = event.getPosition();
                 if (ServoComponent.this.config.invertInput) {
@@ -203,7 +202,7 @@ public class ServoComponent extends Component {
                 }
                 ServoComponent.this.move(position, ServoComponent.this.maxIncrement, ServoComponent.this.config.minPosition, ServoComponent.this.config.maxPosition);
             });
-        } else if (config.controllerInputMethod.equals(Control.Gp2_RightStickX)) {
+        } else if (Control.Gp2_RightStickX.equals(config.controllerInputMethod)) {
             this.addGp2_RightStick_X_Handler(event -> {
                 double position = event.getPosition();
                 if (ServoComponent.this.config.invertInput) {
@@ -211,7 +210,7 @@ public class ServoComponent extends Component {
                 }
                 ServoComponent.this.move(position, ServoComponent.this.maxIncrement, ServoComponent.this.config.minPosition, ServoComponent.this.config.maxPosition);
             });
-        } else if (config.controllerInputMethod.equals(Control.Gp1_RightStickX)) {
+        } else if (Control.Gp1_RightStickX.equals(config.controllerInputMethod)) {
             this.addGp1_RightStick_X_Handler(event -> {
                 double position = event.getPosition();
                 if (ServoComponent.this.config.invertInput) {
@@ -219,7 +218,7 @@ public class ServoComponent extends Component {
                 }
                 ServoComponent.this.move(position, ServoComponent.this.maxIncrement, ServoComponent.this.config.minPosition, ServoComponent.this.config.maxPosition);
             });
-        } else if (config.controllerInputMethod.equals(Control.Gp2_RightStickY)) {
+        } else if (Control.Gp2_RightStickY.equals(config.controllerInputMethod)) {
             this.addGp2_RightStick_Y_Handler(event -> {
                 double position = event.getPosition();
                 if (ServoComponent.this.config.invertInput) {
@@ -229,7 +228,7 @@ public class ServoComponent extends Component {
             });
         }
 
-        if (config.controllerInputMethod.equals(Control.Gp2_Dpad_Up)
+        if (Control.Gp2_Dpad_Up.equals(config.controllerInputMethod)
                 || (config.controllerInputMethod2 != null && config.controllerInputMethod2.equals(Control.Gp2_Dpad_Up))) {
             this.addGp2_Dpad_Up_DownHandler(event -> {
                 double position = 1;
@@ -240,7 +239,7 @@ public class ServoComponent extends Component {
             });
         }
 
-        if (config.controllerInputMethod.equals(Control.Gp2_Dpad_Right)
+        if (Control.Gp2_Dpad_Right.equals(config.controllerInputMethod)
                 || (config.controllerInputMethod2 != null && config.controllerInputMethod2.equals(Control.Gp2_Dpad_Right))) {
             this.addGp2_Dpad_Right_DownHandler(event -> {
                 double position = 1;
@@ -251,7 +250,7 @@ public class ServoComponent extends Component {
             });
         }
 
-        if (config.controllerInputMethod.equals(Control.Gp2_Dpad_Down)
+        if (Control.Gp2_Dpad_Down.equals(config.controllerInputMethod)
                 || (config.controllerInputMethod2 != null && config.controllerInputMethod2.equals(Control.Gp2_Dpad_Down))) {
             this.addGp2_Dpad_Down_DownHandler(event -> {
                 double position = -1;
@@ -266,7 +265,7 @@ public class ServoComponent extends Component {
             });
         }
 
-        if (config.controllerInputMethod.equals(Control.Gp2_Dpad_Left)
+        if (Control.Gp2_Dpad_Left.equals(config.controllerInputMethod)
                 || (config.controllerInputMethod2 != null && config.controllerInputMethod2.equals(Control.Gp2_Dpad_Left))) {
             this.addGp2_Dpad_Left_DownHandler(event -> {
                 double position = -1;
@@ -278,6 +277,38 @@ public class ServoComponent extends Component {
         }
 
         // this.setServoPosition(this.config.homePosition);
+    }
+
+    /**
+     *
+     * @param control
+     */
+    public void addControl(Control control) {
+        if (Control.Gp2_Dpad_Left.equals(control)
+            || Control.Gp2_Dpad_LeftRight.equals(control)
+            || Control.Gp1_Dpad_Left.equals(control)
+            || Control.Gp1_Dpad_LeftRight.equals(control)) {
+            this.addGp2_Dpad_Left_DownHandler(event -> {
+                double position = -1;
+                if (ServoComponent.this.config.invertInput) {
+                    position = -position;
+                }
+                ServoComponent.this.move(position, ServoComponent.this.maxIncrement, ServoComponent.this.config.minPosition, ServoComponent.this.config.maxPosition);
+            });
+        }
+
+        if (Control.Gp2_Dpad_Right.equals(control)
+            || Control.Gp2_Dpad_LeftRight.equals(control)
+            ||Control.Gp1_Dpad_Right.equals(control)
+            || Control.Gp1_Dpad_LeftRight.equals(control)) {
+            this.addGp2_Dpad_Right_DownHandler(event -> {
+                double position = 1;
+                if (ServoComponent.this.config.invertInput) {
+                    position = -position;
+                }
+                ServoComponent.this.move(position, ServoComponent.this.maxIncrement, ServoComponent.this.config.minPosition, ServoComponent.this.config.maxPosition);
+            });
+        }
     }
 
     /**

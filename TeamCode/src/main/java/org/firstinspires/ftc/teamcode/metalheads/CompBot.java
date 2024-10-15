@@ -10,6 +10,7 @@ import org.firstinspires.ftc.teamcode.library.action.WaitAction;
 import org.firstinspires.ftc.teamcode.library.dcmotor.MotorPos;
 import org.firstinspires.ftc.teamcode.library.drivetrain.MecanumDriveTrain;
 import org.firstinspires.ftc.teamcode.library.servo.ServoPos;
+import org.firstinspires.ftc.teamcode.library.utility.Control;
 import org.firstinspires.ftc.teamcode.metalheads.components.Arm;
 import org.firstinspires.ftc.teamcode.metalheads.components.Claw;
 import org.firstinspires.ftc.teamcode.metalheads.components.DoubleHooks;
@@ -210,42 +211,63 @@ public abstract class CompBot extends IsaacBot {
      */
     private void configureGamePad1() {
 
-        // Panic Button / Kill Switch
+        // panic button / kill switch
         this.addGp1_Back_PressHandler(event -> {
             this.terminateOpModeNow();
         });
 
-        this.addGp1_Left_Bumper_DownHandler(event -> {
-            flapperBars.move(-1);
-        });
+        // arm
+        if (this.getConfig().useArm) {
+            this.addGp1_Start_PressHandler(event -> {
+                this.setMode(Mode.NONE);
+                this.setArmPos(ArmPos.INIT);
+                this.runAction(this.actionFactory.moveArmToInitPos());
+            });
+        }
 
-        this.addGp1_Left_Bumper_UpHandler(event -> {
-            flapperBars.move(0);
-        });
+        // double hooks
+        if (this.getConfig().useDoubleHooks) {
+            this.doubleHooks.linearActuator.addControl(Control.Gp1_Dpad_UpDown);
+            this.doubleHooks.doubleServos.addControl(Control.Gp1_Dpad_LeftRight);
+        }
 
-        this.addGp1_Right_Bumper_DownHandler(event -> {
-            flapperBars.move(1);
-        });
+        // flapper bars
+        if (this.getConfig().useFlapperBars) {
+            this.addGp1_Left_Bumper_DownHandler(event -> {
+                flapperBars.move(-1);
+            });
 
-        this.addGp1_Right_Bumper_UpHandler(event -> {
-            flapperBars.move(0);
-        });
+            this.addGp1_Left_Bumper_UpHandler(event -> {
+                flapperBars.move(0);
+            });
 
-        this.addGp1_RightTrigger_DownHandler(event -> {
-            winch.move(1);
-        });
+            this.addGp1_Right_Bumper_DownHandler(event -> {
+                flapperBars.move(1);
+            });
 
-        this.addGp1_RightTrigger_UpHandler(event -> {
-            winch.move(0);
-        });
+            this.addGp1_Right_Bumper_UpHandler(event -> {
+                flapperBars.move(0);
+            });
+        }
 
-        this.addGp1_LeftTrigger_DownHandler(event -> {
-            winch.move(-1);
-        });
+        // winch
+        if (this.getConfig().useWinch) {
+            this.addGp1_RightTrigger_DownHandler(event -> {
+                winch.move(1);
+            });
 
-        this.addGp1_LeftTrigger_UpHandler(event -> {
-            winch.move(0);
-        });
+            this.addGp1_RightTrigger_UpHandler(event -> {
+                winch.move(0);
+            });
+
+            this.addGp1_LeftTrigger_DownHandler(event -> {
+                winch.move(-1);
+            });
+
+            this.addGp1_LeftTrigger_UpHandler(event -> {
+                winch.move(0);
+            });
+        }
 
     }
 
@@ -274,6 +296,14 @@ public abstract class CompBot extends IsaacBot {
 //
 //        this.addGp2_Left_Bumper_PressHandler(event -> {
 //            claw.pincher.setPosition(config.clawConfig.pincherConfig.maxPosition);
+//        });
+
+//        this.addGp2_Right_Trigger_Handler(event -> {
+//            this.pincher.setPosition(this.config.pincherConfig.maxPosition);
+//        });
+//
+//        this.addGp2_Left_Trigger_Handler(event -> {
+//            this.pincher.setPosition(this.config.pincherConfig.minPosition);
 //        });
 
     }

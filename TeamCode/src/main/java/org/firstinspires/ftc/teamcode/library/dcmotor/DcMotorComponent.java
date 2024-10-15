@@ -4,7 +4,6 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 
 import org.firstinspires.ftc.teamcode.library.component.Component;
-import org.firstinspires.ftc.teamcode.library.encodedmotor.EncodedMotor;
 import org.firstinspires.ftc.teamcode.library.utility.Control;
 
 public class DcMotorComponent extends Component {
@@ -46,27 +45,35 @@ public class DcMotorComponent extends Component {
             this.setBrake(true);
         }
 
-        if (Control.Gp1_LeftStickY.equals(this.config.control)) {
+        this.addControl(this.config.control);
+    }
+
+    /**
+     *
+     * @param control
+     */
+    public void addControl(Control control) {
+        if (Control.Gp1_LeftStickY.equals(control)) {
             this.addGp1_LeftStick_Y_Handler(event -> { DcMotorComponent.this.move(-event.getPosition()); });
         }
 
-        if (Control.Gp1_RightStickY.equals(this.config.control)) {
+        if (Control.Gp1_RightStickY.equals(control)) {
             this.addGp1_RightStick_Y_Handler(event -> { DcMotorComponent.this.move(-event.getPosition()); });
         }
 
-        if (Control.Gp2_LeftStickY.equals(this.config.control)) {
+        if (Control.Gp2_LeftStickY.equals(control)) {
             this.addGp2_LeftStick_Y_Handler(event -> { DcMotorComponent.this.move(-event.getPosition()); });
         }
 
-        if (Control.Gp2_RightStickX.equals(this.config.control)) {
+        if (Control.Gp2_RightStickX.equals(control)) {
             this.addGp2_RightStick_X_Handler(event -> { DcMotorComponent.this.move(event.getPosition()); });
         }
 
-        if (Control.Gp2_RightStickY.equals(this.config.control)) {
+        if (Control.Gp2_RightStickY.equals(control)) {
             this.addGp2_RightStick_Y_Handler(event -> { DcMotorComponent.this.move(event.getPosition()); });
         }
 
-        if (Control.Gp2_Dpad_UpDown.equals(this.config.control)) {
+        if (Control.Gp2_Dpad_UpDown.equals(control)) {
             this.addGp2_Dpad_Up_DownHandler(event -> { DcMotorComponent.this.move(1); });
             this.addGp2_Dpad_Up_PressHandler(event -> { DcMotorComponent.this.move(0); });
 
