@@ -32,6 +32,8 @@ public class RoadrunnerAuton extends LinearOpMode {
     private TrajectoryFactory trajectoryFactory;
 
     private Pose2d initialPose;
+    private Pose2d redSamplePose;
+    private Pose2d redBucketPose;
 
     private MecanumDrive drive;
 
@@ -39,14 +41,17 @@ public class RoadrunnerAuton extends LinearOpMode {
     public void runOpMode() throws InterruptedException {
         // instantiate your MecanumDrive at a particular pose.
         //initialPose = new Pose2d(10.3, -61, Math.toRadians(90)); //Inner Tile
-        initialPose = new Pose2d(35.5, -61, Math.toRadians(90));  //outer tile
+        redSamplePose = new Pose2d(35.5, -61, Math.toRadians(90));
+        redBucketPose = new Pose2d(-35.5, -61, Math.toRadians(90));
+
+        initialPose = redBucketPose;  //inside edge of tile
         drive = new MecanumDrive(hardwareMap, initialPose);
 
         this.trajectoryFactory = new TrajectoryFactory();
 
         waitForStart();
 
-        Actions.runBlocking(trajectoryFactory.getTab2().build());
+        Actions.runBlocking(trajectoryFactory.getTab3().build());
 
 //        Actions.runBlocking(
 //                    drive.actionBuilder(initialPose)
@@ -126,12 +131,63 @@ public class RoadrunnerAuton extends LinearOpMode {
                     .splineTo(new Vector2d(62, -12), Math.toRadians(0),
                             new TranslationalVelConstraint(15))
                     .waitSeconds(6)
-                    .strafeTo(new Vector2d(62, -54))
-                    .splineToConstantHeading(new Vector2d(27, -10), Math.toRadians(180),
-                        new TranslationalVelConstraint(velocityLow))
+                    .strafeTo(new Vector2d(62, -55))
                     ;
 
             return tab2;
+        }
+
+
+        /**
+         * Basket Auton Positions
+         * @return Tab3
+         */
+        public TrajectoryActionBuilder getTab3() {
+            double lowV = 20;
+            double extraLowV = 8;
+
+            TrajectoryActionBuilder tab3 = drive.actionBuilder(initialPose)
+                    //Go to first sample
+                    .setTangent(0)
+                    .strafeToLinearHeading(new Vector2d(-43, -48), Math.toRadians(90),
+                            new TranslationalVelConstraint(lowV))
+                    .strafeTo(new Vector2d(-50, -48),
+                            new TranslationalVelConstraint(extraLowV))
+                    // TODO: Pickup Sample 1
+
+                    //GoToBucket
+                    .strafeToLinearHeading(new Vector2d(-55,-55), Math.toRadians(225),
+                            new TranslationalVelConstraint(lowV))
+                    // TODO: Drop Sample
+
+                    //Go To Sample 2
+                    .strafeToLinearHeading(new Vector2d(-55, -48), Math.toRadians(90),
+                            new TranslationalVelConstraint(lowV))
+                    .strafeTo(new Vector2d(-61, -48),
+                            new TranslationalVelConstraint(extraLowV))
+                    // TODO: Pickup Sample 2
+
+                    //GoToBucket
+                    .strafeToLinearHeading(new Vector2d(-55,-55), Math.toRadians(225),
+                            new TranslationalVelConstraint(lowV))
+                    // TODO: Drop Sample
+
+                    //GoBackToNextSample
+                    .splineToLinearHeading(new Pose2d(-44, -24, Math.toRadians(180)), Math.toRadians(180),
+                            new TranslationalVelConstraint(lowV))
+                    // TODO: Pickup Sample 3
+
+                    //GoToBucket
+                    .strafeToLinearHeading(new Vector2d(-55,-55), Math.toRadians(225),
+                            new TranslationalVelConstraint(lowV))
+                    // TODO: Drop Sample
+
+                    //Park
+                    .setTangent(90)
+                    .splineToLinearHeading(new Pose2d(-27, -10, Math.toRadians(0)), Math.toRadians(0),
+                            new TranslationalVelConstraint(lowV));
+
+            return tab3;
         }
 
     }
