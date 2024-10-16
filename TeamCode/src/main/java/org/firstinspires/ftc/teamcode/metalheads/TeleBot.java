@@ -22,5 +22,8 @@ public class TeleBot extends CompBot {
     @Override
     protected void configureBot() {
         super.configureBot();
+
+        // initialize roadrunner from last op pose
+        this.initialPose = PositionStruct.pose;
     }
 }

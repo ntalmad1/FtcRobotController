@@ -40,7 +40,6 @@ public class RoadrunnerAuton extends LinearOpMode {
     @Override
     public void runOpMode() throws InterruptedException {
         // instantiate your MecanumDrive at a particular pose.
-        //initialPose = new Pose2d(10.3, -61, Math.toRadians(90)); //Inner Tile
         redSamplePose = new Pose2d(35.5, -61, Math.toRadians(90));
         redBucketPose = new Pose2d(-35.5, -61, Math.toRadians(90));
 

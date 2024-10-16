@@ -17,6 +17,7 @@ import org.firstinspires.ftc.teamcode.metalheads.components.DoubleHooks;
 import org.firstinspires.ftc.teamcode.metalheads.components.FlapperBars;
 import org.firstinspires.ftc.teamcode.metalheads.components.Intake;
 import org.firstinspires.ftc.teamcode.metalheads.components.Winch;
+import org.firstinspires.ftc.teamcode.roadrunner.tuning.LocalizationTest;
 
 /**
  *
@@ -117,12 +118,12 @@ public abstract class CompBot extends IsaacBot {
         }
 
         this.config.debugDriveTrain = true;
-        this.config.debugArm = true;
-        this.config.debugClaw = true;
-        this.config.debugDoubleHooks = true;
-        this.config.debugFlapperBars = true;
-        this.config.debugIntake = true;
-        this.config.debugWinch = true;
+        this.config.debugArm = false;
+        this.config.debugClaw = false;
+        this.config.debugDoubleHooks = false;
+        this.config.debugFlapperBars = false;
+        this.config.debugIntake = false;
+        this.config.debugWinch = false;
         this.config.debugAll = false;
 
         if (this.config.useDriveTrain) {
@@ -154,9 +155,6 @@ public abstract class CompBot extends IsaacBot {
         }
 
         this.actionFactory = new ActionFactory();
-
-        // TODO: set initial position
-        this.initialPose = new Pose2d(0, 0, 0);
     }
 
     /**
@@ -556,6 +554,7 @@ public abstract class CompBot extends IsaacBot {
 
 
         /**
+         *
          * @return
          */
         public Action moveArmToSamplePickReady() {
