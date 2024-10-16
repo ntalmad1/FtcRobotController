@@ -17,7 +17,6 @@ import org.firstinspires.ftc.teamcode.metalheads.components.DoubleHooks;
 import org.firstinspires.ftc.teamcode.metalheads.components.FlapperBars;
 import org.firstinspires.ftc.teamcode.metalheads.components.Intake;
 import org.firstinspires.ftc.teamcode.metalheads.components.Winch;
-import org.firstinspires.ftc.teamcode.roadrunner.tuning.LocalizationTest;
 
 /**
  *
@@ -37,7 +36,8 @@ public abstract class CompBot extends IsaacBot {
      *
      */
     public enum ArmPos {
-        INIT
+        INIT,
+        SAMPLE_PICK_READY
     }
 
     /**
@@ -118,11 +118,11 @@ public abstract class CompBot extends IsaacBot {
         }
 
         this.config.debugDriveTrain = true;
-        this.config.debugArm = false;
-        this.config.debugClaw = false;
+        this.config.debugArm = true;
+        this.config.debugClaw = true;
         this.config.debugDoubleHooks = false;
         this.config.debugFlapperBars = false;
-        this.config.debugIntake = false;
+        this.config.debugIntake = true;
         this.config.debugWinch = false;
         this.config.debugAll = false;
 
@@ -278,7 +278,7 @@ public abstract class CompBot extends IsaacBot {
         if (this.getConfig().useArm) {
 
             // clear and re-init
-            this.addGp1_Start_PressHandler(event -> {
+            this.addGp2_Start_PressHandler(event -> {
                 this.setMode(Mode.NONE);
                 this.setArmPos(ArmPos.INIT);
                 this.runAction(this.actionFactory.moveArmToInitPos());
@@ -286,11 +286,9 @@ public abstract class CompBot extends IsaacBot {
 
             // manually move main boom
             this.arm.mainBoom.addControl(Control.Gp2_LeftStickY);
-            this.arm.mainBoom.addControl(Control.Gp2_LeftStickX);
 
             // manually move viper slide
-            this.arm.mainBoom.addControl(Control.Gp2_RightStickY);
-            this.arm.mainBoom.addControl(Control.Gp2_RightStickX);
+            this.arm.viperSlide.addControl(Control.Gp2_RightStickX);
 
             // dpad up
             this.addGp2_Dpad_Up_DownHandler(event -> {
@@ -366,9 +364,24 @@ public abstract class CompBot extends IsaacBot {
             });
         }
 
-//        this.addGp2_A_PressHandler(event -> {
-//            runAction(actionFactory.moveArmToSamplePickReady());
-//        });
+        // A button
+        this.addGp2_A_PressHandler(event -> {
+
+            if (Mode.NONE.equals(this.getMode())) {
+                if (this.arm.viperSlide.getVoltage() <= Constants.SAMPLE_PICK_READY_MIN.vSlideVolts) {
+                    this.runAction(this.actionFactory.moveArmToSamplePickReadyMin());
+                }
+                else if (this.arm.viperSlide.getVoltage() >= Constants.SAMPLE_PICK_READY_MAX.vSlideVolts) {
+                    this.runAction(this.actionFactory.moveArmToSamplePickReadyMax());
+                }
+                else {
+                    this.runAction(this.actionFactory.moveArmToSamplePickReady());
+                }
+
+                this.setMode(Mode.SAMPLE_MODE);
+                this.setArmPos(ArmPos.SAMPLE_PICK_READY);
+            }
+        });
 //
 //        this.addGp2_B_PressHandler(event -> {
 //            runAction(actionFactory.moveArmToInitPos());
@@ -540,10 +553,11 @@ public abstract class CompBot extends IsaacBot {
 
         public Action moveArmToInitPos() {
             return new SequentialAction(
-                    CompBot.this.arm.mainBoom.gotoPositionAction(0, 0.5),
+                    CompBot.this.arm.mainBoom.gotoPositionAction(0, 1),
                     new ParallelAction(
-                            CompBot.this.intake.hServo.gotoPositionAction(0.5011, 1),
-                            CompBot.this.intake.vServo.gotoPositionAction(0.5, 1),
+                            CompBot.this.intake.hServo.gotoPositionAction(getConfig().intakeConfig.hServoConfig.homePosition, 1),
+                            CompBot.this.intake.vServo.gotoPositionAction(getConfig().intakeConfig.vServoConfig.homePosition, 1),
+                            CompBot.this.intake.closePincherAction(),
                             CompBot.this.claw.closeClawAction(),
                             CompBot.this.claw.clawRotator.gotoPositionAction(0, 1)
                     ),
@@ -557,14 +571,50 @@ public abstract class CompBot extends IsaacBot {
          *
          * @return
          */
-        public Action moveArmToSamplePickReady() {
+        public Action moveArmToSamplePickReadyMin() {
             return new ParallelAction(
-                            intake.hServo.gotoPositionAction(Constants.SAMPLE_PICK_READY.hServoPos),
-                            intake.vServo.gotoPositionAction(Constants.SAMPLE_PICK_READY.vServoPos),
-                            arm.viperSlide.gotoVoltageAction(Constants.SAMPLE_PICK_READY.vSlideVolts),
+                            intake.hServo.gotoPositionAction(Constants.SAMPLE_PICK_READY_MIN.hServoPos),
+                            intake.vServo.gotoPositionAction(Constants.SAMPLE_PICK_READY_MIN.vServoPos),
+                            arm.viperSlide.gotoVoltageAction(Constants.SAMPLE_PICK_READY_MIN.vSlideVolts),
                             new WaitAction(1000),
                             intake.openPincherAction(),
-                            arm.mainBoom.gotoPositionAction(Constants.SAMPLE_PICK_READY.mainBoomPos.getPos(), 0.5));
+                            arm.mainBoom.gotoPositionAction(Constants.SAMPLE_PICK_READY_MIN.mainBoomPos.getPos(), 0.5));
+        }
+
+        /**
+         * @return
+         */
+        public Action moveArmToSamplePickReady() {
+
+            double volts = arm.viperSlide.getVoltage();
+
+            double tpd = 41.821; // tics per degree
+            double vpi = 0; // TODO
+
+            double h = 20; // height from ground to point of rotation
+            double v = 0; // TODO viper slide length in inches
+
+            double d = Math.acos(h / v) * (180 / Math.PI) - 28.23;
+
+            int tics = 0; // TODO
+
+            // mm = (vServoMax - vServoMin) / (vMax - vMin)
+            // vServoPos = m\m(v-vMin) + vServoMin
+            double vMin = Constants.SAMPLE_PICK_READY_MIN.vSlideVolts;
+            double vMax = Constants.SAMPLE_PICK_READY_MAX.vSlideVolts;
+            double vServoMin = Constants.SAMPLE_PICK_READY_MIN.vServoPos.getPos();
+            double vServoMax = Constants.SAMPLE_PICK_READY_MAX.vServoPos.getPos();
+
+            double m = (vServoMax - vServoMin) / (vMax - vMin);
+            double vServoPos = m * (volts-vMin) + vServoMin;
+
+            return new ParallelAction(
+                    intake.hServo.gotoPositionAction(Constants.SAMPLE_PICK_READY_MIN.hServoPos),
+                    intake.vServo.gotoPositionAction(vServoPos, 1),
+                    //arm.viperSlide.gotoVoltageAction(Constants.SAMPLE_PICK_READY_MIN.vSlideVolts),
+                    intake.openPincherAction(),
+                    arm.mainBoom.gotoPositionAction(tics, 0.5),
+                    claw.clawRotator.gotoPositionAction(Constants.SAMPLE_PICK_READY_MIN.clawRotatorPos));
         }
 
         /**
@@ -704,7 +754,7 @@ public abstract class CompBot extends IsaacBot {
         public ServoPos clawPincherPos;
 
         public PositionConstants () {
-
+            this.setValues();
         }
 
         /**

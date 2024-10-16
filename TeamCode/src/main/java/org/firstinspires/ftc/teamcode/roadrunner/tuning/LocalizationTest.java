@@ -55,13 +55,5 @@ public class LocalizationTest extends LinearOpMode {
         }  else {
             throw new RuntimeException();
         }
-
-    }
-
-    public static double getX_pos() {
-        return x_pos;
-    }
-    public static double getY_pos() {
-        return y_pos;
     }
 }
