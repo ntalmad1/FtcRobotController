@@ -118,7 +118,7 @@ public class Constants {
 
     /**
      */
-    public static final CompBot.PositionConstants SAMPLE_DROP_EXTEND_READY = new CompBot.PositionConstants() {
+    public static final CompBot.PositionConstants SAMPLE_EXTEND_READY = new CompBot.PositionConstants() {
         @Override
         public void setValues() {
             mainBoomPos = new MotorPos(2178, 1);

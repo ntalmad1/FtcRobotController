@@ -41,14 +41,16 @@ public abstract class CompBot extends IsaacBot {
         SAMPLE_PICK,
         SAMPLE_CARRY,
         SAMPLE_EXTEND_READY,
-        SAMPLE_PLACE_LOW_READY,
-        SAMPLE_PLACE_HIGH_READY,
+        SAMPLE_DROP_LOW_READY,
+        SAMPLE_DROP_LOW,
+        SAMPLE_DROP_HIGH_READY,
+        SAMPLE_DROP_HIGH,
         SPECIMEN_PICK_READY,
         SPECIMEN_PICK,
         SPECIMEN_PLACE_LOW_READY,
         SPECIMEN_PLACE_LOW,
         SPECIMEN_PLACE_HIGH_READY,
-        SPECIMEN_PLACE
+        SPECIMEN_PLACE_HIGH
     }
 
     /**
@@ -399,7 +401,24 @@ public abstract class CompBot extends IsaacBot {
                 this.runAction(this.actionFactory.inverseSamplePick());
                 this.setArmPos(ArmPos.SAMPLE_PICK_READY);
             }
-            else if (Mode.SAMPLE_MODE.equals(this.getMode()) && (ArmPos.SAMPLE_PLACE_LOW_READY.equals(this.getArmPos()) || ArmPos.SAMPLE_PLACE_HIGH_READY.equals(this.getArmPos()))) {
+            else if (Mode.SAMPLE_MODE.equals(this.getMode()) && (ArmPos.SAMPLE_DROP_LOW_READY.equals(this.getArmPos()) || ArmPos.SAMPLE_DROP_HIGH_READY.equals(this.getArmPos()))) {
+                this.setMode(Mode.NONE);
+                this.setArmPos(ArmPos.INIT);
+                this.runAction(this.actionFactory.moveArmToInitPos());
+            }
+            else if (Mode.SPECIMEN_MODE.equals(this.getMode()) && (ArmPos.SPECIMEN_PICK_READY.equals(this.getArmPos()))) {
+                this.runAction(this.actionFactory.specimenPick());
+                this.setArmPos(ArmPos.SPECIMEN_PICK);
+            }
+            else if (Mode.SPECIMEN_MODE.equals(this.getMode()) && (ArmPos.SPECIMEN_PICK.equals(this.getArmPos()))) {
+                this.runAction(this.actionFactory.inverseSpecimenPick());
+                this.setArmPos(ArmPos.SPECIMEN_PICK);
+            }
+            else if (Mode.SPECIMEN_MODE.equals(this.getMode()) && (
+                    ArmPos.SPECIMEN_PLACE_LOW_READY.equals(this.getArmPos())
+                 || ArmPos.SPECIMEN_PLACE_LOW.equals(this.getArmPos())
+                 || ArmPos.SPECIMEN_PLACE_HIGH_READY.equals(this.getArmPos())
+                 || ArmPos.SPECIMEN_PLACE_HIGH.equals(this.getArmPos()))) {
                 this.setMode(Mode.NONE);
                 this.setArmPos(ArmPos.INIT);
                 this.runAction(this.actionFactory.moveArmToInitPos());
@@ -434,17 +453,76 @@ public abstract class CompBot extends IsaacBot {
             }
         });
 
+        // X button
+        this.addGp2_X_PressHandler(event -> {
+            if (Mode.NONE.equals(this.getMode())) {
+                this.runAction(this.actionFactory.moveArmToSpecimenPickReady());
+                this.setMode(Mode.SPECIMEN_MODE);
+                this.setArmPos(ArmPos.SPECIMEN_PICK_READY);
+            }
+            else if (Mode.SAMPLE_MODE.equals(this.getMode()) && ArmPos.SAMPLE_CARRY.equals(this.getArmPos())) {
+                this.runAction(new SequentialAction(
+                        actionFactory.moveArmToSampleExtendReady(),
+                        actionFactory.moveArmToSampleBasketLowReady()));
+                this.setArmPos(ArmPos.SAMPLE_DROP_LOW_READY);
+            }
+            else if (Mode.SAMPLE_MODE.equals(this.getMode()) && (
+                    ArmPos.SAMPLE_EXTEND_READY.equals(this.getArmPos()))
+                 || ArmPos.SAMPLE_DROP_LOW.equals(this.getArmPos())) {
+                this.runAction(actionFactory.moveArmToSampleBasketLowReady());
+                this.setArmPos(ArmPos.SAMPLE_DROP_LOW_READY);
+            }
+            else if (Mode.SAMPLE_MODE.equals(this.getMode()) && ArmPos.SAMPLE_DROP_LOW_READY.equals(this.getArmPos())) {
+                this.runAction(actionFactory.sampleDropLow());
+                this.setArmPos(ArmPos.SAMPLE_DROP_LOW_READY);
+            }
+            else if (Mode.SPECIMEN_MODE.equals(this.getMode()) && !ArmPos.SPECIMEN_PLACE_LOW_READY.equals(this.getArmPos())) {
+                this.runAction(actionFactory.moveArmToSpecimenPlaceLowReady());
+                this.setArmPos(ArmPos.SPECIMEN_PLACE_LOW_READY);
+            }
+            else if (Mode.SPECIMEN_MODE.equals(this.getMode()) && ArmPos.SPECIMEN_PLACE_LOW_READY.equals(this.getArmPos())) {
+                this.runAction(actionFactory.moveArmToSpecimenPlaceLowReady());
+                this.setArmPos(ArmPos.SPECIMEN_PLACE_LOW);
+            }
+        });
 
+        // Y button
+        this.addGp2_Y_PressHandler(event -> {
+            if (Mode.NONE.equals(this.getMode())) {
+                // do nothing
+            }
+            else if (Mode.SAMPLE_MODE.equals(this.getMode()) && ArmPos.SAMPLE_CARRY.equals(this.getArmPos())) {
+                this.runAction(new SequentialAction(
+                        actionFactory.moveArmToSampleExtendReady(),
+                        actionFactory.moveArmToSampleBasketHighReady()));
+                this.setArmPos(ArmPos.SAMPLE_DROP_HIGH_READY);
+            }
+            else if (Mode.SAMPLE_MODE.equals(this.getMode()) && (
+                    ArmPos.SAMPLE_EXTEND_READY.equals(this.getArmPos()))
+                    || ArmPos.SAMPLE_DROP_HIGH.equals(this.getArmPos())) {
+                this.runAction(actionFactory.moveArmToSampleBasketHighReady());
+                this.setArmPos(ArmPos.SAMPLE_DROP_HIGH_READY);
+            }
+            else if (Mode.SAMPLE_MODE.equals(this.getMode()) && ArmPos.SAMPLE_DROP_HIGH_READY.equals(this.getArmPos())) {
+                this.runAction(actionFactory.sampleDropHigh());
+                this.setArmPos(ArmPos.SAMPLE_DROP_HIGH_READY);
+            }
+            else if (Mode.SPECIMEN_MODE.equals(this.getMode()) && !ArmPos.SPECIMEN_PLACE_HIGH_READY.equals(this.getArmPos())) {
+                this.runAction(actionFactory.moveArmToSpecimenPlaceHighReady());
+                this.setArmPos(ArmPos.SPECIMEN_PLACE_HIGH_READY);
+            }
+            else if (Mode.SPECIMEN_MODE.equals(this.getMode()) && ArmPos.SPECIMEN_PLACE_HIGH_READY.equals(this.getArmPos())) {
+                this.runAction(actionFactory.moveArmToSpecimenPlaceHighReady());
+                this.setArmPos(ArmPos.SPECIMEN_PLACE_HIGH);
+            }
+        });
 
-//
-//        this.addGp2_B_PressHandler(event -> {
-//            runAction(actionFactory.moveArmToInitPos());
-//        });
-
-
-
-
-
+        // B button
+        this.addGp2_B_PressHandler(event -> {
+            if (Mode.SAMPLE_MODE.equals(this.getMode()) && (
+                    ArmPos.SAMPLE_PICK_READY.equals(this.getArmPos())
+                    ));
+        });
     }
 
     /**
@@ -768,6 +846,22 @@ public abstract class CompBot extends IsaacBot {
         /**
          * @return
          */
+        public Action sampleDropLow() {
+            return null;
+            // TODO
+        }
+
+        /**
+         * @return
+         */
+        public Action sampleDropHigh() {
+            return null;
+            // TODO
+        }
+
+        /**
+         * @return
+         */
         public Action samplePick() {
             return null;
             // TODO
@@ -791,8 +885,8 @@ public abstract class CompBot extends IsaacBot {
         /**
          * @return
          */
-        public Action moveArmToSampeDropExtendReady() {
-            return CompBot.this.moveArmAction(Constants.SAMPLE_DROP_EXTEND_READY);
+        public Action moveArmToSampleExtendReady() {
+            return CompBot.this.moveArmAction(Constants.SAMPLE_EXTEND_READY);
         }
 
         /**
@@ -815,7 +909,7 @@ public abstract class CompBot extends IsaacBot {
         /**
          * @return
          */
-        public Action moveArmToSpecimenPickready() {
+        public Action moveArmToSpecimenPickReady() {
             return CompBot.this.moveArmAction(Constants.SPECIMEN_PICK_READY);
         }
 
@@ -824,6 +918,14 @@ public abstract class CompBot extends IsaacBot {
          */
         public Action specimenPick() {
             return CompBot.this.moveArmAction(Constants.SPECIMEN_PICK);
+        }
+
+        /**
+         *
+         * @return
+         */
+        public Action inverseSpecimenPick() {
+            return CompBot.this.moveArmAction(Constants.SPECIMEN_PICK_READY);
         }
 
         /**
@@ -843,7 +945,7 @@ public abstract class CompBot extends IsaacBot {
         /**
          * @return
          */
-        public Action moveArmToSpecimentPlaceLowready() {
+        public Action moveArmToSpecimenPlaceLowReady() {
             return CompBot.this.moveArmAction(Constants.SPECIMEN_PLACE_LOW_READY);
         }
 
@@ -854,9 +956,7 @@ public abstract class CompBot extends IsaacBot {
             return CompBot.this.moveArmAction(Constants.SPECIMEN_PLACE_LOW);
         }
 
-
-
-/**
+        /**
          * Hidden constructor to make class static
          */
         protected ActionFactory() {
