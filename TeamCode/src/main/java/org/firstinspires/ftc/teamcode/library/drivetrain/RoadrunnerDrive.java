@@ -21,15 +21,12 @@ public class RoadrunnerDrive extends MecanumDrive {
 
     /**
      *
-     * @param leftFrontPow
-     * @param rightFrontPow
-     * @param rightBackPow
-     * @param leftBackPow
+     * @param powers
      */
-    public void setDrivePowers(double leftFrontPow, double rightFrontPow, double rightBackPow, double leftBackPow) {
-        leftFront.setPower(leftFrontPow);
-        leftBack.setPower(leftBackPow);
-        rightBack.setPower(rightBackPow);
-        rightFront.setPower(leftBackPow);
+    public void setDrivePowers(Powers powers) {
+        leftFront.setPower(powers.leftFront);
+        leftBack.setPower(powers.leftBack);
+        rightBack.setPower(powers.rightBack);
+        rightFront.setPower(powers.rightFront);
     }
 }

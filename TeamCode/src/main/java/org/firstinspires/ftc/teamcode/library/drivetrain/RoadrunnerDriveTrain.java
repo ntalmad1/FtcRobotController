@@ -77,7 +77,13 @@ public class RoadrunnerDriveTrain extends Component
         double frontRightPower = (y - x - rx) / denominator;
         double backRightPower  = (y + x - rx) / denominator;
 
-        this.drive.setDrivePowers(frontLeftPower, frontRightPower, backRightPower, backLeftPower);
+        Powers powers = new Powers();
+        powers.leftFront = frontLeftPower;
+        powers.leftBack = backLeftPower;
+        powers.rightFront = frontRightPower;
+        powers.rightBack = backRightPower;
+
+        this.drive.setDrivePowers(powers);
         this.drive.updatePoseEstimate();
 
         if (this.isDebug()) {
