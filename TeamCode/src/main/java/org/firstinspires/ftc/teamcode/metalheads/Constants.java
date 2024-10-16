@@ -1,6 +1,5 @@
 package org.firstinspires.ftc.teamcode.metalheads;
 
-import org.firstinspires.ftc.teamcode.library.IsaacBot;
 import org.firstinspires.ftc.teamcode.library.dcmotor.MotorPos;
 import org.firstinspires.ftc.teamcode.library.servo.ServoPos;
 
@@ -41,7 +40,7 @@ public class Constants {
 
     /**
      */
-    public static final CompBot.PositionConstants SAMPLE_PICK_LEFT_READY = new CompBot.PositionConstants() {
+    public static final CompBot.PositionConstants SAMPLE_PICK_LEFT_READY_MIN = new CompBot.PositionConstants() {
         @Override
         public void setValues() {
             mainBoomPos = new MotorPos(-736, 0.5);
@@ -54,7 +53,7 @@ public class Constants {
 
     /**
      */
-    public static final CompBot.PositionConstants SAMPLE_PICK_RIGHT_READY = new CompBot.PositionConstants() {
+    public static final CompBot.PositionConstants SAMPLE_PICK_RIGHT_READY_MIN = new CompBot.PositionConstants() {
         @Override
         public void setValues() {
             mainBoomPos = new MotorPos(-697, 0.5);
