@@ -1,13 +1,11 @@
 package org.firstinspires.ftc.teamcode.metalheads.components;
 
 import com.acmerobotics.roadrunner.Action;
-import com.qualcomm.robotcore.hardware.DcMotorSimple;
 
 import org.firstinspires.ftc.teamcode.library.component.Component;
-import org.firstinspires.ftc.teamcode.library.continuousservo.ContinuousServo;
 import org.firstinspires.ftc.teamcode.library.rotator.Rotator;
 import org.firstinspires.ftc.teamcode.library.servo.ServoComponent;
-import org.firstinspires.ftc.teamcode.metalheads.Constants;
+import org.firstinspires.ftc.teamcode.metalheads.compbot.Constants;
 
 /**
  *

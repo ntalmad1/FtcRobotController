@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.metalheads;
+package org.firstinspires.ftc.teamcode.metalheads.compbot;
 
 import com.acmerobotics.roadrunner.Action;
 import com.acmerobotics.roadrunner.ParallelAction;
@@ -10,7 +10,6 @@ import org.firstinspires.ftc.teamcode.library.action.WaitAction;
 import org.firstinspires.ftc.teamcode.library.dcmotor.MotorPos;
 import org.firstinspires.ftc.teamcode.library.drivetrain.RoadrunnerDriveTrain;
 import org.firstinspires.ftc.teamcode.library.servo.ServoPos;
-import org.firstinspires.ftc.teamcode.library.utility.Control;
 import org.firstinspires.ftc.teamcode.metalheads.components.Arm;
 import org.firstinspires.ftc.teamcode.metalheads.components.Claw;
 import org.firstinspires.ftc.teamcode.metalheads.components.DoubleHooks;
@@ -79,29 +78,30 @@ public abstract class CompBot extends IsaacBot {
     /**
      */
     private ActionFactory actionFactory;
-    /**
-     */
-    private Claw claw;
 
     /**
      */
-    private DoubleHooks doubleHooks;
+    public Claw claw;
 
     /**
      */
-    private RoadrunnerDriveTrain driveTrain;
+    public DoubleHooks doubleHooks;
 
     /**
      */
-    private FlapperBars flapperBars;
+    public RoadrunnerDriveTrain driveTrain;
 
     /**
      */
-    private Intake intake;
+    public FlapperBars flapperBars;
 
     /**
      */
-    private Winch winch;
+    public Intake intake;
+
+    /**
+     */
+    public Winch winch;
 
     /**
      */
@@ -212,386 +212,9 @@ public abstract class CompBot extends IsaacBot {
             this.winch.init();
         }
 
-        this.configureGamePad1();
-        this.configureGamePad2();
-    }
-
-    /**
-     *
-     */
-    private void configureGamePad1() {
-
-        // panic button / kill switch
-        this.addGp1_Back_PressHandler(event -> {
-            this.terminateOpModeNow();
-        });
-
-        // arm
-        if (this.getConfig().useArm) {
-
-            // clear and re-init
-            this.addGp1_Start_PressHandler(event -> {
-                this.setMode(Mode.NONE);
-                this.setArmPos(ArmPos.INIT);
-                this.runAction(this.actionFactory.moveArmToInitPos());
-            });
-        }
-
-        // double hooks
-        if (this.getConfig().useDoubleHooks) {
-            this.doubleHooks.linearActuator.addControl(Control.Gp1_Dpad_UpDown);
-            this.doubleHooks.doubleServos.addControl(Control.Gp1_Dpad_LeftRight);
-        }
-
-        // flapper bars
-        if (this.getConfig().useFlapperBars) {
-            this.addGp1_Left_Bumper_DownHandler(event -> {
-                flapperBars.move(-1);
-            });
-
-            this.addGp1_Left_Bumper_UpHandler(event -> {
-                flapperBars.move(0);
-            });
-
-            this.addGp1_Right_Bumper_DownHandler(event -> {
-                flapperBars.move(1);
-            });
-
-            this.addGp1_Right_Bumper_UpHandler(event -> {
-                flapperBars.move(0);
-            });
-        }
-
-        // winch
-        if (this.getConfig().useWinch) {
-            this.addGp1_RightTrigger_DownHandler(event -> {
-                winch.move(-1);
-            });
-
-            this.addGp1_RightTrigger_UpHandler(event -> {
-                winch.move(0);
-            });
-
-            this.addGp1_LeftTrigger_DownHandler(event -> {
-                winch.move(1);
-            });
-
-            this.addGp1_LeftTrigger_UpHandler(event -> {
-                winch.move(0);
-            });
-        }
-
-    }
-
-    /**
-     *
-     */
-    private void configureGamePad2() {
-
-        // Panic Button / Kill Switch
-        this.addGp2_Back_PressHandler(event -> {
-            this.terminateOpModeNow();
-        });
-
-        // arm
-        if (this.getConfig().useArm) {
-
-            // clear and re-init
-            this.addGp2_Start_PressHandler(event -> {
-                this.setMode(Mode.NONE);
-                this.setArmPos(ArmPos.INIT);
-                this.runAction(this.actionFactory.moveArmToInitPos());
-            });
-
-            // manually move main boom
-            this.arm.mainBoom.addControl(Control.Gp2_LeftStickY);
-
-            // manually move viper slide
-            this.arm.viperSlide.addGp2_RightStick_X_Handler(event -> {
-
-                this.arm.viperSlide.move(event.getPosition());
-
-                if (ArmPos.SAMPLE_PICK_READY.equals(this.getArmPos())) {
-                    // tics = -1308.8 * v^2 + 3193.07 * v + -2115.4
-
-                    double v = arm.viperSlide.getVoltage();
-                    int tics = (int) (-1308.8 * Math.pow(v, 2) + 3193.07 * v - 2115.4);
-
-                    double vMin = Constants.SAMPLE_PICK_READY_MIN.vSlideVolts;
-                    double vMax = Constants.SAMPLE_PICK_READY_MAX.vSlideVolts;
-                    double vServoMin = Constants.SAMPLE_PICK_READY_MIN.vServoPos.getPos();
-                    double vServoMax = Constants.SAMPLE_PICK_READY_MAX.vServoPos.getPos();
-
-                    double m = (vServoMax - vServoMin) / (vMax - vMin);
-                    double vServoPos = m * (v - vMin) + vServoMin;
-
-                    intake.vServo.setServoPosition(vServoPos);
-                    arm.mainBoom.moveToPosition(1, tics);
-                }
-            });
-
-            // dpad up
-            this.addGp2_Dpad_Up_DownHandler(event -> {
-                if (Mode.SAMPLE_MODE.equals(this.getMode())) {
-                    CompBot.this.intake.vServo.move(1);
-                }
-                else if (Mode.SPECIMEN_MODE.equals(this.getMode())) {
-                    CompBot.this.claw.clawRotator.move(-1);
-                }
-            });
-
-            // dpad down
-            this.addGp2_Dpad_Down_DownHandler(event -> {
-                if (Mode.SAMPLE_MODE.equals(this.getMode())) {
-                    CompBot.this.intake.vServo.move(-1);
-                }
-                else if (Mode.SPECIMEN_MODE.equals(this.getMode())) {
-                    CompBot.this.claw.clawRotator.move(1);
-                }
-            });
-
-            // dpad left
-            this.addGp2_Dpad_Left_DownHandler(event -> {
-                if (Mode.SAMPLE_MODE.equals(this.getMode())) {
-                    CompBot.this.intake.hServo.move(-1);
-                }
-                else if (Mode.SPECIMEN_MODE.equals(this.getMode())) {
-                    CompBot.this.claw.clawRotator.move(-1);
-                }
-            });
-
-            // dpad right
-            this.addGp2_Dpad_Right_DownHandler(event -> {
-                if (Mode.SAMPLE_MODE.equals(this.getMode())) {
-                    CompBot.this.intake.hServo.move(1);
-                }
-                else if (Mode.SPECIMEN_MODE.equals(this.getMode())) {
-                    CompBot.this.claw.clawRotator.move(1);
-                }
-            });
-        }
-
-        // claw
-        if (this.getConfig().useClaw) {
-
-            this.claw.addGp2_Right_Trigger_Handler(event -> {
-                if (Mode.SPECIMEN_MODE.equals(this.getMode())) {
-                    this.claw.pincher.setPosition(Constants.CLAW_PINCHER_CLOSE_POS);
-                }
-            });
-
-            this.claw.addGp2_Left_Trigger_Handler(event -> {
-                if (Mode.SPECIMEN_MODE.equals(this.getMode())) {
-                    this.claw.pincher.setPosition(Constants.CLAW_PINCHER_OPEN_POS);
-                }
-            });
-        }
-
-
-        // intake
-        if (this.getConfig().useIntake) {
-
-            this.intake.addGp2_Right_Trigger_Handler(event -> {
-                if (Mode.SAMPLE_MODE.equals(this.getMode())) {
-                    this.intake.pincher.setPosition(Constants.INTAKE_PINCHER_CLOSE_POS);
-                }
-            });
-
-            this.intake.addGp2_Left_Trigger_Handler(event -> {
-                if (Mode.SAMPLE_MODE.equals(this.getMode())) {
-                    this.intake.pincher.setPosition(Constants.INTAKE_PINCHER_OPEN_POS);
-                }
-            });
-        }
-
-        // A button
-        this.addGp2_A_PressHandler(event -> {
-            if (Mode.NONE.equals(this.getMode())) {
-                if (this.arm.viperSlide.getVoltage() <= Constants.SAMPLE_PICK_READY_MIN.vSlideVolts) {
-                    this.runAction(this.actionFactory.moveArmToSamplePickReadyMin());
-                }
-                else if (this.arm.viperSlide.getVoltage() >= Constants.SAMPLE_PICK_READY_MAX.vSlideVolts) {
-                    this.runAction(this.actionFactory.moveArmToSamplePickReadyMax());
-                }
-                else {
-                    this.runAction(this.actionFactory.moveArmToSamplePickReady());
-                }
-
-                this.setMode(Mode.SAMPLE_MODE);
-                this.setArmPos(ArmPos.SAMPLE_PICK_READY);
-            }
-            else if (Mode.SAMPLE_MODE.equals(this.getMode()) && ArmPos.SAMPLE_PICK_READY.equals(this.getArmPos())) {
-                this.runAction(this.actionFactory.samplePick());
-                this.setArmPos(ArmPos.SAMPLE_PICK);
-            }
-            else if (Mode.SAMPLE_MODE.equals(this.getMode()) && ArmPos.SAMPLE_PICK.equals(this.getArmPos())) {
-                this.runAction(this.actionFactory.inverseSamplePick());
-                this.setArmPos(ArmPos.SAMPLE_PICK_READY);
-            }
-            else if (Mode.SAMPLE_MODE.equals(this.getMode()) && (ArmPos.SAMPLE_DROP_LOW_READY.equals(this.getArmPos()) || ArmPos.SAMPLE_DROP_HIGH_READY.equals(this.getArmPos()))) {
-                this.setMode(Mode.NONE);
-                this.setArmPos(ArmPos.INIT);
-                this.runAction(this.actionFactory.moveArmToInitPos());
-            }
-            else if (Mode.SPECIMEN_MODE.equals(this.getMode()) && (ArmPos.SPECIMEN_PICK_READY.equals(this.getArmPos()))) {
-                this.runAction(this.actionFactory.specimenPick());
-                this.setArmPos(ArmPos.SPECIMEN_PICK);
-            }
-            else if (Mode.SPECIMEN_MODE.equals(this.getMode()) && (ArmPos.SPECIMEN_PICK.equals(this.getArmPos()))) {
-                this.runAction(this.actionFactory.inverseSpecimenPick());
-                this.setArmPos(ArmPos.SPECIMEN_PICK);
-            }
-            else if (Mode.SPECIMEN_MODE.equals(this.getMode()) && (
-                    ArmPos.SPECIMEN_PLACE_LOW_READY.equals(this.getArmPos())
-                 || ArmPos.SPECIMEN_PLACE_LOW.equals(this.getArmPos())
-                 || ArmPos.SPECIMEN_PLACE_HIGH_READY.equals(this.getArmPos())
-                 || ArmPos.SPECIMEN_PLACE_HIGH.equals(this.getArmPos()))) {
-                this.setMode(Mode.NONE);
-                this.setArmPos(ArmPos.INIT);
-                this.runAction(this.actionFactory.moveArmToInitPos());
-            }
-        });
-
-        // left bumper
-        this.addGp2_Left_Bumper_PressHandler(event -> {
-            if (Mode.SAMPLE_MODE.equals(this.getMode())) {
-                if (IntakePos.STRAIGHT.equals(this.getIntakePos())) {
-                    if (this.arm.viperSlide.getVoltage() <= Constants.SAMPLE_PICK_LEFT_READY_MIN.vSlideVolts) {
-                        this.runAction(this.actionFactory.moveArmToSamplePickLeftReadyMin());
-                    } else if (this.arm.viperSlide.getVoltage() >= Constants.SAMPLE_PICK_LEFT_READY_MAX.vSlideVolts) {
-                        this.runAction(this.actionFactory.moveArmToSamplePickLeftReadyMax());
-                    } else {
-                        this.runAction(this.actionFactory.moveArmToSamplePickLeftReady());
-                    }
-                    this.setIntakePos(IntakePos.LEFT);
-                }
-                else if (IntakePos.RIGHT.equals(this.getIntakePos())) {
-                    if (this.arm.viperSlide.getVoltage() <= Constants.SAMPLE_PICK_READY_MIN.vSlideVolts) {
-                        this.runAction(this.actionFactory.moveArmToSamplePickReadyMin());
-                    } else if (this.arm.viperSlide.getVoltage() >= Constants.SAMPLE_PICK_READY_MAX.vSlideVolts) {
-                        this.runAction(this.actionFactory.moveArmToSamplePickReadyMax());
-                    } else {
-                        this.runAction(this.actionFactory.moveArmToSamplePickReady());
-                    }
-                    this.setIntakePos(IntakePos.STRAIGHT);
-                }
-            }
-        });
-
-        // right bumper
-        this.addGp2_Right_Bumper_PressHandler(event -> {
-            if (Mode.SAMPLE_MODE.equals(this.getMode())) {
-                if (IntakePos.STRAIGHT.equals(this.getIntakePos())) {
-                    if (this.arm.viperSlide.getVoltage() <= Constants.SAMPLE_PICK_RIGHT_READY_MIN.vSlideVolts) {
-                        this.runAction(this.actionFactory.moveArmToSamplePickRightReadyMin());
-                    } else if (this.arm.viperSlide.getVoltage() >= Constants.SAMPLE_PICK_RIGHT_READY_MAX.vSlideVolts) {
-                        this.runAction(this.actionFactory.moveArmToSamplePickRightReadyMax());
-                    } else {
-                        this.runAction(this.actionFactory.moveArmToSamplePickRightReady());
-                    }
-                    this.setIntakePos(IntakePos.RIGHT);
-                }
-                else if (IntakePos.LEFT.equals(this.getIntakePos())) {
-                    if (this.arm.viperSlide.getVoltage() <= Constants.SAMPLE_PICK_READY_MIN.vSlideVolts) {
-                        this.runAction(this.actionFactory.moveArmToSamplePickReadyMin());
-                    } else if (this.arm.viperSlide.getVoltage() >= Constants.SAMPLE_PICK_READY_MAX.vSlideVolts) {
-                        this.runAction(this.actionFactory.moveArmToSamplePickReadyMax());
-                    } else {
-                        this.runAction(this.actionFactory.moveArmToSamplePickReady());
-                    }
-                    this.setIntakePos(IntakePos.STRAIGHT);
-                }
-            }
-        });
-
-        // X button
-        this.addGp2_X_PressHandler(event -> {
-            if (Mode.NONE.equals(this.getMode())) {
-                this.runAction(this.actionFactory.moveArmToSpecimenPickReady());
-                this.setMode(Mode.SPECIMEN_MODE);
-                this.setArmPos(ArmPos.SPECIMEN_PICK_READY);
-            }
-            else if (Mode.SAMPLE_MODE.equals(this.getMode()) && ArmPos.SAMPLE_CARRY.equals(this.getArmPos())) {
-                this.runAction(new SequentialAction(
-                        actionFactory.moveArmToSampleExtendReady(),
-                        actionFactory.moveArmToSampleBasketLowReady()));
-                this.setArmPos(ArmPos.SAMPLE_DROP_LOW_READY);
-            }
-            else if (Mode.SAMPLE_MODE.equals(this.getMode()) && (
-                    ArmPos.SAMPLE_EXTEND_READY.equals(this.getArmPos()))
-                 || ArmPos.SAMPLE_DROP_LOW.equals(this.getArmPos())) {
-                this.runAction(actionFactory.moveArmToSampleBasketLowReady());
-                this.setArmPos(ArmPos.SAMPLE_DROP_LOW_READY);
-            }
-            else if (Mode.SAMPLE_MODE.equals(this.getMode()) && ArmPos.SAMPLE_DROP_LOW_READY.equals(this.getArmPos())) {
-                this.runAction(actionFactory.sampleDropLow());
-                this.setArmPos(ArmPos.SAMPLE_DROP_LOW_READY);
-            }
-            else if (Mode.SPECIMEN_MODE.equals(this.getMode()) && !ArmPos.SPECIMEN_PLACE_LOW_READY.equals(this.getArmPos())) {
-                this.runAction(actionFactory.moveArmToSpecimenPlaceLowReady());
-                this.setArmPos(ArmPos.SPECIMEN_PLACE_LOW_READY);
-            }
-            else if (Mode.SPECIMEN_MODE.equals(this.getMode()) && ArmPos.SPECIMEN_PLACE_LOW_READY.equals(this.getArmPos())) {
-                this.runAction(actionFactory.moveArmToSpecimenPlaceLowReady());
-                this.setArmPos(ArmPos.SPECIMEN_PLACE_LOW);
-            }
-        });
-
-        // Y button
-        this.addGp2_Y_PressHandler(event -> {
-            if (Mode.SAMPLE_MODE.equals(this.getMode()) && ArmPos.SAMPLE_CARRY.equals(this.getArmPos())) {
-                this.runAction(new SequentialAction(
-                        actionFactory.moveArmToSampleExtendReady(),
-                        actionFactory.moveArmToSampleBasketHighReady()));
-                this.setArmPos(ArmPos.SAMPLE_DROP_HIGH_READY);
-            }
-            else if (Mode.SAMPLE_MODE.equals(this.getMode()) && (
-                    ArmPos.SAMPLE_EXTEND_READY.equals(this.getArmPos()))
-                    || ArmPos.SAMPLE_DROP_HIGH.equals(this.getArmPos())) {
-                this.runAction(actionFactory.moveArmToSampleBasketHighReady());
-                this.setArmPos(ArmPos.SAMPLE_DROP_HIGH_READY);
-            }
-            else if (Mode.SAMPLE_MODE.equals(this.getMode()) && ArmPos.SAMPLE_DROP_HIGH_READY.equals(this.getArmPos())) {
-                this.runAction(actionFactory.sampleDropHigh());
-                this.setArmPos(ArmPos.SAMPLE_DROP_HIGH_READY);
-            }
-            else if (Mode.SPECIMEN_MODE.equals(this.getMode()) && !ArmPos.SPECIMEN_PLACE_HIGH_READY.equals(this.getArmPos())) {
-                this.runAction(actionFactory.moveArmToSpecimenPlaceHighReady());
-                this.setArmPos(ArmPos.SPECIMEN_PLACE_HIGH_READY);
-            }
-            else if (Mode.SPECIMEN_MODE.equals(this.getMode()) && ArmPos.SPECIMEN_PLACE_HIGH_READY.equals(this.getArmPos())) {
-                this.runAction(actionFactory.moveArmToSpecimenPlaceHighReady());
-                this.setArmPos(ArmPos.SPECIMEN_PLACE_HIGH);
-            }
-        });
-
-        // B button
-        this.addGp2_B_PressHandler(event -> {
-            if (Mode.SAMPLE_MODE.equals(this.getMode()) && (
-                    ArmPos.SAMPLE_PICK_READY.equals(this.getArmPos())
-                 || ArmPos.SAMPLE_PICK.equals(this.getArmPos()))) {
-                this.runAction(actionFactory.moveArmToSampleCarry());
-                this.setArmPos(ArmPos.SAMPLE_CARRY);
-            }
-            else if (Mode.SAMPLE_MODE.equals(this.getMode()) && ArmPos.SAMPLE_CARRY.equals(this.getArmPos())) {
-                this.runAction(actionFactory.moveArmToSampleExtendReady());
-                this.setArmPos(ArmPos.SAMPLE_EXTEND_READY);
-            }
-            else if (Mode.SAMPLE_MODE.equals(this.getMode()) && (ArmPos.SAMPLE_DROP_LOW_READY.equals(this.getArmPos()) || ArmPos.SAMPLE_DROP_HIGH_READY.equals(this.getArmPos()))) {
-                this.setMode(Mode.NONE);
-                this.setArmPos(ArmPos.INIT);
-                this.runAction(this.actionFactory.moveArmToInitPos());
-            }
-            else if (Mode.SPECIMEN_MODE.equals(this.getMode()) && (
-                    ArmPos.SPECIMEN_PLACE_LOW_READY.equals(this.getArmPos())
-                            || ArmPos.SPECIMEN_PLACE_LOW.equals(this.getArmPos())
-                            || ArmPos.SPECIMEN_PLACE_HIGH_READY.equals(this.getArmPos())
-                            || ArmPos.SPECIMEN_PLACE_HIGH.equals(this.getArmPos()))) {
-                this.setMode(Mode.NONE);
-                this.setArmPos(ArmPos.INIT);
-                this.runAction(this.actionFactory.moveArmToInitPos());
-            }
-        });
+        ControlsConfigurator controlsConfigurator = new ControlsConfigurator(this);
+        controlsConfigurator.configureGamePad1();
+        controlsConfigurator.configureGamePad2();
     }
 
     /**

@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.metalheads;
+package org.firstinspires.ftc.teamcode.metalheads.compbot;
 
 import org.firstinspires.ftc.teamcode.library.dcmotor.MotorPos;
 import org.firstinspires.ftc.teamcode.library.servo.ServoPos;

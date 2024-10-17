@@ -3,6 +3,9 @@ package org.firstinspires.ftc.teamcode.metalheads;
 import com.acmerobotics.roadrunner.Pose2d;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
+import org.firstinspires.ftc.teamcode.metalheads.compbot.CompBot;
+import org.firstinspires.ftc.teamcode.metalheads.compbot.PositionStruct;
+
 @TeleOp(name = "TeleBot", group = "Tests")
 public class TeleBot extends CompBot {
 
