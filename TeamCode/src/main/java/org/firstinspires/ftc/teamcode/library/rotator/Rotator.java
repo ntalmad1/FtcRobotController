@@ -400,7 +400,7 @@ public class Rotator extends Component {
      *
      * @param position the position to set the servo to
      */
-    private void setServoPosition (double position) {
+    public void setServoPosition(double position) {
         this.servo.setPosition(position);
         if (this.config.isDualServo) {
             this.secondaryServo.setPosition(1 - position);
