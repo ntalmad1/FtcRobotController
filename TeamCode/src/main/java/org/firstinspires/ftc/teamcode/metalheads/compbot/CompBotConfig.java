@@ -78,7 +78,7 @@ public class CompBotConfig {
 
     /**
      */
-    public boolean useWinch = true;
+    public boolean useWinch = false;
 
     /**
      */

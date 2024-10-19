@@ -7,6 +7,7 @@ import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.AnalogInput;
 
 @TeleOp(name="PotentiometerTest", group="Tests")
+@Disabled
 public class PotTest extends LinearOpMode {
 
     AnalogInput pot;

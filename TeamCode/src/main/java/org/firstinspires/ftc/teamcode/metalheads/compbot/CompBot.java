@@ -1,6 +1,5 @@
 package org.firstinspires.ftc.teamcode.metalheads.compbot;
 
-import com.acmerobotics.dashboard.telemetry.TelemetryPacket;
 import com.acmerobotics.roadrunner.Action;
 import com.acmerobotics.roadrunner.InstantAction;
 import com.acmerobotics.roadrunner.ParallelAction;
@@ -8,7 +7,6 @@ import com.acmerobotics.roadrunner.Pose2d;
 import com.acmerobotics.roadrunner.SequentialAction;
 
 import org.firstinspires.ftc.teamcode.library.IsaacBot;
-import org.firstinspires.ftc.teamcode.library.action.AbstractAction;
 import org.firstinspires.ftc.teamcode.library.action.WaitAction;
 import org.firstinspires.ftc.teamcode.library.dcmotor.MotorPos;
 import org.firstinspires.ftc.teamcode.library.drivetrain.RoadrunnerDriveTrain;
@@ -407,14 +405,23 @@ public abstract class CompBot extends IsaacBot {
 
         public Action doHang() {
             return new SequentialAction(
+                CompBot.this.arm.viperSlide.gotoVoltageAction(HangConstants.HANG_READY_1.vSlideVolts),
+                new WaitAction(500),
                 CompBot.this.arm.mainBoom.gotoPositionAction(HangConstants.HANG_READY_1.mainBoomPos),
+                new WaitAction(500),
                 CompBot.this.arm.viperSlide.gotoVoltageAction(HangConstants.HANG_READY_2.vSlideVolts),
                 CompBot.this.doubleHooks.doubleServos.gotoPositionAction(HangConstants.HANG_READY_2.dHookServos),
+                new WaitAction(500),
+                CompBot.this.doubleHooks.linearActuator.gotoPositionAction(HangConstants.HANG_READY_3.linearActuatorPos),
+                new WaitAction(1000),
+                CompBot.this.doubleHooks.doubleServos.gotoPositionAction(HangConstants.HANG_READY_3.dHookServos),
+                CompBot.this.doubleHooks.linearActuator.gotoPositionAction(HangConstants.HANG_READY_4.linearActuatorPos),
+                new WaitAction(500),
                 new ParallelAction(
-                        CompBot.this.arm.mainBoom.gotoPositionAction(HangConstants.HANG_READY_3.mainBoomPos),
-                        CompBot.this.arm.viperSlide.gotoVoltageAction(HangConstants.HANG_READY_3.vSlideVolts),
-                        CompBot.this.doubleHooks.doubleServos.gotoPositionAction(HangConstants.HANG_READY_3.dHookServos),
-                        CompBot.this.doubleHooks.linearActuator.gotoPositionAction(HangConstants.HANG_READY_3.linearActuatorPos)));
+                        CompBot.this.arm.mainBoom.gotoPositionAction(HangConstants.HANG_READY_4.mainBoomPos),
+                        CompBot.this.arm.viperSlide.gotoVoltageAction(HangConstants.HANG_READY_4.vSlideVolts),
+                        CompBot.this.doubleHooks.doubleServos.gotoPositionAction(HangConstants.HANG_READY_4.dHookServos)
+                ));
         }
 
         /**
@@ -489,7 +496,7 @@ public abstract class CompBot extends IsaacBot {
         public Action moveArmToSamplePickLeftReady() {
             return new ParallelAction(
                     intake.hServo.gotoPositionAction(Constants.SAMPLE_PICK_LEFT_READY_MIN.hServoPos),
-                    intake.vServo.gotoPositionAction(Constants.SAMPLE_PICK_LEFT_READY_MIN.hServoPos),
+                    intake.vServo.gotoPositionAction(Constants.SAMPLE_PICK_LEFT_READY_MIN.vServoPos),
                     intake.openPincherAction(),
                     claw.clawRotator.gotoPositionAction(Constants.SAMPLE_PICK_READY_MIN.clawRotatorPos));
         }
@@ -500,7 +507,7 @@ public abstract class CompBot extends IsaacBot {
         public Action moveArmToSamplePickRightReady() {
             return new ParallelAction(
                     intake.hServo.gotoPositionAction(Constants.SAMPLE_PICK_RIGHT_READY_MIN.hServoPos),
-                    intake.vServo.gotoPositionAction(Constants.SAMPLE_PICK_RIGHT_READY_MIN.hServoPos),
+                    intake.vServo.gotoPositionAction(Constants.SAMPLE_PICK_RIGHT_READY_MIN.vServoPos),
                     intake.openPincherAction(),
                     claw.clawRotator.gotoPositionAction(Constants.SAMPLE_PICK_READY_MIN.clawRotatorPos));
         }

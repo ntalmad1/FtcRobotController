@@ -87,7 +87,7 @@ public class Constants {
         @Override
         public void setValues() {
             mainBoomPos = new MotorPos(-450);
-            vSlideVolts = 0.959;
+            //vSlideVolts = 0.959;
             hServoPos = new ServoPos(0.8422);
             vServoPos = new ServoPos(0.453);
             intakePincherPos = new ServoPos(INTAKE_PINCHER_OPEN_POS, 1);
@@ -100,7 +100,7 @@ public class Constants {
         @Override
         public void setValues() {
             mainBoomPos = new MotorPos(-416, 0.5);
-            vSlideVolts = 0.959;
+            //vSlideVolts = 0.959;
             hServoPos = new ServoPos(0.1717);
             vServoPos = new ServoPos(0.4578);
             intakePincherPos = new ServoPos(INTAKE_PINCHER_OPEN_POS, 1);
@@ -112,7 +112,7 @@ public class Constants {
     public static final CompBot.PositionConstants SAMPLE_CARRY = new CompBot.PositionConstants() {
         @Override
         public void setValues() {
-            mainBoomPos = new MotorPos(-185, 0.75);
+            mainBoomPos = new MotorPos(0, 0.75);
             vSlideVolts = 0.586;
             hServoPos = new ServoPos(0.4856);
             vServoPos = new ServoPos(0.5367);

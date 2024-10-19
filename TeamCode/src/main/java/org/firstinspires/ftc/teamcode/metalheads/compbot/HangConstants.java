@@ -32,6 +32,7 @@ public class HangConstants {
     public static final CompBot.HangPositionContants HANG_READY_1 = new CompBot.HangPositionContants() {
         @Override
         public void setValues() {
+            vSlideVolts = 0.900;
             mainBoomPos = new MotorPos(1274, 1);
         }
     };
@@ -47,10 +48,18 @@ public class HangConstants {
         }
     };
 
+    public static final CompBot.HangPositionContants HANG_READY_3 = new CompBot.HangPositionContants() {
+        @Override
+        public void setValues() {
+            linearActuatorPos = new MotorPos(1000, 1);
+            dHookServos = new ServoPos(0.11);
+        }
+    };
+
     /**
      *
      */
-    public static final CompBot.HangPositionContants HANG_READY_3 = new CompBot.HangPositionContants() {
+    public static final CompBot.HangPositionContants HANG_READY_4 = new CompBot.HangPositionContants() {
         @Override
         public void setValues() {
             mainBoomPos = new MotorPos(2106, 1);

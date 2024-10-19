@@ -17,7 +17,7 @@ import org.firstinspires.ftc.teamcode.library.event.gp1_dpad_press.gp1_dpad_up_p
  * init pos 0.247
  */
 @TeleOp(name="IntakeVServoCalib", group="Calibration")
-//@Disabled
+@Disabled
 public class IntakeVServoCalib extends IsaacBot {
 
     /**

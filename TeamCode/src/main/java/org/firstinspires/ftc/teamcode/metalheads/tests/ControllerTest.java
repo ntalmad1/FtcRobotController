@@ -7,7 +7,7 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import org.firstinspires.ftc.teamcode.library.IsaacBot;
 
 @TeleOp(name = "ControllerTest", group = "Tests")
-//@Disabled
+@Disabled
 public class ControllerTest extends IsaacBot {
 
     /**

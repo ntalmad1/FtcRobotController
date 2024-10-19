@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode.metalheads.tests;
 
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import org.firstinspires.ftc.teamcode.library.IsaacBot;
@@ -11,7 +12,7 @@ import org.firstinspires.ftc.teamcode.library.potentiometermotor.PotentiometerMo
 import org.firstinspires.ftc.teamcode.library.utility.Control;
 
 @TeleOp(name="PotentiometerMotorTest", group="Tests")
-//@Disabled
+@Disabled
 public class PotentiometerMotorTest extends IsaacBot {
 
     /**

@@ -111,4 +111,11 @@ public class RoadrunnerDriveTrain extends Component
         }
     }
 
+    /**
+     *
+     * @return
+     */
+    public MecanumDrive getDrive() {
+        return this.drive;
+    }
 }
