@@ -146,15 +146,24 @@ public class RoadrunnerAuton extends LinearOpMode {
             double extraLowV = 8;
 
             TrajectoryActionBuilder tab3 = drive.actionBuilder(initialPose)
+
+                    //hang specimen
+                    .strafeToConstantHeading(new Vector2d(-8,-45)) //go in front of bar
+                    .lineToY(-38,
+                            new TranslationalVelConstraint(extraLowV)) //go forwards to hang specimen
+
+
+
                     //Go to first sample
-                    .setTangent(0)
-                    .strafeToLinearHeading(new Vector2d(-43, -48), Math.toRadians(90),
+                    .setTangent(-90)
+                    .splineToConstantHeading(new Vector2d(-43, -48), Math.toRadians(180),
                             new TranslationalVelConstraint(lowV))
                     .strafeTo(new Vector2d(-50, -48),
-                            new TranslationalVelConstraint(extraLowV))
+                            new TranslationalVelConstraint(extraLowV)) //strafe into sample
                     // TODO: Pickup Sample 1
 
                     //GoToBucket
+                    .setTangent(-90)
                     .strafeToLinearHeading(new Vector2d(-55,-55), Math.toRadians(225),
                             new TranslationalVelConstraint(lowV))
                     // TODO: Drop Sample
