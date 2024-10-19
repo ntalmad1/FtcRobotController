@@ -167,12 +167,13 @@ public class Constants {
     public static final CompBot.PositionConstants SPECIMEN_PICK_READY = new CompBot.PositionConstants() {
         @Override
         public void setValues() {
-            mainBoomPos = new MotorPos(-318, 0.5);
-            vSlideVolts = 0.70;
-            hServoPos = new ServoPos(0.4272);
+            mainBoomPos = new MotorPos(-355, 0.5);
+            vSlideVolts = 0.8;
+            hServoPos = new ServoPos(0.375);
             vServoPos = new ServoPos(0.1528);
-            clawRotatorPos = new ServoPos(0.3122);
+            clawRotatorPos = new ServoPos(0.3117);
             clawPincherPos = new ServoPos(CLAW_PINCHER_OPEN_POS, 1);
+            intakePincherPos = new ServoPos(INTAKE_PINCHER_CLOSE_POS, 1);
         }
     };
 
@@ -190,11 +191,11 @@ public class Constants {
     public static final CompBot.PositionConstants SPECIMEN_PLACE_HIGH_READY = new CompBot.PositionConstants() {
         @Override
         public void setValues() {
-            mainBoomPos = new MotorPos(1566, 0.75);
-            vSlideVolts = 0.747;
-            hServoPos = new ServoPos(0.425);
+            mainBoomPos = new MotorPos(1724, 0.75);
+            vSlideVolts = 0.76;
+            hServoPos = new ServoPos(0.375);
             vServoPos = new ServoPos(0.0967);
-            clawRotatorPos = new ServoPos(0.445);
+            clawRotatorPos = new ServoPos(0.465);
         }
     };
 
@@ -218,7 +219,7 @@ public class Constants {
         public void setValues() {
             mainBoomPos = new MotorPos(157, 0.75);
             vSlideVolts = 0.709;
-            hServoPos = new ServoPos(0.4733);
+            hServoPos = new ServoPos(0.375);
             vServoPos = new ServoPos(0.1);
             clawRotatorPos = new ServoPos(0.3733);
         }

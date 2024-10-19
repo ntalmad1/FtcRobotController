@@ -17,9 +17,15 @@ import org.firstinspires.ftc.teamcode.library.event.action_callback.ActionSucces
  */
 public abstract class AbstractAction implements Action {
 
-    protected final boolean STOP = false;
+    /**
+     *
+     */
+    public static final boolean STOP = false;
 
-    protected final boolean CONTIUE = true;
+    /**
+     *
+     */
+    public static final boolean CONTIUE = true;
 
     /**
      */

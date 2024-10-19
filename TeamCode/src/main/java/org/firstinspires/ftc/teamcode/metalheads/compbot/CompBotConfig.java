@@ -261,7 +261,6 @@ public class CompBotConfig {
 
         this.intakeConfig.hServoConfig = new RotatorConfig(robot);
         this.intakeConfig.hServoConfig.servoName = "intakeHorizontal";
-        this.intakeConfig.hServoConfig.controllerInputMethod = Control.Gp1_LeftStickX;
         this.intakeConfig.hServoConfig.zeroDegreePosition = 0.5;
         this.intakeConfig.hServoConfig.homePosition = 0.5011;
         this.intakeConfig.hServoConfig.minPosition = 0;
@@ -270,7 +269,6 @@ public class CompBotConfig {
 
         this.intakeConfig.vServoConfig = new RotatorConfig(robot);
         this.intakeConfig.vServoConfig.servoName = "intakeVertical";
-        this.intakeConfig.vServoConfig.controllerInputMethod = Control.Gp1_LeftStickY;
         this.intakeConfig.vServoConfig.zeroDegreePosition = 0.5;
         this.intakeConfig.vServoConfig.homePosition = Constants.INTAKE_V_SERVO_INIT_POS;
         this.intakeConfig.vServoConfig.minPosition = 0.0;

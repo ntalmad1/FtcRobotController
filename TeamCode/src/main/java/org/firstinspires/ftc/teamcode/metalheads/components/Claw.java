@@ -5,6 +5,7 @@ import com.acmerobotics.roadrunner.Action;
 import org.firstinspires.ftc.teamcode.library.component.Component;
 import org.firstinspires.ftc.teamcode.library.rotator.Rotator;
 import org.firstinspires.ftc.teamcode.library.servo.ServoComponent;
+import org.firstinspires.ftc.teamcode.metalheads.compbot.Constants;
 
 /**
  *
@@ -41,7 +42,7 @@ public class Claw extends Component {
      * @return
      */
     public Action closeClawAction() {
-        return this.pincher.gotoPositionAction(config.pincherConfig.maxPosition, 1);
+        return this.pincher.gotoPositionAction(Constants.CLAW_PINCHER_CLOSE_POS, 1);
     }
 
     /**
@@ -49,7 +50,7 @@ public class Claw extends Component {
      * @return
      */
     public Action openClawAction() {
-        return this.pincher.gotoPositionAction(config.pincherConfig.minPosition, 1);
+        return this.pincher.gotoPositionAction(Constants.CLAW_PINCHER_OPEN_POS, 1);
     }
 
     /**

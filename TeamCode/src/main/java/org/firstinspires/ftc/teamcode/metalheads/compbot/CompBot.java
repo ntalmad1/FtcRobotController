@@ -1,11 +1,14 @@
 package org.firstinspires.ftc.teamcode.metalheads.compbot;
 
+import com.acmerobotics.dashboard.telemetry.TelemetryPacket;
 import com.acmerobotics.roadrunner.Action;
+import com.acmerobotics.roadrunner.InstantAction;
 import com.acmerobotics.roadrunner.ParallelAction;
 import com.acmerobotics.roadrunner.Pose2d;
 import com.acmerobotics.roadrunner.SequentialAction;
 
 import org.firstinspires.ftc.teamcode.library.IsaacBot;
+import org.firstinspires.ftc.teamcode.library.action.AbstractAction;
 import org.firstinspires.ftc.teamcode.library.action.WaitAction;
 import org.firstinspires.ftc.teamcode.library.dcmotor.MotorPos;
 import org.firstinspires.ftc.teamcode.library.drivetrain.RoadrunnerDriveTrain;
@@ -624,7 +627,14 @@ public abstract class CompBot extends IsaacBot {
          * @return
          */
         public Action specimenPick() {
-            return CompBot.this.moveArmAction(Constants.SPECIMEN_PICK);
+            return new SequentialAction(
+                    new InstantAction(() -> {
+                      CompBot.this.claw.pincher.setPosition(Constants.CLAW_PINCHER_CLOSE_POS);
+                    }),
+                    new WaitAction(500),
+                    CompBot.this.arm.mainBoom.gotoPositionAction(
+                            new MotorPos(CompBot.this.arm.mainBoom.getCurrentPosition() + 400, 1))
+            );
         }
 
         /**
@@ -650,6 +660,16 @@ public abstract class CompBot extends IsaacBot {
         }
 
         /**
+         *
+         * @return
+         */
+        public Action specimenPlaceHigh() {
+            return new SequentialAction(
+                    CompBot.this.arm.mainBoom.gotoPositionAction(Constants.SPECIMEN_PLACE_HIGH.mainBoomPos)
+            );
+        }
+
+        /**
          * @return
          */
         public Action moveArmToSpecimenPlaceLowReady() {
@@ -661,6 +681,15 @@ public abstract class CompBot extends IsaacBot {
          */
         public Action moveArmToSpecimenPlaceLow() {
             return CompBot.this.moveArmAction(Constants.SPECIMEN_PLACE_LOW);
+        }
+
+        /**
+         * @return
+         */
+        public Action specimenPlaceLow() {
+            return new SequentialAction(
+                    CompBot.this.arm.mainBoom.gotoPositionAction(Constants.SPECIMEN_PLACE_LOW.mainBoomPos)
+            );
         }
 
         /**

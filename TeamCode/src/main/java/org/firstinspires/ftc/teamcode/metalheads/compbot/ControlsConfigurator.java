@@ -166,41 +166,45 @@ public class ControlsConfigurator {
     public void gp2_Dpad() {
         // dpad up
         this.compBot.addGp2_Dpad_Up_DownHandler(event -> {
-            if (CompBot.Mode.SAMPLE_MODE.equals(this.compBot.getMode())) {
-                this.compBot.intake.vServo.move(1);
-            }
-            else if (CompBot.Mode.SPECIMEN_MODE.equals(this.compBot.getMode())) {
+            if (CompBot.Mode.SPECIMEN_MODE.equals(this.compBot.getMode())) {
                 this.compBot.claw.clawRotator.move(-1);
+            }
+            //if (CompBot.Mode.SAMPLE_MODE.equals(this.compBot.getMode())) {
+            else {
+                this.compBot.intake.vServo.move(1);
             }
         });
 
         // dpad down
         this.compBot.addGp2_Dpad_Down_DownHandler(event -> {
-            if (CompBot.Mode.SAMPLE_MODE.equals(this.compBot.getMode())) {
-                this.compBot.intake.vServo.move(-1);
-            }
-            else if (CompBot.Mode.SPECIMEN_MODE.equals(this.compBot.getMode())) {
+            if (CompBot.Mode.SPECIMEN_MODE.equals(this.compBot.getMode())) {
                 this.compBot.claw.clawRotator.move(1);
+            }
+            //else if (CompBot.Mode.SAMPLE_MODE.equals(this.compBot.getMode())) {
+            else {
+                this.compBot.intake.vServo.move(-1);
             }
         });
 
         // dpad left
         this.compBot.addGp2_Dpad_Left_DownHandler(event -> {
-            if (CompBot.Mode.SAMPLE_MODE.equals(this.compBot.getMode())) {
-                this.compBot.intake.hServo.move(-1);
-            }
-            else if (CompBot.Mode.SPECIMEN_MODE.equals(this.compBot.getMode())) {
+            if (CompBot.Mode.SPECIMEN_MODE.equals(this.compBot.getMode())) {
                 this.compBot.claw.clawRotator.move(-1);
+            }
+            //else if (CompBot.Mode.SAMPLE_MODE.equals(this.compBot.getMode())) {
+            else {
+                this.compBot.intake.hServo.move(-1);
             }
         });
 
-        // dpad right
+        //dpad right
         this.compBot.addGp2_Dpad_Right_DownHandler(event -> {
-            if (CompBot.Mode.SAMPLE_MODE.equals(this.compBot.getMode())) {
-                this.compBot.intake.hServo.move(1);
-            }
-            else if (CompBot.Mode.SPECIMEN_MODE.equals(this.compBot.getMode())) {
+            //else if (CompBot.Mode.SAMPLE_MODE.equals(this.compBot.getMode())) {
+            if (CompBot.Mode.SPECIMEN_MODE.equals(this.compBot.getMode())) {
                 this.compBot.claw.clawRotator.move(1);
+            }
+            else {
+                this.compBot.intake.hServo.move(1);
             }
         });
     }
@@ -232,6 +236,9 @@ public class ControlsConfigurator {
                     this.compBot.setIntakePos(CompBot.IntakePos.STRAIGHT);
                 }
             }
+            else {
+                this.compBot.claw.clawRotator.move(-1);
+            }
         });
     }
 
@@ -261,6 +268,9 @@ public class ControlsConfigurator {
                     }
                     this.compBot.setIntakePos(CompBot.IntakePos.STRAIGHT);
                 }
+            }
+            else {
+                this.compBot.claw.clawRotator.move(1);
             }
         });
     }
@@ -310,9 +320,8 @@ public class ControlsConfigurator {
                             || CompBot.ArmPos.SPECIMEN_PLACE_LOW.equals(this.compBot.getArmPos())
                             || CompBot.ArmPos.SPECIMEN_PLACE_HIGH_READY.equals(this.compBot.getArmPos())
                             || CompBot.ArmPos.SPECIMEN_PLACE_HIGH.equals(this.compBot.getArmPos()))) {
-                this.compBot.setMode(CompBot.Mode.NONE);
-                this.compBot.setArmPos(CompBot.ArmPos.INIT);
-                this.compBot.runAction(this.compBot.getActionFactory().moveArmToInitPos());
+                this.compBot.runAction(this.compBot.getActionFactory().moveArmToSpecimenPickReady());
+                this.compBot.setArmPos(CompBot.ArmPos.SPECIMEN_PICK_READY);
             }
         });
     }
@@ -342,9 +351,8 @@ public class ControlsConfigurator {
                             || CompBot.ArmPos.SPECIMEN_PLACE_LOW.equals(this.compBot.getArmPos())
                             || CompBot.ArmPos.SPECIMEN_PLACE_HIGH_READY.equals(this.compBot.getArmPos())
                             || CompBot.ArmPos.SPECIMEN_PLACE_HIGH.equals(this.compBot.getArmPos()))) {
-                this.compBot.setMode(CompBot.Mode.NONE);
-                this.compBot.setArmPos(CompBot.ArmPos.INIT);
-                this.compBot.runAction(this.compBot.getActionFactory().moveArmToInitPos());
+                this.compBot.runAction(this.compBot.getActionFactory().moveArmToSpecimenPickReady());
+                this.compBot.setArmPos(CompBot.ArmPos.SPECIMEN_PICK_READY);
             }
         });
     }
@@ -380,7 +388,7 @@ public class ControlsConfigurator {
                 this.compBot.setArmPos(CompBot.ArmPos.SPECIMEN_PLACE_LOW_READY);
             }
             else if (CompBot.Mode.SPECIMEN_MODE.equals(this.compBot.getMode()) && CompBot.ArmPos.SPECIMEN_PLACE_LOW_READY.equals(this.compBot.getArmPos())) {
-                this.compBot.runAction(compBot.getActionFactory().moveArmToSpecimenPlaceLowReady());
+                this.compBot.runAction(compBot.getActionFactory().specimenPlaceLow());
                 this.compBot.setArmPos(CompBot.ArmPos.SPECIMEN_PLACE_LOW);
             }
         });
@@ -412,7 +420,7 @@ public class ControlsConfigurator {
                 this.compBot.setArmPos(CompBot.ArmPos.SPECIMEN_PLACE_HIGH_READY);
             }
             else if (CompBot.Mode.SPECIMEN_MODE.equals(this.compBot.getMode()) && CompBot.ArmPos.SPECIMEN_PLACE_HIGH_READY.equals(this.compBot.getArmPos())) {
-                this.compBot.runAction(compBot.getActionFactory().moveArmToSpecimenPlaceHighReady());
+                this.compBot.runAction(compBot.getActionFactory().specimenPlaceHigh());
                 this.compBot.setArmPos(CompBot.ArmPos.SPECIMEN_PLACE_HIGH);
             }
         });
