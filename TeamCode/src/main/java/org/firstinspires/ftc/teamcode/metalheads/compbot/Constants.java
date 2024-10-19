@@ -204,7 +204,7 @@ public class Constants {
     public static final CompBot.PositionConstants SPECIMEN_PLACE_HIGH = new CompBot.PositionConstants() {
         @Override
         public void setValues() {
-            mainBoomPos = new MotorPos(985, 0.75);
+            mainBoomPos = new MotorPos(985, 1);
             vSlideVolts = 0.747;
             hServoPos = new ServoPos(0.425);
             vServoPos = new ServoPos(0.0967);

@@ -55,7 +55,7 @@ public class AutoBot extends CompBot {
          */
         public TrajectoryActionBuilder lineToPlaceSpeciman(MecanumDrive drive) {
             return drive.actionBuilder(drive.pose)
-                    .lineToY(-33.25, new TranslationalVelConstraint(10));
+                    .lineToY(-33.5, new TranslationalVelConstraint(10));
         }
 
         public TrajectoryActionBuilder lineBackAfterPlaceSpeciman(MecanumDrive drive) {
@@ -83,7 +83,8 @@ public class AutoBot extends CompBot {
 
             return drive.actionBuilder(drive.pose)
                 .setTangent(Math.toRadians(0))
-                .strafeTo(new Vector2d(26, -43)) //Go towards sample
+                .strafeTo(new Vector2d(26, -43),
+                    new TranslationalVelConstraint(velocityLow)) //Go towards sample
 
                 /*
                  * First Specimen

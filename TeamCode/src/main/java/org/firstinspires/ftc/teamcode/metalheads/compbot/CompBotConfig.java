@@ -265,7 +265,7 @@ public class CompBotConfig {
         this.intakeConfig.hServoConfig.homePosition = 0.5011;
         this.intakeConfig.hServoConfig.minPosition = 0;
         this.intakeConfig.hServoConfig.maxPosition = 1;
-        this.intakeConfig.hServoConfig.maxIncrement = 0.070;
+        this.intakeConfig.hServoConfig.maxIncrement = 0.007;
 
         this.intakeConfig.vServoConfig = new RotatorConfig(robot);
         this.intakeConfig.vServoConfig.servoName = "intakeVertical";

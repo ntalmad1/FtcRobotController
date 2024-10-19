@@ -6,9 +6,9 @@ import com.acmerobotics.roadrunner.Pose2d;
 import com.acmerobotics.roadrunner.SequentialAction;
 import com.acmerobotics.roadrunner.ftc.Actions;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
-import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import org.firstinspires.ftc.teamcode.library.action.WaitAction;
+import org.firstinspires.ftc.teamcode.library.dcmotor.MotorPos;
 import org.firstinspires.ftc.teamcode.metalheads.compbot.AutoBot;
 import org.firstinspires.ftc.teamcode.metalheads.compbot.Constants;
 
@@ -51,12 +51,16 @@ public class RightObsBot extends AutoBot {
         ));
 
         Actions.runBlocking(new SequentialAction(
+                new WaitAction(1000),
                 this.getTrajectoryFactory().lineToPlaceSpeciman(this.driveTrain.getDrive()).build(),
+                new WaitAction(500),
+                this.arm.mainBoom.gotoPositionAction(new MotorPos(1354, 0.5)),
                 new ParallelAction(
                     this.getActionFactory().specimenPlaceHigh(),
                     this.getTrajectoryFactory().lineBackAfterPlaceSpeciman(this.driveTrain.getDrive()).build()),
                 new WaitAction(1000),
                 this.claw.openClawAction(),
+                new WaitAction(1000),
                 new ParallelAction(
                     this.getActionFactory().moveArmToInitPos(),
                     new InstantAction(() -> this.claw.pincher.setPosition(Constants.CLAW_PINCHER_CLOSE_POS))),
