@@ -31,7 +31,9 @@ public abstract class CompBot extends IsaacBot {
     public enum Mode {
         NONE,
         SAMPLE_MODE,
-        SPECIMEN_MODE
+        SPECIMEN_MODE,
+        HANG_READY,
+        ASCENDING
     }
 
     public enum IntakePos {
@@ -142,7 +144,7 @@ public abstract class CompBot extends IsaacBot {
         this.config.debugDriveTrain = true;
         this.config.debugArm = true;
         this.config.debugClaw = true;
-        this.config.debugDoubleHooks = false;
+        this.config.debugDoubleHooks = true;
         this.config.debugFlapperBars = false;
         this.config.debugIntake = true;
         this.config.debugWinch = false;
@@ -387,6 +389,37 @@ public abstract class CompBot extends IsaacBot {
      */
     public class ActionFactory {
 
+        /**
+         * @return
+         */
+        public Action doHangReady() {
+            return new ParallelAction(
+                CompBot.this.arm.mainBoom.gotoPositionAction(HangConstants.HANG_READY.mainBoomPos),
+                CompBot.this.arm.viperSlide.gotoVoltageAction(0.887),
+                CompBot.this.claw.clawRotator.gotoPositionAction(HangConstants.HANG_READY.clawRotatorPos),
+                CompBot.this.intake.hServo.gotoPositionAction(HangConstants.HANG_READY.hServoPos),
+                CompBot.this.intake.vServo.gotoPositionAction(HangConstants.HANG_READY.vServoPos),
+                CompBot.this.claw.pincher.gotoPositionAction(HangConstants.HANG_READY.clawPincherPos),
+                CompBot.this.intake.pincher.gotoPositionAction(HangConstants.HANG_READY.intakePincherPos),
+                CompBot.this.doubleHooks.linearActuator.gotoPositionAction(HangConstants.HANG_READY.linearActuatorPos),
+                CompBot.this.doubleHooks.doubleServos.gotoPositionAction(HangConstants.HANG_READY.dHookServos));
+        }
+
+        public Action doHang() {
+            return new SequentialAction(
+                CompBot.this.arm.mainBoom.gotoPositionAction(HangConstants.HANG_READY_1.mainBoomPos),
+                CompBot.this.arm.viperSlide.gotoVoltageAction(HangConstants.HANG_READY_2.vSlideVolts),
+                CompBot.this.doubleHooks.doubleServos.gotoPositionAction(HangConstants.HANG_READY_2.dHookServos),
+                new ParallelAction(
+                        CompBot.this.arm.mainBoom.gotoPositionAction(HangConstants.HANG_READY_3.mainBoomPos),
+                        CompBot.this.arm.viperSlide.gotoVoltageAction(HangConstants.HANG_READY_3.vSlideVolts),
+                        CompBot.this.doubleHooks.doubleServos.gotoPositionAction(HangConstants.HANG_READY_3.dHookServos),
+                        CompBot.this.doubleHooks.linearActuator.gotoPositionAction(HangConstants.HANG_READY_3.linearActuatorPos)));
+        }
+
+        /**
+         * @return
+         */
         public Action moveArmToInitPos() {
             return new SequentialAction(
                     CompBot.this.arm.viperSlide.gotoVoltageAction(Constants.SAMPLE_PICK_READY_MIN.vSlideVolts),
@@ -719,6 +752,25 @@ public abstract class CompBot extends IsaacBot {
         public ServoPos clawPincherPos;
 
         public PositionConstants () {
+            this.setValues();
+        }
+
+        /**
+         *
+         */
+        public abstract void setValues();
+    }
+
+    /**
+     *
+     */
+    public static abstract class HangPositionContants extends PositionConstants
+    {
+        public MotorPos linearActuatorPos;
+
+        public ServoPos dHookServos;
+
+        public HangPositionContants () {
             this.setValues();
         }
 

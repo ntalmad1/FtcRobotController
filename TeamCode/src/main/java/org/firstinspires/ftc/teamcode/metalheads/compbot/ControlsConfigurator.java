@@ -87,6 +87,8 @@ public class ControlsConfigurator {
             });
         }
 
+        // X button
+        this.gp1_X_Button();
     }
 
     /**
@@ -158,6 +160,22 @@ public class ControlsConfigurator {
 
         // Y button
         this.gp2_Y_Button();
+    }
+
+    /**
+     *
+     */
+    public void gp1_X_Button();
+    {
+        if (!CompBot.Mode.HANG_READY.equals(this.compBot.getMode())
+        && !CompBot.Mode.ASCENDING.equals(this.compBot.getMode())) {
+            this.compBot.runAction(this.compBot.getActionFactory().doHangReady());
+            this.compBot.setMode(CompBot.Mode.HANG_READY);
+        }
+        else if (CompBot.Mode.HANG_READY.equals(this.compBot.getMode())) {
+            this.compBot.runAction(this.compBot.getActionFactory().doHang());
+            this.compBot.setMode(CompBot.Mode.ASCENDING);
+        }
     }
 
     /**
