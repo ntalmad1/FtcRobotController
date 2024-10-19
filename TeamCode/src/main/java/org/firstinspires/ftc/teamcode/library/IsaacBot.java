@@ -710,7 +710,7 @@ public abstract class  IsaacBot extends LinearOpMode implements IComponent
             IsaacBot.this.robotComponent.run();
             IsaacBot.this.run();
 
-            if (this.isCompleted()) {
+            if (this.isCompleted() || !IsaacBot.this.opModeIsActive()) {
                 return STOP;
             }
 
