@@ -451,23 +451,9 @@ public abstract class CompBot extends IsaacBot {
          * @return
          */
         public Action moveArmToSamplePickLeftReady() {
-
-            double volts = arm.viperSlide.getVoltage();
-
-            // m = (vServoMax - vServoMin) / (vMax - vMin)
-            // vServoPos = m\m(v-vMin) + vServoMin
-            double vMin = Constants.SAMPLE_PICK_LEFT_READY_MIN.vSlideVolts;
-            double vMax = Constants.SAMPLE_PICK_LEFT_READY_MAX.vSlideVolts;
-            double vServoMin = Constants.SAMPLE_PICK_LEFT_READY_MIN.vServoPos.getPos();
-            double vServoMax = Constants.SAMPLE_PICK_LEFT_READY_MAX.vServoPos.getPos();
-
-
-            double m = (vServoMax - vServoMin) / (vMax - vMin);
-            double vServoPos = m * (volts-vMin) + vServoMin;
-
             return new ParallelAction(
                     intake.hServo.gotoPositionAction(Constants.SAMPLE_PICK_LEFT_READY_MIN.hServoPos),
-                    intake.vServo.gotoPositionAction(vServoPos, 1),
+                    intake.vServo.gotoPositionAction(Constants.SAMPLE_PICK_LEFT_READY_MIN.hServoPos),
                     intake.openPincherAction(),
                     claw.clawRotator.gotoPositionAction(Constants.SAMPLE_PICK_READY_MIN.clawRotatorPos));
         }
@@ -476,22 +462,9 @@ public abstract class CompBot extends IsaacBot {
          * @return
          */
         public Action moveArmToSamplePickRightReady() {
-
-            double volts = arm.viperSlide.getVoltage();
-
-            // m = (vServoMax - vServoMin) / (vMax - vMin)
-            // vServoPos = m\m(v-vMin) + vServoMin
-            double vMin = Constants.SAMPLE_PICK_RIGHT_READY_MIN.vSlideVolts;
-            double vMax = Constants.SAMPLE_PICK_RIGHT_READY_MAX.vSlideVolts;
-            double vServoMin = Constants.SAMPLE_PICK_RIGHT_READY_MIN.vServoPos.getPos();
-            double vServoMax = Constants.SAMPLE_PICK_RIGHT_READY_MAX.vServoPos.getPos();
-
-            double m = (vServoMax - vServoMin) / (vMax - vMin);
-            double vServoPos = m * (volts-vMin) + vServoMin;
-
             return new ParallelAction(
                     intake.hServo.gotoPositionAction(Constants.SAMPLE_PICK_RIGHT_READY_MIN.hServoPos),
-                    intake.vServo.gotoPositionAction(vServoPos, 1),
+                    intake.vServo.gotoPositionAction(Constants.SAMPLE_PICK_RIGHT_READY_MIN.hServoPos),
                     intake.openPincherAction(),
                     claw.clawRotator.gotoPositionAction(Constants.SAMPLE_PICK_READY_MIN.clawRotatorPos));
         }
@@ -532,36 +505,70 @@ public abstract class CompBot extends IsaacBot {
             return CompBot.this.moveArmAction(Constants.SAMPLE_PICK_RIGHT_READY_MAX);
         }
 
+
         /**
          * @return
          */
         public Action sampleDropLow() {
-            return null;
-            // TODO
+
+            this.mainBoomReturnPos = CompBot.this.arm.mainBoom.getCurrentPosition();
+
+            return new SequentialAction(
+                    CompBot.this.intake.vServo.gotoPositionAction(
+                            Constants.SAMPLE_PLACE_LOW_READY.vServoPos.getPos() + 0.1, 1),
+                    CompBot.this.intake.vServo.gotoPositionAction(
+                            Constants.SAMPLE_PLACE_LOW_READY.vServoPos.getPos() - 0.05, 1),
+                    CompBot.this.intake.openPincherAction(),
+                    CompBot.this.intake.vServo.gotoPositionAction(Constants.SAMPLE_PLACE_LOW_READY.vServoPos)
+            );
+
         }
 
         /**
          * @return
          */
         public Action sampleDropHigh() {
-            return null;
-            // TODO
+            this.mainBoomReturnPos = CompBot.this.arm.mainBoom.getCurrentPosition();
+
+            return new SequentialAction(
+                    CompBot.this.intake.vServo.gotoPositionAction(
+                            Constants.SAMPLE_PLACE_HIGH_READY.vServoPos.getPos() + 0.1, 1),
+                    CompBot.this.intake.vServo.gotoPositionAction(
+                            Constants.SAMPLE_PLACE_HIGH_READY.vServoPos.getPos() - 0.05, 1),
+                    CompBot.this.intake.openPincherAction(),
+                    CompBot.this.intake.vServo.gotoPositionAction(Constants.SAMPLE_PLACE_HIGH_READY.vServoPos)
+            );
         }
+
+        /**
+         */
+        private int mainBoomReturnPos = 0;
 
         /**
          * @return
          */
         public Action samplePick() {
-            return null;
-            // TODO
+
+            this.mainBoomReturnPos = CompBot.this.arm.mainBoom.getCurrentPosition();
+
+            return new SequentialAction(
+                    CompBot.this.intake.closePincherAction(),
+                    new WaitAction(500),
+                    CompBot.this.arm.mainBoom.gotoPositionAction(Constants.SAMPLE_CARRY.mainBoomPos)
+            );
+
         }
 
         /**
          * @return
          */
         public Action inverseSamplePick() {
-            return null;
-            // TODO
+
+            return new SequentialAction(
+                    CompBot.this.intake.openPincherAction(),
+                    new WaitAction(500),
+                    CompBot.this.arm.mainBoom.gotoPositionAction(this.mainBoomReturnPos)
+            );
         }
 
         /**
@@ -581,15 +588,26 @@ public abstract class CompBot extends IsaacBot {
         /**
          * @return
          */
-        public Action moveArmToSampleBasketLowReady() {
-            return CompBot.this.moveArmAction(Constants.SAMPLE_BASKET_LOW_READY);
+        public Action moveArmToSamplePlaceLowReady() {
+            return CompBot.this.moveArmAction(Constants.SAMPLE_PLACE_LOW_READY);
         }
 
         /**
          * @return
          */
-        public Action moveArmToSampleBasketHighReady() {
-            return CompBot.this.moveArmAction(Constants.SAMPLE_BASKET_HIGH_READY);
+        public Action moveArmToSampPlaceHighReady() {
+
+            CompBot.this.arm.viperSlide.resetEncoder();
+
+            return new ParallelAction(
+                    intake.hServo.gotoPositionAction(Constants.SAMPLE_PLACE_HIGH_READY.hServoPos),
+                    intake.vServo.gotoPositionAction(Constants.SAMPLE_PLACE_HIGH_READY.vServoPos),
+                    intake.pincher.gotoPositionAction(Constants.SAMPLE_PLACE_HIGH_READY.intakePincherPos),
+                    arm.viperSlide.gotoPositionAction(2900),
+                    arm.mainBoom.gotoPositionAction(Constants.SAMPLE_PLACE_HIGH_READY.mainBoomPos),
+                    claw.clawRotator.gotoPositionAction(Constants.SAMPLE_PLACE_HIGH_READY.clawRotatorPos),
+                    claw.pincher.gotoPositionAction(Constants.SAMPLE_PLACE_HIGH_READY.clawPincherPos)
+            );
         }
 
         //------------------------------------------------------------------------------------------

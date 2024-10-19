@@ -4,9 +4,6 @@ import com.acmerobotics.roadrunner.Action;
 import com.qualcomm.robotcore.hardware.DcMotor;
 
 import org.firstinspires.ftc.teamcode.library.dcmotor.DcMotorComponent;
-import org.firstinspires.ftc.teamcode.library.encodedmotor.EncodedMotorGoToPositionAction;
-import org.firstinspires.ftc.teamcode.library.encodedmotor.EncodedMotorGoToPositionCommand;
-import org.firstinspires.ftc.teamcode.library.event.command_callback.CommandCallbackHandler;
 import org.firstinspires.ftc.teamcode.library.potentiometer.Potentiometer;
 
 /**
@@ -79,6 +76,14 @@ public class PotentiometerMotor extends DcMotorComponent {
         return this.gotoVoltageAction(voltage, 1);
     }
 
+    /**
+     *
+     * @param position
+     */
+    public Action gotoPositionAction (int position) {
+        return this.gotoPositionAction(position, 1);
+    }
+
 //    /**
 //     *
 //     * @param position
@@ -95,7 +100,17 @@ public class PotentiometerMotor extends DcMotorComponent {
      * @return
      */
     public Action gotoVoltageAction (double voltage, double power) {
-        return new PotentiometerMotorGoToPositionAction(this, voltage, power);
+        return new PotentiometerMotorGoToVoltageAction(this, voltage, power);
+    }
+
+    /**
+     *
+     * @param position
+     * @param power
+     * @return
+     */
+    public Action gotoPositionAction (int position, double power) {
+        return new PotentiometerMotorGoToPositionAction(this, position, power);
     }
 
 //    /**
@@ -181,4 +196,41 @@ public class PotentiometerMotor extends DcMotorComponent {
         this.setPower(power);
     }
 
+    /**
+     *
+     * @param power
+     * @param targetPosition
+     */
+    public void moveToPosition (double power, int targetPosition) {
+        if (power == 0 && this.holding) {
+            return;
+        }
+
+        if (power == 0) {
+            targetPosition = this.getCurrentPosition();
+
+            if (isBrakeOn()) {
+                holding = true;
+                power = 1;
+            }
+            else {
+                holding = true;
+                this.setPower(0);
+                return;
+            }
+        }
+        else {
+            holding = false;
+        }
+
+        this.setTargetPosition(targetPosition);
+        this.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        this.setPower(power);
+    }
+
+    /**
+     */
+    public void resetEncoder() {
+        this.getMotor().setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+    }
 }

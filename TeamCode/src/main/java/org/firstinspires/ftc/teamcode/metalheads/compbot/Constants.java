@@ -22,6 +22,10 @@ public class Constants {
      */
     public static final double INTAKE_V_SERVO_INIT_POS = 0.364;
 
+    /**
+     */
+    public static final double VIPER_SLIDE_VOLTS_MAX = 1.20;
+
     //----------------------------------------------------------------------------------------------
     //----------------------------------------------------------------------------------------------
 
@@ -85,7 +89,7 @@ public class Constants {
             mainBoomPos = new MotorPos(-450);
             vSlideVolts = 0.959;
             hServoPos = new ServoPos(0.8422);
-            vServoPos = new ServoPos(0.4472);
+            vServoPos = new ServoPos(0.453);
             intakePincherPos = new ServoPos(INTAKE_PINCHER_OPEN_POS, 1);
         }
     };
@@ -131,7 +135,7 @@ public class Constants {
 
     /**
      */
-    public static final CompBot.PositionConstants SAMPLE_BASKET_LOW_READY = new CompBot.PositionConstants() {
+    public static final CompBot.PositionConstants SAMPLE_PLACE_LOW_READY = new CompBot.PositionConstants() {
         @Override
         public void setValues() {
             mainBoomPos = new MotorPos(2223, 0.5);
@@ -144,11 +148,11 @@ public class Constants {
 
     /**
      */
-    public static final CompBot.PositionConstants SAMPLE_BASKET_HIGH_READY = new CompBot.PositionConstants() {
+    public static final CompBot.PositionConstants SAMPLE_PLACE_HIGH_READY = new CompBot.PositionConstants() {
         @Override
         public void setValues() {
             mainBoomPos = new MotorPos(2783, 0.5);
-            vSlideVolts = 1.136;
+            vSlideVolts = VIPER_SLIDE_VOLTS_MAX;
             hServoPos = new ServoPos(0.5039);
             vServoPos = new ServoPos(0.51);
             intakePincherPos = new ServoPos(INTAKE_PINCHER_CLOSE_POS, 1);

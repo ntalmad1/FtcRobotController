@@ -126,8 +126,16 @@ public class DcMotorComponent extends Component {
      *
      * @return
      */
-    public double getPower () {
+    public double getPower() {
         return this.motor.getPower();
+    }
+
+    /**
+     *
+     * @return
+     */
+    public DcMotor getMotor() {
+        return this.motor;
     }
 
     /**

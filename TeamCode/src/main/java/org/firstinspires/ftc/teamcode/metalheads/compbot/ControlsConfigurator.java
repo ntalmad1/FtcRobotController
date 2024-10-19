@@ -163,7 +163,7 @@ public class ControlsConfigurator {
     /**
      *
      */
-    private void gp2_Dpad() {
+    public void gp2_Dpad() {
         // dpad up
         this.compBot.addGp2_Dpad_Up_DownHandler(event -> {
             if (CompBot.Mode.SAMPLE_MODE.equals(this.compBot.getMode())) {
@@ -208,7 +208,7 @@ public class ControlsConfigurator {
     /**
      *
      */
-    private void gp2_Left_Bumper() {
+    public void gp2_Left_Bumper() {
         this.compBot.addGp2_Left_Bumper_PressHandler(event -> {
             if (CompBot.Mode.SAMPLE_MODE.equals(this.compBot.getMode())) {
                 if (CompBot.IntakePos.STRAIGHT.equals(this.compBot.getIntakePos())) {
@@ -238,7 +238,7 @@ public class ControlsConfigurator {
     /**
      *
      */
-    private void gp2_Right_Bumper() {
+    public void gp2_Right_Bumper() {
         this.compBot.addGp2_Right_Bumper_PressHandler(event -> {
             if (CompBot.Mode.SAMPLE_MODE.equals(this.compBot.getMode())) {
                 if (CompBot.IntakePos.STRAIGHT.equals(this.compBot.getIntakePos())) {
@@ -268,7 +268,7 @@ public class ControlsConfigurator {
     /**
      *
      */
-    private void gp2_A_Button() {
+    public void gp2_A_Button() {
         this.compBot.addGp2_A_PressHandler(event -> {
             if (CompBot.Mode.NONE.equals(this.compBot.getMode())) {
                 if (this.compBot.arm.viperSlide.getVoltage() <= Constants.SAMPLE_PICK_READY_MIN.vSlideVolts) {
@@ -362,13 +362,13 @@ public class ControlsConfigurator {
             else if (CompBot.Mode.SAMPLE_MODE.equals(this.compBot.getMode()) && CompBot.ArmPos.SAMPLE_CARRY.equals(this.compBot.getArmPos())) {
                 this.compBot.runAction(new SequentialAction(
                         compBot.getActionFactory().moveArmToSampleExtendReady(),
-                        compBot.getActionFactory().moveArmToSampleBasketLowReady()));
+                        compBot.getActionFactory().moveArmToSamplePlaceLowReady()));
                 this.compBot.setArmPos(CompBot.ArmPos.SAMPLE_DROP_LOW_READY);
             }
             else if (CompBot.Mode.SAMPLE_MODE.equals(this.compBot.getMode()) && (
                     CompBot.ArmPos.SAMPLE_EXTEND_READY.equals(this.compBot.getArmPos()))
                     || CompBot.ArmPos.SAMPLE_DROP_LOW.equals(this.compBot.getArmPos())) {
-                this.compBot.runAction(compBot.getActionFactory().moveArmToSampleBasketLowReady());
+                this.compBot.runAction(compBot.getActionFactory().moveArmToSamplePlaceLowReady());
                 this.compBot.setArmPos(CompBot.ArmPos.SAMPLE_DROP_LOW_READY);
             }
             else if (CompBot.Mode.SAMPLE_MODE.equals(this.compBot.getMode()) && CompBot.ArmPos.SAMPLE_DROP_LOW_READY.equals(this.compBot.getArmPos())) {
@@ -394,13 +394,13 @@ public class ControlsConfigurator {
             if (CompBot.Mode.SAMPLE_MODE.equals(this.compBot.getMode()) && CompBot.ArmPos.SAMPLE_CARRY.equals(this.compBot.getArmPos())) {
                 this.compBot.runAction(new SequentialAction(
                         compBot.getActionFactory().moveArmToSampleExtendReady(),
-                        compBot.getActionFactory().moveArmToSampleBasketHighReady()));
+                        compBot.getActionFactory().moveArmToSampPlaceHighReady()));
                 this.compBot.setArmPos(CompBot.ArmPos.SAMPLE_DROP_HIGH_READY);
             }
             else if (CompBot.Mode.SAMPLE_MODE.equals(this.compBot.getMode()) && (
                     CompBot.ArmPos.SAMPLE_EXTEND_READY.equals(this.compBot.getArmPos()))
                     || CompBot.ArmPos.SAMPLE_DROP_HIGH.equals(this.compBot.getArmPos())) {
-                this.compBot.runAction(compBot.getActionFactory().moveArmToSampleBasketHighReady());
+                this.compBot.runAction(compBot.getActionFactory().moveArmToSampPlaceHighReady());
                 this.compBot.setArmPos(CompBot.ArmPos.SAMPLE_DROP_HIGH_READY);
             }
             else if (CompBot.Mode.SAMPLE_MODE.equals(this.compBot.getMode()) && CompBot.ArmPos.SAMPLE_DROP_HIGH_READY.equals(this.compBot.getArmPos())) {

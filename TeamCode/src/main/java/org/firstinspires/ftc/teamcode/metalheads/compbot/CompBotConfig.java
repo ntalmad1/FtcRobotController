@@ -202,7 +202,8 @@ public class CompBotConfig {
         this.armConfig.viperSlideConfig.minTics = 100;
         this.armConfig.viperSlideConfig.maxTics = 2900;
         this.armConfig.viperSlideConfig.minVolts = 0.586;
-        this.armConfig.viperSlideConfig.maxVolts = 1.129;
+        //this.armConfig.viperSlideConfig.maxVolts = 1.129;
+        this.armConfig.viperSlideConfig.maxVolts = Constants.VIPER_SLIDE_VOLTS_MAX;
         this.armConfig.viperSlideConfig.brakeOn = true;
 
         this.armConfig.viperSlideConfig.potentiometerConfig = new PotentiometerConfig(robot);
@@ -242,6 +243,7 @@ public class CompBotConfig {
         this.clawConfig.clawRotatorConfig.zeroDegreePosition = 0;
         this.clawConfig.clawRotatorConfig.minPosition = 0;
         this.clawConfig.clawRotatorConfig.maxPosition = 1;
+        this.clawConfig.clawRotatorConfig.maxIncrement = 0.010;
     }
 
     /**
@@ -264,6 +266,7 @@ public class CompBotConfig {
         this.intakeConfig.hServoConfig.homePosition = 0.5011;
         this.intakeConfig.hServoConfig.minPosition = 0;
         this.intakeConfig.hServoConfig.maxPosition = 1;
+        this.intakeConfig.hServoConfig.maxIncrement = 0.070;
 
         this.intakeConfig.vServoConfig = new RotatorConfig(robot);
         this.intakeConfig.vServoConfig.servoName = "intakeVertical";
@@ -272,5 +275,6 @@ public class CompBotConfig {
         this.intakeConfig.vServoConfig.homePosition = Constants.INTAKE_V_SERVO_INIT_POS;
         this.intakeConfig.vServoConfig.minPosition = 0.0;
         this.intakeConfig.vServoConfig.maxPosition = 0.674;
+        this.intakeConfig.vServoConfig.maxIncrement = 0.005;
     }
 }
