@@ -20,9 +20,15 @@ public class RedBasket {
 //                .followTrajectorySequence(drive -> drive.trajectorySequenceBuilder(new Pose2d(35.5, -61, Math.toRadians(90)))
                 .followTrajectorySequence(drive -> drive.trajectorySequenceBuilder(new Pose2d(-31.35, -61, Math.toRadians(90)))
 
+                        //hang specimen
+                        .lineToConstantHeading(new Vector2d(-8,-45)) //go in front of bar
+                        .lineTo(new Vector2d(-8,-38)) //go forwards to hang specimen
+
+
+
                         //Go to first sample
-                        .setTangent(0)
-                        .lineToSplineHeading(new Pose2d(-43, -48, Math.toRadians(90)))
+                        .setTangent(-90)
+                        .splineToConstantHeading(new Vector2d(-43, -48), Math.toRadians(180))
                         .strafeTo(new Vector2d(-50, -48))
                         // TODO: Pickup Sample 1
 
