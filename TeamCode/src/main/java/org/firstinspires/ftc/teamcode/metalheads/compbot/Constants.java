@@ -167,7 +167,7 @@ public class Constants {
     public static final CompBot.PositionConstants SPECIMEN_PICK_READY = new CompBot.PositionConstants() {
         @Override
         public void setValues() {
-            mainBoomPos = new MotorPos(-355, 0.5);
+            mainBoomPos = new MotorPos(-255, 0.5);
             vSlideVolts = 0.8;
             hServoPos = new ServoPos(0.375);
             vServoPos = new ServoPos(0.1528);

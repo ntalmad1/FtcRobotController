@@ -38,7 +38,7 @@ public class RightObsBot extends AutoBot {
         super.configureBot();
 
         // initialize roadrunner from last op pose
-        this.setInitialPose(new Pose2d(31.35, -61, Math.toRadians(90)));
+        this.setInitialPose(new Pose2d(24.21, -61, Math.toRadians(90)));
     }
 
     @Override
