@@ -19,11 +19,14 @@ public class RedSamples {
 //                .followTrajectorySequence(drive -> drive.trajectorySequenceBuilder(new Pose2d(35, -61, Math.toRadians(90)))
 //                .followTrajectorySequence(drive -> drive.trajectorySequenceBuilder(new Pose2d(35.5, -61, Math.toRadians(90)))
                 .followTrajectorySequence(drive -> drive.trajectorySequenceBuilder(new Pose2d(31.35, -61, Math.toRadians(90)))
-                        .strafeTo(new Vector2d(8, -40)) //Go infront of bar to hang specimen
+                        .strafeTo(new Vector2d(5, -40)) //Go infront of bar to hang specimen
+                        .lineToConstantHeading(new Vector2d(5, -33.25))
+                        .lineToConstantHeading(new Vector2d(5, -43))
+                        //.lineto(new Vector2d(-33.25, -40))
 
                         //hang specimen
                         .setTangent(Math.toRadians(0))
-                        .lineTo(new Vector2d(26, -40)) //Go towards sample
+                        .lineTo(new Vector2d(26, -43)) //Go towards sample
 
                         //first specimen
                         .splineToConstantHeading(new Vector2d(41, -12), Math.toRadians(0)) //left side of arc

@@ -83,8 +83,7 @@ public class AutoBot extends CompBot {
 
             return drive.actionBuilder(drive.pose)
                 .setTangent(Math.toRadians(0))
-                .strafeTo(new Vector2d(26, -43),
-                    new TranslationalVelConstraint(velocityLow)) //Go towards sample
+                .strafeTo(new Vector2d(26, -46)) //Go towards sample
 
                 /*
                  * First Specimen
