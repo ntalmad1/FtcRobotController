@@ -238,8 +238,6 @@ public class ControlsConfigurator {
                 if (CompBot.IntakePos.STRAIGHT.equals(this.compBot.getIntakePos())) {
                     if (this.compBot.arm.viperSlide.getVoltage() <= Constants.SAMPLE_PICK_LEFT_READY_MIN.vSlideVolts) {
                         this.compBot.runAction(this.compBot.getActionFactory().moveArmToSamplePickLeftReadyMin());
-                    } else if (this.compBot.arm.viperSlide.getVoltage() >= Constants.SAMPLE_PICK_LEFT_READY_MAX.vSlideVolts) {
-                        this.compBot.runAction(this.compBot.getActionFactory().moveArmToSamplePickLeftReadyMax());
                     } else {
                         this.compBot.runAction(this.compBot.getActionFactory().moveArmToSamplePickLeftReady());
                     }
@@ -248,8 +246,6 @@ public class ControlsConfigurator {
                 else if (CompBot.IntakePos.RIGHT.equals(this.compBot.getIntakePos())) {
                     if (this.compBot.arm.viperSlide.getVoltage() <= Constants.SAMPLE_PICK_READY_MIN.vSlideVolts) {
                         this.compBot.runAction(this.compBot.getActionFactory().moveArmToSamplePickReadyMin());
-                    } else if (this.compBot.arm.viperSlide.getVoltage() >= Constants.SAMPLE_PICK_READY_MAX.vSlideVolts) {
-                        this.compBot.runAction(this.compBot.getActionFactory().moveArmToSamplePickReadyMax());
                     } else {
                         this.compBot.runAction(this.compBot.getActionFactory().moveArmToSamplePickReady());
                     }
@@ -271,8 +267,6 @@ public class ControlsConfigurator {
                 if (CompBot.IntakePos.STRAIGHT.equals(this.compBot.getIntakePos())) {
                     if (this.compBot.arm.viperSlide.getVoltage() <= Constants.SAMPLE_PICK_RIGHT_READY_MIN.vSlideVolts) {
                         this.compBot.runAction(this.compBot.getActionFactory().moveArmToSamplePickRightReadyMin());
-                    } else if (this.compBot.arm.viperSlide.getVoltage() >= Constants.SAMPLE_PICK_RIGHT_READY_MAX.vSlideVolts) {
-                        this.compBot.runAction(this.compBot.getActionFactory().moveArmToSamplePickRightReadyMax());
                     } else {
                         this.compBot.runAction(this.compBot.getActionFactory().moveArmToSamplePickRightReady());
                     }
@@ -281,8 +275,6 @@ public class ControlsConfigurator {
                 else if (CompBot.IntakePos.LEFT.equals(this.compBot.getIntakePos())) {
                     if (this.compBot.arm.viperSlide.getVoltage() <= Constants.SAMPLE_PICK_READY_MIN.vSlideVolts) {
                         this.compBot.runAction(this.compBot.getActionFactory().moveArmToSamplePickReadyMin());
-                    } else if (this.compBot.arm.viperSlide.getVoltage() >= Constants.SAMPLE_PICK_READY_MAX.vSlideVolts) {
-                        this.compBot.runAction(this.compBot.getActionFactory().moveArmToSamplePickReadyMax());
                     } else {
                         this.compBot.runAction(this.compBot.getActionFactory().moveArmToSamplePickReady());
                     }
@@ -304,9 +296,6 @@ public class ControlsConfigurator {
                 if (this.compBot.arm.viperSlide.getVoltage() <= Constants.SAMPLE_PICK_READY_MIN.vSlideVolts) {
                     this.compBot.runAction(this.compBot.getActionFactory().moveArmToSamplePickReadyMin());
                 }
-                else if (this.compBot.arm.viperSlide.getVoltage() >= Constants.SAMPLE_PICK_READY_MAX.vSlideVolts) {
-                    this.compBot.runAction(this.compBot.getActionFactory().moveArmToSamplePickReadyMax());
-                }
                 else {
                     this.compBot.runAction(this.compBot.getActionFactory().moveArmToSamplePickReady());
                 }
@@ -325,6 +314,7 @@ public class ControlsConfigurator {
             else if (CompBot.Mode.SAMPLE_MODE.equals(this.compBot.getMode()) && (CompBot.ArmPos.SAMPLE_DROP_LOW_READY.equals(this.compBot.getArmPos()) || CompBot.ArmPos.SAMPLE_DROP_HIGH_READY.equals(this.compBot.getArmPos()))) {
                 this.compBot.setMode(CompBot.Mode.NONE);
                 this.compBot.setArmPos(CompBot.ArmPos.INIT);
+                this.compBot.setIntakePos(CompBot.IntakePos.STRAIGHT);
                 this.compBot.runAction(this.compBot.getActionFactory().moveArmToInitPos());
             }
             else if (CompBot.Mode.SPECIMEN_MODE.equals(this.compBot.getMode()) && (CompBot.ArmPos.SPECIMEN_PICK_READY.equals(this.compBot.getArmPos()))) {
@@ -355,6 +345,7 @@ public class ControlsConfigurator {
                     CompBot.ArmPos.SAMPLE_PICK_READY.equals(this.compBot.getArmPos())
                             || CompBot.ArmPos.SAMPLE_PICK.equals(this.compBot.getArmPos()))) {
                 this.compBot.runAction(compBot.getActionFactory().moveArmToSampleCarry());
+                this.compBot.setIntakePos(CompBot.IntakePos.STRAIGHT);
                 this.compBot.setArmPos(CompBot.ArmPos.SAMPLE_CARRY);
             }
             else if (CompBot.Mode.SAMPLE_MODE.equals(this.compBot.getMode()) && CompBot.ArmPos.SAMPLE_CARRY.equals(this.compBot.getArmPos())) {
@@ -364,6 +355,7 @@ public class ControlsConfigurator {
             else if (CompBot.Mode.SAMPLE_MODE.equals(this.compBot.getMode()) && (CompBot.ArmPos.SAMPLE_DROP_LOW_READY.equals(this.compBot.getArmPos()) || CompBot.ArmPos.SAMPLE_DROP_HIGH_READY.equals(this.compBot.getArmPos()))) {
                 this.compBot.setMode(CompBot.Mode.NONE);
                 this.compBot.setArmPos(CompBot.ArmPos.INIT);
+                this.compBot.setIntakePos(CompBot.IntakePos.STRAIGHT);
                 this.compBot.runAction(this.compBot.getActionFactory().moveArmToInitPos());
             }
             else if (CompBot.Mode.SPECIMEN_MODE.equals(this.compBot.getMode()) && (

@@ -622,7 +622,9 @@ public abstract class  IsaacBot extends LinearOpMode implements IComponent
             Actions.runBlocking(actionWrapper);
         }
 
-        this.runActions();
+        if (this.opModeIsActive()) {
+            this.runActions();
+        }
     }
 
     /**
@@ -640,7 +642,6 @@ public abstract class  IsaacBot extends LinearOpMode implements IComponent
         this.runActions();
 
         while (this.opModeIsActive()) {
-
         }
 
         this.onStop();
@@ -709,7 +710,7 @@ public abstract class  IsaacBot extends LinearOpMode implements IComponent
             IsaacBot.this.robotComponent.run();
             IsaacBot.this.run();
 
-            if (this.isCompleted()) {
+            if (this.isCompleted() || !IsaacBot.this.opModeIsActive()) {
                 return STOP;
             }
 
