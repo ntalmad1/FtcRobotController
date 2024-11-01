@@ -43,10 +43,10 @@ public class ServoTest extends IsaacBot {
     public void initBot() {
         yStickIncrement = 0.0006;
         gamePadIncrement = 0.002;
-        servoName = "testServo";
+        servoName = "test";
         servoInitPos = 0.5;
-        servoMinPos = 0.484;
-        servoMaxPos = 0.65;
+        servoMinPos = 0.0;
+        servoMaxPos = 1.0;
 
 
         servo = this.hardwareMap.get(Servo.class, servoName);
