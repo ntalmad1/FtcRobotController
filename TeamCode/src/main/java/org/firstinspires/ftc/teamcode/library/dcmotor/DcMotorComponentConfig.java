@@ -26,6 +26,22 @@ public class DcMotorComponentConfig {
 
     /**
      */
+    public boolean isDualMotor = false;
+
+    /**
+     */
+    public String secondaryMotorName;
+
+    /**
+     */
+    public int  secondaryMotorOffset = 0;
+
+    /**
+     */
+    public DcMotorSimple.Direction secondaryInitialMotorDirection = DcMotorSimple.Direction.FORWARD;
+
+    /**
+     */
     public boolean brakeOn = false;
 
     /**

@@ -9,7 +9,7 @@ import org.firstinspires.ftc.teamcode.library.encodedmotor.EncodedMotorConfig;
 import org.firstinspires.ftc.teamcode.library.utility.Control;
 
 @TeleOp(name="EncodedMotorTest", group="Tests")
-@Disabled
+//@Disabled
 public class EncodedMotorTest extends IsaacBot {
 
     /**
@@ -24,11 +24,14 @@ public class EncodedMotorTest extends IsaacBot {
         super();
 
         EncodedMotorConfig config = new EncodedMotorConfig(this);
-        config.brakeOn = true;
-        config.maxTics = 10000;
-        config.minTics = 0;
-        config.motorName = "motor0";
+        config.brakeOn = false;
+        config.maxTics = 100000;
+        config.minTics = -10000;
+        config.motorName = "rightWorm";
         config.control = Control.Gp1_LeftStickY;
+
+        config.isDualMotor = true;
+        config.secondaryMotorName = "leftWorm";
 
         motor = new EncodedMotor(config);
     }
@@ -48,7 +51,7 @@ public class EncodedMotorTest extends IsaacBot {
     @Override
     public void go() {
 
-        this.motor.gotoPosition(5000, 1);
+        //this.motor.gotoPosition(5000, 1);
 
     }
 

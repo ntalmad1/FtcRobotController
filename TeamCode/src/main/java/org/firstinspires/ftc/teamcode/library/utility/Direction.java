@@ -1,5 +1,7 @@
 package org.firstinspires.ftc.teamcode.library.utility;
 
+import com.qualcomm.robotcore.hardware.DcMotor;
+
 /**
  *
  */
@@ -25,6 +27,10 @@ public enum Direction {
      */
     RIGHT;
 
+    /**
+     *
+     * @return
+     */
     public Direction invert () {
 
         switch (this) {
@@ -36,6 +42,23 @@ public enum Direction {
                 return RIGHT;
             case RIGHT:
                 return LEFT;
+        }
+
+        return null;
+    }
+
+    /**
+     *
+     * @param direction
+     * @return
+     */
+    public static DcMotor.Direction invert (DcMotor.Direction direction) {
+        switch (direction) {
+            case FORWARD:
+                return DcMotor.Direction.REVERSE;
+            case REVERSE:
+                return DcMotor.Direction.FORWARD;
+
         }
 
         return null;

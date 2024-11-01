@@ -5,12 +5,20 @@ import com.qualcomm.robotcore.hardware.DcMotorSimple;
 
 import org.firstinspires.ftc.teamcode.library.component.Component;
 import org.firstinspires.ftc.teamcode.library.utility.Control;
+import org.firstinspires.ftc.teamcode.library.utility.Direction;
 
+/**
+ *
+ */
 public class DcMotorComponent extends Component {
 
     /**
      */
     private DcMotor motor;
+
+    /**
+     */
+    private DcMotor sececondaryMotor;
 
     /**
      */
@@ -39,6 +47,9 @@ public class DcMotorComponent extends Component {
         super.init();
 
         this.motor = this.robot.hardwareMap.get(DcMotor.class, this.config.motorName);
+        if (this.isDualMotor()) {
+            this.sececondaryMotor = this.robot.hardwareMap.get(DcMotor.class, this.config.secondaryMotorName);
+        }
         this.setDirection(this.config.initialMotorDirection);
 
         if (this.config.brakeOn) {
@@ -142,6 +153,14 @@ public class DcMotorComponent extends Component {
      *
      * @return
      */
+    public DcMotor.ZeroPowerBehavior getZeroPowerBehavior() {
+        return this.motor.getZeroPowerBehavior();
+    }
+
+    /**
+     *
+     * @return
+     */
     public boolean isBrakeOn () {
         return this.brakeOn;
     }
@@ -152,6 +171,14 @@ public class DcMotorComponent extends Component {
      */
     public boolean isBusy() {
         return this.motor.isBusy();
+    }
+
+    /**
+     *
+     * @return
+     */
+    public boolean isDualMotor() {
+        return this.getConfig().isDualMotor;
     }
 
     /**
@@ -169,6 +196,15 @@ public class DcMotorComponent extends Component {
      */
     public void setDirection (DcMotorSimple.Direction direction) {
         this.motor.setDirection(direction);
+
+        if (this.isDualMotor()) {
+            if (this.getConfig().initialMotorDirection.equals(this.getConfig().secondaryInitialMotorDirection)) {
+                this.sececondaryMotor.setDirection(direction);
+            }
+            else {
+                this.sececondaryMotor.setDirection(Direction.invert(direction));
+            }
+        }
     }
 
     /**
@@ -177,6 +213,9 @@ public class DcMotorComponent extends Component {
      */
     public void setMode (DcMotor.RunMode mode) {
         this.motor.setMode(mode);
+        if (this.isDualMotor()) {
+            this.sececondaryMotor.setMode(mode);
+        }
     }
 
     /**
@@ -185,6 +224,9 @@ public class DcMotorComponent extends Component {
      */
     public void setPower (double power) {
         this.motor.setPower(power);
+        if (this.isDualMotor()) {
+            this.sececondaryMotor.setPower(power);
+        }
     }
 
     /**
@@ -193,14 +235,9 @@ public class DcMotorComponent extends Component {
      */
     public void setTargetPosition (int position) {
         this.motor.setTargetPosition(position);
-    }
-
-    /**
-     *
-     * @return
-     */
-    public DcMotor.ZeroPowerBehavior getZeroPowerBehavior() {
-        return this.motor.getZeroPowerBehavior();
+        if (this.isDualMotor()) {
+            this.sececondaryMotor.setTargetPosition(position);
+        }
     }
 
     /**
@@ -211,10 +248,16 @@ public class DcMotorComponent extends Component {
         if (brakeOn) {
             this.brakeOn = true;
             this.motor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+            if (this.isDualMotor()) {
+                this.sececondaryMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+            }
         }
         else {
             this.brakeOn = false;
             this.motor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
+            if (this.isDualMotor()) {
+                this.sececondaryMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
+            }
         }
     }
 }
