@@ -1,16 +1,16 @@
 package org.firstinspires.ftc.teamcode.metalheads.tests;
 
-import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
 
 import org.firstinspires.ftc.teamcode.library.IsaacBot;
 import org.firstinspires.ftc.teamcode.library.encodedmotor.EncodedMotor;
 import org.firstinspires.ftc.teamcode.library.encodedmotor.EncodedMotorConfig;
 import org.firstinspires.ftc.teamcode.library.utility.Control;
 
-@TeleOp(name="EncodedMotorTest", group="Tests")
+@TeleOp(name="ViperSlidesTest", group="Tests")
 //@Disabled
-public class EncodedMotorTest extends IsaacBot {
+public class ViperSlidesTest extends IsaacBot {
 
     /**
      */
@@ -20,18 +20,19 @@ public class EncodedMotorTest extends IsaacBot {
      */
     private String motorName;
 
-    public EncodedMotorTest() {
+    public ViperSlidesTest() {
         super();
 
         EncodedMotorConfig config = new EncodedMotorConfig(this);
-        config.brakeOn = false;
         config.maxTics = 100000;
         config.minTics = -100000;
-        config.motorName = "rightWorm";
+        config.motorName = "rightSlide";
         config.control = Control.Gp1_LeftStickY;
+        config.brakeOn = false;
 
         config.isDualMotor = true;
-        config.secondaryMotorName = "leftWorm";
+        config.secondaryMotorName = "leftSlide";
+        config.secondaryInitialMotorDirection = DcMotorSimple.Direction.REVERSE;
 
         motor = new EncodedMotor(config);
     }
