@@ -124,13 +124,13 @@ public class EncodedMotor extends DcMotorComponent {
      */
     public void move (double power) {
         if (power == 0) {
-            this.moveToPosition(power, this.getCurrentPosition());
+            this.moveToPosition(1, this.getCurrentPosition());
         }
         else if (power > 0) {
-            this.moveToPosition(power, this.getConfig().maxTics);
+            this.moveToPosition(1, this.getCurrentPosition() + (int)(power * 100));
         }
         else if (power < 0) {
-            this.moveToPosition(power, this.getConfig().minTics);
+            this.moveToPosition(1, this.getCurrentPosition() + (int)(power * 100));
         }
     }
 
@@ -153,23 +153,23 @@ public class EncodedMotor extends DcMotorComponent {
             holding = false;
         }
         else if (power == 0) {
-            targetPosition = this.getCurrentPosition();
+//            targetPosition = this.getCurrentPosition();
 
-            if (isBrakeOn()) {
-                if (!holding) {
-                    holdPosition = targetPosition;
-                }
-                else {
-                    targetPosition = holdPosition;
-                }
+//            if (isBrakeOn()) {
+//                if (!holding) {
+//                    holdPosition = targetPosition;
+//                }
+//                else {
+//                    targetPosition = holdPosition;
+//                }
+//                holding = true;
+//                power = 1;
+//            }
+//            else {
                 holding = true;
                 power = 1;
-            }
-            else {
-                holding = true;
-                this.setPower(0);
-                return;
-            }
+                //return;
+//            }
         }
         else {
             holding = false;

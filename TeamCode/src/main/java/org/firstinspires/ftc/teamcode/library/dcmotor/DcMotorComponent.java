@@ -247,10 +247,10 @@ public class DcMotorComponent extends Component {
     public void setBrake (boolean brakeOn) {
         if (brakeOn) {
             this.brakeOn = true;
-            this.motor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-            if (this.isDualMotor()) {
-                this.sececondaryMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-            }
+//            this.motor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+//            if (this.isDualMotor()) {
+//                this.sececondaryMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+//            }
         }
         else {
             this.brakeOn = false;

@@ -28,7 +28,7 @@ public class ViperSlidesTest extends IsaacBot {
         config.minTics = -100000;
         config.motorName = "rightSlide";
         config.control = Control.Gp1_LeftStickY;
-        config.brakeOn = false;
+        config.brakeOn = true;
 
         config.isDualMotor = true;
         config.secondaryMotorName = "leftSlide";
