@@ -31,131 +31,141 @@ public class Constants {
 
     /**
      */
-    public static final CompBot.PositionConstants SAMPLE_PICK_READY_MIN = new CompBot.PositionConstants(){
+    public static final PositionsStruct SAMPLE_PICK_READY_MIN = new PositionsStruct(){
         @Override
         public void setValues() {
-            hServoPos = new ServoPos(0.5033);
-            vServoPos = new ServoPos(0.5044);
-            vSlideVolts = 0.7;
             mainBoomPos = new MotorPos(-518);
+            vSlideVolts = 0.7;
+            doubleServosPos = new ServoPos(0.5033);
+            middleServoPos = new ServoPos(0.5044);
             clawRotatorPos = new ServoPos(0.0);
+            clawPincherPos = new ServoPos(0.0);
         }
     };
 
     /**
      */
-    public static final CompBot.PositionConstants SAMPLE_PICK_LEFT_READY_MIN = new CompBot.PositionConstants() {
+    public static final PositionsStruct SAMPLE_PICK_LEFT_READY_MIN = new PositionsStruct() {
         @Override
         public void setValues() {
-            mainBoomPos = new MotorPos(-736, 0.5);
-            vSlideVolts = 0.694;
-            hServoPos = new ServoPos(0.8633);
-            vServoPos = new ServoPos(0.4606);
-            intakePincherPos = new ServoPos(INTAKE_PINCHER_OPEN_POS, 1);
+            mainBoomPos = new MotorPos(-518);
+            vSlideVolts = 0.7;
+            doubleServosPos = new ServoPos(0.5033);
+            middleServoPos = new ServoPos(0.5044);
+            clawRotatorPos = new ServoPos(0.0);
+            clawPincherPos = new ServoPos(0.0);
         }
     };
 
     /**
      */
-    public static final CompBot.PositionConstants SAMPLE_PICK_RIGHT_READY_MIN = new CompBot.PositionConstants() {
+    public static final PositionsStruct SAMPLE_PICK_RIGHT_READY_MIN = new PositionsStruct() {
         @Override
         public void setValues() {
-            mainBoomPos = new MotorPos(-697, 0.5);
-            vSlideVolts = 0.698;
-            hServoPos = new ServoPos(0.1917);
-            vServoPos = new ServoPos(0.47);
-            intakePincherPos = new ServoPos(INTAKE_PINCHER_OPEN_POS, 1);
+            mainBoomPos = new MotorPos(-518);
+            vSlideVolts = 0.7;
+            doubleServosPos = new ServoPos(0.5033);
+            middleServoPos = new ServoPos(0.5044);
+            clawRotatorPos = new ServoPos(0.0);
+            clawPincherPos = new ServoPos(0.0);
         }
     };
 
     /**
      */
-    public static final CompBot.PositionConstants SAMPLE_PICK_READY_MAX = new CompBot.PositionConstants() {
+    public static final PositionsStruct SAMPLE_PICK_READY_MAX = new PositionsStruct() {
         @Override
         public void setValues() {
-            mainBoomPos = new MotorPos(-288, 0.5);
-            vSlideVolts = 0.9;
-            hServoPos = new ServoPos(0.4994);
-            vServoPos = new ServoPos(0.4944);
-            intakePincherPos = new ServoPos(INTAKE_PINCHER_OPEN_POS, 1);
+            mainBoomPos = new MotorPos(-518);
+            vSlideVolts = 0.7;
+            doubleServosPos = new ServoPos(0.5033);
+            middleServoPos = new ServoPos(0.5044);
+            clawRotatorPos = new ServoPos(0.0);
+            clawPincherPos = new ServoPos(0.0);
         }
     };
 
     /**
      */
-    public static final CompBot.PositionConstants SAMPLE_PICK_LEFT_READY_MAX = new CompBot.PositionConstants() {
+    public static final PositionsStruct SAMPLE_PICK_LEFT_READY_MAX = new PositionsStruct() {
         @Override
         public void setValues() {
-            mainBoomPos = new MotorPos(-450);
-            //vSlideVolts = 0.959;
-            hServoPos = new ServoPos(0.8422);
-            vServoPos = new ServoPos(0.453);
-            intakePincherPos = new ServoPos(INTAKE_PINCHER_OPEN_POS, 1);
+            mainBoomPos = new MotorPos(-518);
+            vSlideVolts = 0.7;
+            doubleServosPos = new ServoPos(0.5033);
+            middleServoPos = new ServoPos(0.5044);
+            clawRotatorPos = new ServoPos(0.0);
+            clawPincherPos = new ServoPos(0.0);
         }
     };
 
     /**
      */
-    public static final CompBot.PositionConstants SAMPLE_PICK_RIGHT_READY_MAX = new CompBot.PositionConstants() {
+    public static final PositionsStruct SAMPLE_PICK_RIGHT_READY_MAX = new PositionsStruct() {
         @Override
         public void setValues() {
-            mainBoomPos = new MotorPos(-416, 0.5);
-            //vSlideVolts = 0.959;
-            hServoPos = new ServoPos(0.1717);
-            vServoPos = new ServoPos(0.4578);
-            intakePincherPos = new ServoPos(INTAKE_PINCHER_OPEN_POS, 1);
+            mainBoomPos = new MotorPos(-518);
+            vSlideVolts = 0.7;
+            doubleServosPos = new ServoPos(0.5033);
+            middleServoPos = new ServoPos(0.5044);
+            clawRotatorPos = new ServoPos(0.0);
+            clawPincherPos = new ServoPos(0.0);
         }
     };
 
     /**
      */
-    public static final CompBot.PositionConstants SAMPLE_CARRY = new CompBot.PositionConstants() {
+    public static final PositionsStruct SAMPLE_CARRY = new PositionsStruct() {
         @Override
         public void setValues() {
-            mainBoomPos = new MotorPos(0, 0.75);
-            vSlideVolts = 0.586;
-            hServoPos = new ServoPos(0.4856);
-            vServoPos = new ServoPos(0.5367);
-            intakePincherPos = new ServoPos(INTAKE_PINCHER_CLOSE_POS, 1);
+            mainBoomPos = new MotorPos(-518);
+            vSlideVolts = 0.7;
+            doubleServosPos = new ServoPos(0.5033);
+            middleServoPos = new ServoPos(0.5044);
+            clawRotatorPos = new ServoPos(0.0);
+            clawPincherPos = new ServoPos(0.0);
         }
     };
 
     /**
      */
-    public static final CompBot.PositionConstants SAMPLE_EXTEND_READY = new CompBot.PositionConstants() {
+    public static final PositionsStruct SAMPLE_EXTEND_READY = new PositionsStruct() {
         @Override
         public void setValues() {
-            mainBoomPos = new MotorPos(2178, 1);
-            vSlideVolts = 0.587;
-            hServoPos = new ServoPos(0.4856);
-            vServoPos = new ServoPos(0.5367);
-            intakePincherPos = new ServoPos(INTAKE_PINCHER_CLOSE_POS, 1);
+            mainBoomPos = new MotorPos(-518);
+            vSlideVolts = 0.7;
+            doubleServosPos = new ServoPos(0.5033);
+            middleServoPos = new ServoPos(0.5044);
+            clawRotatorPos = new ServoPos(0.0);
+            clawPincherPos = new ServoPos(0.0);
         }
     };
 
     /**
      */
-    public static final CompBot.PositionConstants SAMPLE_PLACE_LOW_READY = new CompBot.PositionConstants() {
+    public static final PositionsStruct SAMPLE_PLACE_LOW_READY = new PositionsStruct() {
         @Override
         public void setValues() {
-            mainBoomPos = new MotorPos(2223, 0.5);
-            vSlideVolts = 0.813;
-            hServoPos = new ServoPos(0.4922);
-            vServoPos = new ServoPos(0.4239);
-            intakePincherPos = new ServoPos(INTAKE_PINCHER_CLOSE_POS, 1);
+            mainBoomPos = new MotorPos(-518);
+            vSlideVolts = 0.7;
+            doubleServosPos = new ServoPos(0.5033);
+            middleServoPos = new ServoPos(0.5044);
+            clawRotatorPos = new ServoPos(0.0);
+            clawPincherPos = new ServoPos(0.0);
         }
     };
 
     /**
      */
-    public static final CompBot.PositionConstants SAMPLE_PLACE_HIGH_READY = new CompBot.PositionConstants() {
+    public static final PositionsStruct SAMPLE_PLACE_HIGH_READY = new PositionsStruct() {
         @Override
         public void setValues() {
-            mainBoomPos = new MotorPos(2783, 0.5);
-            vSlideVolts = VIPER_SLIDE_VOLTS_MAX;
-            hServoPos = new ServoPos(0.5039);
-            vServoPos = new ServoPos(0.51);
-            intakePincherPos = new ServoPos(INTAKE_PINCHER_CLOSE_POS, 1);
+            mainBoomPos = new MotorPos(-518);
+            vSlideVolts = 0.7;
+            doubleServosPos = new ServoPos(0.5033);
+            middleServoPos = new ServoPos(0.5044);
+            clawRotatorPos = new ServoPos(0.0);
+            clawPincherPos = new ServoPos(0.0);
         }
     };
 
@@ -164,73 +174,85 @@ public class Constants {
 
     /**
      */
-    public static final CompBot.PositionConstants SPECIMEN_PICK_READY = new CompBot.PositionConstants() {
+    public static final PositionsStruct SPECIMEN_PICK_READY = new PositionsStruct() {
         @Override
         public void setValues() {
-            mainBoomPos = new MotorPos(-255, 0.5);
-            vSlideVolts = 0.8;
-            hServoPos = new ServoPos(0.375);
-            vServoPos = new ServoPos(0.1528);
-            clawRotatorPos = new ServoPos(0.3117);
-            clawPincherPos = new ServoPos(CLAW_PINCHER_OPEN_POS, 1);
-            intakePincherPos = new ServoPos(INTAKE_PINCHER_CLOSE_POS, 1);
+            mainBoomPos = new MotorPos(-518);
+            vSlideVolts = 0.7;
+            doubleServosPos = new ServoPos(0.5033);
+            middleServoPos = new ServoPos(0.5044);
+            clawRotatorPos = new ServoPos(0.0);
+            clawPincherPos = new ServoPos(0.0);
         }
     };
 
     /**
      */
-    public static final CompBot.PositionConstants SPECIMEN_PICK = new CompBot.PositionConstants() {
+    public static final PositionsStruct SPECIMEN_PICK = new PositionsStruct() {
         @Override
         public void setValues() {
-            mainBoomPos = new MotorPos(-6, 0.75);
+            mainBoomPos = new MotorPos(-518);
+            vSlideVolts = 0.7;
+            doubleServosPos = new ServoPos(0.5033);
+            middleServoPos = new ServoPos(0.5044);
+            clawRotatorPos = new ServoPos(0.0);
+            clawPincherPos = new ServoPos(0.0);
         }
     };
 
     /**
      */
-    public static final CompBot.PositionConstants SPECIMEN_PLACE_HIGH_READY = new CompBot.PositionConstants() {
+    public static final PositionsStruct SPECIMEN_PLACE_HIGH_READY = new PositionsStruct() {
         @Override
         public void setValues() {
-            mainBoomPos = new MotorPos(1724, 0.75);
-            vSlideVolts = 0.76;
-            hServoPos = new ServoPos(0.375);
-            vServoPos = new ServoPos(0.0967);
-            clawRotatorPos = new ServoPos(0.465);
+            mainBoomPos = new MotorPos(-518);
+            vSlideVolts = 0.7;
+            doubleServosPos = new ServoPos(0.5033);
+            middleServoPos = new ServoPos(0.5044);
+            clawRotatorPos = new ServoPos(0.0);
+            clawPincherPos = new ServoPos(0.0);
         }
     };
 
     /**
      */
-    public static final CompBot.PositionConstants SPECIMEN_PLACE_HIGH = new CompBot.PositionConstants() {
+    public static final PositionsStruct SPECIMEN_PLACE_HIGH = new PositionsStruct() {
         @Override
         public void setValues() {
-            mainBoomPos = new MotorPos(985, 1);
-            vSlideVolts = 0.747;
-            hServoPos = new ServoPos(0.425);
-            vServoPos = new ServoPos(0.0967);
-            clawRotatorPos = new ServoPos(0.445);
+            mainBoomPos = new MotorPos(-518);
+            vSlideVolts = 0.7;
+            doubleServosPos = new ServoPos(0.5033);
+            middleServoPos = new ServoPos(0.5044);
+            clawRotatorPos = new ServoPos(0.0);
+            clawPincherPos = new ServoPos(0.0);
         }
     };
 
     /**
      */
-    public static final CompBot.PositionConstants SPECIMEN_PLACE_LOW_READY = new CompBot.PositionConstants() {
+    public static final PositionsStruct SPECIMEN_PLACE_LOW_READY = new PositionsStruct() {
         @Override
         public void setValues() {
-            mainBoomPos = new MotorPos(157, 0.75);
-            vSlideVolts = 0.709;
-            hServoPos = new ServoPos(0.375);
-            vServoPos = new ServoPos(0.1);
-            clawRotatorPos = new ServoPos(0.3733);
+            mainBoomPos = new MotorPos(-518);
+            vSlideVolts = 0.7;
+            doubleServosPos = new ServoPos(0.5033);
+            middleServoPos = new ServoPos(0.5044);
+            clawRotatorPos = new ServoPos(0.0);
+            clawPincherPos = new ServoPos(0.0);
         }
     };
 
     /**
      */
-    public static final CompBot.PositionConstants SPECIMEN_PLACE_LOW = new CompBot.PositionConstants() {
+    public static final PositionsStruct SPECIMEN_PLACE_LOW = new PositionsStruct() {
         @Override
         public void setValues() {
-            mainBoomPos = new MotorPos(-616, 0.75);
+            mainBoomPos = new MotorPos(-518);
+            vSlideVolts = 0.7;
+            doubleServosPos = new ServoPos(0.5033);
+            middleServoPos = new ServoPos(0.5044);
+            clawRotatorPos = new ServoPos(0.0);
+            clawPincherPos = new ServoPos(0.0);
         }
     };
 

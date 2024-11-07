@@ -2,17 +2,16 @@ package org.firstinspires.ftc.teamcode.metalheads.components;
 
 import org.firstinspires.ftc.teamcode.library.component.Component;
 import org.firstinspires.ftc.teamcode.library.encodedmotor.EncodedMotor;
-import org.firstinspires.ftc.teamcode.library.potentiometer.Potentiometer;
 import org.firstinspires.ftc.teamcode.library.potentiometermotor.PotentiometerMotor;
 
 /**
  *
  */
-public class Arm extends Component {
+public class BigArm extends Component {
 
     /**
      */
-    public ArmConfig config;
+    public BigArmConfig config;
 
     /**
      */
@@ -25,12 +24,12 @@ public class Arm extends Component {
     /**
      * Constructor
      *
-     * @param armConfig
+     * @param bigArmConfig
      */
-    public Arm(ArmConfig armConfig) {
-        super(armConfig.robot);
+    public BigArm(BigArmConfig bigArmConfig) {
+        super(bigArmConfig.robot);
 
-        this.config = armConfig;
+        this.config = bigArmConfig;
 
         this.mainBoom = new EncodedMotor(this.config.mainBoomConfig);
         this.viperSlide = new PotentiometerMotor(this.config.viperSlideConfig);

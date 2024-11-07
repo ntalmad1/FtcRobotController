@@ -2,14 +2,12 @@ package org.firstinspires.ftc.teamcode.metalheads.components;
 
 import org.firstinspires.ftc.teamcode.library.IsaacBot;
 import org.firstinspires.ftc.teamcode.library.encodedmotor.EncodedMotorConfig;
-import org.firstinspires.ftc.teamcode.library.potentiometer.PotentiometerConfig;
-import org.firstinspires.ftc.teamcode.library.potentiometermotor.PotentiometerMotor;
 import org.firstinspires.ftc.teamcode.library.potentiometermotor.PotentiometerMotorConfig;
 
 /**
  *
  */
-public class ArmConfig {
+public class BigArmConfig {
     /**
      */
     public IsaacBot robot;
@@ -27,7 +25,7 @@ public class ArmConfig {
      *
      * @param robot
      */
-    public ArmConfig(IsaacBot robot) {
+    public BigArmConfig(IsaacBot robot) {
         this.robot = robot;
 
         this.mainBoomConfig = new EncodedMotorConfig(robot);

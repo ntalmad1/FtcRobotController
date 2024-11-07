@@ -10,7 +10,7 @@ import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
-import org.firstinspires.ftc.teamcode.metalheads.compbot.PositionStruct;
+import org.firstinspires.ftc.teamcode.metalheads.compbot.DriveTrainPositionStruct;
 import org.firstinspires.ftc.teamcode.roadrunner.Drawing;
 import org.firstinspires.ftc.teamcode.roadrunner.MecanumDrive;
 
@@ -40,7 +40,7 @@ public class LocalizationTest extends LinearOpMode {
 
                 drive.updatePoseEstimate();
 
-                PositionStruct.pose = drive.pose;
+                DriveTrainPositionStruct.pose = drive.pose;
 
                 telemetry.addData("x", drive.pose.position.x);
                 telemetry.addData("y", drive.pose.position.y);

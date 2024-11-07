@@ -15,11 +15,7 @@ public class AutoBotConfig extends CompBotConfig {
     public AutoBotConfig(IsaacBot robot) {
         super(robot);
 
-        this.useIntake = true;
-        this.useClaw = true;
-        this.useArm = true;
-        this.useFlapperBars = false;
-        this.useDoubleHooks = false;
-        this.useWinch = false;
+        this.useBigArm = true;
+        this.useLittleArm = true;
     }
 }

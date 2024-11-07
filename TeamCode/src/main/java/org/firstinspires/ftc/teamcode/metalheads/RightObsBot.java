@@ -45,28 +45,28 @@ public class RightObsBot extends AutoBot {
     public void go() {
         super.go();
 
-        Actions.runBlocking(new ParallelAction(
-                this.getActionFactory().moveArmToSpecimenPlaceHighReady(),
-                this.getTrajectoryFactory().splineToChamber(this.driveTrain.getDrive(), initialPose).build()
-        ));
-
-        Actions.runBlocking(new SequentialAction(
-                new WaitAction(1000),
-                this.getTrajectoryFactory().lineToPlaceSpeciman(this.driveTrain.getDrive()).build(),
-                new WaitAction(500),
-                this.arm.mainBoom.gotoPositionAction(new MotorPos(1354, 0.5)),
-                new ParallelAction(
-                    this.getActionFactory().specimenPlaceHigh(),
-                    this.getTrajectoryFactory().lineBackAfterPlaceSpeciman(this.driveTrain.getDrive()).build()),
-                new WaitAction(1000),
-                this.claw.openClawAction(),
-                new WaitAction(1000),
-                new ParallelAction(
-                    this.getActionFactory().moveArmToInitPos(),
-                    new InstantAction(() -> this.claw.pincher.setPosition(Constants.CLAW_PINCHER_CLOSE_POS))),
-                this.arm.viperSlide.gotoVoltageAction(this.getConfig().armConfig.viperSlideConfig.minVolts),
-                this.getTrajectoryFactory().pushSamples(this.driveTrain.getDrive()).build()
-        ));
+//        Actions.runBlocking(new ParallelAction(
+//                this.getActionFactory().moveArmToSpecimenPlaceHighReady(),
+//                this.getTrajectoryFactory().splineToChamber(this.driveTrain.getDrive(), initialPose).build()
+//        ));
+//
+//        Actions.runBlocking(new SequentialAction(
+//                new WaitAction(1000),
+//                this.getTrajectoryFactory().lineToPlaceSpeciman(this.driveTrain.getDrive()).build(),
+//                new WaitAction(500),
+//                this.arm.mainBoom.gotoPositionAction(new MotorPos(1354, 0.5)),
+//                new ParallelAction(
+//                    this.getActionFactory().specimenPlaceHigh(),
+//                    this.getTrajectoryFactory().lineBackAfterPlaceSpeciman(this.driveTrain.getDrive()).build()),
+//                new WaitAction(1000),
+//                this.claw.openClawAction(),
+//                new WaitAction(1000),
+//                new ParallelAction(
+//                    this.getActionFactory().moveArmToInitPos(),
+//                    new InstantAction(() -> this.claw.pincher.setPosition(Constants.CLAW_PINCHER_CLOSE_POS))),
+//                this.arm.viperSlide.gotoVoltageAction(this.getConfig().armConfig.viperSlideConfig.minVolts),
+//                this.getTrajectoryFactory().pushSamples(this.driveTrain.getDrive()).build()
+//        ));
     }
 
 }

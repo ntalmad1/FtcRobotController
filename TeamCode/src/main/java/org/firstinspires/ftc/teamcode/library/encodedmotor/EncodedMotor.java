@@ -124,13 +124,18 @@ public class EncodedMotor extends DcMotorComponent {
      */
     public void move (double power) {
         if (power == 0) {
-            this.moveToPosition(1, this.getCurrentPosition());
+
+            if (this.isBrakeOn()) {
+                power = 1;
+            }
+
+            this.moveToPosition(power, this.getCurrentPosition());
         }
         else if (power > 0) {
-            this.moveToPosition(1, this.getCurrentPosition() + (int)(power * 100));
+            this.moveToPosition(1, this.getCurrentPosition() + (int)(power * this.getConfig().scale));
         }
         else if (power < 0) {
-            this.moveToPosition(1, this.getCurrentPosition() + (int)(power * 100));
+            this.moveToPosition(1, this.getCurrentPosition() + (int)(power * this.getConfig().scale));
         }
     }
 

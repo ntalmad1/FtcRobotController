@@ -4,7 +4,7 @@ import com.acmerobotics.roadrunner.Pose2d;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import org.firstinspires.ftc.teamcode.metalheads.compbot.CompBot;
-import org.firstinspires.ftc.teamcode.metalheads.compbot.PositionStruct;
+import org.firstinspires.ftc.teamcode.metalheads.compbot.DriveTrainPositionStruct;
 
 @TeleOp(name = "TeleBot", group = "Tests")
 public class TeleBot extends CompBot {
@@ -28,6 +28,6 @@ public class TeleBot extends CompBot {
         super.configureBot();
 
         // initialize roadrunner from last op pose
-        this.initialPose = PositionStruct.pose == null ? new Pose2d(0, 0, 0) : PositionStruct.pose;
+        this.initialPose = DriveTrainPositionStruct.pose == null ? new Pose2d(0, 0, 0) : DriveTrainPositionStruct.pose;
     }
 }

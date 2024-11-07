@@ -5,7 +5,7 @@ import com.acmerobotics.roadrunner.Pose2d;
 /**
  *
  */
-public class PositionStruct {
+public class DriveTrainPositionStruct {
 
     /**
      *
@@ -15,6 +15,6 @@ public class PositionStruct {
     /**
      * Hidden constructor to make class static
      */
-    private PositionStruct() {
+    private DriveTrainPositionStruct() {
     }
 }

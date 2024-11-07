@@ -20,6 +20,11 @@ public class EncodedMotorConfig extends DcMotorComponentConfig {
     public int maxTics;
 
     /**
+     * The number of tics ti adjust positon by for each cyle when input is detected from controller
+     */
+    public int scale = 100;
+
+    /**
      *
      * @param robot
      */
