@@ -1,6 +1,5 @@
-package org.firstinspires.ftc.teamcode.metalheads.tests;
+package org.firstinspires.ftc.teamcode.metalheads.calibration;
 
-import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.Servo;
 
@@ -13,9 +12,9 @@ import org.firstinspires.ftc.teamcode.library.event.gp1_dpad_press.gp1_dpad_up_p
 /**
  *
  */
-@TeleOp(name="PincherIntakeServoTest", group="Tests")
-@Disabled
-public class PincherIntakeServoTest extends IsaacBot {
+@TeleOp(name="ClawPincherServoCalibration", group="Calibration")
+//@Disabled
+public class ClawPincherServoCalib extends IsaacBot {
 
     /**
      */
@@ -39,19 +38,14 @@ public class PincherIntakeServoTest extends IsaacBot {
      */
     private Servo servo;
 
-    /**
-     *
-     */
-    private boolean toggleMin = false;
-
     @Override
     public void initBot() {
-        yStickIncrement = 0.0006;
-        gamePadIncrement = 0.002;
-        servoName = "testServo";
-        servoInitPos = 0.5;
-        servoMinPos = 0.373;
-        servoMaxPos = 0.544;
+        yStickIncrement = 0.0012;
+        gamePadIncrement = 0.006;
+        servoName = "claw";
+        servoInitPos = 0.52;
+        servoMinPos = 0.294;
+        servoMaxPos = 0.6;
 
 
         servo = this.hardwareMap.get(Servo.class, servoName);
@@ -80,13 +74,12 @@ public class PincherIntakeServoTest extends IsaacBot {
         });
 
         this.addGp1_A_PressHandler(event -> {
-            if (!toggleMin) {
+
+            if (servo.getPosition() > 0.5) {
                 servo.setPosition(servoMinPos);
-                toggleMin = true;
             }
             else {
                 servo.setPosition(servoMaxPos);
-                toggleMin = false;
             }
 
         });

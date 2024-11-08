@@ -10,21 +10,37 @@ public class Constants {
 
     /**
      */
-    public static final double INTAKE_PINCHER_OPEN_POS = 0.373;
-    public static final double INTAKE_PINCHER_CLOSE_POS = 0.544;
+    public static final int MAIN_BOOM_MIN_TICS = 10000;
+    public static final int MAIN_BOOM_MAX_TICS = 10000;
 
     /**
      */
-    public static final double CLAW_PINCHER_OPEN_POS = 0.65;
-    public static final double CLAW_PINCHER_CLOSE_POS = 0.484;
-
-    /**
-     */
-    public static final double INTAKE_V_SERVO_INIT_POS = 0.364;
-
-    /**
-     */
+    public static final double VIPER_SLIDE_VOLTS_MIN = 0.586;
     public static final double VIPER_SLIDE_VOLTS_MAX = 1.20;
+
+    /**
+     */
+    public static final double DOUBLE_SERVOS_MIN_POS = 0;
+    public static final double DOUBLE_SERVOS_MAX_POS = 1;
+    public static final double DOUBLE_SERVOS_INIT_POS = 0.5;
+
+    /**
+     */
+    public static final double MIDDLE_SERVO_MIN_POS = 0;
+    public static final double MIDDLE_SERVO_MAX_POS = 1;
+    public static final double MIDDLE_SERVO_INIT_POS = 0.5;
+
+    /**
+     */
+    public static final double CLAW_ROTATOR_MIN_POS = 0;
+    public static final double CLAW_ROTATOR_MAX_POS = 1;
+    public static final double CLAW_ROTATOR_INIT_POS = 0.5;
+
+    /**
+     */
+    public static final double CLAW_PINCHER_OPEN_POS = 0.294;
+    public static final double CLAW_PINCHER_CLOSE_POS = 0.6;
+    public static final double CLAW_PINCHER_INIT_POS = 0.52;
 
     //----------------------------------------------------------------------------------------------
     //----------------------------------------------------------------------------------------------

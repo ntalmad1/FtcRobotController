@@ -19,9 +19,9 @@ import org.firstinspires.ftc.teamcode.library.IsaacBot;
  * right max
  *
  */
-@TeleOp(name="DoubleHooksServosCalib", group="Calibration")
+@TeleOp(name="DoubleServosCalib", group="Calibration")
 @Disabled
-public class DoubleHooksServosCalib extends IsaacBot {
+public class DoubleServosCalib extends IsaacBot {
 
     /**
      */
@@ -50,7 +50,7 @@ public class DoubleHooksServosCalib extends IsaacBot {
     /**
      * Constructor
      */
-    public DoubleHooksServosCalib(){
+    public DoubleServosCalib(){
         super();
 
         leftServoName = "leftActuatorArm";
