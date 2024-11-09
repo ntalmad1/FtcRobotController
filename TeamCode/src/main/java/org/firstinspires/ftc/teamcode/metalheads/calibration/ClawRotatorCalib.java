@@ -14,7 +14,7 @@ import org.firstinspires.ftc.teamcode.library.event.gp1_dpad_press.gp1_dpad_up_p
  * Max position 1
  */
 @TeleOp(name="ClawRotatorCalib", group="Calibration")
-@Disabled
+//@Disabled
 public class ClawRotatorCalib extends IsaacBot {
 
     /**
@@ -43,8 +43,8 @@ public class ClawRotatorCalib extends IsaacBot {
     public void initBot() {
         yStickIncrement = 0.0006;
         gamePadIncrement = 0.002;
-        servoName = "clawRotate";
-        servoInitPos = 0.0;
+        servoName = "clawRotator";
+        servoInitPos = 0.5;
         servoMinPos = 0.0;
         servoMaxPos = 1.0;
 

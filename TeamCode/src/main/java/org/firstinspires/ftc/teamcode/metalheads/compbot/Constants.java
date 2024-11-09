@@ -10,13 +10,14 @@ public class Constants {
 
     /**
      */
-    public static final int MAIN_BOOM_MIN_TICS = 10000;
-    public static final int MAIN_BOOM_MAX_TICS = 10000;
+    public static final int MAIN_BOOM_MIN_TICS = 0;
+    public static final int MAIN_BOOM_MAX_TICS = 1155;
+    public static final int MAIN_BOOM_INIT_TICS = 525;
 
     /**
      */
-    public static final double VIPER_SLIDE_VOLTS_MIN = 0.586;
-    public static final double VIPER_SLIDE_VOLTS_MAX = 1.20;
+    public static final double VIPER_SLIDE_VOLTS_MIN = 0.456;
+    public static final double VIPER_SLIDE_VOLTS_MAX = 1.284;
 
     /**
      */

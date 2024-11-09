@@ -5,21 +5,22 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 
 import org.firstinspires.ftc.teamcode.library.IsaacBot;
+import org.firstinspires.ftc.teamcode.library.encodedmotor.EncodedMotor;
+import org.firstinspires.ftc.teamcode.library.encodedmotor.EncodedMotorConfig;
+import org.firstinspires.ftc.teamcode.library.utility.Control;
 
 /**
  *
  */
 @TeleOp(name="MainBoomCalib", group="Calibration")
-@Disabled
+//@Disabled
 public class MainBoomCalib extends IsaacBot {
 
     /**
      */
-    private DcMotor motor;
+    private EncodedMotor motor;
 
-    /**
-     */
-    private String motorName;
+    private EncodedMotorConfig config;
 
     /**
      * Constructor
@@ -28,9 +29,17 @@ public class MainBoomCalib extends IsaacBot {
     public MainBoomCalib() {
         super();
 
-        this.motorName = "arm";
+        config = new EncodedMotorConfig(this);
 
+        config.motorName = "rightWorm";
+        config.brakeOn = false;
+        config.isDualMotor = true;
+        config.minTics = 0;
+        config.maxTics = 1155;
+        config.scale = 200;
+        config.control = Control.Gp1_LeftStickY;
 
+        config.secondaryMotorName = "leftWorm";
     }
 
     /**
@@ -39,18 +48,8 @@ public class MainBoomCalib extends IsaacBot {
     public void initBot() {
         super.initBot();
 
-        this.motor = this.hardwareMap.get(DcMotor.class, motorName);
-
-        this.addGp1_LeftStick_Y_Handler(event -> {
-
-            double power = event.getPosition() * -1;
-
-            this.motor.setPower(power);
-        });
-
-        //this.motor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        //this.motor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-
+        this.motor = new EncodedMotor(config);
+        this.motor.init();
     }
 
     /**
@@ -59,10 +58,10 @@ public class MainBoomCalib extends IsaacBot {
     public void run() {
         super.run();
 
+        this.motor.run();
+
         this.telemetry.addData("Direction:", this.motor.getDirection());
         this.telemetry.addData("Position:", this.motor.getCurrentPosition());
-        this.telemetry.addData("TargetPosition:", this.motor.getTargetPosition());
-        this.telemetry.addData("Power:", this.motor.getPower());
         this.telemetry.update();
     }
 

@@ -43,7 +43,7 @@ public class ServoTest extends IsaacBot {
     public void initBot() {
         yStickIncrement = 0.0006;
         gamePadIncrement = 0.002;
-        servoName = "test";
+        servoName = "leftBoom";
         servoInitPos = 0.5;
         servoMinPos = 0.0;
         servoMaxPos = 1.0;
@@ -51,6 +51,10 @@ public class ServoTest extends IsaacBot {
 
         servo = this.hardwareMap.get(Servo.class, servoName);
         servo.resetDeviceConfigurationForOpMode();
+
+        //temporary
+        Servo servo2 = this.hardwareMap.get(Servo.class, "rightBoom");
+        servo2.setPosition(0.5);
 
         this.addGp1_Dpad_Down_PressHandler(new Gp1_Dpad_Down_PressHandler() {
             public void onGp1_Dpad_Down_Press(Gp1_Dpad_Down_PressEvent event) {

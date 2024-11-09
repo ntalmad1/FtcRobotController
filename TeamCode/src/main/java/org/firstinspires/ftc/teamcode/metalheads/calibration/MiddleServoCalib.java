@@ -11,14 +11,10 @@ import org.firstinspires.ftc.teamcode.library.event.gp1_dpad_press.gp1_dpad_up_p
 import org.firstinspires.ftc.teamcode.library.event.gp1_dpad_press.gp1_dpad_up_press.Gp1_Dpad_Up_PressHandler;
 
 /**
- * Max position 0.674
- * Min pos 0.233
- *
- * init pos 0.247
  */
-@TeleOp(name="IntakeVServoCalib", group="Calibration")
-@Disabled
-public class IntakeVServoCalib extends IsaacBot {
+@TeleOp(name="MiddleServoCalib", group="Calibration")
+//@Disabled
+public class MiddleServoCalib extends IsaacBot {
 
     /**
      */
@@ -46,10 +42,10 @@ public class IntakeVServoCalib extends IsaacBot {
     public void initBot() {
         yStickIncrement = 0.0006;
         gamePadIncrement = 0.002;
-        servoName = "intakeVertical";
+        servoName = "middle";
         servoInitPos = 0.5;
         servoMinPos = 0.0;
-        servoMaxPos = 1.0;
+        servoMaxPos = 0.783;
 
         servo = this.hardwareMap.get(Servo.class, servoName);
         servo.resetDeviceConfigurationForOpMode();
@@ -115,7 +111,7 @@ public class IntakeVServoCalib extends IsaacBot {
             servo.setPosition(newPos);
         }
 
-        telemetry.addData("Servo position: ", "%.3f", servo.getPosition());
+        telemetry.addData("Middle Pos: ", "%.3f", servo.getPosition());
         telemetry.update();
     }
 }

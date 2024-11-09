@@ -5,6 +5,13 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.Servo;
 
 import org.firstinspires.ftc.teamcode.library.IsaacBot;
+import org.firstinspires.ftc.teamcode.library.event.gp1_dpad_press.gp1_dpad_down_press.Gp1_Dpad_Down_PressEvent;
+import org.firstinspires.ftc.teamcode.library.event.gp1_dpad_press.gp1_dpad_down_press.Gp1_Dpad_Down_PressHandler;
+import org.firstinspires.ftc.teamcode.library.event.gp1_dpad_press.gp1_dpad_up_press.Gp1_Dpad_Up_PressEvent;
+import org.firstinspires.ftc.teamcode.library.event.gp1_dpad_press.gp1_dpad_up_press.Gp1_Dpad_Up_PressHandler;
+import org.firstinspires.ftc.teamcode.library.rotator.Rotator;
+import org.firstinspires.ftc.teamcode.library.rotator.RotatorConfig;
+import org.firstinspires.ftc.teamcode.library.utility.Control;
 
 /**
  * Tool to 'zero' the servos for the linear actuator arms. Also to
@@ -20,32 +27,15 @@ import org.firstinspires.ftc.teamcode.library.IsaacBot;
  *
  */
 @TeleOp(name="DoubleServosCalib", group="Calibration")
-@Disabled
+//@Disabled
 public class DoubleServosCalib extends IsaacBot {
 
-    /**
-     */
-    private Servo leftActuatorServo;
+    private Rotator doubleServos;
 
-    /**
-     */
-    private String leftServoName;
+    private RotatorConfig config;
 
-    /**
-     */
-    private Servo rightActuatorServo;
+    private double gamePadIncrement = 0.006;
 
-    /**
-     */
-    private String rightServoName;
-
-    /**
-     */
-    private double stickIncrement;
-
-    /**
-     */
-    private double dpadIncrement;
 
     /**
      * Constructor
@@ -53,10 +43,23 @@ public class DoubleServosCalib extends IsaacBot {
     public DoubleServosCalib(){
         super();
 
-        leftServoName = "leftActuatorArm";
-        rightServoName = "rightActuatorArm";
-        stickIncrement = 0.0002;
-        dpadIncrement = 0.002;
+        config = new RotatorConfig(this);
+
+        config.servoName = "leftBoom";
+
+        config.maxIncrement = 0.006;
+
+        config.minPosition = 0;
+        config.maxPosition = 0.9;
+
+        config.homePosition = 0.5;
+        config.zeroDegreePosition = 0.5;
+
+        config.controllerInputMethod = Control.Gp1_LeftStickX;
+
+        config.isDualServo = true;
+
+        config.secondaryServoName = "rightBoom";
     }
 
     /**
@@ -66,39 +69,41 @@ public class DoubleServosCalib extends IsaacBot {
     public void initBot() {
         super.initBot();
 
-        leftActuatorServo = this.hardwareMap.get(Servo.class, leftServoName);
-        leftActuatorServo.resetDeviceConfigurationForOpMode();
+        this.doubleServos = new Rotator(config);
+        this.doubleServos.init();
 
-        rightActuatorServo = this.hardwareMap.get(Servo.class, rightServoName);
-        rightActuatorServo.resetDeviceConfigurationForOpMode();
+        this.addGp1_Dpad_Down_PressHandler(new Gp1_Dpad_Down_PressHandler() {
+            public void onGp1_Dpad_Down_Press(Gp1_Dpad_Down_PressEvent event) {
+                double newPos = doubleServos.getPosition() - gamePadIncrement;
 
-        this.addGp1_LeftStick_Y_Handler(event -> {
-            moveServoByStick(leftActuatorServo, event.getPosition());
+                if (newPos < config.minPosition) newPos = config.minPosition;
+                if (newPos > config.maxPosition) newPos = config.maxPosition;
+
+                doubleServos.setServoPosition(newPos);
+            }
         });
 
-        this.addGp1_RightStick_X_Handler(event -> {
-            moveServoByStick(rightActuatorServo, event.getPosition());
+        this.addGp1_Dpad_Up_PressHandler(new Gp1_Dpad_Up_PressHandler() {
+            public void onGp1_Dpad_Up_Press(Gp1_Dpad_Up_PressEvent event) {
+                double newPos = doubleServos.getPosition() + gamePadIncrement;
+
+                if (newPos < config.minPosition) newPos = config.minPosition;
+                if (newPos > config.maxPosition) newPos = config.maxPosition;
+
+                doubleServos.setServoPosition(newPos);
+            }
         });
 
-        this.addGp1_Dpad_Down_PressHandler(event -> {
-            decrementServo(leftActuatorServo);
+        this.addGp1_A_PressHandler(event -> {
+
+            if (doubleServos.getPosition() >= 0.5) {
+                doubleServos.setServoPosition(config.minPosition);
+            }
+            else {
+                doubleServos.setServoPosition(config.maxPosition);
+            }
+
         });
-
-        this.addGp1_Dpad_Up_PressHandler(event -> {
-            incrementServo(leftActuatorServo);
-        });
-
-        this.addGp1_Dpad_Left_PressHandler(event -> {
-            incrementServo(rightActuatorServo);
-        });
-
-        this.addGp1_Dpad_Right_PressHandler(event -> {
-            decrementServo(rightActuatorServo);
-        });
-
-        this.leftActuatorServo.setPosition(0);
-        this.rightActuatorServo.setPosition(1);
-
     }
 
     /**
@@ -108,53 +113,9 @@ public class DoubleServosCalib extends IsaacBot {
     public void run() {
         super.run();
 
-        telemetry.addData("Left servo pos:", "%.3f", leftActuatorServo.getPosition());
-        telemetry.addData("Right servo pos:", "%.3f", rightActuatorServo.getPosition());
+        doubleServos.run();
+
+        telemetry.addData("Double Servos Pos:", "%.3f", doubleServos.getPosition());
         telemetry.update();
-    }
-
-    /**
-     *
-     * @param stickPosition
-     */
-    private void moveServoByStick(Servo servo, double stickPosition) {
-        double newPos = servo.getPosition() + (stickPosition > 0 ? -stickIncrement : stickIncrement);
-
-        if (newPos < 0) {
-            newPos = 0;
-        }
-        else if (newPos > 1) {
-            newPos = 1;
-        }
-
-        servo.setPosition(newPos);
-    }
-
-    /**
-     *
-     * @param servo
-     */
-    private void incrementServo(Servo servo) {
-        double newPosition = servo.getPosition() + this.dpadIncrement;
-
-        if (newPosition > 1) {
-            newPosition = 1;
-        }
-
-        servo.setPosition(newPosition);
-    }
-
-    /**
-     *
-     * @param servo
-     */
-    private void decrementServo(Servo servo) {
-        double newPosition = servo.getPosition() - this.dpadIncrement;
-
-        if (newPosition < 0) {
-            newPosition = 0;
-        }
-
-        servo.setPosition(newPosition);
     }
 }
