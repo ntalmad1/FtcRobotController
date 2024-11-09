@@ -64,6 +64,10 @@ public class ServoComponentConfig {
 
     /**
      */
+    public boolean lazyInit = true;
+
+    /**
+     */
     public double maxIncrement = 0.001;
 
     /**

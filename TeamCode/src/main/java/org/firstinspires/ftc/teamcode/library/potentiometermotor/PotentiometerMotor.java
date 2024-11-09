@@ -154,10 +154,9 @@ public class PotentiometerMotor extends EncodedMotor {
         if ((currentPosTicsByVolts + numTics) > maxTicsByVolts) {
             targetPosition = this.getCurrentPosition() + (maxTicsByVolts - currentPosTicsByVolts);
         }
-
-        else if (currentPosTicsByVolts + numTics < 0) {
-            targetPosition = this.getCurrentPosition() + (numTics - currentPosTicsByVolts);
-        }
+//        else if (currentPosTicsByVolts + numTics < 0) {
+//            targetPosition = this.getCurrentPosition() + (numTics - currentPosTicsByVolts);
+//        }
 
 
         super.moveToPosition(power, targetPosition);

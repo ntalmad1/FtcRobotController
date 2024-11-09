@@ -276,7 +276,9 @@ public class ServoComponent extends Component {
             });
         }
 
-        // this.setServoPosition(this.config.homePosition);
+        if (!config.lazyInit) {
+            this.setServoPosition(this.config.homePosition);
+        }
     }
 
     /**

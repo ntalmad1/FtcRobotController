@@ -149,7 +149,6 @@ public abstract class CompBot extends IsaacBot {
 
         if (this.config.useLittleArm) {
             this.littleArm.init();
-            //this.claw.pincher.setPosition(config.clawConfig.pincherConfig.homePosition);
         }
 
         ControlsConfigurator controlsConfigurator = new ControlsConfigurator(this);

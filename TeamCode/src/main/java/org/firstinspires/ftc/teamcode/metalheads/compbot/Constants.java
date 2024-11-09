@@ -13,29 +13,36 @@ public class Constants {
     public static final int MAIN_BOOM_MIN_TICS = 0;
     public static final int MAIN_BOOM_MAX_TICS = 1155;
     public static final int MAIN_BOOM_INIT_TICS = 525;
+    public static final int MAIN_BOOM_SCALE = 200;
 
     /**
      */
-    public static final double VIPER_SLIDE_VOLTS_MIN = 0.456;
-    public static final double VIPER_SLIDE_VOLTS_MAX = 1.284;
-
+    public static final double VIPER_SLIDES_VOLTS_MIN = 0.456;
+    public static final double VIPER_SLIDES_VOLTS_MAX = 1.284;
+    public static final int VIPER_SLIDES_SCALE = 200;
     /**
      */
     public static final double DOUBLE_SERVOS_MIN_POS = 0;
-    public static final double DOUBLE_SERVOS_MAX_POS = 1;
-    public static final double DOUBLE_SERVOS_INIT_POS = 0.5;
+    public static final double DOUBLE_SERVOS_MAX_POS = 0.9;
+    public static final double DOUBLE_SERVOS_INIT_POS = 0.9;
+    public static final double DOUBLE_SERVOS_INCREMENT = 0.006;
 
     /**
      */
     public static final double MIDDLE_SERVO_MIN_POS = 0;
-    public static final double MIDDLE_SERVO_MAX_POS = 1;
-    public static final double MIDDLE_SERVO_INIT_POS = 0.5;
+    public static final double MIDDLE_SERVO_MAX_POS = 0.783;
+    public static final double MIDDLE_SERVO_INIT_POS = 0.783;
+    public static final double MIDDLE_SERVO_INCREMENT = 0.006;
 
     /**
      */
     public static final double CLAW_ROTATOR_MIN_POS = 0;
+    public static final double CLAW_ROTATOR_0_DEG = 0.016;
+    public static final double CLAW_ROTATOR_90_DEG = 0.016;
+    public static final double CLAW_ROTATOR_180_DEG = 0.688;
     public static final double CLAW_ROTATOR_MAX_POS = 1;
-    public static final double CLAW_ROTATOR_INIT_POS = 0.5;
+    public static final double CLAW_ROTATOR_INIT_POS = 0.016;
+    public static final double CLAW_ROTATOR_INCREMENT = 0.006;
 
     /**
      */

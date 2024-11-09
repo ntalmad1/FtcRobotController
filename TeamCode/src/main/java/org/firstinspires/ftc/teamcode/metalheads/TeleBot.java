@@ -6,7 +6,7 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import org.firstinspires.ftc.teamcode.metalheads.compbot.CompBot;
 import org.firstinspires.ftc.teamcode.metalheads.compbot.DriveTrainPositionStruct;
 
-@TeleOp(name = "TeleBot", group = "Tests")
+@TeleOp(name = "TeleBot", group = "Comp")
 public class TeleBot extends CompBot {
 
     /**
@@ -18,6 +18,13 @@ public class TeleBot extends CompBot {
 
         this.setConfig(new TeleBotConfig(this));
         this.configureBot();
+    }
+
+    @Override
+    public void initBot() {
+        super.initBot();
+
+        this.bigArm.mainBoom.moveToPosition(1, 525);
     }
 
     /**

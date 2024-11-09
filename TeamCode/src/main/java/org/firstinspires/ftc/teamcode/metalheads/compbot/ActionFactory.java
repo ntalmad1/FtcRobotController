@@ -68,21 +68,21 @@ public class ActionFactory {
      */
     public Action moveArmToInitPos() {
         return new SequentialAction(
-//                ActionFactory.this.compBot.arm.viperSlide.gotoVoltageAction(Constants.SAMPLE_PICK_READY_MIN.vSlideVolts),
-//                ActionFactory.this.compBot.arm.mainBoom.gotoPositionAction(0, 1),
-//                new ParallelAction(
-//                        ActionFactory.this.compBot.intake.hServo.gotoPositionAction(getConfig().intakeConfig.hServoConfig.homePosition, 1),
-//                        ActionFactory.this.compBot.intake.vServo.gotoPositionAction(getConfig().intakeConfig.vServoConfig.homePosition, 1),
-//                        ActionFactory.this.compBot.intake.closePincherAction(),
-//                        ActionFactory.this.compBot.claw.closeClawAction(),
-//                        ActionFactory.this.compBot.claw.clawRotator.gotoPositionAction(0, 1)
-//                ),
-//                new WaitAction(1000),
-//                ActionFactory.this.compBot.arm.viperSlide.gotoVoltageAction(0.586)
+            ActionFactory.this.compBot.bigArm.viperSlide.gotoVoltageAction(Constants.VIPER_SLIDES_VOLTS_MIN),
+            new ParallelAction(
+                ActionFactory.this.compBot.littleArm.doubleServos.gotoPositionAction(
+                        ActionFactory.this.compBot.getConfig().littleArmConfig.doubleServosConfig.homePosition, 1),
+                ActionFactory.this.compBot.littleArm.middleServo.gotoPositionAction(
+                        ActionFactory.this.compBot.getConfig().littleArmConfig.middleServoConfig.homePosition, 1),
+                ActionFactory.this.compBot.littleArm.clawRotator.gotoPositionAction(
+                        ActionFactory.this.compBot.getConfig().littleArmConfig.clawRotatorConfig.homePosition, 1),
+                ActionFactory.this.compBot.littleArm.clawPincher.gotoPositionAction(
+                        ActionFactory.this.compBot.getConfig().littleArmConfig.clawPincherConfig.homePosition, 1)
+            ),
+            new WaitAction(1000),
+            ActionFactory.this.compBot.bigArm.mainBoom.gotoPositionAction(0, 1)
         );
     }
-
-
 
     /**
      *
