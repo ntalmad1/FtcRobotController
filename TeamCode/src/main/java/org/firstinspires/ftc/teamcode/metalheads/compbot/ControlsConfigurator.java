@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode.metalheads.compbot;
 import com.acmerobotics.roadrunner.SequentialAction;
 
 import org.firstinspires.ftc.teamcode.library.utility.Control;
+import org.opencv.core.Mat;
 
 /**
  *
@@ -64,9 +65,17 @@ public class ControlsConfigurator {
         this.gp2_Dpad();
 
         // claw rotator
-        this.compBot.littleArm.clawRotator.addControl(Control.Gp2_LeftStickX);
-        this.gp2_Left_Bumper();
-        this.gp2_Right_Bumper();
+        //this.compBot.littleArm.clawRotator.addControl(Control.Gp2_LeftStickX);
+        //this.gp2_Left_Bumper();
+        //this.gp2_Right_Bumper();
+        this.compBot.littleArm.clawRotator.addGp2_LeftStick_X_Handler(event -> {
+
+            double x = event.getPosition() * -1;
+
+            double servoPos = -0.188 * Math.pow(x, 2) + 0.5 * x + 0.688;
+
+            this.compBot.littleArm.clawRotator.setServoPosition(servoPos);
+        });
 
         // claw pincher
         this.gp2_Triggers();
