@@ -4,6 +4,7 @@ import com.acmerobotics.roadrunner.Action;
 import com.qualcomm.robotcore.hardware.Servo;
 
 import org.firstinspires.ftc.teamcode.library.component.Component;
+import org.firstinspires.ftc.teamcode.library.servo.ServoComponent;
 import org.firstinspires.ftc.teamcode.library.servo.ServoPos;
 import org.firstinspires.ftc.teamcode.library.utility.Control;
 
@@ -49,6 +50,22 @@ public class Rotator extends Component {
         this.config = config;
 
         this.maxIncrement = config.maxIncrement;
+    }
+
+    /**
+     *
+     * @param control
+     */
+    public void addControl(Control control) {
+        if (control.equals(Control.Gp2_LeftStickX)) {
+            this.addGp2_LeftStick_X_Handler(event -> {
+                double position = event.getPosition();
+                if (Rotator.this.config.invertInput) {
+                    position = -position;
+                }
+                Rotator.this.move(position, Rotator.this.maxIncrement, Rotator.this.config.minPosition, Rotator.this.config.maxPosition);
+            });
+        }
     }
 
     /**
@@ -234,9 +251,7 @@ public class Rotator extends Component {
                 }
                 Rotator.this.move(position, Rotator.this.maxIncrement, Rotator.this.config.minPosition, Rotator.this.config.maxPosition);
             });
-        }
-
-        if (config.controllerInputMethod.equals(Control.Gp2_LeftStickX)) {
+        } else if (config.controllerInputMethod.equals(Control.Gp2_LeftStickX)) {
             this.addGp2_LeftStick_X_Handler(event -> {
                 double position = event.getPosition();
                 if (Rotator.this.config.invertInput) {

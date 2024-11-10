@@ -1,6 +1,5 @@
 package org.firstinspires.ftc.teamcode.metalheads.calibration;
 
-import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.Servo;
 
@@ -9,80 +8,48 @@ import org.firstinspires.ftc.teamcode.library.event.gp1_dpad_press.gp1_dpad_down
 import org.firstinspires.ftc.teamcode.library.event.gp1_dpad_press.gp1_dpad_down_press.Gp1_Dpad_Down_PressHandler;
 import org.firstinspires.ftc.teamcode.library.event.gp1_dpad_press.gp1_dpad_up_press.Gp1_Dpad_Up_PressEvent;
 import org.firstinspires.ftc.teamcode.library.event.gp1_dpad_press.gp1_dpad_up_press.Gp1_Dpad_Up_PressHandler;
+import org.firstinspires.ftc.teamcode.library.rotator.Rotator;
+import org.firstinspires.ftc.teamcode.library.rotator.RotatorConfig;
+import org.firstinspires.ftc.teamcode.library.utility.Control;
 
 /**
- * Max position 1
  */
 @TeleOp(name="ClawRotatorCalib", group="Calibration")
 //@Disabled
 public class ClawRotatorCalib extends IsaacBot {
 
-    /**
-     */
-    private double yStickIncrement;
+    private Rotator servo;
 
-    /**
-     */
-    private double gamePadIncrement;
+    private RotatorConfig config;
 
-    /**
-     */
-    private String servoName;
+    private double gamePadIncrement = 0.006;
 
-    private double servoInitPos;
 
-    private double servoMinPos;
+    public ClawRotatorCalib() {
+        super();
 
-    private double servoMaxPos;
+        config = new RotatorConfig(this);
 
-    /**
-     */
-    private Servo servo;
+        config.servoName = "clawRotator";
+
+        config.maxIncrement = 0.006;
+
+        config.minPosition = 0;
+        config.maxPosition = 1;
+
+        config.homePosition = 0.016;
+        config.zeroDegreePosition = 0.5;
+
+        config.controllerInputMethod = Control.Gp2_LeftStickX;
+
+    }
 
     @Override
     public void initBot() {
-        yStickIncrement = 0.0006;
-        gamePadIncrement = 0.002;
-        servoName = "clawRotator";
-        servoInitPos = 0.5;
-        servoMinPos = 0.0;
-        servoMaxPos = 1.0;
+        super.initBot();
 
-        servo = this.hardwareMap.get(Servo.class, servoName);
-        servo.resetDeviceConfigurationForOpMode();
-
-        this.addGp1_Dpad_Down_PressHandler(new Gp1_Dpad_Down_PressHandler() {
-            public void onGp1_Dpad_Down_Press(Gp1_Dpad_Down_PressEvent event) {
-                double newPos = servo.getPosition() - gamePadIncrement;
-
-                if (newPos < servoMinPos) newPos = servoMinPos;
-                if (newPos > servoMaxPos) newPos = servoMaxPos;
-
-                servo.setPosition(newPos);
-            }
-        });
-
-        this.addGp1_Dpad_Up_PressHandler(new Gp1_Dpad_Up_PressHandler() {
-            public void onGp1_Dpad_Up_Press(Gp1_Dpad_Up_PressEvent event) {
-                double newPos = servo.getPosition() + gamePadIncrement;
-
-                if (newPos < servoMinPos) newPos = servoMinPos;
-                if (newPos > servoMaxPos) newPos = servoMaxPos;
-
-                servo.setPosition(newPos);
-            }
-        });
-
-        this.addGp1_A_PressHandler(event -> {
-
-            if (servo.getPosition() > 0.5) {
-                servo.setPosition(servoMinPos);
-            }
-            else {
-                servo.setPosition(servoMaxPos);
-            }
-
-        });
+        this.servo = new Rotator(config);
+        this.servo.init();
     }
 
     /**
@@ -90,7 +57,8 @@ public class ClawRotatorCalib extends IsaacBot {
      */
     @Override
     public void go() {
-        servo.setPosition(this.servoInitPos);
+
+
     }
 
     /**
@@ -100,19 +68,7 @@ public class ClawRotatorCalib extends IsaacBot {
     public void run() {
         super.run();
 
-        if (this.gamepad1.left_stick_y != 0) {
-
-            double ly = this.gamepad1.left_stick_y;
-
-            double newPos = servo.getPosition() + (ly > 0 ? -yStickIncrement : yStickIncrement);
-
-            if (newPos < servoMinPos) newPos = servoMinPos;
-            if (newPos > servoMaxPos) newPos = servoMaxPos;
-
-            servo.setPosition(newPos);
-        }
-
-        telemetry.addData("Servo position: ", "%.3f", servo.getPosition());
+        telemetry.addData("Claw Rotator Pos: ", "%.3f", servo.getPosition());
         telemetry.update();
     }
 }

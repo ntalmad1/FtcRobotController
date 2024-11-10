@@ -192,4 +192,17 @@ public class EncodedMotor extends DcMotorComponent {
         this.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         this.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
     }
+
+    /**
+     */
+    public void run () {
+        super.run();
+
+        if (!this.isBrakeOn() && this.isDualMotor()) {
+
+            if (!this.getMotor().isBusy() || !this.getSecondaryMotor().isBusy()) {
+                this.setPower(0);
+            }
+        }
+    }
 }

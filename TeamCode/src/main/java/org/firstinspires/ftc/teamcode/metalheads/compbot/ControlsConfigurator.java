@@ -55,7 +55,7 @@ public class ControlsConfigurator {
         });
 
         // main boom
-        //this.compBot.bigArm.mainBoom.addControl(Control.Gp2_RightStickY);
+        this.compBot.bigArm.mainBoom.addControl(Control.Gp2_RightStickY);
 
         // viper slides
         this.compBot.bigArm.viperSlide.addControl(Control.Gp2_RightStickX);
@@ -64,7 +64,7 @@ public class ControlsConfigurator {
         this.gp2_Dpad();
 
         // claw rotator
-        this.compBot.littleArm.clawPincher.addControl(Control.Gp2_LeftStickX);
+        this.compBot.littleArm.clawRotator.addControl(Control.Gp2_LeftStickX);
         this.gp2_Left_Bumper();
         this.gp2_Right_Bumper();
 

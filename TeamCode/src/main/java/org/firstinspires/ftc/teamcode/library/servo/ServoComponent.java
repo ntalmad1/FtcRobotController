@@ -329,6 +329,16 @@ public class ServoComponent extends Component {
                 ServoComponent.this.move(position, ServoComponent.this.maxIncrement, ServoComponent.this.config.minPosition, ServoComponent.this.config.maxPosition);
             });
         }
+
+        if (Control.Gp2_LeftStickX.equals(config.controllerInputMethod)) {
+            this.addGp2_LeftStick_X_Handler(event -> {
+                double position = event.getPosition();
+                if (ServoComponent.this.config.invertInput) {
+                    position = -position;
+                }
+                ServoComponent.this.move(position, ServoComponent.this.maxIncrement, ServoComponent.this.config.minPosition, ServoComponent.this.config.maxPosition);
+            });
+        }
     }
 
     /**

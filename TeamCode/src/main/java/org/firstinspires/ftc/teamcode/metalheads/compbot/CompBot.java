@@ -1,16 +1,10 @@
 package org.firstinspires.ftc.teamcode.metalheads.compbot;
 
-import com.acmerobotics.roadrunner.Action;
-import com.acmerobotics.roadrunner.InstantAction;
 import com.acmerobotics.roadrunner.ParallelAction;
 import com.acmerobotics.roadrunner.Pose2d;
-import com.acmerobotics.roadrunner.SequentialAction;
 
 import org.firstinspires.ftc.teamcode.library.IsaacBot;
-import org.firstinspires.ftc.teamcode.library.action.WaitAction;
-import org.firstinspires.ftc.teamcode.library.dcmotor.MotorPos;
 import org.firstinspires.ftc.teamcode.library.drivetrain.RoadrunnerDriveTrain;
-import org.firstinspires.ftc.teamcode.library.servo.ServoPos;
 import org.firstinspires.ftc.teamcode.metalheads.components.BigArm;
 import org.firstinspires.ftc.teamcode.metalheads.components.LittleArm;
 

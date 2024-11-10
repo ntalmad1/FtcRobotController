@@ -153,6 +153,14 @@ public class DcMotorComponent extends Component {
      *
      * @return
      */
+    public DcMotor getSecondaryMotor() {
+        return this.sececondaryMotor;
+    }
+
+    /**
+     *
+     * @return
+     */
     public DcMotor.ZeroPowerBehavior getZeroPowerBehavior() {
         return this.motor.getZeroPowerBehavior();
     }

@@ -95,7 +95,6 @@ public class CompBotConfig {
         this.bigArmConfig.mainBoomConfig.minTics = Constants.MAIN_BOOM_MIN_TICS;
         this.bigArmConfig.mainBoomConfig.maxTics = Constants.MAIN_BOOM_MAX_TICS;
         this.bigArmConfig.mainBoomConfig.scale = Constants.MAIN_BOOM_SCALE;
-        this.bigArmConfig.mainBoomConfig.control = Control.Gp1_LeftStickY;
         this.bigArmConfig.mainBoomConfig.secondaryMotorName = "leftWorm";
 
         // viper slides
@@ -105,7 +104,6 @@ public class CompBotConfig {
         this.bigArmConfig.viperSlideConfig.minVolts = Constants.VIPER_SLIDES_VOLTS_MIN;
         this.bigArmConfig.viperSlideConfig.maxVolts = Constants.VIPER_SLIDES_VOLTS_MAX;
         this.bigArmConfig.viperSlideConfig.motorName = "rightSlide";
-        this.bigArmConfig.viperSlideConfig.control = Control.Gp1_LeftStickY;
         this.bigArmConfig.viperSlideConfig.brakeOn = true;
         this.bigArmConfig.viperSlideConfig.initialMotorDirection = DcMotorSimple.Direction.REVERSE;
         this.bigArmConfig.viperSlideConfig.scale = Constants.VIPER_SLIDES_SCALE;
