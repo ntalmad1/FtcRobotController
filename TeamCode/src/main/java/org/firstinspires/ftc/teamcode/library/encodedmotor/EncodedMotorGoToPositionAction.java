@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode.library.encodedmotor;
 
 import com.acmerobotics.dashboard.telemetry.TelemetryPacket;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.teamcode.library.action.AbstractAction;
@@ -24,6 +25,14 @@ public class EncodedMotorGoToPositionAction extends AbstractAction {
      */
     private EncodedMotor motor;
 
+    /**
+     */
+    Integer timeout = 250;
+
+    /**
+     */
+    ElapsedTime timer;
+
 
     /**
      *
@@ -35,6 +44,8 @@ public class EncodedMotorGoToPositionAction extends AbstractAction {
         this.motor = motor;
         this.position = position;
         this.power = power;
+
+
     }
 
     /**
@@ -50,7 +61,14 @@ public class EncodedMotorGoToPositionAction extends AbstractAction {
      */
     @Override
     public boolean run() {
-        if (this.motor.isBusy() && !this.motor.isHolding())
+        if (this.withinTolerance()) {
+            if (this.timer == null) {
+                this.timer = new ElapsedTime();
+                this.timer.reset();
+            }
+        }
+
+        if (!this.isTimedOut() && this.motor.isBusy() && !this.motor.isHolding())
         {
             if (this.motor.getConfig().debug) {
                 this.motor.getRobot().telemetry.addData("Running to: ",  " %7d", position);
@@ -65,5 +83,25 @@ public class EncodedMotorGoToPositionAction extends AbstractAction {
             return STOP;
         }
 
+    }
+
+    /**
+     *
+     * @return
+     */
+    private boolean isTimedOut() {
+        if (this.timer == null) {
+            return false;
+        }
+
+        return this.timer.milliseconds() > this.timeout;
+    }
+
+    /**
+     *
+     * @return
+     */
+    private boolean withinTolerance() {
+        return position - 25 > this.motor.getCurrentPosition() || position + 25 < this.motor.getCurrentPosition();
     }
 }

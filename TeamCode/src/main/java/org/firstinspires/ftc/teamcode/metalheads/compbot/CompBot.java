@@ -16,31 +16,17 @@ public abstract class CompBot extends IsaacBot {
     /**
      *
      */
-    public enum Mode {
-        NONE,
-        SAMPLE_MODE,
-        SPECIMEN_MODE,
-        HANG_READY,
-        ASCENDING
-    }
-
-    /**
-     *
-     */
     public enum ArmPos {
+        INIT_READY,
         INIT,
         SAMPLE_PICK_READY,
-        SAMPLE_PICK,
-        SAMPLE_CARRY,
+        SAMPLE_PICK_DOWN,
+        SAMPLE_PICK_UP,
         SAMPLE_EXTEND_READY,
-        SAMPLE_DROP_LOW_READY,
-        SAMPLE_DROP_LOW,
         SAMPLE_DROP_HIGH_READY,
         SAMPLE_DROP_HIGH,
         SPECIMEN_PICK_READY,
         SPECIMEN_PICK,
-        SPECIMEN_PLACE_LOW_READY,
-        SPECIMEN_PLACE_LOW,
         SPECIMEN_PLACE_HIGH_READY,
         SPECIMEN_PLACE_HIGH
     }
@@ -55,11 +41,7 @@ public abstract class CompBot extends IsaacBot {
 
     /**
      */
-    protected ArmPos armPos = ArmPos.INIT;
-
-    /**
-     */
-    protected Mode mode = Mode.NONE;
+    protected ArmPos armPos = ArmPos.INIT_READY;
 
     /**
      */
@@ -235,14 +217,6 @@ public abstract class CompBot extends IsaacBot {
 
     /**
      *
-     * @return
-     */
-    protected Mode getMode() {
-        return this.mode;
-    }
-
-    /**
-     *
      * @param positions
      * @return
      */
@@ -268,13 +242,5 @@ public abstract class CompBot extends IsaacBot {
      */
     protected void setArmPos(ArmPos pos) {
         this.armPos = pos;
-    }
-
-    /**
-     *
-     * @param mode
-     */
-    protected void setMode(Mode mode) {
-        this.mode = mode;
     }
 }

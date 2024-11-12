@@ -5,6 +5,7 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 
 import org.firstinspires.ftc.teamcode.library.encodedmotor.EncodedMotor;
 import org.firstinspires.ftc.teamcode.library.potentiometer.Potentiometer;
+import org.firstinspires.ftc.teamcode.metalheads.compbot.Constants;
 
 /**
  *
@@ -172,5 +173,13 @@ public class PotentiometerMotor extends EncodedMotor {
         int tics = (int) (-1104.249 * Math.pow(volts, 2) + 5739.821 * volts + -2454.05);
 
         return tics;
+    }
+
+    public void run () {
+        super.run();
+
+        if ((this.getTargetPosition() < 0) && (this.getVoltage() <= Constants.VIPER_SLIDES_VOLTS_MIN)) {
+            this.setPower(0);
+        }
     }
 }

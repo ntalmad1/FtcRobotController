@@ -25,6 +25,7 @@ public class TeleBot extends CompBot {
         super.initBot();
 
         this.bigArm.mainBoom.moveToPosition(1, 525);
+        this.setArmPos(ArmPos.INIT);
     }
 
     /**

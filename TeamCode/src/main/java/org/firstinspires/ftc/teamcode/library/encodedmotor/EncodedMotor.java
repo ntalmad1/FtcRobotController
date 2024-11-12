@@ -171,8 +171,10 @@ public class EncodedMotor extends DcMotorComponent {
 //                power = 1;
 //            }
 //            else {
+            if (this.isBrakeOn()) {
                 holding = true;
                 power = 1;
+            }
                 //return;
 //            }
         }

@@ -17,7 +17,7 @@ public class Constants {
 
     /**
      */
-    public static final double VIPER_SLIDES_VOLTS_MIN = 0.456;
+    public static final double VIPER_SLIDES_VOLTS_MIN = 0.48;
     public static final double VIPER_SLIDES_VOLTS_MAX = 1.284;
     public static final int VIPER_SLIDES_SCALE = 200;
     /**
@@ -37,11 +37,11 @@ public class Constants {
     /**
      */
     public static final double CLAW_ROTATOR_MIN_POS = 0;
-    public static final double CLAW_ROTATOR_0_DEG = 0.016;
-    public static final double CLAW_ROTATOR_90_DEG = 0.016;
-    public static final double CLAW_ROTATOR_180_DEG = 0.688;
+    public static final double CLAW_ROTATOR_0_DEG = 0;
+    public static final double CLAW_ROTATOR_90_DEG = 0.3;
+    public static final double CLAW_ROTATOR_180_DEG = 0.64;
     public static final double CLAW_ROTATOR_MAX_POS = 1;
-    public static final double CLAW_ROTATOR_INIT_POS = 0.016;
+    public static final double CLAW_ROTATOR_INIT_POS = 0;
     public static final double CLAW_ROTATOR_INCREMENT = 0.006;
 
     /**
@@ -55,127 +55,37 @@ public class Constants {
 
     /**
      */
-    public static final PositionsStruct SAMPLE_PICK_READY_MIN = new PositionsStruct(){
+    public static final PositionsStruct SAMPLE_PICK_READY = new PositionsStruct(){
         @Override
         public void setValues() {
-            mainBoomPos = new MotorPos(-518);
-            vSlideVolts = 0.7;
-            doubleServosPos = new ServoPos(0.5033);
-            middleServoPos = new ServoPos(0.5044);
-            clawRotatorPos = new ServoPos(0.0);
-            clawPincherPos = new ServoPos(0.0);
+            mainBoomPos = new MotorPos(Constants.MAIN_BOOM_MIN_TICS);
+            vSlideVolts = 0.488;
+            doubleServosPos = new ServoPos(0.617);
+            middleServoPos = new ServoPos(0.783);
+            clawRotatorPos = new ServoPos(Constants.CLAW_ROTATOR_180_DEG);
+            clawPincherPos = new ServoPos(Constants.CLAW_PINCHER_OPEN_POS);
         }
     };
 
     /**
      */
-    public static final PositionsStruct SAMPLE_PICK_LEFT_READY_MIN = new PositionsStruct() {
+    public static final PositionsStruct SAMPLE_PICK_DOWN = new PositionsStruct(){
         @Override
         public void setValues() {
-            mainBoomPos = new MotorPos(-518);
-            vSlideVolts = 0.7;
-            doubleServosPos = new ServoPos(0.5033);
-            middleServoPos = new ServoPos(0.5044);
-            clawRotatorPos = new ServoPos(0.0);
-            clawPincherPos = new ServoPos(0.0);
+            mainBoomPos = new MotorPos(Constants.MAIN_BOOM_MIN_TICS);
+            doubleServosPos = new ServoPos(0.543);
+            middleServoPos = new ServoPos(0.733);
         }
     };
 
     /**
      */
-    public static final PositionsStruct SAMPLE_PICK_RIGHT_READY_MIN = new PositionsStruct() {
+    public static final PositionsStruct SAMPLE_PICK_UP = new PositionsStruct(){
         @Override
         public void setValues() {
-            mainBoomPos = new MotorPos(-518);
-            vSlideVolts = 0.7;
-            doubleServosPos = new ServoPos(0.5033);
-            middleServoPos = new ServoPos(0.5044);
-            clawRotatorPos = new ServoPos(0.0);
-            clawPincherPos = new ServoPos(0.0);
-        }
-    };
-
-    /**
-     */
-    public static final PositionsStruct SAMPLE_PICK_READY_MAX = new PositionsStruct() {
-        @Override
-        public void setValues() {
-            mainBoomPos = new MotorPos(-518);
-            vSlideVolts = 0.7;
-            doubleServosPos = new ServoPos(0.5033);
-            middleServoPos = new ServoPos(0.5044);
-            clawRotatorPos = new ServoPos(0.0);
-            clawPincherPos = new ServoPos(0.0);
-        }
-    };
-
-    /**
-     */
-    public static final PositionsStruct SAMPLE_PICK_LEFT_READY_MAX = new PositionsStruct() {
-        @Override
-        public void setValues() {
-            mainBoomPos = new MotorPos(-518);
-            vSlideVolts = 0.7;
-            doubleServosPos = new ServoPos(0.5033);
-            middleServoPos = new ServoPos(0.5044);
-            clawRotatorPos = new ServoPos(0.0);
-            clawPincherPos = new ServoPos(0.0);
-        }
-    };
-
-    /**
-     */
-    public static final PositionsStruct SAMPLE_PICK_RIGHT_READY_MAX = new PositionsStruct() {
-        @Override
-        public void setValues() {
-            mainBoomPos = new MotorPos(-518);
-            vSlideVolts = 0.7;
-            doubleServosPos = new ServoPos(0.5033);
-            middleServoPos = new ServoPos(0.5044);
-            clawRotatorPos = new ServoPos(0.0);
-            clawPincherPos = new ServoPos(0.0);
-        }
-    };
-
-    /**
-     */
-    public static final PositionsStruct SAMPLE_CARRY = new PositionsStruct() {
-        @Override
-        public void setValues() {
-            mainBoomPos = new MotorPos(-518);
-            vSlideVolts = 0.7;
-            doubleServosPos = new ServoPos(0.5033);
-            middleServoPos = new ServoPos(0.5044);
-            clawRotatorPos = new ServoPos(0.0);
-            clawPincherPos = new ServoPos(0.0);
-        }
-    };
-
-    /**
-     */
-    public static final PositionsStruct SAMPLE_EXTEND_READY = new PositionsStruct() {
-        @Override
-        public void setValues() {
-            mainBoomPos = new MotorPos(-518);
-            vSlideVolts = 0.7;
-            doubleServosPos = new ServoPos(0.5033);
-            middleServoPos = new ServoPos(0.5044);
-            clawRotatorPos = new ServoPos(0.0);
-            clawPincherPos = new ServoPos(0.0);
-        }
-    };
-
-    /**
-     */
-    public static final PositionsStruct SAMPLE_PLACE_LOW_READY = new PositionsStruct() {
-        @Override
-        public void setValues() {
-            mainBoomPos = new MotorPos(-518);
-            vSlideVolts = 0.7;
-            doubleServosPos = new ServoPos(0.5033);
-            middleServoPos = new ServoPos(0.5044);
-            clawRotatorPos = new ServoPos(0.0);
-            clawPincherPos = new ServoPos(0.0);
+            mainBoomPos = new MotorPos(Constants.MAIN_BOOM_MIN_TICS);
+            doubleServosPos = new ServoPos(0.728);
+            middleServoPos = new ServoPos(0.78);
         }
     };
 
@@ -184,12 +94,12 @@ public class Constants {
     public static final PositionsStruct SAMPLE_PLACE_HIGH_READY = new PositionsStruct() {
         @Override
         public void setValues() {
-            mainBoomPos = new MotorPos(-518);
-            vSlideVolts = 0.7;
-            doubleServosPos = new ServoPos(0.5033);
-            middleServoPos = new ServoPos(0.5044);
-            clawRotatorPos = new ServoPos(0.0);
-            clawPincherPos = new ServoPos(0.0);
+            mainBoomPos = new MotorPos(Constants.MAIN_BOOM_MAX_TICS);
+            vSlideVolts = Constants.VIPER_SLIDES_VOLTS_MAX;
+            doubleServosPos = new ServoPos(0.493);
+            middleServoPos = new ServoPos(0.023);
+            clawRotatorPos = new ServoPos(0.68);
+            clawPincherPos = new ServoPos(Constants.CLAW_PINCHER_CLOSE_POS);
         }
     };
 
@@ -201,26 +111,12 @@ public class Constants {
     public static final PositionsStruct SPECIMEN_PICK_READY = new PositionsStruct() {
         @Override
         public void setValues() {
-            mainBoomPos = new MotorPos(-518);
-            vSlideVolts = 0.7;
-            doubleServosPos = new ServoPos(0.5033);
-            middleServoPos = new ServoPos(0.5044);
-            clawRotatorPos = new ServoPos(0.0);
-            clawPincherPos = new ServoPos(0.0);
-        }
-    };
-
-    /**
-     */
-    public static final PositionsStruct SPECIMEN_PICK = new PositionsStruct() {
-        @Override
-        public void setValues() {
-            mainBoomPos = new MotorPos(-518);
-            vSlideVolts = 0.7;
-            doubleServosPos = new ServoPos(0.5033);
-            middleServoPos = new ServoPos(0.5044);
-            clawRotatorPos = new ServoPos(0.0);
-            clawPincherPos = new ServoPos(0.0);
+            mainBoomPos = new MotorPos(Constants.MAIN_BOOM_MAX_TICS);
+            vSlideVolts = Constants.VIPER_SLIDES_VOLTS_MIN;
+            doubleServosPos = new ServoPos(0.9);
+            middleServoPos = new ServoPos(0.416);
+            clawRotatorPos = new ServoPos(0.689);
+            clawPincherPos = new ServoPos(Constants.CLAW_PINCHER_OPEN_POS);
         }
     };
 
@@ -229,54 +125,12 @@ public class Constants {
     public static final PositionsStruct SPECIMEN_PLACE_HIGH_READY = new PositionsStruct() {
         @Override
         public void setValues() {
-            mainBoomPos = new MotorPos(-518);
-            vSlideVolts = 0.7;
-            doubleServosPos = new ServoPos(0.5033);
-            middleServoPos = new ServoPos(0.5044);
-            clawRotatorPos = new ServoPos(0.0);
-            clawPincherPos = new ServoPos(0.0);
-        }
-    };
-
-    /**
-     */
-    public static final PositionsStruct SPECIMEN_PLACE_HIGH = new PositionsStruct() {
-        @Override
-        public void setValues() {
-            mainBoomPos = new MotorPos(-518);
-            vSlideVolts = 0.7;
-            doubleServosPos = new ServoPos(0.5033);
-            middleServoPos = new ServoPos(0.5044);
-            clawRotatorPos = new ServoPos(0.0);
-            clawPincherPos = new ServoPos(0.0);
-        }
-    };
-
-    /**
-     */
-    public static final PositionsStruct SPECIMEN_PLACE_LOW_READY = new PositionsStruct() {
-        @Override
-        public void setValues() {
-            mainBoomPos = new MotorPos(-518);
-            vSlideVolts = 0.7;
-            doubleServosPos = new ServoPos(0.5033);
-            middleServoPos = new ServoPos(0.5044);
-            clawRotatorPos = new ServoPos(0.0);
-            clawPincherPos = new ServoPos(0.0);
-        }
-    };
-
-    /**
-     */
-    public static final PositionsStruct SPECIMEN_PLACE_LOW = new PositionsStruct() {
-        @Override
-        public void setValues() {
-            mainBoomPos = new MotorPos(-518);
-            vSlideVolts = 0.7;
-            doubleServosPos = new ServoPos(0.5033);
-            middleServoPos = new ServoPos(0.5044);
-            clawRotatorPos = new ServoPos(0.0);
-            clawPincherPos = new ServoPos(0.0);
+            mainBoomPos = new MotorPos(526);
+            vSlideVolts = 0.787;
+            doubleServosPos = new ServoPos(0.32);
+            middleServoPos = new ServoPos(0.0);
+            clawRotatorPos = new ServoPos(0.016);
+            clawPincherPos = new ServoPos(Constants.CLAW_PINCHER_CLOSE_POS);
         }
     };
 

@@ -6,7 +6,6 @@ import com.acmerobotics.roadrunner.ParallelAction;
 import com.acmerobotics.roadrunner.SequentialAction;
 
 import org.firstinspires.ftc.teamcode.library.action.WaitAction;
-import org.firstinspires.ftc.teamcode.library.dcmotor.MotorPos;
 
 /**
  *
@@ -27,7 +26,7 @@ public class ActionFactory {
     /**
      * @return
      */
-    public Action doHangReady() {
+    public Action hangReady() {
         return new ParallelAction(
 //                ActionFactory.this.compBot.arm.mainBoom.gotoPositionAction(HangConstants.HANG_READY.mainBoomPos),
 //                ActionFactory.this.compBot.arm.viperSlide.gotoVoltageAction(0.887),
@@ -66,7 +65,7 @@ public class ActionFactory {
     /**
      * @return
      */
-    public Action moveArmToInitPos() {
+    public Action initPos() {
         return new SequentialAction(
             ActionFactory.this.compBot.bigArm.viperSlide.gotoVoltageAction(Constants.VIPER_SLIDES_VOLTS_MIN),
             new ParallelAction(
@@ -80,7 +79,63 @@ public class ActionFactory {
                         ActionFactory.this.compBot.getConfig().littleArmConfig.clawPincherConfig.homePosition, 1)
             ),
             new WaitAction(1000),
-            ActionFactory.this.compBot.bigArm.mainBoom.gotoPositionAction(0, 1)
+            ActionFactory.this.compBot.bigArm.mainBoom.gotoPositionAction(0),
+            new InstantAction(() -> { ActionFactory.this.compBot.setArmPos(CompBot.ArmPos.INIT_READY); })
+
+        );
+    }
+
+    /**
+     * @return
+     */
+    public Action samplePickReady() {
+        if (this.compBot.getArmPos().equals(CompBot.ArmPos.INIT_READY)) {
+            return new SequentialAction(
+                    new ParallelAction(
+                            this.compBot.bigArm.viperSlide.gotoVoltageAction(Constants.SAMPLE_PICK_READY.vSlideVolts),
+                            this.compBot.littleArm.doubleServos.gotoPositionAction(Constants.SAMPLE_PICK_READY.doubleServosPos),
+                            this.compBot.littleArm.middleServo.gotoPositionAction(Constants.SAMPLE_PICK_READY.middleServoPos),
+                            this.compBot.littleArm.clawRotator.gotoPositionAction(Constants.SAMPLE_PICK_READY.clawRotatorPos),
+                            this.compBot.littleArm.clawPincher.gotoPositionAction(Constants.SAMPLE_PICK_READY.clawPincherPos)),
+                    new InstantAction(() -> { this.compBot.setArmPos(CompBot.ArmPos.SAMPLE_PICK_READY); }));
+        }
+        else {
+            return new SequentialAction(
+                    new ParallelAction(
+                            this.compBot.bigArm.viperSlide.gotoVoltageAction(Constants.SAMPLE_PICK_READY.vSlideVolts),
+                            this.compBot.littleArm.doubleServos.gotoPositionAction(Constants.SAMPLE_PICK_READY.doubleServosPos),
+                            this.compBot.littleArm.middleServo.gotoPositionAction(Constants.SAMPLE_PICK_READY.middleServoPos),
+                            this.compBot.littleArm.clawRotator.gotoPositionAction(Constants.SAMPLE_PICK_READY.clawRotatorPos),
+                            this.compBot.littleArm.clawPincher.gotoPositionAction(Constants.SAMPLE_PICK_READY.clawPincherPos)),
+                    new InstantAction(() -> { this.compBot.setArmPos(CompBot.ArmPos.SAMPLE_PICK_READY); }),
+                    this.compBot.bigArm.mainBoom.gotoPositionAction(100, 1),
+                    this.compBot.bigArm.mainBoom.gotoPositionAction(0, 0.5));
+        }
+    }
+
+    /**
+     *
+     * @return
+     */
+    public Action samplePickDown() {
+        return new SequentialAction(
+            this.compBot.littleArm.doubleServos.gotoPositionAction(Constants.SAMPLE_PICK_DOWN.doubleServosPos),
+            new WaitAction(75),
+            this.compBot.littleArm.middleServo.gotoPositionAction(Constants.SAMPLE_PICK_DOWN.middleServoPos),
+            new InstantAction(() -> this.compBot.setArmPos(CompBot.ArmPos.SAMPLE_PICK_DOWN))
+        );
+    }
+
+
+    /**
+     *
+     * @return
+     */
+    public Action samplePickUp() {
+        return new ParallelAction(
+                this.compBot.littleArm.doubleServos.gotoPositionAction(Constants.SAMPLE_PICK_UP.doubleServosPos),
+                this.compBot.littleArm.middleServo.gotoPositionAction(Constants.SAMPLE_PICK_UP.middleServoPos),
+                new InstantAction(() -> this.compBot.setArmPos(CompBot.ArmPos.SAMPLE_PICK_UP))
         );
     }
 
@@ -88,137 +143,38 @@ public class ActionFactory {
      *
      * @return
      */
-    public Action moveArmToSamplePickReadyMin() {
+    public Action inverseSamplePick() {
         return new ParallelAction(
-//                intake.hServo.gotoPositionAction(Constants.SAMPLE_PICK_READY_MIN.hServoPos),
-//                intake.vServo.gotoPositionAction(Constants.SAMPLE_PICK_READY_MIN.vServoPos),
-//                arm.viperSlide.gotoVoltageAction(Constants.SAMPLE_PICK_READY_MIN.vSlideVolts),
-//                new WaitAction(1000),
-//                intake.openPincherAction(),
-//                arm.mainBoom.gotoPositionAction(Constants.SAMPLE_PICK_READY_MIN.mainBoomPos.getPos(), 0.5)
+                this.compBot.littleArm.doubleServos.gotoPositionAction(Constants.SAMPLE_PICK_READY.doubleServosPos),
+                this.compBot.littleArm.middleServo.gotoPositionAction(Constants.SAMPLE_PICK_READY.middleServoPos),
+                this.compBot.littleArm.clawPincher.gotoPositionAction(Constants.CLAW_PINCHER_OPEN_POS, 1),
+                new InstantAction(() -> this.compBot.setArmPos(CompBot.ArmPos.SAMPLE_PICK_READY))
         );
     }
 
     /**
      * @return
      */
-    public Action moveArmToSamplePickReady() {
-
-        // tics = -1308.8 * v^2 + 3193.07 * v + -2115.4
-
-//        double v = arm.viperSlide.getVoltage();
-//
-//        int tics = (int) (-1308.8 * Math.pow(v, 2) + 3193.07 * v - 2115.4);
-//
-//        // m = (vServoMax - vServoMin) / (vMax - vMin)
-//        // vServoPos = m\m(v-vMin) + vServoMin
-//        double vMin = Constants.SAMPLE_PICK_READY_MIN.vSlideVolts;
-//        double vMax = Constants.SAMPLE_PICK_READY_MAX.vSlideVolts;
-//        double vServoMin = Constants.SAMPLE_PICK_READY_MIN.vServoPos.getPos();
-//        double vServoMax = Constants.SAMPLE_PICK_READY_MAX.vServoPos.getPos();
-//
-//        double m = (vServoMax - vServoMin) / (vMax - vMin);
-//        double vServoPos = m * (v - vMin) + vServoMin;
-
-        return new ParallelAction(
-//                intake.hServo.gotoPositionAction(Constants.SAMPLE_PICK_READY_MIN.hServoPos),
-//                intake.vServo.gotoPositionAction(vServoPos, 1),
-//                //arm.viperSlide.gotoVoltageAction(Constants.SAMPLE_PICK_READY_MIN.vSlideVolts),
-//                intake.openPincherAction(),
-//                arm.mainBoom.gotoPositionAction(tics, 0.5),
-//                claw.clawRotator.gotoPositionAction(Constants.SAMPLE_PICK_READY_MIN.clawRotatorPos)
-        );
-    }
-
-
-    /**
-     * @return
-     */
-    public Action moveArmToSamplePickLeftReady() {
-        return new ParallelAction(
-//                intake.hServo.gotoPositionAction(Constants.SAMPLE_PICK_LEFT_READY_MIN.hServoPos),
-//                intake.vServo.gotoPositionAction(Constants.SAMPLE_PICK_LEFT_READY_MIN.vServoPos),
-//                intake.openPincherAction(),
-//                claw.clawRotator.gotoPositionAction(Constants.SAMPLE_PICK_READY_MIN.clawRotatorPos)
-        );
-    }
-
-    /**
-     * @return
-     */
-    public Action moveArmToSamplePickRightReady() {
-        return new ParallelAction(
-//                intake.hServo.gotoPositionAction(Constants.SAMPLE_PICK_RIGHT_READY_MIN.hServoPos),
-//                intake.vServo.gotoPositionAction(Constants.SAMPLE_PICK_RIGHT_READY_MIN.vServoPos),
-//                intake.openPincherAction(),
-//                claw.clawRotator.gotoPositionAction(Constants.SAMPLE_PICK_READY_MIN.clawRotatorPos)
-        );
-    }
-
-
-    /**
-     * @return
-     */
-    public Action moveArmToSamplePickLeftReadyMin() {
-//        return ActionFactory.this.compBot.moveArmAction(Constants.SAMPLE_PICK_LEFT_READY_MIN);
-        return null;
-    }
-
-    /**
-     * @return
-     */
-    public Action moveArmToSamplePickRightReadyMin() {
-        //return ActionFactory.this.compBot.moveArmAction(Constants.SAMPLE_PICK_RIGHT_READY_MIN);
-        return null;
-    }
-
-    /**
-     * @return
-     */
-    public Action moveArmToSamplePickReadyMax() {
-        //return ActionFactory.this.compBot.moveArmAction(Constants.SAMPLE_PICK_READY_MAX);
-        return null;
-    }
-
-    /**
-     * @return
-     */
-    public Action moveArmToSamplePickLeftReadyMax() {
-        //return ActionFactory.this.compBot.moveArmAction(Constants.SAMPLE_PICK_LEFT_READY_MAX);
-        return null;
-    }
-
-    /**
-     * @return
-     */
-    public Action moveArmToSamplePickRightReadyMax() {
-        //return ActionFactory.this.compBot.moveArmAction(Constants.SAMPLE_PICK_RIGHT_READY_MAX);
-        return null;
-    }
-
-
-    /**
-     * @return
-     */
-    public Action sampleDropLow() {
-
-       // this.mainBoomReturnPos = ActionFactory.this.compBot.arm.mainBoom.getCurrentPosition();
-
+    public Action sampleExtendReady() {
         return new SequentialAction(
-//                ActionFactory.this.compBot.intake.vServo.gotoPositionAction(
-//                        Constants.SAMPLE_PLACE_LOW_READY.vServoPos.getPos() + 0.1, 1),
-//                ActionFactory.this.compBot.intake.vServo.gotoPositionAction(
-//                        Constants.SAMPLE_PLACE_LOW_READY.vServoPos.getPos() - 0.05, 1),
-//                ActionFactory.this.compBot.intake.openPincherAction(),
-//                ActionFactory.this.compBot.intake.vServo.gotoPositionAction(Constants.SAMPLE_PLACE_LOW_READY.vServoPos)
+                this.compBot.bigArm.viperSlide.gotoVoltageAction(Constants.VIPER_SLIDES_VOLTS_MIN),
+                new ParallelAction(
+                    this.compBot.bigArm.mainBoom.gotoPositionAction(Constants.MAIN_BOOM_MAX_TICS, 1),
+                    new SequentialAction(
+                        new WaitAction(500),
+                        this.compBot.littleArm.doubleServos.gotoPositionAction(Constants.SAMPLE_PLACE_HIGH_READY.doubleServosPos),
+                        new WaitAction(250),
+                        this.compBot.littleArm.middleServo.gotoPositionAction(Constants.SAMPLE_PLACE_HIGH_READY.middleServoPos),
+                        this.compBot.littleArm.clawRotator.gotoPositionAction(Constants.SAMPLE_PLACE_HIGH_READY.clawRotatorPos))
+                ),
+                new InstantAction(() -> { this.compBot.setArmPos(CompBot.ArmPos.SAMPLE_EXTEND_READY); })
         );
-
     }
 
     /**
      * @return
      */
-    public Action sampleDropHigh() {
+    public Action sampleDropHighReady() {
 
         //this.mainBoomReturnPos = ActionFactory.this.compBot.arm.mainBoom.getCurrentPosition();
 
@@ -232,67 +188,11 @@ public class ActionFactory {
         );
     }
 
-    /**
-     */
-    private int mainBoomReturnPos = 0;
 
     /**
      * @return
      */
-    public Action samplePick() {
-
-        //this.mainBoomReturnPos = ActionFactory.this.compBot.arm.mainBoom.getCurrentPosition();
-
-        return new SequentialAction(
-//                ActionFactory.this.compBot.intake.closePincherAction(),
-//                new WaitAction(500),
-//                ActionFactory.this.compBot.arm.mainBoom.gotoPositionAction(Constants.SAMPLE_CARRY.mainBoomPos)
-        );
-
-    }
-
-    /**
-     * @return
-     */
-    public Action inverseSamplePick() {
-
-        return new SequentialAction(
-//                ActionFactory.this.compBot.intake.openPincherAction(),
-//                new WaitAction(500),
-//                ActionFactory.this.compBot.arm.mainBoom.gotoPositionAction(this.mainBoomReturnPos)
-        );
-    }
-
-    /**
-     * @return
-     */
-    public Action moveArmToSampleCarry() {
-        //return ActionFactory.this.compBot.moveArmAction(Constants.SAMPLE_CARRY);
-        return null;
-    }
-
-    /**
-     * @return
-     */
-    public Action moveArmToSampleExtendReady() {
-        //return ActionFactory.this.compBot.moveArmAction(Constants.SAMPLE_EXTEND_READY);
-        return null;
-    }
-
-    /**
-     * @return
-     */
-    public Action moveArmToSamplePlaceLowReady() {
-        //return ActionFactory.this.compBot.moveArmAction(Constants.SAMPLE_PLACE_LOW_READY);
-        return null;
-    }
-
-    /**
-     * @return
-     */
-    public Action moveArmToSampPlaceHighReady() {
-
-        ActionFactory.this.compBot.bigArm.viperSlide.resetEncoder();
+    public Action samplePlaceHighReady() {
 
         return new ParallelAction(
 //                intake.hServo.gotoPositionAction(Constants.SAMPLE_PLACE_HIGH_READY.hServoPos),
@@ -311,7 +211,7 @@ public class ActionFactory {
     /**
      * @return
      */
-    public Action moveArmToSpecimenPickReady() {
+    public Action specimenPickReady() {
         //return ActionFactory.this.compBot.moveArmAction(Constants.SPECIMEN_PICK_READY);
         return null;
     }
@@ -339,54 +239,14 @@ public class ActionFactory {
         return null;
     }
 
-    /**
-     * @return
-     */
-    public Action moveArmToSpecimenPlaceHighReady() {
-        //return ActionFactory.this.compBot.moveArmAction(Constants.SPECIMEN_PLACE_HIGH_READY);
-        return null;
-    }
-
-    /**
-     * @return
-     */
-    public Action moveArmToSpecimenPlaceHigh() {
-        //return ActionFactory.this.compBot.moveArmAction(Constants.SPECIMEN_PLACE_HIGH);
-        return null;
-    }
 
     /**
      *
      * @return
      */
-    public Action specimenPlaceHigh() {
+    public Action specimenPlaceHighReady() {
         return new SequentialAction(
                 // ActionFactory.this.compBot.arm.mainBoom.gotoPositionAction(Constants.SPECIMEN_PLACE_HIGH.mainBoomPos)
-        );
-    }
-
-    /**
-     * @return
-     */
-    public Action moveArmToSpecimenPlaceLowReady() {
-        //return ActionFactory.this.compBot.moveArmAction(Constants.SPECIMEN_PLACE_LOW_READY);
-        return null;
-    }
-
-    /**
-     * @return
-     */
-    public Action moveArmToSpecimenPlaceLow() {
-        //return ActionFactory.this.compBot.moveArmAction(Constants.SPECIMEN_PLACE_LOW);
-        return null;
-    }
-
-    /**
-     * @return
-     */
-    public Action specimenPlaceLow() {
-        return new SequentialAction(
-                // ActionFactory.this.compBot.arm.mainBoom.gotoPositionAction(Constants.SPECIMEN_PLACE_LOW.mainBoomPos)
         );
     }
 }
