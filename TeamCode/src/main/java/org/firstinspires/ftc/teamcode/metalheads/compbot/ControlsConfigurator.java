@@ -1,9 +1,9 @@
 package org.firstinspires.ftc.teamcode.metalheads.compbot;
 
 import com.acmerobotics.roadrunner.Action;
+import com.acmerobotics.roadrunner.InstantAction;
 import com.acmerobotics.roadrunner.SequentialAction;
 
-import org.firstinspires.ftc.teamcode.archive.library.arm.Arm;
 import org.firstinspires.ftc.teamcode.library.action.WaitAction;
 import org.firstinspires.ftc.teamcode.library.utility.Control;
 
@@ -266,7 +266,22 @@ public class ControlsConfigurator {
     public void gp2_X_BUtton() {
         this.compBot.addGp2_X_PressHandler(event -> {
             if (this.compBot.getArmPos().equals(CompBot.ArmPos.SAMPLE_PICK_UP)) {
+                Action action = new SequentialAction(
+                        this.compBot.bigArm.viperSlide.gotoVoltageAction(Constants.VIPER_SLIDES_VOLTS_MIN),
+                        new InstantAction(() -> { this.compBot.setArmPos(CompBot.ArmPos.SAMPLE_RETRACTED); })
+                );
+            }
+            else if (this.compBot.getArmPos().equals(CompBot.ArmPos.SAMPLE_RETRACTED)) {
                 this.compBot.runAction(this.compBot.getActionFactory().sampleExtendReady());
+            }
+            else if (this.compBot.getArmPos().equals(CompBot.ArmPos.SAMPLE_EXTEND_READY)) {
+                Action action = new SequentialAction(
+                        this.compBot.bigArm.viperSlide.gotoVoltageAction(Constants.VIPER_SLIDES_VOLTS_MAX),
+                        new InstantAction(() -> { this.compBot.setArmPos(CompBot.ArmPos.SAMPLE_DROP_HIGH_READY); })
+                );
+            }
+            else if (this.compBot.getArmPos().equals(CompBot.ArmPos.SAMPLE_DROP_HIGH_READY)) {
+                this.compBot.runAction(this.compBot.getActionFactory().sampleDropHigh());
             }
         });
     }

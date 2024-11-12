@@ -174,36 +174,19 @@ public class ActionFactory {
     /**
      * @return
      */
-    public Action sampleDropHighReady() {
-
-        //this.mainBoomReturnPos = ActionFactory.this.compBot.arm.mainBoom.getCurrentPosition();
-
+    public Action sampleDropHigh() {
         return new SequentialAction(
-//                ActionFactory.this.compBot.intake.vServo.gotoPositionAction(
-//                        Constants.SAMPLE_PLACE_HIGH_READY.vServoPos.getPos() + 0.1, 1),
-//                ActionFactory.this.compBot.intake.vServo.gotoPositionAction(
-//                        Constants.SAMPLE_PLACE_HIGH_READY.vServoPos.getPos() - 0.05, 1),
-//                ActionFactory.this.compBot.intake.openPincherAction(),
-//                ActionFactory.this.compBot.intake.vServo.gotoPositionAction(Constants.SAMPLE_PLACE_HIGH_READY.vServoPos)
+            this.compBot.littleArm.clawPincher.gotoPositionAction(Constants.CLAW_PINCHER_OPEN_POS, 1),
+            new WaitAction(250),
+            this.compBot.littleArm.middleServo.gotoPositionAction(0.5),
+            new WaitAction(250),
+            this.compBot.bigArm.viperSlide.gotoVoltageAction(Constants.VIPER_SLIDES_VOLTS_MIN),
+            new InstantAction(() -> { this.compBot.setArmPos( CompBot.ArmPos.SAMPLE_DROP_HIGH );})
         );
     }
 
 
-    /**
-     * @return
-     */
-    public Action samplePlaceHighReady() {
 
-        return new ParallelAction(
-//                intake.hServo.gotoPositionAction(Constants.SAMPLE_PLACE_HIGH_READY.hServoPos),
-//                intake.vServo.gotoPositionAction(Constants.SAMPLE_PLACE_HIGH_READY.vServoPos),
-//                intake.pincher.gotoPositionAction(Constants.SAMPLE_PLACE_HIGH_READY.intakePincherPos),
-//                arm.viperSlide.gotoPositionAction(2900),
-//                arm.mainBoom.gotoPositionAction(Constants.SAMPLE_PLACE_HIGH_READY.mainBoomPos),
-//                claw.clawRotator.gotoPositionAction(Constants.SAMPLE_PLACE_HIGH_READY.clawRotatorPos),
-//                claw.pincher.gotoPositionAction(Constants.SAMPLE_PLACE_HIGH_READY.clawPincherPos)
-        );
-    }
 
     //------------------------------------------------------------------------------------------
     //------------------------------------------------------------------------------------------

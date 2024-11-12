@@ -22,6 +22,7 @@ public abstract class CompBot extends IsaacBot {
         SAMPLE_PICK_READY,
         SAMPLE_PICK_DOWN,
         SAMPLE_PICK_UP,
+        SAMPLE_RETRACTED,
         SAMPLE_EXTEND_READY,
         SAMPLE_DROP_HIGH_READY,
         SAMPLE_DROP_HIGH,
