@@ -4,6 +4,7 @@ import com.acmerobotics.roadrunner.Pose2d;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import org.firstinspires.ftc.teamcode.metalheads.compbot.CompBot;
+import org.firstinspires.ftc.teamcode.metalheads.compbot.Constants;
 import org.firstinspires.ftc.teamcode.metalheads.compbot.DriveTrainPositionStruct;
 
 @TeleOp(name = "TeleBot", group = "Comp")

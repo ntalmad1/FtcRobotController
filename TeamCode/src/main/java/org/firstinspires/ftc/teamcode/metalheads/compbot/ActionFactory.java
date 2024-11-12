@@ -178,7 +178,7 @@ public class ActionFactory {
         return new SequentialAction(
             this.compBot.littleArm.clawPincher.gotoPositionAction(Constants.CLAW_PINCHER_OPEN_POS, 1),
             new WaitAction(250),
-            this.compBot.littleArm.middleServo.gotoPositionAction(0.5),
+            this.compBot.littleArm.middleServo.gotoPositionAction(0.5, 1),
             new WaitAction(250),
             this.compBot.bigArm.viperSlide.gotoVoltageAction(Constants.VIPER_SLIDES_VOLTS_MIN),
             new InstantAction(() -> { this.compBot.setArmPos( CompBot.ArmPos.SAMPLE_DROP_HIGH );})

@@ -17,8 +17,10 @@ public class Constants {
 
     /**
      */
-    public static final double VIPER_SLIDES_VOLTS_MIN = 0.48;
-    public static final double VIPER_SLIDES_VOLTS_MAX = 1.284;
+    public static final double VIPER_SLIDES_VOLTS_INIT = 0.53;
+    public static final double VIPER_SLIDES_VOLTS_MIN = 0.58;
+    //public static final double VIPER_SLIDES_VOLTS_MAX = 1.184;
+    public static final double VIPER_SLIDES_VOLTS_MAX = 1.234;
     public static final int VIPER_SLIDES_SCALE = 200;
     /**
      */
@@ -127,7 +129,7 @@ public class Constants {
         public void setValues() {
             mainBoomPos = new MotorPos(526);
             vSlideVolts = 0.787;
-            doubleServosPos = new ServoPos(0.32);
+            doubleServosPos = new ServoPos(0.468);
             middleServoPos = new ServoPos(0.0);
             clawRotatorPos = new ServoPos(0.016);
             clawPincherPos = new ServoPos(Constants.CLAW_PINCHER_CLOSE_POS);

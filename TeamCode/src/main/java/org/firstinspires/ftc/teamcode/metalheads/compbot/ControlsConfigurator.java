@@ -90,7 +90,7 @@ public class ControlsConfigurator {
         // presets
         this.gp2_A_Button();
         this.gp2_B_Button();
-        this.gp2_X_BUtton();
+        this.gp2_X_Button();
         this.gp2_Y_Button();
     }
 
@@ -263,13 +263,15 @@ public class ControlsConfigurator {
     /**
      *
      */
-    public void gp2_X_BUtton() {
+    public void gp2_X_Button() {
         this.compBot.addGp2_X_PressHandler(event -> {
             if (this.compBot.getArmPos().equals(CompBot.ArmPos.SAMPLE_PICK_UP)) {
                 Action action = new SequentialAction(
                         this.compBot.bigArm.viperSlide.gotoVoltageAction(Constants.VIPER_SLIDES_VOLTS_MIN),
                         new InstantAction(() -> { this.compBot.setArmPos(CompBot.ArmPos.SAMPLE_RETRACTED); })
                 );
+
+                this.compBot.runAction(action);
             }
             else if (this.compBot.getArmPos().equals(CompBot.ArmPos.SAMPLE_RETRACTED)) {
                 this.compBot.runAction(this.compBot.getActionFactory().sampleExtendReady());
@@ -279,6 +281,8 @@ public class ControlsConfigurator {
                         this.compBot.bigArm.viperSlide.gotoVoltageAction(Constants.VIPER_SLIDES_VOLTS_MAX),
                         new InstantAction(() -> { this.compBot.setArmPos(CompBot.ArmPos.SAMPLE_DROP_HIGH_READY); })
                 );
+
+                this.compBot.runAction(action);
             }
             else if (this.compBot.getArmPos().equals(CompBot.ArmPos.SAMPLE_DROP_HIGH_READY)) {
                 this.compBot.runAction(this.compBot.getActionFactory().sampleDropHigh());

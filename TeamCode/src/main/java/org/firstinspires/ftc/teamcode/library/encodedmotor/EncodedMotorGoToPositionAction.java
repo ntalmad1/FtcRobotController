@@ -29,6 +29,8 @@ public class EncodedMotorGoToPositionAction extends AbstractAction {
      */
     Integer timeout = 250;
 
+    int tolerance = 40;
+
     /**
      */
     ElapsedTime timer;
@@ -102,6 +104,6 @@ public class EncodedMotorGoToPositionAction extends AbstractAction {
      * @return
      */
     private boolean withinTolerance() {
-        return position - 25 > this.motor.getCurrentPosition() || position + 25 < this.motor.getCurrentPosition();
+        return position - tolerance > this.motor.getCurrentPosition() || position + tolerance < this.motor.getCurrentPosition();
     }
 }
