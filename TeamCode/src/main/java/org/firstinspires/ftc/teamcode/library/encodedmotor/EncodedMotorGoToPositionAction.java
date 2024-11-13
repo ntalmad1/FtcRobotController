@@ -27,13 +27,15 @@ public class EncodedMotorGoToPositionAction extends AbstractAction {
 
     /**
      */
-    Integer timeout = 250;
-
-    int tolerance = 40;
+    private Integer timeout = 250;
 
     /**
      */
-    ElapsedTime timer;
+    private int tolerance = 40;
+
+    /**
+     */
+    private ElapsedTime timer;
 
 
     /**
@@ -96,7 +98,12 @@ public class EncodedMotorGoToPositionAction extends AbstractAction {
             return false;
         }
 
-        return this.timer.milliseconds() > this.timeout;
+        boolean timedOut = this.timer.milliseconds() > this.timeout;
+        if (timedOut) {
+            this.motor.setPower(0);
+        }
+
+        return timedOut;
     }
 
     /**

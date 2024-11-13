@@ -87,6 +87,8 @@ public class CompBotConfig {
     private void configureBigArm(IsaacBot robot) {
         this.bigArmConfig = new BigArmConfig(robot);
 
+        this.bigArmConfig.viperSlidesTouchSensorName = "viperSliceStopper";
+
         // main boom
         this.bigArmConfig.mainBoomConfig = new EncodedMotorConfig(robot);
         this.bigArmConfig.mainBoomConfig.motorName = "rightWorm";
