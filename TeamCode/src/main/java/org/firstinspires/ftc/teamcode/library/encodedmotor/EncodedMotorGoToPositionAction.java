@@ -27,7 +27,7 @@ public class EncodedMotorGoToPositionAction extends AbstractAction {
 
     /**
      */
-    private Integer timeout = 500;
+    private Integer timeout = 300;
 
     /**
      */
@@ -100,7 +100,7 @@ public class EncodedMotorGoToPositionAction extends AbstractAction {
 
         boolean timedOut = this.timer.milliseconds() > this.timeout;
         if (timedOut) {
-       //     this.motor.setPower(0);
+            this.motor.setPower(0);
         }
 
         return timedOut;
@@ -111,6 +111,6 @@ public class EncodedMotorGoToPositionAction extends AbstractAction {
      * @return
      */
     private boolean withinTolerance() {
-        return position - tolerance > this.motor.getCurrentPosition() || position + tolerance < this.motor.getCurrentPosition();
+        return position - this.motor.getCurrentPosition() <= tolerance || Math.abs(this.motor.getCurrentPosition() - position) <= tolerance;
     }
 }
