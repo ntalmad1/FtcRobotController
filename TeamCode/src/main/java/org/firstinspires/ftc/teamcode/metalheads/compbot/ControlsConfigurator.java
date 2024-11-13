@@ -5,6 +5,7 @@ import com.acmerobotics.roadrunner.InstantAction;
 import com.acmerobotics.roadrunner.SequentialAction;
 
 import org.firstinspires.ftc.teamcode.library.action.WaitAction;
+import org.firstinspires.ftc.teamcode.library.dcmotor.DcMotorComponent;
 import org.firstinspires.ftc.teamcode.library.utility.Control;
 
 /**
@@ -57,7 +58,25 @@ public class ControlsConfigurator {
         });
 
         // main boom
-        this.compBot.bigArm.mainBoom.addControl(Control.Gp2_RightStickY);
+        //this.compBot.bigArm.mainBoom.addControl(Control.Gp2_RightStickY);
+        this.compBot.bigArm.mainBoom.addGp2_RightStick_Y_Handler(event -> {
+            double deadZone = 0.2;
+
+            double pos = event.getPosition();
+
+            double power = 0;
+
+            if (pos > deadZone) {
+                power = (pos - deadZone) / (1 - deadZone);
+            }
+            else if (pos < (deadZone * -1)) {
+
+                power = (pos - (deadZone * -1)) / (1 - deadZone);
+            }
+
+            this.compBot.bigArm.mainBoom.move(power);
+        });
+
 
         // viper slides
         this.compBot.bigArm.viperSlide.addControl(Control.Gp2_RightStickX);
