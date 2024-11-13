@@ -17,8 +17,8 @@ public class Constants {
 
     /**
      */
-    public static final double VIPER_SLIDES_VOLTS_INIT = 0.53;
-    public static final double VIPER_SLIDES_VOLTS_MIN = 0.58;
+    public static final double VIPER_SLIDES_VOLTS_INIT = 0.44;
+    public static final double VIPER_SLIDES_VOLTS_MIN = 0.44;
     //public static final double VIPER_SLIDES_VOLTS_MAX = 1.184;
     public static final double VIPER_SLIDES_VOLTS_MAX = 1.234;
     public static final int VIPER_SLIDES_SCALE = 200;

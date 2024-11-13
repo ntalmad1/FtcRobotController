@@ -14,6 +14,10 @@ public class BigArmConfig {
 
     /**
      */
+    public String viperSlidesTouchSensorName;
+
+    /**
+     */
     public EncodedMotorConfig mainBoomConfig;
 
     /**

@@ -195,8 +195,17 @@ public class ActionFactory {
      * @return
      */
     public Action specimenPickReady() {
-        //return ActionFactory.this.compBot.moveArmAction(Constants.SPECIMEN_PICK_READY);
-        return null;
+        return new SequentialAction(
+                new InstantAction(() -> { this.compBot.setArmPos(CompBot.ArmPos.SPECIMEN_PICK_READY); }),
+                new ParallelAction(
+                        this.compBot.bigArm.mainBoom.gotoPositionAction(Constants.MAIN_BOOM_MAX_TICS),
+                        this.compBot.bigArm.viperSlide.gotoVoltageAction(Constants.SPECIMEN_PICK_READY.vSlideVolts),
+                        this.compBot.littleArm.doubleServos.gotoPositionAction(Constants.SPECIMEN_PICK_READY.doubleServosPos),
+                        this.compBot.littleArm.middleServo.gotoPositionAction(Constants.SPECIMEN_PICK_READY.middleServoPos),
+                        this.compBot.littleArm.clawRotator.gotoPositionAction(Constants.SPECIMEN_PICK_READY.clawRotatorPos),
+                        this.compBot.littleArm.clawPincher.gotoPositionAction(Constants.SPECIMEN_PICK_READY.clawPincherPos))
+                );
+
     }
 
     /**
@@ -204,12 +213,10 @@ public class ActionFactory {
      */
     public Action specimenPick() {
         return new SequentialAction(
-//                new InstantAction(() -> {
-//                    ActionFactory.this.compBot.claw.pincher.setPosition(Constants.CLAW_PINCHER_CLOSE_POS);
-//                }),
-//                new WaitAction(500),
-//                ActionFactory.this.compBot.arm.mainBoom.gotoPositionAction(
-//                        new MotorPos(ActionFactory.this.compBot.arm.mainBoom.getCurrentPosition() + 400, 1))
+                this.compBot.littleArm.clawPincher.gotoPositionAction(Constants.CLAW_PINCHER_CLOSE_POS, 1),
+                new WaitAction(250),
+                new InstantAction(() -> { this.compBot.setArmPos(CompBot.ArmPos.SPECIMEN_PICK); }),
+                this.compBot.bigArm.mainBoom.gotoPositionAction(Constants.MAIN_BOOM_MAX_TICS - 100)
         );
     }
 
@@ -218,8 +225,12 @@ public class ActionFactory {
      * @return
      */
     public Action inverseSpecimenPick() {
-        //return ActionFactory.this.compBot.moveArmAction(Constants.SPECIMEN_PICK_READY);
-        return null;
+        return new SequentialAction(
+                this.compBot.littleArm.clawPincher.gotoPositionAction(Constants.CLAW_PINCHER_OPEN_POS, 1),
+                new WaitAction(250),
+                new InstantAction(() -> { this.compBot.setArmPos(CompBot.ArmPos.SPECIMEN_PICK_READY); }),
+                this.compBot.bigArm.mainBoom.gotoPositionAction(Constants.MAIN_BOOM_MAX_TICS)
+            );
     }
 
 
@@ -229,7 +240,43 @@ public class ActionFactory {
      */
     public Action specimenPlaceHighReady() {
         return new SequentialAction(
-                // ActionFactory.this.compBot.arm.mainBoom.gotoPositionAction(Constants.SPECIMEN_PLACE_HIGH.mainBoomPos)
+                new InstantAction(() -> { this.compBot.setArmPos(CompBot.ArmPos.SPECIMEN_PLACE_HIGH_READY); }),
+                new ParallelAction(
+                        this.compBot.bigArm.mainBoom.gotoPositionAction(Constants.SPECIMEN_PLACE_HIGH_READY.mainBoomPos),
+                        this.compBot.littleArm.doubleServos.gotoPositionAction(Constants.SPECIMEN_PLACE_HIGH_READY.doubleServosPos),
+                        this.compBot.littleArm.middleServo.gotoPositionAction(Constants.SPECIMEN_PLACE_HIGH_READY.middleServoPos)
+                ),
+                new ParallelAction(
+                        new SequentialAction(
+                                new WaitAction(500),
+                                this.compBot.littleArm.clawRotator.gotoPositionAction(Constants.SPECIMEN_PLACE_HIGH_READY.clawRotatorPos)
+                        ),
+                        this.compBot.bigArm.viperSlide.gotoVoltageAction(Constants.SPECIMEN_PLACE_HIGH_READY.vSlideVolts))
+        );
+    }
+
+    /**
+     *
+     * @return
+     */
+    public Action specimenPlaceHigh() {
+        return new SequentialAction(
+                new InstantAction(() -> { this.compBot.setArmPos(CompBot.ArmPos.SPECIMEN_PLACE_HIGH); }),
+                this.compBot.littleArm.clawPincher.gotoPositionAction(Constants.CLAW_PINCHER_OPEN_POS, 1),
+                new WaitAction(250),
+                this.compBot.bigArm.viperSlide.gotoVoltageAction(Constants.VIPER_SLIDES_VOLTS_MAX),
+                new ParallelAction(
+                        this.compBot.bigArm.mainBoom.gotoPositionAction(Constants.SPECIMEN_PICK_READY.mainBoomPos),
+                        this.compBot.littleArm.doubleServos.gotoPositionAction(Constants.SPECIMEN_PICK_READY.doubleServosPos),
+                        this.compBot.littleArm.middleServo.gotoPositionAction(Constants.SPECIMEN_PICK_READY.middleServoPos)
+                ),
+                new ParallelAction(
+                        new SequentialAction(
+                            new WaitAction(500),
+                            this.compBot.littleArm.clawRotator.gotoPositionAction(Constants.SPECIMEN_PICK_READY.clawRotatorPos)
+                        )),
+                new InstantAction(() -> { this.compBot.setArmPos(CompBot.ArmPos.SPECIMEN_PICK_READY); })
+
         );
     }
 }

@@ -1,5 +1,7 @@
 package org.firstinspires.ftc.teamcode.metalheads.components;
 
+import com.qualcomm.robotcore.hardware.TouchSensor;
+
 import org.firstinspires.ftc.teamcode.library.component.Component;
 import org.firstinspires.ftc.teamcode.library.encodedmotor.EncodedMotor;
 import org.firstinspires.ftc.teamcode.library.potentiometermotor.PotentiometerMotor;
@@ -41,6 +43,9 @@ public class BigArm extends Component {
     @Override
     public void init() {
         super.init();
+
+        TouchSensor touchSensor = this.robot.hardwareMap.get(TouchSensor.class, this.config.viperSlidesTouchSensorName);
+        this.viperSlide.setTouchSensor(touchSensor);
 
         this.mainBoom.init();
         this.viperSlide.init();

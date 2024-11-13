@@ -231,33 +231,23 @@ public class ControlsConfigurator {
      *
      */
     public void gp2_B_Button() {
-//        this.compBot.addGp2_B_PressHandler(event -> {
-//            if (CompBot.Mode.SAMPLE_MODE.equals(this.compBot.getMode()) && (
-//                    CompBot.ArmPos.SAMPLE_PICK_READY.equals(this.compBot.getArmPos())
-//                            || CompBot.ArmPos.SAMPLE_PICK.equals(this.compBot.getArmPos()))) {
-//                this.compBot.runAction(compBot.getActionFactory().moveArmToSampleCarry());
-//                this.compBot.setIntakePos(CompBot.IntakePos.STRAIGHT);
-//                this.compBot.setArmPos(CompBot.ArmPos.SAMPLE_CARRY);
-//            }
-//            else if (CompBot.Mode.SAMPLE_MODE.equals(this.compBot.getMode()) && CompBot.ArmPos.SAMPLE_CARRY.equals(this.compBot.getArmPos())) {
-//                this.compBot.runAction(compBot.getActionFactory().moveArmToSampleExtendReady());
-//                this.compBot.setArmPos(CompBot.ArmPos.SAMPLE_EXTEND_READY);
-//            }
-//            else if (CompBot.Mode.SAMPLE_MODE.equals(this.compBot.getMode()) && (CompBot.ArmPos.SAMPLE_DROP_LOW_READY.equals(this.compBot.getArmPos()) || CompBot.ArmPos.SAMPLE_DROP_HIGH_READY.equals(this.compBot.getArmPos()))) {
-//                this.compBot.setMode(CompBot.Mode.NONE);
-//                this.compBot.setArmPos(CompBot.ArmPos.INIT);
-//                this.compBot.setIntakePos(CompBot.IntakePos.STRAIGHT);
-//                this.compBot.runAction(this.compBot.getActionFactory().moveArmToInitPos());
-//            }
-//            else if (CompBot.Mode.SPECIMEN_MODE.equals(this.compBot.getMode()) && (
-//                    CompBot.ArmPos.SPECIMEN_PLACE_LOW_READY.equals(this.compBot.getArmPos())
-//                            || CompBot.ArmPos.SPECIMEN_PLACE_LOW.equals(this.compBot.getArmPos())
-//                            || CompBot.ArmPos.SPECIMEN_PLACE_HIGH_READY.equals(this.compBot.getArmPos())
-//                            || CompBot.ArmPos.SPECIMEN_PLACE_HIGH.equals(this.compBot.getArmPos()))) {
-//                this.compBot.runAction(this.compBot.getActionFactory().moveArmToSpecimenPickReady());
-//                this.compBot.setArmPos(CompBot.ArmPos.SPECIMEN_PICK_READY);
-//            }
-//        });
+        this.compBot.addGp2_B_PressHandler(event -> {
+            if (!this.compBot.getArmPos().equals(CompBot.ArmPos.SPECIMEN_PICK_READY)
+                    && !this.compBot.getArmPos().equals(CompBot.ArmPos.SPECIMEN_PICK)) {
+
+                this.compBot.runAction(this.compBot.getActionFactory().specimenPickReady());
+
+            }
+            else if (this.compBot.getArmPos().equals(CompBot.ArmPos.SPECIMEN_PICK_READY)) {
+
+                this.compBot.runAction(this.compBot.getActionFactory().specimenPick());
+
+            }
+            else if (this.compBot.getArmPos().equals(CompBot.ArmPos.SPECIMEN_PICK)) {
+
+                this.compBot.runAction(this.compBot.getActionFactory().inverseSpecimenPick());
+            }
+        });
     }
 
     /**
@@ -294,32 +284,18 @@ public class ControlsConfigurator {
      *
      */
     public void gp2_Y_Button() {
-//        this.compBot.addGp2_Y_PressHandler(event -> {
-//            if (CompBot.Mode.SAMPLE_MODE.equals(this.compBot.getMode()) && CompBot.ArmPos.SAMPLE_CARRY.equals(this.compBot.getArmPos())) {
-//                this.compBot.runAction(new SequentialAction(
-//                        compBot.getActionFactory().moveArmToSampleExtendReady(),
-//                        compBot.getActionFactory().moveArmToSampPlaceHighReady()));
-//                this.compBot.setArmPos(CompBot.ArmPos.SAMPLE_DROP_HIGH_READY);
-//            }
-//            else if (CompBot.Mode.SAMPLE_MODE.equals(this.compBot.getMode()) && (
-//                    CompBot.ArmPos.SAMPLE_EXTEND_READY.equals(this.compBot.getArmPos()))
-//                    || CompBot.ArmPos.SAMPLE_DROP_HIGH.equals(this.compBot.getArmPos())) {
-//                this.compBot.runAction(compBot.getActionFactory().moveArmToSampPlaceHighReady());
-//                this.compBot.setArmPos(CompBot.ArmPos.SAMPLE_DROP_HIGH_READY);
-//            }
-//            else if (CompBot.Mode.SAMPLE_MODE.equals(this.compBot.getMode()) && CompBot.ArmPos.SAMPLE_DROP_HIGH_READY.equals(this.compBot.getArmPos())) {
-//                this.compBot.runAction(compBot.getActionFactory().sampleDropHigh());
-//                this.compBot.setArmPos(CompBot.ArmPos.SAMPLE_DROP_HIGH_READY);
-//            }
-//            else if (CompBot.Mode.SPECIMEN_MODE.equals(this.compBot.getMode()) && !CompBot.ArmPos.SPECIMEN_PLACE_HIGH_READY.equals(this.compBot.getArmPos())) {
-//                this.compBot.runAction(compBot.getActionFactory().moveArmToSpecimenPlaceHighReady());
-//                this.compBot.setArmPos(CompBot.ArmPos.SPECIMEN_PLACE_HIGH_READY);
-//            }
-//            else if (CompBot.Mode.SPECIMEN_MODE.equals(this.compBot.getMode()) && CompBot.ArmPos.SPECIMEN_PLACE_HIGH_READY.equals(this.compBot.getArmPos())) {
-//                this.compBot.runAction(compBot.getActionFactory().specimenPlaceHigh());
-//                this.compBot.setArmPos(CompBot.ArmPos.SPECIMEN_PLACE_HIGH);
-//            }
-//        });
+        this.compBot.addGp2_Y_PressHandler(event -> {
+            if (this.compBot.getArmPos().equals(CompBot.ArmPos.SPECIMEN_PICK)) {
+
+                this.compBot.runAction(this.compBot.getActionFactory().specimenPlaceHighReady());
+
+            }
+            else if (this.compBot.getArmPos().equals(CompBot.ArmPos.SPECIMEN_PLACE_HIGH_READY)) {
+
+                this.compBot.runAction(this.compBot.getActionFactory().specimenPlaceHigh());
+
+            }
+        });
     }
 
     /**
