@@ -29,7 +29,7 @@ public class EncodedMotorTest extends IsaacBot {
         config.minTics = -100000;
         config.motorName = "rightWorm";
         config.control = Control.Gp1_LeftStickY;
-        config.scale = 25;
+        config.scale = 100;
 
         config.isDualMotor = true;
         config.secondaryMotorName = "leftWorm";

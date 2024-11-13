@@ -66,19 +66,23 @@ public class PotentiometerMotorGoToVoltageAction extends AbstractAction {
      */
     @Override
     public boolean run() {
-        if (this.motor.isBusy() && !this.motor.isHolding())
+        if (this.motor.isBusy())
         {
             if (this.motor.getConfig().debug) {
-                this.motor.getRobot().telemetry.addData("Running to Volt: ",  " %7d", voltage);
-                this.motor.getRobot().telemetry.addData("Currently at: ",  " at %7d", this.motor.getCurrentPosition());
-                this.motor.getRobot().telemetry.addData("Motor Power: ", " %f", this.motor.getPower());
-                this.motor.getRobot().telemetry.update();
+                this.motor.getRobot().telemetry.addData("Running to Volt: ", voltage);
+                this.motor.getRobot().telemetry.addData("Currently at: ",  this.motor.getCurrentPosition());
+                this.motor.getRobot().telemetry.addData("Motor Power: ", this.motor.getPower());
             }
+
+            if (this.initialTouchSensorIsPressed && this.motor.getTargetPosition() < 0) {
+                this.motor.setPower(0);
+                return STOP;
+            }
+
 
             if (this.motor.getTouchSensor() != null && !this.initialTouchSensorIsPressed) {
                 if (this.motor.getTouchSensor().isPressed()) {
                     this.motor.setPower(0);
-                    this.motor.setTargetPosition(this.motor.getCurrentPosition());
                     return STOP;
                 }
             }
@@ -86,6 +90,11 @@ public class PotentiometerMotorGoToVoltageAction extends AbstractAction {
             return CONTIUE;
         }
         else {
+
+            if (this.motor.getTouchSensor() != null && this.motor.getTouchSensor().isPressed()) {
+                    this.motor.setPower(0);
+            }
+
             return STOP;
         }
 

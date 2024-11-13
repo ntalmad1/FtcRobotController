@@ -100,7 +100,7 @@ public class Constants {
             vSlideVolts = Constants.VIPER_SLIDES_VOLTS_MAX;
             doubleServosPos = new ServoPos(0.493);
             middleServoPos = new ServoPos(0.023);
-            clawRotatorPos = new ServoPos(0.68);
+            clawRotatorPos = new ServoPos(Constants.CLAW_ROTATOR_180_DEG);
             clawPincherPos = new ServoPos(Constants.CLAW_PINCHER_CLOSE_POS);
         }
     };
@@ -117,7 +117,7 @@ public class Constants {
             vSlideVolts = Constants.VIPER_SLIDES_VOLTS_MIN;
             doubleServosPos = new ServoPos(0.9);
             middleServoPos = new ServoPos(0.416);
-            clawRotatorPos = new ServoPos(0.689);
+            clawRotatorPos = new ServoPos(Constants.CLAW_ROTATOR_180_DEG);
             clawPincherPos = new ServoPos(Constants.CLAW_PINCHER_OPEN_POS);
         }
     };
@@ -129,9 +129,9 @@ public class Constants {
         public void setValues() {
             mainBoomPos = new MotorPos(526);
             vSlideVolts = 0.787;
-            doubleServosPos = new ServoPos(0.468);
+            doubleServosPos = new ServoPos(0.296);
             middleServoPos = new ServoPos(0.0);
-            clawRotatorPos = new ServoPos(0.016);
+            clawRotatorPos = new ServoPos(Constants.CLAW_ROTATOR_0_DEG);
             clawPincherPos = new ServoPos(Constants.CLAW_PINCHER_CLOSE_POS);
         }
     };

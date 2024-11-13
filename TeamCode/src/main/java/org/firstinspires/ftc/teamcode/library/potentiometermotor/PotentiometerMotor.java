@@ -1,7 +1,6 @@
 package org.firstinspires.ftc.teamcode.library.potentiometermotor;
 
 import com.acmerobotics.roadrunner.Action;
-import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.TouchSensor;
 
 import org.firstinspires.ftc.teamcode.library.encodedmotor.EncodedMotor;

@@ -73,7 +73,7 @@ public class ControlsConfigurator {
 
             double x = event.getPosition() * -1;
 
-            double servoPos = -0.188 * Math.pow(x, 2) + 0.5 * x + 0.688;
+            double servoPos = 0.01 * Math.pow(x, 2) + 0.35 * x + 0.64;
 
             this.compBot.littleArm.clawRotator.setServoPosition(servoPos);
         });

@@ -27,7 +27,7 @@ public class EncodedMotorGoToPositionAction extends AbstractAction {
 
     /**
      */
-    private Integer timeout = 250;
+    private Integer timeout = 500;
 
     /**
      */
@@ -72,7 +72,7 @@ public class EncodedMotorGoToPositionAction extends AbstractAction {
             }
         }
 
-        if (!this.isTimedOut() && this.motor.isBusy() && !this.motor.isHolding())
+        if (!this.isTimedOut() && this.motor.isBusy())
         {
             if (this.motor.getConfig().debug) {
                 this.motor.getRobot().telemetry.addData("Running to: ",  " %7d", position);
@@ -100,7 +100,7 @@ public class EncodedMotorGoToPositionAction extends AbstractAction {
 
         boolean timedOut = this.timer.milliseconds() > this.timeout;
         if (timedOut) {
-            this.motor.setPower(0);
+       //     this.motor.setPower(0);
         }
 
         return timedOut;

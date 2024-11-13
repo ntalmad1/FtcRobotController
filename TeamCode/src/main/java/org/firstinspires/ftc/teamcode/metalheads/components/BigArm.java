@@ -1,5 +1,8 @@
 package org.firstinspires.ftc.teamcode.metalheads.components;
 
+
+import com.qualcomm.hardware.rev.RevTouchSensor;
+import com.qualcomm.robotcore.hardware.DigitalChannel;
 import com.qualcomm.robotcore.hardware.TouchSensor;
 
 import org.firstinspires.ftc.teamcode.library.component.Component;
@@ -44,7 +47,8 @@ public class BigArm extends Component {
     public void init() {
         super.init();
 
-        TouchSensor touchSensor = this.robot.hardwareMap.get(TouchSensor.class, this.config.viperSlidesTouchSensorName);
+        RevTouchSensor touchSensor = this.robot.hardwareMap.get(RevTouchSensor.class, this.config.viperSlidesTouchSensorName);
+
         this.viperSlide.setTouchSensor(touchSensor);
 
         this.mainBoom.init();
@@ -64,6 +68,7 @@ public class BigArm extends Component {
         if (this.isDebug()) {
             telemetry.addData("Main Boom Position:", this.mainBoom.getCurrentPosition());
             telemetry.addData("Viper Slide Volts:", this.viperSlide.getVoltage());
+            telemetry.addData("Touch Sensor: ", this.viperSlide.getTouchSensor().isPressed());
         }
     }
 }

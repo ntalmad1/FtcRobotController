@@ -216,7 +216,7 @@ public class ActionFactory {
                 this.compBot.littleArm.clawPincher.gotoPositionAction(Constants.CLAW_PINCHER_CLOSE_POS, 1),
                 new WaitAction(250),
                 new InstantAction(() -> { this.compBot.setArmPos(CompBot.ArmPos.SPECIMEN_PICK); }),
-                this.compBot.bigArm.mainBoom.gotoPositionAction(Constants.MAIN_BOOM_MAX_TICS - 100)
+                this.compBot.bigArm.mainBoom.gotoPositionAction(Constants.MAIN_BOOM_MAX_TICS - 375)
         );
     }
 
@@ -248,7 +248,6 @@ public class ActionFactory {
                 ),
                 new ParallelAction(
                         new SequentialAction(
-                                new WaitAction(500),
                                 this.compBot.littleArm.clawRotator.gotoPositionAction(Constants.SPECIMEN_PLACE_HIGH_READY.clawRotatorPos)
                         ),
                         this.compBot.bigArm.viperSlide.gotoVoltageAction(Constants.SPECIMEN_PLACE_HIGH_READY.vSlideVolts))
@@ -263,8 +262,8 @@ public class ActionFactory {
         return new SequentialAction(
                 new InstantAction(() -> { this.compBot.setArmPos(CompBot.ArmPos.SPECIMEN_PLACE_HIGH); }),
                 this.compBot.littleArm.clawPincher.gotoPositionAction(Constants.CLAW_PINCHER_OPEN_POS, 1),
-                new WaitAction(250),
-                this.compBot.bigArm.viperSlide.gotoVoltageAction(Constants.VIPER_SLIDES_VOLTS_MAX),
+                new WaitAction(400),
+                this.compBot.bigArm.viperSlide.gotoVoltageAction(Constants.VIPER_SLIDES_VOLTS_MIN, 0.75),
                 new ParallelAction(
                         this.compBot.bigArm.mainBoom.gotoPositionAction(Constants.SPECIMEN_PICK_READY.mainBoomPos),
                         this.compBot.littleArm.doubleServos.gotoPositionAction(Constants.SPECIMEN_PICK_READY.doubleServosPos),
@@ -272,7 +271,6 @@ public class ActionFactory {
                 ),
                 new ParallelAction(
                         new SequentialAction(
-                            new WaitAction(500),
                             this.compBot.littleArm.clawRotator.gotoPositionAction(Constants.SPECIMEN_PICK_READY.clawRotatorPos)
                         )),
                 new InstantAction(() -> { this.compBot.setArmPos(CompBot.ArmPos.SPECIMEN_PICK_READY); })
