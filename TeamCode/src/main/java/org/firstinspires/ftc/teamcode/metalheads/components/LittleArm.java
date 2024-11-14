@@ -3,7 +3,6 @@ package org.firstinspires.ftc.teamcode.metalheads.components;
 import com.acmerobotics.roadrunner.Action;
 
 import org.firstinspires.ftc.teamcode.library.component.Component;
-import org.firstinspires.ftc.teamcode.library.rotator.Rotator;
 import org.firstinspires.ftc.teamcode.library.servo.ServoComponent;
 import org.firstinspires.ftc.teamcode.metalheads.compbot.Constants;
 
@@ -18,15 +17,15 @@ public class LittleArm extends Component {
 
     /**
      */
-    public Rotator doubleServos;
+    public ServoComponent doubleServos;
 
     /**
      */
-    public Rotator middleServo;
+    public ServoComponent middleServo;
 
     /**
      */
-    public Rotator clawRotator;
+    public ServoComponent clawRotator;
 
     /**
      */
@@ -42,11 +41,11 @@ public class LittleArm extends Component {
 
         this.config = littleArmConfig;
 
-        this.doubleServos = new Rotator(this.config.doubleServosConfig);
+        this.doubleServos = new ServoComponent(this.config.doubleServosConfig);
 
-        this.middleServo = new Rotator(this.config.middleServoConfig);
+        this.middleServo = new ServoComponent(this.config.middleServoConfig);
 
-        this.clawRotator = new Rotator(this.config.clawRotatorConfig);
+        this.clawRotator = new ServoComponent(this.config.clawRotatorConfig);
 
         this.clawPincher = new ServoComponent(this.config.clawPincherConfig);
     }

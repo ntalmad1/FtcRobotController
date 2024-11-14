@@ -1,8 +1,5 @@
 package org.firstinspires.ftc.teamcode.library;
 
-import androidx.annotation.NonNull;
-
-import com.acmerobotics.dashboard.telemetry.TelemetryPacket;
 import com.acmerobotics.roadrunner.Action;
 import com.acmerobotics.roadrunner.ParallelAction;
 import com.acmerobotics.roadrunner.ftc.Actions;
@@ -14,16 +11,10 @@ import org.firstinspires.ftc.robotcore.external.navigation.YawPitchRollAngles;
 import org.firstinspires.ftc.teamcode.library.action.AbstractAction;
 import org.firstinspires.ftc.teamcode.library.component.IComponent;
 import org.firstinspires.ftc.teamcode.library.component.RobotComponent;
-import org.firstinspires.ftc.teamcode.library.command.ICommand;
-import org.firstinspires.ftc.teamcode.library.command.WaitCommand;
 import org.firstinspires.ftc.teamcode.library.event.EventBus;
 import org.firstinspires.ftc.teamcode.library.event.HandlerRegistration;
-import org.firstinspires.ftc.teamcode.library.event.action_callback.ActionAfterEvent;
-import org.firstinspires.ftc.teamcode.library.event.action_callback.ActionCallbackAdapter;
-import org.firstinspires.ftc.teamcode.library.event.command_callback.CommandCallbackHandler;
 import org.firstinspires.ftc.teamcode.library.event.gp1_a_press.Gp1_A_PressHandler;
 import org.firstinspires.ftc.teamcode.library.event.gp1_b_press.Gp1_B_PressHandler;
-import org.firstinspires.ftc.teamcode.library.event.gp1_back_press.Gp1_Back_PressEvent;
 import org.firstinspires.ftc.teamcode.library.event.gp1_back_press.Gp1_Back_PressHandler;
 import org.firstinspires.ftc.teamcode.library.event.gp1_dpad_down.gp1_dpad_down_down.Gp1_Dpad_Down_DownHandler;
 import org.firstinspires.ftc.teamcode.library.event.gp1_dpad_down.gp1_dpad_left_down.Gp1_Dpad_Left_DownHandler;
@@ -45,13 +36,11 @@ import org.firstinspires.ftc.teamcode.library.event.gp1_right_stick_x.Gp1_RightS
 import org.firstinspires.ftc.teamcode.library.event.gp1_right_stick_y.Gp1_RightStick_Y_Handler;
 import org.firstinspires.ftc.teamcode.library.event.gp1_right_trigger_down.Gp1_Right_Trigger_DownHandler;
 import org.firstinspires.ftc.teamcode.library.event.gp1_right_trigger_up.Gp1_Right_Trigger_UpHandler;
-import org.firstinspires.ftc.teamcode.library.event.gp1_start_press.Gp1_Start_PressEvent;
 import org.firstinspires.ftc.teamcode.library.event.gp1_start_press.Gp1_Start_PressHandler;
 import org.firstinspires.ftc.teamcode.library.event.gp1_x_press.Gp1_X_PressHandler;
 import org.firstinspires.ftc.teamcode.library.event.gp1_y_press.Gp1_Y_PressHandler;
 import org.firstinspires.ftc.teamcode.library.event.gp2_a_press.Gp2_A_PressHandler;
 import org.firstinspires.ftc.teamcode.library.event.gp2_b_press.Gp2_B_PressHandler;
-import org.firstinspires.ftc.teamcode.library.event.gp2_back_press.Gp2_Back_PressEvent;
 import org.firstinspires.ftc.teamcode.library.event.gp2_back_press.Gp2_Back_PressHandler;
 import org.firstinspires.ftc.teamcode.library.event.gp2_dpad_down.gp2_dpad_down_down.Gp2_Dpad_Down_DownHandler;
 import org.firstinspires.ftc.teamcode.library.event.gp2_dpad_down.gp2_dpad_left_down.Gp2_Dpad_Left_DownHandler;
@@ -67,7 +56,6 @@ import org.firstinspires.ftc.teamcode.library.event.gp2_left_stick_y.Gp2_LeftSti
 import org.firstinspires.ftc.teamcode.library.event.gp2_right_bumper_press.Gp2_Right_Bumper_PressHandler;
 import org.firstinspires.ftc.teamcode.library.event.gp2_right_stick_x.Gp2_RightStick_X_Handler;
 import org.firstinspires.ftc.teamcode.library.event.gp2_right_stick_y.Gp2_RightStick_Y_Handler;
-import org.firstinspires.ftc.teamcode.library.event.gp2_start_press.Gp2_Start_PressEvent;
 import org.firstinspires.ftc.teamcode.library.event.gp2_start_press.Gp2_Start_PressHandler;
 import org.firstinspires.ftc.teamcode.library.event.gp2_x_press.Gp2_X_PressHandler;
 import org.firstinspires.ftc.teamcode.library.event.gp2_y_press.Gp2_Y_PressHandler;
@@ -126,14 +114,6 @@ public abstract class  IsaacBot extends LinearOpMode implements IComponent
         EventBus.init(this);
 
         this.robotComponent = new RobotComponent(this);
-    }
-
-    /**
-     *
-     * @param command
-     */
-    public void addCommand (ICommand command) {
-        this.robotComponent.addCommand(command);
     }
 
 //region addHandlers
@@ -655,20 +635,6 @@ public abstract class  IsaacBot extends LinearOpMode implements IComponent
      */
     public void setImuName (String imuName) {
         this.imuName = imuName;
-    }
-
-    /**
-     *
-     * @param milliseconds
-     * @param callbackHandler
-     */
-    public IsaacBot wait (int milliseconds, CommandCallbackHandler callbackHandler) {
-        WaitCommand command = new WaitCommand(milliseconds);
-        command.addCallbackHandler(callbackHandler);
-
-        this.robotComponent.addCommand(command);
-
-        return this;
     }
 
     /**

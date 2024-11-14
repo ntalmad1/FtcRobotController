@@ -2,9 +2,6 @@ package org.firstinspires.ftc.teamcode.library.component;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.teamcode.library.IsaacBot;
-import org.firstinspires.ftc.teamcode.library.command.CommandQueue;
-import org.firstinspires.ftc.teamcode.library.command.ICommand;
-import org.firstinspires.ftc.teamcode.library.command.WaitCommand;
 import org.firstinspires.ftc.teamcode.library.event.Event;
 import org.firstinspires.ftc.teamcode.library.event.EventBus;
 import org.firstinspires.ftc.teamcode.library.event.EventHandler;
@@ -130,10 +127,6 @@ public abstract class Component implements IComponent {
 
     /**
      */
-    private CommandQueue commandQueue;
-
-    /**
-     */
     protected IsaacBot robot;
 
     /**
@@ -153,17 +146,6 @@ public abstract class Component implements IComponent {
         this.robot = robot;
 
         this.telemetry = this.robot.telemetry;
-
-        this.commandQueue = new CommandQueue(this);
-    }
-
-    /**
-     *
-     * @param command
-     */
-    public Component addCommand (ICommand command) {
-        this.commandQueue.add(command);
-        return this;
     }
 
     /**
@@ -493,21 +475,6 @@ public abstract class Component implements IComponent {
 
     /**
      *
-     */
-    public void cancelAllCommands () {
-        this.commandQueue.clear();
-    }
-
-    /**
-     *
-     * @return
-     */
-    public CommandQueue getCommandQueue () {
-        return this.commandQueue;
-    }
-
-    /**
-     *
      * @return
      */
     public IsaacBot getRobot () {
@@ -537,16 +504,6 @@ public abstract class Component implements IComponent {
 
     /**
      *
-     * @param milliseconds
-     */
-    public Component wait (int milliseconds) {
-        WaitCommand waitCommand = new WaitCommand(milliseconds);
-        this.addCommand(waitCommand);
-        return this;
-    }
-
-    /**
-     *
      * @param debug
      */
     public void run(boolean debug) {
@@ -558,15 +515,7 @@ public abstract class Component implements IComponent {
     /**
      *
      */
-    public void run (){
-        this.commandQueue.run();
-    }
-
-    public void runCommand (ICommand command) {
-        if (command.isCompleted()) {
-            return;
-        }
-        command.run();
+    public void run() {
     }
 
     /**

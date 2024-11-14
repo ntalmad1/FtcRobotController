@@ -3,10 +3,7 @@ package org.firstinspires.ftc.teamcode.library.drivetrain;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
-import org.firstinspires.ftc.teamcode.library.command.ICommand;
-import org.firstinspires.ftc.teamcode.library.command.WaitCommand;
 import org.firstinspires.ftc.teamcode.library.component.Component;
-import org.firstinspires.ftc.teamcode.library.event.command_callback.CommandCallbackHandler;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -123,33 +120,6 @@ public abstract class AbstractDriveTrain extends Component
      */
     public DcMotor getLeftRearMotor () {
         return this.leftRearMotor;
-    }
-
-    /**
-     *
-     * @param milliseconds
-     * @return
-     */
-    public AbstractDriveTrain wait (int milliseconds) {
-        ICommand command = new WaitCommand(milliseconds);
-        this.addCommand(command);
-
-        return this;
-    }
-
-    /**
-     *
-     * @param milliseconds
-     * @param handler
-     * @return
-     */
-    public AbstractDriveTrain wait (int milliseconds, CommandCallbackHandler handler) {
-        ICommand command = new WaitCommand(milliseconds);
-        command.addCallbackHandler(handler);
-
-        this.addCommand(command);
-
-        return this;
     }
 
     /**
@@ -276,7 +246,7 @@ public abstract class AbstractDriveTrain extends Component
          */
         public boolean isBusy ()
         {
-            if (this.motors.size() == 0) {
+            if (this.motors.isEmpty()) {
                 return false;
             }
 

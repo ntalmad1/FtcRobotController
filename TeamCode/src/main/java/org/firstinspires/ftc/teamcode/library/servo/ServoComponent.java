@@ -111,39 +111,6 @@ public class ServoComponent extends Component {
 
     /**
      *
-     * @param degrees Move the boom to degrees, degrees from the 0 degree position
-     * forwards 0 +
-     * backwards 0 -
-     */
-    public void gotoDegrees (double degrees)
-    {
-        double startPosition = this.servo.getPosition();
-        double targetPosition = this.calculateTargetPosition(degrees);
-
-        this.addCommand(new ServoGoToPositionCommand(this, this.getMaxIncrement(), startPosition, targetPosition));
-    }
-
-    /**
-     *
-     * @param targetPosition Move the boom to servo position
-     */
-    public void gotoPosition (double targetPosition)
-    {
-        this.gotoPosition(targetPosition, this.getMaxIncrement());
-    }
-
-    /**
-     *
-     * @param targetPosition
-     * @param maxIncrement
-     */
-    public void gotoPosition (double targetPosition, double maxIncrement) {
-        double startPosition = this.servo.getPosition();
-        this.addCommand(new ServoGoToPositionCommand(this, maxIncrement, startPosition, targetPosition));
-    }
-
-    /**
-     *
      * @param servoPos
      * @return
      */
@@ -431,7 +398,7 @@ public class ServoComponent extends Component {
      *
      * @param position the position to set the servo to
      */
-    private void setServoPosition(double position) {
+    public void setServoPosition(double position) {
         this.servo.setPosition(position);
         if (this.config.isDualServo) {
             this.secondaryServo.setPosition(1 - this.config.secondaryServoOffset - position);

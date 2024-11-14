@@ -1,15 +1,10 @@
 package org.firstinspires.ftc.teamcode.metalheads.calibration;
 
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-import com.qualcomm.robotcore.hardware.Servo;
 
 import org.firstinspires.ftc.teamcode.library.IsaacBot;
-import org.firstinspires.ftc.teamcode.library.event.gp1_dpad_press.gp1_dpad_down_press.Gp1_Dpad_Down_PressEvent;
-import org.firstinspires.ftc.teamcode.library.event.gp1_dpad_press.gp1_dpad_down_press.Gp1_Dpad_Down_PressHandler;
-import org.firstinspires.ftc.teamcode.library.event.gp1_dpad_press.gp1_dpad_up_press.Gp1_Dpad_Up_PressEvent;
-import org.firstinspires.ftc.teamcode.library.event.gp1_dpad_press.gp1_dpad_up_press.Gp1_Dpad_Up_PressHandler;
-import org.firstinspires.ftc.teamcode.library.rotator.Rotator;
-import org.firstinspires.ftc.teamcode.library.rotator.RotatorConfig;
+import org.firstinspires.ftc.teamcode.library.servo.ServoComponent;
+import org.firstinspires.ftc.teamcode.library.servo.ServoComponentConfig;
 import org.firstinspires.ftc.teamcode.library.utility.Control;
 
 /**
@@ -18,9 +13,9 @@ import org.firstinspires.ftc.teamcode.library.utility.Control;
 //@Disabled
 public class ClawRotatorCalib extends IsaacBot {
 
-    private Rotator servo;
+    private ServoComponent servo;
 
-    private RotatorConfig config;
+    private ServoComponentConfig config;
 
     private double gamePadIncrement = 0.006;
 
@@ -28,7 +23,7 @@ public class ClawRotatorCalib extends IsaacBot {
     public ClawRotatorCalib() {
         super();
 
-        config = new RotatorConfig(this);
+        config = new ServoComponentConfig(this);
 
         config.servoName = "clawRotator";
 
@@ -48,7 +43,7 @@ public class ClawRotatorCalib extends IsaacBot {
     public void initBot() {
         super.initBot();
 
-        this.servo = new Rotator(config);
+        this.servo = new ServoComponent(config);
         this.servo.init();
     }
 
