@@ -1,12 +1,8 @@
 package org.firstinspires.ftc.teamcode.library.encodedmotor;
 
-import com.acmerobotics.dashboard.telemetry.TelemetryPacket;
-import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
-import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.teamcode.library.action.AbstractAction;
-import org.firstinspires.ftc.teamcode.library.command.AbstractSynchronousCommand;
 import org.firstinspires.ftc.teamcode.library.utility.Direction;
 
 /**
@@ -89,12 +85,11 @@ public class EncodedMotorGoToPositionAction extends AbstractAction {
 
         if (!this.isTimedOut() && this.motor.isBusy())
         {
-            if (true && this.motor.getConfig().debug) {
+            if (this.motor.getConfig().debug) {
                 this.motor.getRobot().telemetry.addData("Running to: ",  position);
                 this.motor.getRobot().telemetry.addData("Currently at: ", this.motor.getCurrentPosition());
                 this.motor.getRobot().telemetry.addData("Motor Power: ", this.motor.getPower());
                 this.motor.getRobot().telemetry.addData("Motor Direction: ", this.motor.getDirection());
-                //this.motor.getRobot().telemetry.update();
             }
 
             return CONTIUE;

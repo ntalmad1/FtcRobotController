@@ -1,14 +1,11 @@
 package org.firstinspires.ftc.teamcode.library;
 
 import com.acmerobotics.roadrunner.Action;
-import com.acmerobotics.roadrunner.ParallelAction;
-import com.acmerobotics.roadrunner.ftc.Actions;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.IMU;
 
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.YawPitchRollAngles;
-import org.firstinspires.ftc.teamcode.library.action.AbstractAction;
 import org.firstinspires.ftc.teamcode.library.component.IComponent;
 import org.firstinspires.ftc.teamcode.library.component.RobotComponent;
 import org.firstinspires.ftc.teamcode.library.event.EventBus;
@@ -60,9 +57,6 @@ import org.firstinspires.ftc.teamcode.library.event.gp2_start_press.Gp2_Start_Pr
 import org.firstinspires.ftc.teamcode.library.event.gp2_x_press.Gp2_X_PressHandler;
 import org.firstinspires.ftc.teamcode.library.event.gp2_y_press.Gp2_Y_PressHandler;
 
-import java.util.ArrayList;
-import java.util.List;
-
 /**
  *
  * @noinspection unused
@@ -92,14 +86,6 @@ public abstract class  IsaacBot extends LinearOpMode implements IComponent
     /**
      */
     private IMU imu;
-
-    /**
-     */
-    private IsaacBotRunAction runningIsaacBotAction;
-
-    /**
-     */
-    private List<Action> actionsToRun = new ArrayList<Action>();
 
     /**
      * Constructor
@@ -564,6 +550,8 @@ public abstract class  IsaacBot extends LinearOpMode implements IComponent
      * This code gets ran after start pressed and "whileOpIsActive" in a loop
      */
     public void run () {
+        this.getEventBus().run();
+        this.robotComponent.run();
     }
 
     /**
@@ -577,34 +565,8 @@ public abstract class  IsaacBot extends LinearOpMode implements IComponent
      * @param action
      */
     public void runAction (Action action) {
-        this.actionsToRun.add(action);
-        this.runningIsaacBotAction.markAsCompleted();
-    }
-
-    /**
-     *
-     */
-    public void runActions() {
-
-        if (this.runningIsaacBotAction == null || this.runningIsaacBotAction.isCompleted()) {
-            IsaacBot.this.runningIsaacBotAction = new IsaacBotRunAction();
-        }
-
-        if (this.actionsToRun.isEmpty()) {
-            ParallelAction actionWrapper = new ParallelAction(IsaacBot.this.runningIsaacBotAction);
-            Actions.runBlocking(actionWrapper);
-        }
-        else
-        {
-            Action actionToRun = this.actionsToRun.remove(0);
-
-            ParallelAction actionWrapper = new ParallelAction(IsaacBot.this.runningIsaacBotAction, actionToRun);
-            Actions.runBlocking(actionWrapper);
-        }
-
-        if (this.opModeIsActive()) {
-            this.runActions();
-        }
+//        this.actionsToRun.add(action);
+//        this.runningIsaacBotAction.markAsCompleted();
     }
 
     /**
@@ -619,15 +581,12 @@ public abstract class  IsaacBot extends LinearOpMode implements IComponent
 
         this.go();
 
-        this.runActions();
-
         while (this.opModeIsActive()) {
+            this.run();
         }
 
         this.onStop();
     }
-
-
 
     /**
      *
@@ -637,50 +596,4 @@ public abstract class  IsaacBot extends LinearOpMode implements IComponent
         this.imuName = imuName;
     }
 
-    /**
-     *
-     * @param message
-     */
-    public void voiceLog (String message) {
-        this.voiceLog(message, 2000);
-    }
-
-    /**
-     *
-     * @param message
-     * @param milliseconds
-     */
-    public void voiceLog (String message, long milliseconds) {
-        this.telemetry.speak(message);
-        this.telemetry.log().add(message);
-
-        try {
-            this.sleep(milliseconds);
-        } catch (Exception e) {
-            // do nothing
-        }
-    }
-
-    /**
-     *
-     */
-    private class IsaacBotRunAction extends AbstractAction {
-
-        /**
-         *
-         * @return
-         */
-        @Override
-        public boolean run() {
-            IsaacBot.this.getEventBus().run();
-            IsaacBot.this.robotComponent.run();
-            IsaacBot.this.run();
-
-            if (this.isCompleted() || !IsaacBot.this.opModeIsActive()) {
-                return STOP;
-            }
-
-            return CONTIUE;
-        }
-    }
 }

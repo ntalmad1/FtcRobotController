@@ -5,7 +5,6 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 
 import org.firstinspires.ftc.teamcode.library.dcmotor.DcMotorComponent;
 import org.firstinspires.ftc.teamcode.library.dcmotor.MotorPos;
-import org.firstinspires.ftc.teamcode.library.event.command_callback.CommandCallbackHandler;
 
 /**
  *
@@ -40,25 +39,8 @@ public class EncodedMotor extends DcMotorComponent {
      *
      * @param position
      */
-    public void gotoPosition (int position) {
-        this.gotoPosition(position, 1);
-    }
-
-    /**
-     *
-     * @param position
-     */
     public Action gotoPositionAction (int position) {
         return this.gotoPositionAction(position, 1);
-    }
-
-    /**
-     *
-     * @param position
-     * @param power
-     */
-    public void gotoPosition (int position, double power) {
-        this.addCommand(new EncodedMotorGoToPositionCommand(this, position, power));
     }
 
     /**
@@ -96,18 +78,6 @@ public class EncodedMotor extends DcMotorComponent {
      */
     public Action gotoPositionAction (int position, double power, Integer timeout) {
         return new EncodedMotorGoToPositionAction(this, position, power, timeout);
-    }
-
-    /**
-     *
-     * @param position
-     * @param power
-     * @param handler
-     */
-    public void gotoPosition (int position, double power, CommandCallbackHandler handler) {
-        EncodedMotorGoToPositionCommand command = new EncodedMotorGoToPositionCommand(this, position, power);
-        command.addCallbackHandler(handler);
-        this.addCommand(command);
     }
 
     /**

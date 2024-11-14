@@ -15,7 +15,7 @@ public abstract class AbstractDriveTrain extends Component
 {
     /**
      */
-    protected SimpleDriveTrain.MotorGroup motorGroup = new MotorGroup();
+    protected MotorGroup motorGroup = new MotorGroup();
 
     /**
      */
