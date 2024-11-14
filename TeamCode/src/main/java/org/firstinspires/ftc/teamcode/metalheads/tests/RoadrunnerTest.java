@@ -9,6 +9,8 @@ import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import org.firstinspires.ftc.teamcode.library.IsaacBot;
+import org.firstinspires.ftc.teamcode.library.action.AbstractAction;
+import org.firstinspires.ftc.teamcode.library.action.InstantActionImpl;
 import org.firstinspires.ftc.teamcode.library.action.WaitAction;
 
 @TeleOp(name = "RoadrunnerTest", group = "Tests")
@@ -32,7 +34,7 @@ public class RoadrunnerTest extends IsaacBot {
 
             telemetry.log().add("B");
 
-            Action myAction = new InstantAction(() -> telemetry.log().add("Hello World"));
+            AbstractAction myAction = new InstantActionImpl(() -> telemetry.log().add("Hello World"));
 
             RoadrunnerTest.this.runAction(myAction);
 

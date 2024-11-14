@@ -96,7 +96,7 @@ public class ControlsConfigurator {
 
             double servoPos = 0.01 * Math.pow(x, 2) + 0.35 * x + 0.64;
 
-            this.compBot.littleArm.clawRotator.setServoPosition(servoPos);
+            this.compBot.littleArm.clawRotator.setPosition(servoPos);
         });
 
         // claw pincher

@@ -77,7 +77,7 @@ public class DoubleServosCalib extends IsaacBot {
                 if (newPos < config.minPosition) newPos = config.minPosition;
                 if (newPos > config.maxPosition) newPos = config.maxPosition;
 
-                doubleServos.setServoPosition(newPos);
+                doubleServos.setPosition(newPos);
             }
         });
 
@@ -88,17 +88,17 @@ public class DoubleServosCalib extends IsaacBot {
                 if (newPos < config.minPosition) newPos = config.minPosition;
                 if (newPos > config.maxPosition) newPos = config.maxPosition;
 
-                doubleServos.setServoPosition(newPos);
+                doubleServos.setPosition(newPos);
             }
         });
 
         this.addGp1_A_PressHandler(event -> {
 
             if (doubleServos.getPosition() >= 0.5) {
-                doubleServos.setServoPosition(config.minPosition);
+                doubleServos.setPosition(config.minPosition);
             }
             else {
-                doubleServos.setServoPosition(config.maxPosition);
+                doubleServos.setPosition(config.maxPosition);
             }
 
         });
