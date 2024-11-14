@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode.library.potentiometermotor;
 
 import com.acmerobotics.roadrunner.Action;
+import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.TouchSensor;
 
 import org.firstinspires.ftc.teamcode.library.action.AbstractAction;
@@ -219,12 +220,13 @@ public class PotentiometerMotor extends EncodedMotor {
         if ((currentPosTicsByVolts + numTics) > maxTicsByVolts) {
             targetPosition = this.getCurrentPosition() + (maxTicsByVolts - currentPosTicsByVolts);
         }
-//        else if (currentPosTicsByVolts + numTics < 0) {
-//            targetPosition = this.getCurrentPosition() + (numTics - currentPosTicsByVolts);
-//        }
+        else if (currentPosTicsByVolts + numTics < 0) {
+            targetPosition = this.getCurrentPosition() + (numTics - currentPosTicsByVolts);
+        }
 
-
-        super.moveToPosition(power, targetPosition);
+        this.setTargetPosition(targetPosition);
+        this.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        this.setPower(power);
     }
 
     /**
@@ -244,10 +246,6 @@ public class PotentiometerMotor extends EncodedMotor {
      */
     public void run () {
         super.run();
-
-        if ((this.getTargetPosition() < 0) && (this.getVoltage() <= Constants.VIPER_SLIDES_VOLTS_MIN)) {
-            this.setPower(0);
-        }
     }
 
     /**
