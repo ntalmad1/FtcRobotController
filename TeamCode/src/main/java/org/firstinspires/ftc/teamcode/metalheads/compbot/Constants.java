@@ -17,10 +17,10 @@ public class Constants {
 
     /**
      */
-    public static final double VIPER_SLIDES_VOLTS_INIT = 0.44;
-    public static final double VIPER_SLIDES_VOLTS_MIN = 0.44;
+    public static final double VIPER_SLIDES_VOLTS_INIT = 0.46;
+    public static final double VIPER_SLIDES_VOLTS_MIN = 0.46;
     //public static final double VIPER_SLIDES_VOLTS_MAX = 1.184;
-    public static final double VIPER_SLIDES_VOLTS_MAX = 1.234;
+    public static final double VIPER_SLIDES_VOLTS_MAX = 1.209;
     public static final int VIPER_SLIDES_SCALE = 200;
     /**
      */
@@ -135,6 +135,32 @@ public class Constants {
             clawPincherPos = new ServoPos(Constants.CLAW_PINCHER_CLOSE_POS);
         }
     };
+
+    /**
+     */
+    public static final PositionsStruct HANG_READY = new PositionsStruct() {
+        @Override
+        public void setValues() {
+            mainBoomPos = new MotorPos(669);
+            vSlideVolts = 0.921;
+            doubleServosPos = new ServoPos(0.9);
+            middleServoPos = new ServoPos(0.783);
+            clawRotatorPos = new ServoPos(Constants.CLAW_ROTATOR_0_DEG);
+            clawPincherPos = new ServoPos(Constants.CLAW_PINCHER_OPEN_POS);
+        }
+    };
+
+    /**
+     */
+    public static final PositionsStruct HANG = new PositionsStruct() {
+        @Override
+        public void setValues() {
+            mainBoomPos = new MotorPos(1019);
+            vSlideVolts = 0.650;
+        }
+    };
+
+
 
     /**
      * Hidden constructor - make class essentially static

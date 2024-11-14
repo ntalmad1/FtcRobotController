@@ -79,6 +79,14 @@ public class PotentiometerMotor extends EncodedMotor {
 
     /**
      *
+     * @param voltage
+     */
+    public Action gotoVoltageAction (double voltage, Boolean brake) {
+        return this.gotoVoltageAction(voltage, 1, brake);
+    }
+
+    /**
+     *
      * @param position
      */
     public Action gotoPositionAction (int position) {
@@ -92,7 +100,11 @@ public class PotentiometerMotor extends EncodedMotor {
      * @return
      */
     public Action gotoVoltageAction (double voltage, double power) {
-        return new PotentiometerMotorGoToVoltageAction(this, voltage, power);
+        return this.gotoVoltageAction(voltage, power, null);
+    }
+
+    public Action gotoVoltageAction (double voltage, double power, Boolean brake) {
+        return new PotentiometerMotorGoToVoltageAction(this, voltage, power, brake);
     }
 
     /**
@@ -116,11 +128,42 @@ public class PotentiometerMotor extends EncodedMotor {
     /**
      *
      * @param power
+     */
+    public void move (double power) {
+        if (power == 0) {
+
+            if (this.isBrakeOn()) {
+                power = 1;
+            }
+
+            this.setBrake(this.getConfig().brakeOn);
+            this.moveToPosition(power, this.getCurrentPosition());
+        }
+        else if (power > 0) {
+
+            this.setBrake(this.getConfig().brakeOn);
+            this.moveToPosition(1, this.getCurrentPosition() + (int)(power * this.getConfig().scale));
+        }
+        else if (power < 0) {
+            if (this.touchSensor != null && this.touchSensor.isPressed()) {
+                this.setBrake(false);
+                this.setPower(0);
+                return;
+            }
+
+            this.setBrake(this.getConfig().brakeOn);
+            this.moveToPosition(1, this.getCurrentPosition() + (int)(power * this.getConfig().scale));
+        }
+    }
+
+    /**
+     *
+     * @param power
      * @param targetVoltage
      */
-    public void moveToVoltage (double power, double targetVoltage) {
+    public int moveToVoltage (double power, double targetVoltage) {
         if (power == 0 && this.holding) {
-            return;
+            return this.getCurrentPosition();
         }
 
         if (targetVoltage < this.getConfig().minVolts) {
@@ -142,6 +185,8 @@ public class PotentiometerMotor extends EncodedMotor {
         int target = this.getCurrentPosition() + targetTics;
 
         this.moveToPosition(power, target);
+
+        return target;
     }
 
     /**
@@ -150,6 +195,12 @@ public class PotentiometerMotor extends EncodedMotor {
      * @param targetPosition
      */
     public void moveToPosition (double power, int targetPosition) {
+
+        if (this.getTouchSensor() != null && targetPosition <= this.getCurrentPosition() && this.touchSensor.isPressed()) {
+            this.setPower(0);
+            return;
+        }
+
         int numTics = targetPosition - this.getCurrentPosition();
 
         if (this.getVoltage() >= this.getConfig().maxVolts && numTics > 0) {

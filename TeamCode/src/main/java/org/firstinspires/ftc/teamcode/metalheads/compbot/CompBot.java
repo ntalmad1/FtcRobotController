@@ -25,11 +25,14 @@ public abstract class CompBot extends IsaacBot {
         SAMPLE_RETRACTED,
         SAMPLE_EXTEND_READY,
         SAMPLE_DROP_HIGH_READY,
-        SAMPLE_DROP_HIGH,
+        SAMPLE_DROPPING_HIGH,
+        SAMPLE_DROPPED_HIGH,
         SPECIMEN_PICK_READY,
         SPECIMEN_PICK,
         SPECIMEN_PLACE_HIGH_READY,
-        SPECIMEN_PLACE_HIGH
+        SPECIMEN_PLACE_HIGH,
+        HANG_READY,
+        HANG
     }
 
     /**
@@ -214,27 +217,6 @@ public abstract class CompBot extends IsaacBot {
      */
     protected ArmPos getArmPos() {
         return this.armPos;
-    }
-
-    /**
-     *
-     * @param positions
-     * @return
-     */
-    protected ParallelAction moveArmAction(PositionsStruct positions) {
-
-        return new ParallelAction(
-                /*
-                intake.hServo.gotoPositionAction(positions.hServoPos),
-                intake.vServo.gotoPositionAction(positions.vServoPos),
-                intake.pincher.gotoPositionAction(positions.intakePincherPos),
-                arm.viperSlide.gotoVoltageAction(positions.vSlideVolts),
-                arm.mainBoom.gotoPositionAction(positions.mainBoomPos),
-                claw.clawRotator.gotoPositionAction(positions.clawRotatorPos),
-                claw.pincher.gotoPositionAction(positions.clawPincherPos)
-                */
-        );
-
     }
 
     /**

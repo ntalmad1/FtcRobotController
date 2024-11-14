@@ -5,7 +5,6 @@ import com.acmerobotics.roadrunner.InstantAction;
 import com.acmerobotics.roadrunner.SequentialAction;
 
 import org.firstinspires.ftc.teamcode.library.action.WaitAction;
-import org.firstinspires.ftc.teamcode.library.dcmotor.DcMotorComponent;
 import org.firstinspires.ftc.teamcode.library.utility.Control;
 
 /**
@@ -118,17 +117,14 @@ public class ControlsConfigurator {
      */
     public void gp1_X_Button()
     {
-//        this.compBot.addGp1_X_PressHandler(event -> {
-//            if (!CompBot.Mode.HANG_READY.equals(this.compBot.getMode())
-//                && !CompBot.Mode.ASCENDING.equals(this.compBot.getMode())) {
-//                this.compBot.runAction(this.compBot.getActionFactory().doHangReady());
-//                this.compBot.setMode(CompBot.Mode.HANG_READY);
-//            }
-//            else if (CompBot.Mode.HANG_READY.equals(this.compBot.getMode())) {
-//                this.compBot.runAction(this.compBot.getActionFactory().doHang());
-//                this.compBot.setMode(CompBot.Mode.ASCENDING);
-//            }
-//        });
+        this.compBot.addGp1_X_PressHandler(event -> {
+            if (!CompBot.ArmPos.HANG_READY.equals(this.compBot.getArmPos())) {
+                this.compBot.runAction(this.compBot.getActionFactory().hangReady());
+            }
+            else if (CompBot.ArmPos.HANG_READY.equals(this.compBot.getArmPos())) {
+                this.compBot.runAction(this.compBot.getActionFactory().doHang());
+            }
+        });
     }
 
     /**
@@ -294,6 +290,14 @@ public class ControlsConfigurator {
                 this.compBot.runAction(action);
             }
             else if (this.compBot.getArmPos().equals(CompBot.ArmPos.SAMPLE_DROP_HIGH_READY)) {
+                Action action = new SequentialAction(
+                        this.compBot.littleArm.clawPincher.gotoPositionAction(Constants.CLAW_PINCHER_OPEN_POS, 1),
+                        new InstantAction(() -> { this.compBot.setArmPos(CompBot.ArmPos.SAMPLE_DROPPING_HIGH); })
+                );
+
+                this.compBot.runAction(action);
+            }
+            else if (this.compBot.getArmPos().equals(CompBot.ArmPos.SAMPLE_DROPPING_HIGH)) {
                 this.compBot.runAction(this.compBot.getActionFactory().sampleDropHigh());
             }
         });

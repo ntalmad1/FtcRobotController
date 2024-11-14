@@ -210,11 +210,11 @@ public class EncodedMotor extends DcMotorComponent {
     public void run () {
         super.run();
 
-        if (!this.isBrakeOn() && this.isDualMotor()) {
-
-            if (!this.getMotor().isBusy() || !this.getSecondaryMotor().isBusy()) {
-                this.setPower(0);
-            }
-        }
+//        if (!this.isBrakeOn() && this.isDualMotor()) {
+//
+//            if (!this.getMotor().isBusy() || !this.getSecondaryMotor().isBusy()) {
+//                this.setPower(0);
+//            }
+//        }
     }
 }

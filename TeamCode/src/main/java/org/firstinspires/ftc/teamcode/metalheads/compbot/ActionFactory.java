@@ -27,38 +27,26 @@ public class ActionFactory {
      * @return
      */
     public Action hangReady() {
-        return new ParallelAction(
-//                ActionFactory.this.compBot.arm.mainBoom.gotoPositionAction(HangConstants.HANG_READY.mainBoomPos),
-//                ActionFactory.this.compBot.arm.viperSlide.gotoVoltageAction(0.887),
-//                ActionFactory.this.compBot.claw.clawRotator.gotoPositionAction(HangConstants.HANG_READY.clawRotatorPos),
-//                ActionFactory.this.compBot.intake.hServo.gotoPositionAction(HangConstants.HANG_READY.hServoPos),
-//                ActionFactory.this.compBot.intake.vServo.gotoPositionAction(HangConstants.HANG_READY.vServoPos),
-//                ActionFactory.this.compBot.claw.pincher.gotoPositionAction(HangConstants.HANG_READY.clawPincherPos),
-//                ActionFactory.this.compBot.intake.pincher.gotoPositionAction(HangConstants.HANG_READY.intakePincherPos),
-//                ActionFactory.this.compBot.doubleHooks.linearActuator.gotoPositionAction(HangConstants.HANG_READY.linearActuatorPos),
-//                ActionFactory.this.compBot.doubleHooks.doubleServos.gotoPositionAction(HangConstants.HANG_READY.dHookServos)
-                );
+        return new SequentialAction(
+            this.compBot.bigArm.mainBoom.gotoPositionAction(Constants.HANG_READY.mainBoomPos),
+            new ParallelAction(
+                this.compBot.bigArm.viperSlide.gotoVoltageAction(Constants.HANG_READY.vSlideVolts),
+                this.compBot.littleArm.doubleServos.gotoPositionAction(Constants.HANG_READY.doubleServosPos),
+                this.compBot.littleArm.middleServo.gotoPositionAction(Constants.HANG_READY.middleServoPos),
+                this.compBot.littleArm.clawRotator.gotoPositionAction(Constants.HANG_READY.clawRotatorPos),
+                this.compBot.littleArm.clawPincher.gotoPositionAction(Constants.HANG_READY.clawPincherPos)),
+                new InstantAction(() -> { this.compBot.setArmPos(CompBot.ArmPos.HANG_READY); }));
     }
 
+    /**
+     *
+     * @return
+     */
     public Action doHang() {
         return new SequentialAction(
-//                ActionFactory.this.compBot.arm.viperSlide.gotoVoltageAction(HangConstants.HANG_READY_1.vSlideVolts),
-//                new WaitAction(500),
-//                ActionFactory.this.compBot.arm.mainBoom.gotoPositionAction(HangConstants.HANG_READY_1.mainBoomPos),
-//                new WaitAction(500),
-//                ActionFactory.this.compBot.arm.viperSlide.gotoVoltageAction(HangConstants.HANG_READY_2.vSlideVolts),
-//                ActionFactory.this.compBot.doubleHooks.doubleServos.gotoPositionAction(HangConstants.HANG_READY_2.dHookServos),
-//                new WaitAction(500),
-//                ActionFactory.this.compBot.doubleHooks.linearActuator.gotoPositionAction(HangConstants.HANG_READY_3.linearActuatorPos),
-//                new WaitAction(1000),
-//                ActionFactory.this.compBot.doubleHooks.doubleServos.gotoPositionAction(HangConstants.HANG_READY_3.dHookServos),
-//                ActionFactory.this.compBot.doubleHooks.linearActuator.gotoPositionAction(HangConstants.HANG_READY_4.linearActuatorPos),
-//                new WaitAction(500),
-//                new ParallelAction(
-//                        ActionFactory.this.compBot.arm.mainBoom.gotoPositionAction(HangConstants.HANG_READY_4.mainBoomPos),
-//                        ActionFactory.this.compBot.arm.viperSlide.gotoVoltageAction(HangConstants.HANG_READY_4.vSlideVolts),
-//                        ActionFactory.this.compBot.doubleHooks.doubleServos.gotoPositionAction(HangConstants.HANG_READY_4.dHookServos)
-//                )
+            this.compBot.bigArm.viperSlide.gotoVoltageAction(Constants.HANG.vSlideVolts),
+            this.compBot.bigArm.mainBoom.gotoPositionAction(Constants.HANG.mainBoomPos),
+            new InstantAction(() -> { this.compBot.setArmPos(CompBot.ArmPos.HANG); })
         );
     }
 
@@ -67,7 +55,7 @@ public class ActionFactory {
      */
     public Action initPos() {
         return new SequentialAction(
-            ActionFactory.this.compBot.bigArm.viperSlide.gotoVoltageAction(Constants.VIPER_SLIDES_VOLTS_MIN),
+            ActionFactory.this.compBot.bigArm.viperSlide.gotoVoltageAction(Constants.VIPER_SLIDES_VOLTS_MIN, false),
             new ParallelAction(
                 ActionFactory.this.compBot.littleArm.doubleServos.gotoPositionAction(
                         ActionFactory.this.compBot.getConfig().littleArmConfig.doubleServosConfig.homePosition, 1),
@@ -176,17 +164,12 @@ public class ActionFactory {
      */
     public Action sampleDropHigh() {
         return new SequentialAction(
-            this.compBot.littleArm.clawPincher.gotoPositionAction(Constants.CLAW_PINCHER_OPEN_POS, 1),
-            new WaitAction(250),
             this.compBot.littleArm.middleServo.gotoPositionAction(0.5, 1),
             new WaitAction(250),
             this.compBot.bigArm.viperSlide.gotoVoltageAction(Constants.VIPER_SLIDES_VOLTS_MIN),
-            new InstantAction(() -> { this.compBot.setArmPos( CompBot.ArmPos.SAMPLE_DROP_HIGH );})
+            new InstantAction(() -> { this.compBot.setArmPos( CompBot.ArmPos.SAMPLE_DROPPED_HIGH );})
         );
     }
-
-
-
 
     //------------------------------------------------------------------------------------------
     //------------------------------------------------------------------------------------------
