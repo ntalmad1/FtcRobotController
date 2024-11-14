@@ -6,6 +6,8 @@ import com.qualcomm.robotcore.hardware.IMU;
 
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.YawPitchRollAngles;
+import org.firstinspires.ftc.teamcode.library.action.AbstractAction;
+import org.firstinspires.ftc.teamcode.library.action.ActionQueue;
 import org.firstinspires.ftc.teamcode.library.component.IComponent;
 import org.firstinspires.ftc.teamcode.library.component.RobotComponent;
 import org.firstinspires.ftc.teamcode.library.event.EventBus;
@@ -88,6 +90,10 @@ public abstract class  IsaacBot extends LinearOpMode implements IComponent
     private IMU imu;
 
     /**
+     */
+    private ActionQueue actionQueue;
+
+    /**
      * Constructor
      *
      */
@@ -100,6 +106,7 @@ public abstract class  IsaacBot extends LinearOpMode implements IComponent
         EventBus.init(this);
 
         this.robotComponent = new RobotComponent(this);
+        this.actionQueue = new ActionQueue();
     }
 
 //region addHandlers
@@ -552,6 +559,7 @@ public abstract class  IsaacBot extends LinearOpMode implements IComponent
     public void run () {
         this.getEventBus().run();
         this.robotComponent.run();
+        this.actionQueue.run();
     }
 
     /**
@@ -564,9 +572,8 @@ public abstract class  IsaacBot extends LinearOpMode implements IComponent
      *
      * @param action
      */
-    public void runAction (Action action) {
-//        this.actionsToRun.add(action);
-//        this.runningIsaacBotAction.markAsCompleted();
+    public void runAction (AbstractAction action) {
+        this.actionQueue.add(action);
     }
 
     /**

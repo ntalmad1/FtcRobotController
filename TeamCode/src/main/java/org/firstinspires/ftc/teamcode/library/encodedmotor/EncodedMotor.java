@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode.library.encodedmotor;
 import com.acmerobotics.roadrunner.Action;
 import com.qualcomm.robotcore.hardware.DcMotor;
 
+import org.firstinspires.ftc.teamcode.library.action.AbstractAction;
 import org.firstinspires.ftc.teamcode.library.dcmotor.DcMotorComponent;
 import org.firstinspires.ftc.teamcode.library.dcmotor.MotorPos;
 
@@ -39,7 +40,7 @@ public class EncodedMotor extends DcMotorComponent {
      *
      * @param position
      */
-    public Action gotoPositionAction (int position) {
+    public AbstractAction gotoPositionAction (int position) {
         return this.gotoPositionAction(position, 1);
     }
 
@@ -48,7 +49,7 @@ public class EncodedMotor extends DcMotorComponent {
      * @param motorPos
      * @return
      */
-    public Action gotoPositionAction(MotorPos motorPos) {
+    public AbstractAction gotoPositionAction(MotorPos motorPos) {
         if (motorPos == null) {
             return this.gotoPositionAction(this.getCurrentPosition(), 1);
         }
@@ -66,7 +67,7 @@ public class EncodedMotor extends DcMotorComponent {
      * @param power
      * @return
      */
-    public Action gotoPositionAction (int position, double power) {
+    public AbstractAction gotoPositionAction (int position, double power) {
         return new EncodedMotorGoToPositionAction(this, position, power, null);
     }
 
@@ -76,7 +77,7 @@ public class EncodedMotor extends DcMotorComponent {
      * @param power
      * @return
      */
-    public Action gotoPositionAction (int position, double power, Integer timeout) {
+    public AbstractAction gotoPositionAction (int position, double power, Integer timeout) {
         return new EncodedMotorGoToPositionAction(this, position, power, timeout);
     }
 

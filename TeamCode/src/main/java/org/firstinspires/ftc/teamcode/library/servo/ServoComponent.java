@@ -1,7 +1,6 @@
 package org.firstinspires.ftc.teamcode.library.servo;
 
-import com.acmerobotics.roadrunner.Action;
-
+import org.firstinspires.ftc.teamcode.library.action.AbstractAction;
 import org.firstinspires.ftc.teamcode.library.component.Component;
 import org.firstinspires.ftc.teamcode.library.utility.Control;
 
@@ -114,7 +113,7 @@ public class ServoComponent extends Component {
      * @param servoPos
      * @return
      */
-    public Action gotoPositionAction(ServoPos servoPos) {
+    public AbstractAction gotoPositionAction(ServoPos servoPos) {
         if (servoPos == null) {
             return this.gotoPositionAction(this.getPosition(), 1);
         }
@@ -132,7 +131,7 @@ public class ServoComponent extends Component {
      * @param maxIncrement
      * @return
      */
-    public Action gotoPositionAction (double targetPosition, double maxIncrement) {
+    public AbstractAction gotoPositionAction (double targetPosition, double maxIncrement) {
         double startPosition = this.servo.getPosition();
         return new ServoGoToPositionAction(this, maxIncrement, startPosition, targetPosition);
     }

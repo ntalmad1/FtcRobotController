@@ -29,6 +29,10 @@ public abstract class AbstractAction implements Action {
 
     /**
      */
+    protected boolean blocking = false;
+
+    /**
+     */
     protected boolean completed = false;
 
     /**
@@ -38,6 +42,14 @@ public abstract class AbstractAction implements Action {
     /**
      */
     private HandlerManager handlerManager = new HandlerManager();
+
+    /**
+     */
+    private TelemetryPacket telemetryPacket;
+
+    /**
+     */
+    private boolean useEvents = false;
 
     /**
      *
@@ -60,6 +72,14 @@ public abstract class AbstractAction implements Action {
      *
      * @return
      */
+    public TelemetryPacket getTelemetryPacket() {
+        return this.telemetryPacket;
+    }
+
+    /**
+     *
+     * @return
+     */
     public boolean isCompleted() {
         return this.completed;
     }
@@ -68,7 +88,7 @@ public abstract class AbstractAction implements Action {
      *
      */
     public void markAsCompleted () {
-        this.markAsCompleted(true);
+        this.markAsCompleted(this.useEvents);
     }
 
     /**
@@ -98,6 +118,10 @@ public abstract class AbstractAction implements Action {
         return this.initialized;
     }
 
+    public boolean isBlocking () {
+        return this.blocking;
+    }
+
     /**
      *
      * @param initialized
@@ -119,12 +143,20 @@ public abstract class AbstractAction implements Action {
      * @return
      */
     public boolean run(TelemetryPacket tp) {
+        this.telemetryPacket = tp;
+
         if (!this.initialized) {
             this.init();
             this.setInitialized(true);
         }
 
-        return this.run();
+        boolean result = this.run();
+
+        if (result == STOP) {
+            this.markAsCompleted();
+        }
+
+        return result;
     }
 
     /**
@@ -132,4 +164,12 @@ public abstract class AbstractAction implements Action {
      * @return
      */
     public abstract boolean run();
+
+    /**
+     *
+     * @param blocking
+     */
+    protected void setBlocking(boolean blocking) {
+        this.blocking = blocking;
+    }
 }
