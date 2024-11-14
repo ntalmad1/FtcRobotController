@@ -7,6 +7,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.teamcode.library.action.AbstractAction;
 import org.firstinspires.ftc.teamcode.library.command.AbstractSynchronousCommand;
+import org.firstinspires.ftc.teamcode.library.utility.Direction;
 
 /**
  *
@@ -27,7 +28,7 @@ public class EncodedMotorGoToPositionAction extends AbstractAction {
 
     /**
      */
-    private Integer timeout = 300;
+    private Integer timeout;
 
     /**
      */
@@ -37,6 +38,11 @@ public class EncodedMotorGoToPositionAction extends AbstractAction {
      */
     private ElapsedTime timer;
 
+    /**
+     */
+    private Direction direction;
+
+
 
     /**
      *
@@ -44,10 +50,19 @@ public class EncodedMotorGoToPositionAction extends AbstractAction {
      * @param position
      * @param power
      */
-    public EncodedMotorGoToPositionAction(EncodedMotor motor, int position, double power) {
+    public EncodedMotorGoToPositionAction(EncodedMotor motor, int position, double power, Integer timeout) {
         this.motor = motor;
         this.position = position;
         this.power = power;
+
+        if (this.motor.getCurrentPosition() <= this.position) {
+            direction = Direction.FORWARD;
+        } else {
+            direction = Direction.REVERSE;
+        }
+
+
+        this.timeout = timeout;
 
 
     }
@@ -65,7 +80,7 @@ public class EncodedMotorGoToPositionAction extends AbstractAction {
      */
     @Override
     public boolean run() {
-        if (this.withinTolerance()) {
+        if (this.timeout != null && this.withinTolerance()) {
             if (this.timer == null) {
                 this.timer = new ElapsedTime();
                 this.timer.reset();
@@ -74,11 +89,12 @@ public class EncodedMotorGoToPositionAction extends AbstractAction {
 
         if (!this.isTimedOut() && this.motor.isBusy())
         {
-            if (this.motor.getConfig().debug) {
-                this.motor.getRobot().telemetry.addData("Running to: ",  " %7d", position);
-                this.motor.getRobot().telemetry.addData("Currently at: ",  " at %7d", this.motor.getCurrentPosition());
-                this.motor.getRobot().telemetry.addData("Motor Power: ", " %f", this.motor.getPower());
-                this.motor.getRobot().telemetry.update();
+            if (true && this.motor.getConfig().debug) {
+                this.motor.getRobot().telemetry.addData("Running to: ",  position);
+                this.motor.getRobot().telemetry.addData("Currently at: ", this.motor.getCurrentPosition());
+                this.motor.getRobot().telemetry.addData("Motor Power: ", this.motor.getPower());
+                this.motor.getRobot().telemetry.addData("Motor Direction: ", this.motor.getDirection());
+                //this.motor.getRobot().telemetry.update();
             }
 
             return CONTIUE;
@@ -101,6 +117,7 @@ public class EncodedMotorGoToPositionAction extends AbstractAction {
         boolean timedOut = this.timer.milliseconds() > this.timeout;
         if (timedOut) {
             this.motor.setPower(0);
+            this.timer = null;
         }
 
         return timedOut;
@@ -111,6 +128,11 @@ public class EncodedMotorGoToPositionAction extends AbstractAction {
      * @return
      */
     private boolean withinTolerance() {
-        return position - this.motor.getCurrentPosition() <= tolerance || Math.abs(this.motor.getCurrentPosition() - position) <= tolerance;
+//        return position - this.motor.getCurrentPosition() <= tolerance || Math.abs(this.motor.getCurrentPosition() - position) <= tolerance;
+        if (Direction.FORWARD.equals(direction)) { // Opening
+            return this.motor.getCurrentPosition() >= position - tolerance;
+        } else {
+            return this.motor.getCurrentPosition() <= position + tolerance;
+        }
     }
 }

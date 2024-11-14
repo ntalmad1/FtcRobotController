@@ -79,7 +79,7 @@ public class ActionFactory {
                         ActionFactory.this.compBot.getConfig().littleArmConfig.clawPincherConfig.homePosition, 1)
             ),
             new WaitAction(1000),
-            ActionFactory.this.compBot.bigArm.mainBoom.gotoPositionAction(0),
+            ActionFactory.this.compBot.bigArm.mainBoom.gotoPositionAction(0, 1, 300),
             new InstantAction(() -> { ActionFactory.this.compBot.setArmPos(CompBot.ArmPos.INIT_READY); })
 
         );
@@ -109,7 +109,7 @@ public class ActionFactory {
                             this.compBot.littleArm.clawPincher.gotoPositionAction(Constants.SAMPLE_PICK_READY.clawPincherPos)),
                     new InstantAction(() -> { this.compBot.setArmPos(CompBot.ArmPos.SAMPLE_PICK_READY); }),
                     this.compBot.bigArm.mainBoom.gotoPositionAction(100, 1),
-                    this.compBot.bigArm.mainBoom.gotoPositionAction(0, 0.5));
+                    this.compBot.bigArm.mainBoom.gotoPositionAction(0, 0.5, 300));
         }
     }
 
@@ -159,7 +159,7 @@ public class ActionFactory {
         return new SequentialAction(
                 this.compBot.bigArm.viperSlide.gotoVoltageAction(Constants.VIPER_SLIDES_VOLTS_MIN),
                 new ParallelAction(
-                    this.compBot.bigArm.mainBoom.gotoPositionAction(Constants.MAIN_BOOM_MAX_TICS, 1),
+                    this.compBot.bigArm.mainBoom.gotoPositionAction(Constants.MAIN_BOOM_MAX_TICS, 1, 300),
                     new SequentialAction(
                         new WaitAction(500),
                         this.compBot.littleArm.doubleServos.gotoPositionAction(Constants.SAMPLE_PLACE_HIGH_READY.doubleServosPos),
@@ -198,7 +198,7 @@ public class ActionFactory {
         return new SequentialAction(
                 new InstantAction(() -> { this.compBot.setArmPos(CompBot.ArmPos.SPECIMEN_PICK_READY); }),
                 new ParallelAction(
-                        this.compBot.bigArm.mainBoom.gotoPositionAction(Constants.MAIN_BOOM_MAX_TICS),
+                        this.compBot.bigArm.mainBoom.gotoPositionAction(Constants.MAIN_BOOM_MAX_TICS, 1, 300),
                         this.compBot.bigArm.viperSlide.gotoVoltageAction(Constants.SPECIMEN_PICK_READY.vSlideVolts),
                         this.compBot.littleArm.doubleServos.gotoPositionAction(Constants.SPECIMEN_PICK_READY.doubleServosPos),
                         this.compBot.littleArm.middleServo.gotoPositionAction(Constants.SPECIMEN_PICK_READY.middleServoPos),
@@ -229,7 +229,7 @@ public class ActionFactory {
                 this.compBot.littleArm.clawPincher.gotoPositionAction(Constants.CLAW_PINCHER_OPEN_POS, 1),
                 new WaitAction(250),
                 new InstantAction(() -> { this.compBot.setArmPos(CompBot.ArmPos.SPECIMEN_PICK_READY); }),
-                this.compBot.bigArm.mainBoom.gotoPositionAction(Constants.MAIN_BOOM_MAX_TICS)
+                this.compBot.bigArm.mainBoom.gotoPositionAction(Constants.MAIN_BOOM_MAX_TICS, 1, 300)
             );
     }
 
@@ -265,7 +265,7 @@ public class ActionFactory {
                 new WaitAction(400),
                 this.compBot.bigArm.viperSlide.gotoVoltageAction(Constants.VIPER_SLIDES_VOLTS_MIN, 0.75),
                 new ParallelAction(
-                        this.compBot.bigArm.mainBoom.gotoPositionAction(Constants.SPECIMEN_PICK_READY.mainBoomPos.getPos(), 0.75),
+                        this.compBot.bigArm.mainBoom.gotoPositionAction(Constants.SPECIMEN_PICK_READY.mainBoomPos.getPos(), 0.75, 300),
                         this.compBot.littleArm.doubleServos.gotoPositionAction(Constants.SPECIMEN_PICK_READY.doubleServosPos),
                         this.compBot.littleArm.middleServo.gotoPositionAction(Constants.SPECIMEN_PICK_READY.middleServoPos)
                 ),

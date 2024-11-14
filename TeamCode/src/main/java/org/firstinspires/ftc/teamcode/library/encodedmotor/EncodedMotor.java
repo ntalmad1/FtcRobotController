@@ -85,7 +85,17 @@ public class EncodedMotor extends DcMotorComponent {
      * @return
      */
     public Action gotoPositionAction (int position, double power) {
-        return new EncodedMotorGoToPositionAction(this, position, power);
+        return new EncodedMotorGoToPositionAction(this, position, power, null);
+    }
+
+    /**
+     *
+     * @param position
+     * @param power
+     * @return
+     */
+    public Action gotoPositionAction (int position, double power, Integer timeout) {
+        return new EncodedMotorGoToPositionAction(this, position, power, timeout);
     }
 
     /**
