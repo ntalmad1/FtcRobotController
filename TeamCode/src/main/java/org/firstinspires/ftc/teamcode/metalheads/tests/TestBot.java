@@ -10,6 +10,8 @@ import org.firstinspires.ftc.teamcode.library.action.WaitAction;
 import org.firstinspires.ftc.teamcode.library.encodedmotor.EncodedMotor;
 import org.firstinspires.ftc.teamcode.library.encodedmotor.EncodedMotorConfig;
 import org.firstinspires.ftc.teamcode.library.utility.Control;
+import org.firstinspires.ftc.teamcode.metalheads.compbot.CompBotConfig;
+import org.firstinspires.ftc.teamcode.metalheads.compbot.Constants;
 
 /**
  *
@@ -19,19 +21,7 @@ public class TestBot extends IsaacBot {
 
     /**
      */
-    private EncodedMotor motor0;
-
-    /**
-     */
-    private EncodedMotor motor1;
-
-    /**
-     */
-    private EncodedMotorConfig motorConfig0;
-
-    /**
-     */
-    private EncodedMotorConfig motorConfig1;
+    private EncodedMotor mainBoom;
 
     /**
      * Constructor
@@ -40,26 +30,9 @@ public class TestBot extends IsaacBot {
     public TestBot () {
         super();
 
-        motorConfig0 = new EncodedMotorConfig(this);
+        CompBotConfig compBotConfig = new CompBotConfig(this);
 
-        motorConfig0.motorName = "motor0";
-        motorConfig0.minTics = 0;
-        motorConfig0.maxTics = 10000;
-        motorConfig0.brakeOn = false;
-        motorConfig0.control = Control.Gp1_LeftStickY;
-        motorConfig0.scale = 200;
-        //motorConfig0.debug = true;
-
-
-        motorConfig1 = new EncodedMotorConfig(this);
-
-        motorConfig1.motorName = "motor1";
-        motorConfig1.minTics = 0;
-        motorConfig1.maxTics = 10000;
-        motorConfig1.brakeOn = false;
-        motorConfig1.control = Control.Gp1_RightStickY;
-        motorConfig1.scale = 200;
-        //motorConfig1.debug = true;
+        mainBoom = new EncodedMotor(compBotConfig.bigArmConfig.mainBoomConfig);
     }
 
     /**
@@ -69,11 +42,15 @@ public class TestBot extends IsaacBot {
     public void initBot () {
         super.initBot();
 
-        this.motor0 = new EncodedMotor(motorConfig0);
-        this.motor0.init();
+        this.mainBoom.init();
 
-        this.motor1 = new EncodedMotor(motorConfig1);
-        this.motor1.init();
+        this.mainBoom.addGp1_Left_Bumper_UpHandler(event -> {
+            this.runAction(this.mainBoom.gotoPositionAction(Constants.MAIN_BOOM_MAX_TICS));
+        });
+
+        this.mainBoom.addGp1_Right_Bumper_UpHandler(event -> {
+            this.runAction(this.mainBoom.gotoPositionAction(Constants.MAIN_BOOM_MIN_TICS));
+        });
     }
 
     /**
@@ -81,18 +58,6 @@ public class TestBot extends IsaacBot {
      */
     @Override
     public void go () {
-
-        AbstractAction action =
-                new SequentialActionImpl(
-                        this.motor0.gotoPositionAction(2000),
-                        new WaitAction(1000),
-                        this.motor1.gotoPositionAction(2000),
-                    new ParallelActionImpl(
-                        this.motor0.gotoPositionAction(0),
-                        this.motor1.gotoPositionAction(0)
-                ));
-
-        this.runAction(action);
 
     }
 
@@ -103,11 +68,23 @@ public class TestBot extends IsaacBot {
     public void run () {
         super.run();
 
-        this.motor0.run();
-        this.motor1.run();
+        this.mainBoom.run();
 
-//        this.telemetry.addData("Pos: ", this.motor.getCurrentPosition());
-//        this.telemetry.update();
+        telemetry.addData("M0 Target Pos: ", this.mainBoom.getTargetPosition());
+        telemetry.addData("M0 Current Pos: ", this.mainBoom.getCurrentPosition());
+        telemetry.addData("M0 Power: ", this.mainBoom.getPower());
+        telemetry.addData("M0 Mode: ", this.mainBoom.getMotor().getMode());
+        telemetry.addData("M0 Brake: ", this.mainBoom.getMotor().getZeroPowerBehavior());
+        telemetry.addData("M0 Busy: ", this.mainBoom.getMotor().isBusy());
+        telemetry.addLine("-----");
+        telemetry.addData("M1 Target Pos: ", this.mainBoom.getSecondaryMotor().getTargetPosition());
+        telemetry.addData("M1 Current Pos: ", this.mainBoom.getSecondaryMotor().getCurrentPosition());
+        telemetry.addData("M1 Power: ", this.mainBoom.getSecondaryMotor().getPower());
+        telemetry.addData("M1 Mode: ", this.mainBoom.getSecondaryMotor().getMode());
+        telemetry.addData("M1 Brake: ", this.mainBoom.getSecondaryMotor().getZeroPowerBehavior());
+        telemetry.addData("M1 Busy: ", this.mainBoom.getSecondaryMotor().isBusy());
+
+        telemetry.update();
     }
 
 }

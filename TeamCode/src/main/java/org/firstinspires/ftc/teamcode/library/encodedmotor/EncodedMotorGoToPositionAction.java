@@ -36,6 +36,12 @@ public class EncodedMotorGoToPositionAction extends AbstractAction {
     private int lastPosEqualsCount;
 
     /**
+     */
+    private int timeoutAfterXCycles = 40;
+
+    private int startPos;
+
+    /**
      *
      * @param motor
      * @param position
@@ -52,11 +58,11 @@ public class EncodedMotorGoToPositionAction extends AbstractAction {
      *
      */
     public void init () {
+        this.startPos = this.motor.getCurrentPosition();
 
         this.motor.setTargetPosition(this.position);
         this.motor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         this.motor.setPower(1);
-
     }
 
     /**
@@ -81,18 +87,19 @@ public class EncodedMotorGoToPositionAction extends AbstractAction {
 
                 int currentPos = this.motor.getCurrentPosition();
 
-                if (currentPos == lastPos) {
-                    this.lastPosEqualsCount++;
-                } else {
-                    this.lastPos = currentPos;
-                    this.lastPosEqualsCount = 0;
-                }
+                if (currentPos < this.position + 40 && currentPos > this.position - 40) {
+                    if (currentPos == lastPos) {
+                        this.lastPosEqualsCount++;
+                    } else {
+                        this.lastPos = currentPos;
+                        this.lastPosEqualsCount = 0;
+                    }
 
-                if (this.lastPosEqualsCount > 5){
-                    this.motor.setPower(0);
-                    this.motor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-
-                    return STOP;
+                    if (this.lastPosEqualsCount > timeoutAfterXCycles) {
+                        //this.motor.setPower(0);
+                        this.motor.getRobot().telemetry.log().add("TIMED_OUT!!");
+                        return STOP;
+                    }
                 }
             }
 
@@ -100,8 +107,8 @@ public class EncodedMotorGoToPositionAction extends AbstractAction {
         }
         else {
             if (this.timeout != null) {
-                this.motor.setPower(0);
-                this.motor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+                //this.motor.setPower(0);
+                this.motor.getRobot().telemetry.log().add("STOPPED");
             }
 
             return STOP;

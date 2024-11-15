@@ -64,7 +64,7 @@ public class ServoComponentConfig {
 
     /**
      */
-    public boolean lazyInit = true;
+    public boolean lazyInit = false;
 
     /**
      */
