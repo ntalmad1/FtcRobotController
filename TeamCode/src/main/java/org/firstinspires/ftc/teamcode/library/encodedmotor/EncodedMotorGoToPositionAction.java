@@ -88,11 +88,11 @@ public class EncodedMotorGoToPositionAction extends AbstractAction {
             }
 
             if (this.timeout != null) {
-
                 int currentPos = this.motor.getCurrentPosition();
 
                 if ((startPos < currentPos && currentPos > this.targetPosition - 40)
                    || (startPos > currentPos && currentPos < this.targetPosition + 40)) {
+
                     if (currentPos == lastPos) {
                         this.lastPosEqualsCount++;
                     } else {
@@ -101,14 +101,7 @@ public class EncodedMotorGoToPositionAction extends AbstractAction {
                     }
 
                     if (this.lastPosEqualsCount > timeoutAfterXCycles) {
-                        if (this.targetPosition != 0 && this.motor.isBrakeOn())
-                        {
-                            this.motor.setTargetPosition(this.motor.getCurrentPosition());
-                            this.motor.setPower(1);
-                        }
-                        else {
-                            this.motor.setPower(0);
-                        }
+                        this.motor.setPower(0);
                         return STOP;
                     }
                 }
@@ -119,19 +112,8 @@ public class EncodedMotorGoToPositionAction extends AbstractAction {
         else {
 
             if (this.startPos != this.motor.getCurrentPosition()) {
-               // if (this.timeout != null) {
-                    if (this.targetPosition != 0 && this.motor.isBrakeOn())
-                    {
-                        this.motor.setTargetPosition(this.motor.getCurrentPosition());
-                        this.motor.setPower(1);
-                    }
-                    else {
-                        this.motor.setPower(0);
-                    }
-               // }
-
+                this.motor.getSecondaryMotor().setPower(0);
                 return STOP;
-
             }
 
             return CONTIUE;
