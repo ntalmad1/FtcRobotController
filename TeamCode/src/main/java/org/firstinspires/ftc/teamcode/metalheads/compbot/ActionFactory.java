@@ -1,9 +1,5 @@
 package org.firstinspires.ftc.teamcode.metalheads.compbot;
 
-import com.acmerobotics.roadrunner.Action;
-import com.acmerobotics.roadrunner.InstantAction;
-import com.acmerobotics.roadrunner.SequentialAction;
-
 import org.firstinspires.ftc.teamcode.library.action.AbstractAction;
 import org.firstinspires.ftc.teamcode.library.action.InstantActionImpl;
 import org.firstinspires.ftc.teamcode.library.action.ParallelActionImpl;
@@ -98,8 +94,8 @@ public class ActionFactory {
                             this.compBot.littleArm.clawRotator.gotoPositionAction(Constants.SAMPLE_PICK_READY.clawRotatorPos),
                             this.compBot.littleArm.clawPincher.gotoPositionAction(Constants.SAMPLE_PICK_READY.clawPincherPos)),
                     new InstantActionImpl(() -> { this.compBot.setArmPos(CompBot.ArmPos.SAMPLE_PICK_READY); }),
-                    this.compBot.bigArm.mainBoom.gotoPositionAction(100, 1),
-                    this.compBot.bigArm.mainBoom.gotoPositionAction(0, 0.5, 300));
+                    this.compBot.bigArm.mainBoom.gotoPositionAction(0, 1, 300));
+
         }
     }
 

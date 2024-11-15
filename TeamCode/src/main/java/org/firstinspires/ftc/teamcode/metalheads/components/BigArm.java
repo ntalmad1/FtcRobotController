@@ -67,7 +67,8 @@ public class BigArm extends Component {
 
         if (this.isDebug()) {
             telemetry.addData("Main Boom Position:", this.mainBoom.getCurrentPosition());
-            telemetry.addData("Viper Slide Volts:", this.viperSlide.getVoltage());
+            //telemetry.addData("Viper Slide Volts:", this.viperSlide.getVoltage());
+            telemetry.addData("Viper Slide Position:", this.viperSlide.getCurrentPosition());
             telemetry.addData("Touch Sensor: ", this.viperSlide.getTouchSensor().isPressed());
         }
     }

@@ -1,10 +1,8 @@
 package org.firstinspires.ftc.teamcode.library.encodedmotor;
 
 import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.teamcode.library.action.AbstractAction;
-import org.firstinspires.ftc.teamcode.library.utility.Direction;
 
 /**
  *
@@ -17,7 +15,7 @@ public class EncodedMotorGoToPositionAction extends AbstractAction {
 
     /**
      */
-    private int position;
+    private int targetPosition;
 
     /**
      */
@@ -37,7 +35,7 @@ public class EncodedMotorGoToPositionAction extends AbstractAction {
 
     /**
      */
-    private int timeoutAfterXCycles = 40;
+    private int timeoutAfterXCycles = 10;
 
     private int startPos;
 
@@ -49,7 +47,7 @@ public class EncodedMotorGoToPositionAction extends AbstractAction {
      */
     public EncodedMotorGoToPositionAction(EncodedMotor motor, int position, double power, Integer timeout) {
         this.motor = motor;
-        this.position = position;
+        this.targetPosition = position;
         this.power = power;
         this.timeout = timeout;
     }
@@ -60,9 +58,9 @@ public class EncodedMotorGoToPositionAction extends AbstractAction {
     public void init () {
         this.startPos = this.motor.getCurrentPosition();
 
-        this.motor.setTargetPosition(this.position);
+        this.motor.setTargetPosition(this.targetPosition);
         this.motor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        this.motor.setPower(1);
+        this.motor.setPower(power);
     }
 
     /**
@@ -71,12 +69,18 @@ public class EncodedMotorGoToPositionAction extends AbstractAction {
      */
     @Override
     public boolean run() {
+        if (!this.motor.getMotor().getMode().equals(DcMotor.RunMode.RUN_TO_POSITION)) {
+            this.motor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        }
 
+        if (this.motor.getPower() != power) {
+            this.motor.setPower(power);
+        }
 
         if (this.motor.isBusy())
         {
             if (this.motor.getConfig().debug) {
-                this.motor.getRobot().telemetry.addData("Running to: ",  position);
+                this.motor.getRobot().telemetry.addData("Running to: ", targetPosition);
                 this.motor.getRobot().telemetry.addData("Currently at: ", this.motor.getCurrentPosition());
                 this.motor.getRobot().telemetry.addData("Motor Power: ", this.motor.getPower());
                 this.motor.getRobot().telemetry.addData("Motor Direction: ", this.motor.getDirection());
@@ -87,7 +91,8 @@ public class EncodedMotorGoToPositionAction extends AbstractAction {
 
                 int currentPos = this.motor.getCurrentPosition();
 
-                if (currentPos < this.position + 40 && currentPos > this.position - 40) {
+                if ((startPos < currentPos && currentPos > this.targetPosition - 40)
+                   || (startPos > currentPos && currentPos < this.targetPosition + 40)) {
                     if (currentPos == lastPos) {
                         this.lastPosEqualsCount++;
                     } else {
@@ -96,7 +101,7 @@ public class EncodedMotorGoToPositionAction extends AbstractAction {
                     }
 
                     if (this.lastPosEqualsCount > timeoutAfterXCycles) {
-                        //this.motor.setPower(0);
+                        this.motor.setPower(0);
                         this.motor.getRobot().telemetry.log().add("TIMED_OUT!!");
                         return STOP;
                     }
@@ -106,12 +111,17 @@ public class EncodedMotorGoToPositionAction extends AbstractAction {
             return CONTIUE;
         }
         else {
-            if (this.timeout != null) {
-                //this.motor.setPower(0);
-                this.motor.getRobot().telemetry.log().add("STOPPED");
+
+            if (this.startPos != this.motor.getCurrentPosition()) {
+                if (this.timeout != null) {
+                    this.motor.setPower(0);
+                }
+
+                return STOP;
+
             }
 
-            return STOP;
+            return CONTIUE;
         }
     }
 }
