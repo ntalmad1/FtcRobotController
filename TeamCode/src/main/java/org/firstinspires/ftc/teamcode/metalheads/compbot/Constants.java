@@ -63,10 +63,7 @@ public class Constants {
         @Override
         public void setValues() {
             mainBoomPos = new MotorPos(Constants.MAIN_BOOM_MIN_TICS);
-            /*
-                TODO: GET ACTUAL VALUE
-             */
-            vSlidePos = new MotorPos(300);
+            vSlidePos = new MotorPos(230);
             doubleServosPos = new ServoPos(0.617);
             middleServoPos = new ServoPos(0.783);
             clawRotatorPos = new ServoPos(Constants.CLAW_ROTATOR_180_DEG);
@@ -133,10 +130,7 @@ public class Constants {
         @Override
         public void setValues() {
             mainBoomPos = new MotorPos(526);
-            /*
-                TODO: GET ACTUAL VALUE
-             */
-            vSlidePos = new MotorPos(1000);
+            vSlidePos = new MotorPos(1271);
             doubleServosPos = new ServoPos(0.296);
             middleServoPos = new ServoPos(0.0);
             clawRotatorPos = new ServoPos(Constants.CLAW_ROTATOR_0_DEG);
@@ -150,10 +144,7 @@ public class Constants {
         @Override
         public void setValues() {
             mainBoomPos = new MotorPos(669);
-            /*
-                TODO: GET ACTUAL VALUE
-             */
-            vSlidePos = new MotorPos(0);
+            vSlidePos = new MotorPos(1920);
             doubleServosPos = new ServoPos(0.9);
             middleServoPos = new ServoPos(0.783);
             clawRotatorPos = new ServoPos(Constants.CLAW_ROTATOR_0_DEG);
@@ -166,11 +157,8 @@ public class Constants {
     public static final PositionsStruct HANG = new PositionsStruct() {
         @Override
         public void setValues() {
-            mainBoomPos = new MotorPos(1019);
-            /*
-                TODO: GET ACTUAL VALUE
-            */
-            vSlidePos = new MotorPos(0);
+            mainBoomPos = new MotorPos(863);
+            vSlidePos = new MotorPos(935);
         }
     };
 
