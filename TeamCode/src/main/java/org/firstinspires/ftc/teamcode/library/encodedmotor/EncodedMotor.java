@@ -52,6 +52,15 @@ public class EncodedMotor extends DcMotorComponent {
 
     /**
      *
+     * @param position
+     * @return
+     */
+    public AbstractAction viperSlidesGotoPositionAction (int position) {
+        return this.viperSlidesGotoPositionAction(position, 1);
+    }
+
+    /**
+     *
      * @param motorPos
      * @return
      */
@@ -69,12 +78,39 @@ public class EncodedMotor extends DcMotorComponent {
 
     /**
      *
+     * @param motorPos
+     * @return
+     */
+    public AbstractAction viperSlidesGotoPositionAction(MotorPos motorPos) {
+        if (motorPos == null) {
+            return this.viperSlidesGotoPositionAction(this.getCurrentPosition(), 1);
+        }
+
+        if (motorPos.getPos() == null) {
+            return this.viperSlidesGotoPositionAction(this.getCurrentPosition(), motorPos.getPower());
+        }
+
+        return this.viperSlidesGotoPositionAction(motorPos.getPos(), motorPos.getPower());
+    }
+
+    /**
+     *
      * @param position
      * @param power
      * @return
      */
     public AbstractAction gotoPositionAction (int position, double power) {
         return new EncodedMotorGoToPositionAction(this, position, power, null);
+    }
+
+    /**
+     *
+     * @param position
+     * @param power
+     * @return
+     */
+    public AbstractAction viperSlidesGotoPositionAction (int position, double power) {
+        return new ViperSlidsGoToPositionAction(this, position, power);
     }
 
     /**
@@ -197,16 +233,17 @@ public class EncodedMotor extends DcMotorComponent {
     public void run () {
         super.run();
 
-        if (this.touchSensor != null && this.touchSensor.isPressed() && this.toggle) {
-            this.toggle = false;
-            this.setPower(0);
-            this.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-            this.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        }
-
-        if (this.touchSensor != null && !this.touchSensor.isPressed()) {
-            toggle = true;
-        }
+//        if (this.touchSensor != null && this.touchSensor.isPressed() && this.toggle) {
+//            this.toggle = false;
+//            this.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+//            this.setTargetPosition(10);
+//            this.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+//            this.setPower(1);
+//        }
+//
+//        if (this.touchSensor != null && !this.touchSensor.isPressed()) {
+//            toggle = true;
+//        }
     }
 
     /**
