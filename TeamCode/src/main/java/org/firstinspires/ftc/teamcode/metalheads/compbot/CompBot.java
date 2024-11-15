@@ -92,7 +92,7 @@ public abstract class CompBot extends IsaacBot {
             this.config = new CompBotConfig(this);
         }
 
-        this.config.debugDriveTrain = false;
+        this.config.debugDriveTrain = true;
         this.config.debugBigArm = true;
         this.config.debugLittleArm = true;
         this.config.debugAll = false;

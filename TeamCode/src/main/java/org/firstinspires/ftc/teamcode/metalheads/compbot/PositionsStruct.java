@@ -14,7 +14,8 @@ public abstract class PositionsStruct {
 
     /**
      */
-    public Double vSlideVolts;
+    //public Double vSlideVolts;
+    public MotorPos vSlidePos;
 
     /**
      */

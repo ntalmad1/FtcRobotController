@@ -1,13 +1,10 @@
 package org.firstinspires.ftc.teamcode.library.potentiometermotor;
 
-import com.acmerobotics.roadrunner.Action;
 import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.TouchSensor;
 
 import org.firstinspires.ftc.teamcode.library.action.AbstractAction;
 import org.firstinspires.ftc.teamcode.library.encodedmotor.EncodedMotor;
 import org.firstinspires.ftc.teamcode.library.potentiometer.Potentiometer;
-import org.firstinspires.ftc.teamcode.metalheads.compbot.Constants;
 
 /**
  *
@@ -21,10 +18,6 @@ public class PotentiometerMotor extends EncodedMotor {
     /**
      */
     private boolean holding;
-
-    /**
-     */
-    private TouchSensor touchSensor;
 
     /**
      * Constructor
@@ -53,14 +46,6 @@ public class PotentiometerMotor extends EncodedMotor {
      */
     public PotentiometerMotorConfig getConfig () {
         return (PotentiometerMotorConfig)super.getConfig();
-    }
-
-    /**
-     *
-     * @return
-     */
-    public TouchSensor getTouchSensor() {
-        return this.touchSensor;
     }
 
     /**
@@ -248,11 +233,4 @@ public class PotentiometerMotor extends EncodedMotor {
         super.run();
     }
 
-    /**
-     *
-     * @parm sensor
-     */
-    public void setTouchSensor(TouchSensor sensor) {
-        this.touchSensor = sensor;
-    }
 }

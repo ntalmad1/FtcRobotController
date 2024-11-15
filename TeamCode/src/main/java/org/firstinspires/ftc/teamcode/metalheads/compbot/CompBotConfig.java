@@ -99,10 +99,10 @@ public class CompBotConfig {
 
         // viper slides
         this.bigArmConfig.viperSlideConfig = new PotentiometerMotorConfig(robot);
-        this.bigArmConfig.viperSlideConfig.minTics = -100000;
-        this.bigArmConfig.viperSlideConfig.maxTics = 100000;
-        this.bigArmConfig.viperSlideConfig.minVolts = Constants.VIPER_SLIDES_VOLTS_MIN;
-        this.bigArmConfig.viperSlideConfig.maxVolts = Constants.VIPER_SLIDES_VOLTS_MAX;
+        this.bigArmConfig.viperSlideConfig.minTics = Constants.VIPER_SLIDES_MIN_TICS;
+        this.bigArmConfig.viperSlideConfig.maxTics = Constants.VIPER_SLIDES_MAX_TICS;
+        //this.bigArmConfig.viperSlideConfig.minVolts = Constants.VIPER_SLIDES_VOLTS_MIN;
+        //this.bigArmConfig.viperSlideConfig.maxVolts = Constants.VIPER_SLIDES_VOLTS_MAX;
         this.bigArmConfig.viperSlideConfig.motorName = "rightSlide";
         this.bigArmConfig.viperSlideConfig.brakeOn = true;
         this.bigArmConfig.viperSlideConfig.initialMotorDirection = DcMotorSimple.Direction.REVERSE;
@@ -111,8 +111,8 @@ public class CompBotConfig {
         this.bigArmConfig.viperSlideConfig.secondaryMotorName = "leftSlide";
         this.bigArmConfig.viperSlideConfig.secondaryInitialMotorDirection = DcMotorSimple.Direction.FORWARD;
 
-        this.bigArmConfig.viperSlideConfig.potentiometerConfig = new PotentiometerConfig(robot);
-        this.bigArmConfig.viperSlideConfig.potentiometerConfig.potentiometerName = "pot";
+       // this.bigArmConfig.viperSlideConfig.potentiometerConfig = new PotentiometerConfig(robot);
+       // this.bigArmConfig.viperSlideConfig.potentiometerConfig.potentiometerName = "pot";
     }
 
     /**

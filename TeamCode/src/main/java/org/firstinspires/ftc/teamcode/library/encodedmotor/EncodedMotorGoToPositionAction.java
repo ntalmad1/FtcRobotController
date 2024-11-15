@@ -101,8 +101,14 @@ public class EncodedMotorGoToPositionAction extends AbstractAction {
                     }
 
                     if (this.lastPosEqualsCount > timeoutAfterXCycles) {
-                        this.motor.setPower(0);
-                        this.motor.getRobot().telemetry.log().add("TIMED_OUT!!");
+                        if (this.targetPosition != 0 && this.motor.isBrakeOn())
+                        {
+                            this.motor.setTargetPosition(this.motor.getCurrentPosition());
+                            this.motor.setPower(1);
+                        }
+                        else {
+                            this.motor.setPower(0);
+                        }
                         return STOP;
                     }
                 }
@@ -113,9 +119,16 @@ public class EncodedMotorGoToPositionAction extends AbstractAction {
         else {
 
             if (this.startPos != this.motor.getCurrentPosition()) {
-                if (this.timeout != null) {
-                    this.motor.setPower(0);
-                }
+               // if (this.timeout != null) {
+                    if (this.targetPosition != 0 && this.motor.isBrakeOn())
+                    {
+                        this.motor.setTargetPosition(this.motor.getCurrentPosition());
+                        this.motor.setPower(1);
+                    }
+                    else {
+                        this.motor.setPower(0);
+                    }
+               // }
 
                 return STOP;
 

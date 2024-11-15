@@ -24,7 +24,7 @@ public class BigArm extends Component {
 
     /**
      */
-    public PotentiometerMotor viperSlide;
+    public EncodedMotor viperSlide;
 
     /**
      * Constructor
@@ -37,7 +37,7 @@ public class BigArm extends Component {
         this.config = bigArmConfig;
 
         this.mainBoom = new EncodedMotor(this.config.mainBoomConfig);
-        this.viperSlide = new PotentiometerMotor(this.config.viperSlideConfig);
+        this.viperSlide = new EncodedMotor(this.config.viperSlideConfig);
     }
 
     /**
@@ -67,6 +67,7 @@ public class BigArm extends Component {
 
         if (this.isDebug()) {
             telemetry.addData("Main Boom Position:", this.mainBoom.getCurrentPosition());
+            telemetry.addData("Main Boom Brake:", this.mainBoom.isBrakeOn());
             //telemetry.addData("Viper Slide Volts:", this.viperSlide.getVoltage());
             telemetry.addData("Viper Slide Position:", this.viperSlide.getCurrentPosition());
             telemetry.addData("Touch Sensor: ", this.viperSlide.getTouchSensor().isPressed());

@@ -6,6 +6,7 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 
 import org.firstinspires.ftc.teamcode.library.IsaacBot;
+import org.firstinspires.ftc.teamcode.library.encodedmotor.EncodedMotor;
 import org.firstinspires.ftc.teamcode.library.encodedmotor.EncodedMotorConfig;
 import org.firstinspires.ftc.teamcode.library.potentiometer.PotentiometerConfig;
 import org.firstinspires.ftc.teamcode.library.potentiometermotor.PotentiometerMotor;
@@ -21,23 +22,22 @@ public class ViperSlideCalib extends IsaacBot {
 
     /**
      */
-    private PotentiometerMotor motor;
+    private EncodedMotor motor;
 
-    private PotentiometerMotorConfig config;
+    private EncodedMotorConfig config;
 
     /**
+     *
      */
-    private PotentiometerMotorConfig motorName;
-
     public ViperSlideCalib() {
         super();
 
-        PotentiometerMotorConfig config = new PotentiometerMotorConfig(this);
-        config.minTics = -100000;
+        EncodedMotorConfig config = new EncodedMotorConfig(this);
+        config.minTics = 0;
         config.maxTics = 100000;
 
-        config.minVolts = 0.456;
-        config.maxVolts = 1.284;
+//        config.minVolts = 0.456;
+//        config.maxVolts = 1.284;
         config.motorName = "rightSlide";
         config.control = Control.Gp1_LeftStickY;
         config.brakeOn = true;
@@ -48,8 +48,8 @@ public class ViperSlideCalib extends IsaacBot {
         config.secondaryMotorName = "leftSlide";
         config.secondaryInitialMotorDirection = DcMotorSimple.Direction.FORWARD;
 
-        config.potentiometerConfig = new PotentiometerConfig(this);
-        config.potentiometerConfig.potentiometerName = "pot";
+//        config.potentiometerConfig = new PotentiometerConfig(this);
+//        config.potentiometerConfig.potentiometerName = "pot";
 
         this.config = config;
     }
@@ -60,7 +60,7 @@ public class ViperSlideCalib extends IsaacBot {
     public void initBot() {
         super.initBot();
 
-        this.motor = new PotentiometerMotor(config);
+        this.motor = new EncodedMotor(config);
         this.motor.init();
     }
 
@@ -72,10 +72,10 @@ public class ViperSlideCalib extends IsaacBot {
 
         this.motor.run();
 
-        this.telemetry.addData("Direction:", this.motor.getDirection());
+       // this.telemetry.addData("Direction:", this.motor.getDirection());
         this.telemetry.addData("Position:", this.motor.getCurrentPosition());
-        this.telemetry.addData("Voltage:", this.motor.getVoltage());
-        this.telemetry.addData("Power:", this.motor.getPower());
+       // this.telemetry.addData("Voltage:", this.motor.getVoltage());
+       // this.telemetry.addData("Power:", this.motor.getPower());
         this.telemetry.update();
     }
 
