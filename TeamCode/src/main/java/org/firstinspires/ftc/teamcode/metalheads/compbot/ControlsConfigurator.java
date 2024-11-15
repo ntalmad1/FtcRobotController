@@ -76,12 +76,15 @@ public class ControlsConfigurator {
                 power = (pos - (deadZone * -1)) / (1 - deadZone);
             }
 
-            this.compBot.bigArm.mainBoom.move(power);
+            this.compBot.bigArm.mainBoom.move(-power);
         });
 
 
         // viper slides
-        this.compBot.bigArm.viperSlide.addControl(Control.Gp2_RightStickX);
+        this.compBot.bigArm.viperSlide.addGp2_RightStick_X_Handler(event -> {
+            this.compBot.bigArm.viperSlide.move(-event.getPosition());
+        });
+        //this.compBot.bigArm.viperSlide.addControl(Control.Gp2_RightStickX);
 
         // double servos and middle servo
         this.gp2_Dpad();
