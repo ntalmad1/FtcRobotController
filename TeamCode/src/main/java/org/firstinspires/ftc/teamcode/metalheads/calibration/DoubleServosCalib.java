@@ -1,16 +1,14 @@
 package org.firstinspires.ftc.teamcode.metalheads.calibration;
 
-import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-import com.qualcomm.robotcore.hardware.Servo;
 
 import org.firstinspires.ftc.teamcode.library.IsaacBot;
 import org.firstinspires.ftc.teamcode.library.event.gp1_dpad_press.gp1_dpad_down_press.Gp1_Dpad_Down_PressEvent;
 import org.firstinspires.ftc.teamcode.library.event.gp1_dpad_press.gp1_dpad_down_press.Gp1_Dpad_Down_PressHandler;
 import org.firstinspires.ftc.teamcode.library.event.gp1_dpad_press.gp1_dpad_up_press.Gp1_Dpad_Up_PressEvent;
 import org.firstinspires.ftc.teamcode.library.event.gp1_dpad_press.gp1_dpad_up_press.Gp1_Dpad_Up_PressHandler;
-import org.firstinspires.ftc.teamcode.library.rotator.Rotator;
-import org.firstinspires.ftc.teamcode.library.rotator.RotatorConfig;
+import org.firstinspires.ftc.teamcode.library.servo.ServoComponent;
+import org.firstinspires.ftc.teamcode.library.servo.ServoComponentConfig;
 import org.firstinspires.ftc.teamcode.library.utility.Control;
 
 /**
@@ -30,9 +28,9 @@ import org.firstinspires.ftc.teamcode.library.utility.Control;
 //@Disabled
 public class DoubleServosCalib extends IsaacBot {
 
-    private Rotator doubleServos;
+    private ServoComponent doubleServos;
 
-    private RotatorConfig config;
+    private ServoComponentConfig config;
 
     private double gamePadIncrement = 0.006;
 
@@ -43,7 +41,7 @@ public class DoubleServosCalib extends IsaacBot {
     public DoubleServosCalib(){
         super();
 
-        config = new RotatorConfig(this);
+        config = new ServoComponentConfig(this);
 
         config.servoName = "leftBoom";
 
@@ -69,7 +67,7 @@ public class DoubleServosCalib extends IsaacBot {
     public void initBot() {
         super.initBot();
 
-        this.doubleServos = new Rotator(config);
+        this.doubleServos = new ServoComponent(config);
         this.doubleServos.init();
 
         this.addGp1_Dpad_Down_PressHandler(new Gp1_Dpad_Down_PressHandler() {
@@ -79,7 +77,7 @@ public class DoubleServosCalib extends IsaacBot {
                 if (newPos < config.minPosition) newPos = config.minPosition;
                 if (newPos > config.maxPosition) newPos = config.maxPosition;
 
-                doubleServos.setServoPosition(newPos);
+                doubleServos.setPosition(newPos);
             }
         });
 
@@ -90,17 +88,17 @@ public class DoubleServosCalib extends IsaacBot {
                 if (newPos < config.minPosition) newPos = config.minPosition;
                 if (newPos > config.maxPosition) newPos = config.maxPosition;
 
-                doubleServos.setServoPosition(newPos);
+                doubleServos.setPosition(newPos);
             }
         });
 
         this.addGp1_A_PressHandler(event -> {
 
             if (doubleServos.getPosition() >= 0.5) {
-                doubleServos.setServoPosition(config.minPosition);
+                doubleServos.setPosition(config.minPosition);
             }
             else {
-                doubleServos.setServoPosition(config.maxPosition);
+                doubleServos.setPosition(config.maxPosition);
             }
 
         });

@@ -1,7 +1,6 @@
 package org.firstinspires.ftc.teamcode.library.servo;
 
-import com.acmerobotics.roadrunner.Action;
-
+import org.firstinspires.ftc.teamcode.library.action.AbstractAction;
 import org.firstinspires.ftc.teamcode.library.component.Component;
 import org.firstinspires.ftc.teamcode.library.utility.Control;
 
@@ -91,63 +90,10 @@ public class ServoComponent extends Component {
 
     /**
      *
-     * @return The position of the boom in degrees, degrees from the 0 degree position
-     * forwards 0 +
-     * backwards 0 -
-     */
-    public double getPositionDegrees () {
-        double servoPosition = this.servo.getPosition();
-
-        double offset = this.config.zeroDegreePosition - servoPosition;
-
-        double degrees = (offset / this.config.degree) / this.config.gearRatio;
-
-        if (this.inverted) {
-            degrees = degrees * (double)-1;
-        }
-
-        return degrees;
-    }
-
-    /**
-     *
-     * @param degrees Move the boom to degrees, degrees from the 0 degree position
-     * forwards 0 +
-     * backwards 0 -
-     */
-    public void gotoDegrees (double degrees)
-    {
-        double startPosition = this.servo.getPosition();
-        double targetPosition = this.calculateTargetPosition(degrees);
-
-        this.addCommand(new ServoGoToPositionCommand(this, this.getMaxIncrement(), startPosition, targetPosition));
-    }
-
-    /**
-     *
-     * @param targetPosition Move the boom to servo position
-     */
-    public void gotoPosition (double targetPosition)
-    {
-        this.gotoPosition(targetPosition, this.getMaxIncrement());
-    }
-
-    /**
-     *
-     * @param targetPosition
-     * @param maxIncrement
-     */
-    public void gotoPosition (double targetPosition, double maxIncrement) {
-        double startPosition = this.servo.getPosition();
-        this.addCommand(new ServoGoToPositionCommand(this, maxIncrement, startPosition, targetPosition));
-    }
-
-    /**
-     *
      * @param servoPos
      * @return
      */
-    public Action gotoPositionAction(ServoPos servoPos) {
+    public AbstractAction gotoPositionAction(ServoPos servoPos) {
         if (servoPos == null) {
             return this.gotoPositionAction(this.getPosition(), 1);
         }
@@ -165,7 +111,7 @@ public class ServoComponent extends Component {
      * @param maxIncrement
      * @return
      */
-    public Action gotoPositionAction (double targetPosition, double maxIncrement) {
+    public AbstractAction gotoPositionAction (double targetPosition, double maxIncrement) {
         double startPosition = this.servo.getPosition();
         return new ServoGoToPositionAction(this, maxIncrement, startPosition, targetPosition);
     }
@@ -277,7 +223,7 @@ public class ServoComponent extends Component {
         }
 
         if (!config.lazyInit) {
-            this.setServoPosition(this.config.homePosition);
+            this.setPosition(this.config.homePosition);
         }
     }
 
@@ -349,7 +295,7 @@ public class ServoComponent extends Component {
         return this.move(
                 input,
                 this.getConfig().maxIncrement,
-                this.getConfig().maxIncrement,
+                this.getConfig().minPosition,
                 this.getConfig().maxPosition);
     }
 
@@ -374,7 +320,7 @@ public class ServoComponent extends Component {
                 isMax = true;
             }
 
-            this.setServoPosition(newPos);
+            this.setPosition(newPos);
         }
         else if (input < 0) {
             double newPos = servo.getPosition() + (maxIncrement * input);
@@ -384,7 +330,7 @@ public class ServoComponent extends Component {
                 isMin = true;
             }
 
-            this.setServoPosition(newPos);
+            this.setPosition(newPos);
         }
 
         return isMin || isMax;
@@ -398,7 +344,6 @@ public class ServoComponent extends Component {
 
         if (this.config.debug) {
             this.telemetry.addData("servo position: ", "%2f", this.servo.getPosition());
-            this.telemetry.addData( "servo position degrees: ", "%2f", this.getPositionDegrees());
             this.telemetry.addLine("servo direction: " + this.servo.getDirection().toString());
 
             if (this.config.isDualServo) {
@@ -421,50 +366,12 @@ public class ServoComponent extends Component {
 
     /**
      *
-     * @param position
-     */
-    public void setPosition(double position) {
-        this.setServoPosition(position);
-    }
-
-    /**
-     *
      * @param position the position to set the servo to
      */
-    private void setServoPosition(double position) {
+    public void setPosition(double position) {
         this.servo.setPosition(position);
         if (this.config.isDualServo) {
             this.secondaryServo.setPosition(1 - this.config.secondaryServoOffset - position);
         }
-    }
-
-    /**
-     *
-     * @param degrees Convert degrees to servo position
-     * @return the servo position
-     */
-    protected double calculateTargetPosition(double degrees)
-    {
-        if (this.inverted) {
-            degrees = degrees * (double)-1;
-        }
-
-        degrees = degrees * this.config.gearRatio;
-
-        double degreesInPosition = Math.abs(degrees * this.config.degree);
-
-        double targetPosition = this.config.zeroDegreePosition;
-
-        if (degrees < 0) {
-            targetPosition = targetPosition + degreesInPosition;
-        }
-        else if (degrees > 0) {
-            targetPosition = targetPosition - degreesInPosition;
-        }
-
-        return targetPosition;
-    }
-
-    public void setMaxIncrement(double increment) {
     }
 }

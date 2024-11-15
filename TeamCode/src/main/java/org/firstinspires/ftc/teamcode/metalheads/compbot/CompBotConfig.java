@@ -7,9 +7,7 @@ import org.firstinspires.ftc.teamcode.library.drivetrain.RoadrunnerDriveTrainCon
 import org.firstinspires.ftc.teamcode.library.encodedmotor.EncodedMotorConfig;
 import org.firstinspires.ftc.teamcode.library.potentiometer.PotentiometerConfig;
 import org.firstinspires.ftc.teamcode.library.potentiometermotor.PotentiometerMotorConfig;
-import org.firstinspires.ftc.teamcode.library.rotator.RotatorConfig;
 import org.firstinspires.ftc.teamcode.library.servo.ServoComponentConfig;
-import org.firstinspires.ftc.teamcode.library.utility.Control;
 import org.firstinspires.ftc.teamcode.metalheads.components.BigArmConfig;
 import org.firstinspires.ftc.teamcode.metalheads.components.LittleArmConfig;
 
@@ -101,10 +99,10 @@ public class CompBotConfig {
 
         // viper slides
         this.bigArmConfig.viperSlideConfig = new PotentiometerMotorConfig(robot);
-        this.bigArmConfig.viperSlideConfig.minTics = -100000;
-        this.bigArmConfig.viperSlideConfig.maxTics = 100000;
-        this.bigArmConfig.viperSlideConfig.minVolts = Constants.VIPER_SLIDES_VOLTS_MIN;
-        this.bigArmConfig.viperSlideConfig.maxVolts = Constants.VIPER_SLIDES_VOLTS_MAX;
+        this.bigArmConfig.viperSlideConfig.minTics = Constants.VIPER_SLIDES_MIN_TICS;
+        this.bigArmConfig.viperSlideConfig.maxTics = Constants.VIPER_SLIDES_MAX_TICS;
+        //this.bigArmConfig.viperSlideConfig.minVolts = Constants.VIPER_SLIDES_VOLTS_MIN;
+        //this.bigArmConfig.viperSlideConfig.maxVolts = Constants.VIPER_SLIDES_VOLTS_MAX;
         this.bigArmConfig.viperSlideConfig.motorName = "rightSlide";
         this.bigArmConfig.viperSlideConfig.brakeOn = true;
         this.bigArmConfig.viperSlideConfig.initialMotorDirection = DcMotorSimple.Direction.REVERSE;
@@ -113,8 +111,8 @@ public class CompBotConfig {
         this.bigArmConfig.viperSlideConfig.secondaryMotorName = "leftSlide";
         this.bigArmConfig.viperSlideConfig.secondaryInitialMotorDirection = DcMotorSimple.Direction.FORWARD;
 
-        this.bigArmConfig.viperSlideConfig.potentiometerConfig = new PotentiometerConfig(robot);
-        this.bigArmConfig.viperSlideConfig.potentiometerConfig.potentiometerName = "pot";
+       // this.bigArmConfig.viperSlideConfig.potentiometerConfig = new PotentiometerConfig(robot);
+       // this.bigArmConfig.viperSlideConfig.potentiometerConfig.potentiometerName = "pot";
     }
 
     /**
@@ -125,7 +123,7 @@ public class CompBotConfig {
         this.littleArmConfig = new LittleArmConfig(robot);
 
         // double servos
-        this.littleArmConfig.doubleServosConfig = new RotatorConfig(robot);
+        this.littleArmConfig.doubleServosConfig = new ServoComponentConfig(robot);
         this.littleArmConfig.doubleServosConfig.servoName = "leftBoom";
         this.littleArmConfig.doubleServosConfig.maxIncrement = Constants.DOUBLE_SERVOS_INCREMENT;
         this.littleArmConfig.doubleServosConfig.minPosition = Constants.DOUBLE_SERVOS_MIN_POS;
@@ -136,7 +134,7 @@ public class CompBotConfig {
         this.littleArmConfig.doubleServosConfig.secondaryServoName = "rightBoom";
 
         // middle servos
-        this.littleArmConfig.middleServoConfig = new RotatorConfig(robot);
+        this.littleArmConfig.middleServoConfig = new ServoComponentConfig(robot);
         this.littleArmConfig.middleServoConfig.servoName = "middle";
         this.littleArmConfig.middleServoConfig.homePosition = Constants.MIDDLE_SERVO_INIT_POS;
         this.littleArmConfig.middleServoConfig.zeroDegreePosition = 0.5;
@@ -145,7 +143,7 @@ public class CompBotConfig {
         this.littleArmConfig.middleServoConfig.maxIncrement = Constants.MIDDLE_SERVO_INCREMENT;
 
         // claw rotator
-        this.littleArmConfig.clawRotatorConfig = new RotatorConfig(robot);
+        this.littleArmConfig.clawRotatorConfig = new ServoComponentConfig(robot);
         this.littleArmConfig.clawRotatorConfig.servoName = "clawRotator";
         this.littleArmConfig.clawRotatorConfig.homePosition = Constants.CLAW_ROTATOR_0_DEG;
         this.littleArmConfig.clawRotatorConfig.zeroDegreePosition = Constants.CLAW_ROTATOR_0_DEG;

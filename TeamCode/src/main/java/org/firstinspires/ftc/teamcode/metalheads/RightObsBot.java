@@ -1,12 +1,17 @@
 package org.firstinspires.ftc.teamcode.metalheads;
 
+import com.acmerobotics.dashboard.telemetry.TelemetryPacket;
 import com.acmerobotics.roadrunner.InstantAction;
 import com.acmerobotics.roadrunner.ParallelAction;
 import com.acmerobotics.roadrunner.Pose2d;
 import com.acmerobotics.roadrunner.SequentialAction;
 import com.acmerobotics.roadrunner.ftc.Actions;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
+import org.firstinspires.ftc.teamcode.library.action.AbstractAction;
+import org.firstinspires.ftc.teamcode.library.action.InstantActionImpl;
+import org.firstinspires.ftc.teamcode.library.action.SequentialActionImpl;
 import org.firstinspires.ftc.teamcode.library.action.WaitAction;
 import org.firstinspires.ftc.teamcode.library.dcmotor.MotorPos;
 import org.firstinspires.ftc.teamcode.metalheads.compbot.AutoBot;
@@ -15,7 +20,7 @@ import org.firstinspires.ftc.teamcode.metalheads.compbot.Constants;
 /**
  *
  */
-@Autonomous(name = "Right-Observation", group = "Auto")
+@TeleOp(name = "Right-Observation", group = "Auto")
 //@Disabled
 public class RightObsBot extends AutoBot {
 
@@ -38,17 +43,38 @@ public class RightObsBot extends AutoBot {
         super.configureBot();
 
         // initialize roadrunner from last op pose
-        this.setInitialPose(new Pose2d(24.21, -61, Math.toRadians(90)));
+        this.setInitialPose(new Pose2d(8, -61, Math.toRadians(90)));
+    }
+
+    /**
+     *
+     */
+    @Override
+    public void initBot() {
+        super.initBot();
+
+        AbstractAction action = new SequentialActionImpl(
+                this.littleArm.clawPincher.gotoPositionAction(Constants.CLAW_PINCHER_CLOSE_POS, 1),
+                new WaitAction(300),
+                this.bigArm.mainBoom.gotoPositionAction(525),
+                new InstantActionImpl(() -> { this.setArmPos(ArmPos.INIT); })
+        );
+
+        TelemetryPacket tp = new TelemetryPacket();
+        while (action.run(tp) == AbstractAction.CONTIUE){}
     }
 
     @Override
     public void go() {
         super.go();
 
-//        Actions.runBlocking(new ParallelAction(
-//                this.getActionFactory().moveArmToSpecimenPlaceHighReady(),
-//                this.getTrajectoryFactory().splineToChamber(this.driveTrain.getDrive(), initialPose).build()
-//        ));
+        Actions.runBlocking(new ParallelAction(
+                this.getActionFactory().specimenPlaceHighReady(),
+                new SequentialAction(
+                   new WaitAction(800)
+                   //this.getTrajectoryFactory().splineToChamber(this.driveTrain.getDrive(), initialPose).build()
+                )
+        ));
 //
 //        Actions.runBlocking(new SequentialAction(
 //                new WaitAction(1000),

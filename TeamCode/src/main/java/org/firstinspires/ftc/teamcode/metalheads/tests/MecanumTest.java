@@ -46,14 +46,10 @@ public class MecanumTest extends IsaacBot {
 
         driveTrain.init();
 
-        this.voiceLog("System Armed");
-
         waitForStart();
 
         while(this.opModeIsActive()) {
             driveTrain.run();
         }
-
-        this.voiceLog("Disarming System");
     }
 }

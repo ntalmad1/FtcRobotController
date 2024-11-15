@@ -4,6 +4,9 @@ import com.acmerobotics.roadrunner.Action;
 import com.acmerobotics.roadrunner.InstantAction;
 import com.acmerobotics.roadrunner.SequentialAction;
 
+import org.firstinspires.ftc.teamcode.library.action.AbstractAction;
+import org.firstinspires.ftc.teamcode.library.action.InstantActionImpl;
+import org.firstinspires.ftc.teamcode.library.action.SequentialActionImpl;
 import org.firstinspires.ftc.teamcode.library.action.WaitAction;
 import org.firstinspires.ftc.teamcode.library.utility.Control;
 
@@ -73,12 +76,15 @@ public class ControlsConfigurator {
                 power = (pos - (deadZone * -1)) / (1 - deadZone);
             }
 
-            this.compBot.bigArm.mainBoom.move(power);
+            this.compBot.bigArm.mainBoom.move(-power);
         });
 
 
         // viper slides
-        this.compBot.bigArm.viperSlide.addControl(Control.Gp2_RightStickX);
+        this.compBot.bigArm.viperSlide.addGp2_RightStick_X_Handler(event -> {
+            this.compBot.bigArm.viperSlide.move(-event.getPosition());
+        });
+        //this.compBot.bigArm.viperSlide.addControl(Control.Gp2_RightStickX);
 
         // double servos and middle servo
         this.gp2_Dpad();
@@ -93,7 +99,7 @@ public class ControlsConfigurator {
 
             double servoPos = 0.01 * Math.pow(x, 2) + 0.35 * x + 0.64;
 
-            this.compBot.littleArm.clawRotator.setServoPosition(servoPos);
+            this.compBot.littleArm.clawRotator.setPosition(servoPos);
         });
 
         // claw pincher
@@ -156,58 +162,18 @@ public class ControlsConfigurator {
      *
      */
     public void gp2_Left_Bumper() {
-//        this.compBot.addGp2_Left_Bumper_PressHandler(event -> {
-//            if (CompBot.Mode.SAMPLE_MODE.equals(this.compBot.getMode())) {
-//                if (CompBot.IntakePos.STRAIGHT.equals(this.compBot.getIntakePos())) {
-//                    if (this.compBot.arm.viperSlide.getVoltage() <= Constants.SAMPLE_PICK_LEFT_READY_MIN.vSlideVolts) {
-//                        this.compBot.runAction(this.compBot.getActionFactory().moveArmToSamplePickLeftReadyMin());
-//                    } else {
-//                        this.compBot.runAction(this.compBot.getActionFactory().moveArmToSamplePickLeftReady());
-//                    }
-//                    this.compBot.setIntakePos(CompBot.IntakePos.LEFT);
-//                }
-//                else if (CompBot.IntakePos.RIGHT.equals(this.compBot.getIntakePos())) {
-//                    if (this.compBot.arm.viperSlide.getVoltage() <= Constants.SAMPLE_PICK_READY_MIN.vSlideVolts) {
-//                        this.compBot.runAction(this.compBot.getActionFactory().moveArmToSamplePickReadyMin());
-//                    } else {
-//                        this.compBot.runAction(this.compBot.getActionFactory().moveArmToSamplePickReady());
-//                    }
-//                    this.compBot.setIntakePos(CompBot.IntakePos.STRAIGHT);
-//                }
-//            }
-//            else {
-//                this.compBot.claw.clawRotator.move(-1);
-//            }
-//        });
+        this.compBot.addGp2_Left_Bumper_PressHandler(event -> {
+            this.compBot.runAction(this.compBot.bigArm.mainBoom.gotoPositionAction(Constants.MAIN_BOOM_MAX_TICS));
+        });
     }
 
     /**
      *
      */
     public void gp2_Right_Bumper() {
-//        this.compBot.addGp2_Right_Bumper_PressHandler(event -> {
-//            if (CompBot.Mode.SAMPLE_MODE.equals(this.compBot.getMode())) {
-//                if (CompBot.IntakePos.STRAIGHT.equals(this.compBot.getIntakePos())) {
-//                    if (this.compBot.arm.viperSlide.getVoltage() <= Constants.SAMPLE_PICK_RIGHT_READY_MIN.vSlideVolts) {
-//                        this.compBot.runAction(this.compBot.getActionFactory().moveArmToSamplePickRightReadyMin());
-//                    } else {
-//                        this.compBot.runAction(this.compBot.getActionFactory().moveArmToSamplePickRightReady());
-//                    }
-//                    this.compBot.setIntakePos(CompBot.IntakePos.RIGHT);
-//                }
-//                else if (CompBot.IntakePos.LEFT.equals(this.compBot.getIntakePos())) {
-//                    if (this.compBot.arm.viperSlide.getVoltage() <= Constants.SAMPLE_PICK_READY_MIN.vSlideVolts) {
-//                        this.compBot.runAction(this.compBot.getActionFactory().moveArmToSamplePickReadyMin());
-//                    } else {
-//                        this.compBot.runAction(this.compBot.getActionFactory().moveArmToSamplePickReady());
-//                    }
-//                    this.compBot.setIntakePos(CompBot.IntakePos.STRAIGHT);
-//                }
-//            }
-//            else {
-//                this.compBot.claw.clawRotator.move(1);
-//            }
-//        });
+        this.compBot.addGp2_Right_Bumper_PressHandler(event -> {
+            this.compBot.runAction(this.compBot.bigArm.mainBoom.gotoPositionAction(Constants.MAIN_BOOM_MIN_TICS));
+        });
     }
 
     /**
@@ -224,15 +190,7 @@ public class ControlsConfigurator {
             }
             else if (this.compBot.getArmPos().equals(CompBot.ArmPos.SAMPLE_PICK_READY)) {
 
-                Action pickAction = new SequentialAction(
-                        this.compBot.getActionFactory().samplePickDown(),
-                        new WaitAction(250),
-                        this.compBot.littleArm.clawPincher.gotoPositionAction(Constants.CLAW_PINCHER_CLOSE_POS, 1),
-                        new WaitAction(250),
-                        this.compBot.getActionFactory().samplePickUp()
-                );
-
-                this.compBot.runAction(pickAction);
+                this.compBot.runAction(this.compBot.getActionFactory().pickSample());
 
             }
             else if (this.compBot.getArmPos().equals(CompBot.ArmPos.SAMPLE_PICK_UP)) {
@@ -271,28 +229,19 @@ public class ControlsConfigurator {
     public void gp2_X_Button() {
         this.compBot.addGp2_X_PressHandler(event -> {
             if (this.compBot.getArmPos().equals(CompBot.ArmPos.SAMPLE_PICK_UP)) {
-                Action action = new SequentialAction(
-                        this.compBot.bigArm.viperSlide.gotoVoltageAction(Constants.VIPER_SLIDES_VOLTS_MIN),
-                        new InstantAction(() -> { this.compBot.setArmPos(CompBot.ArmPos.SAMPLE_RETRACTED); })
-                );
-
-                this.compBot.runAction(action);
+                this.compBot.runAction(this.compBot.getActionFactory().retractSample());
             }
             else if (this.compBot.getArmPos().equals(CompBot.ArmPos.SAMPLE_RETRACTED)) {
                 this.compBot.runAction(this.compBot.getActionFactory().sampleExtendReady());
             }
             else if (this.compBot.getArmPos().equals(CompBot.ArmPos.SAMPLE_EXTEND_READY)) {
-                Action action = new SequentialAction(
-                        this.compBot.bigArm.viperSlide.gotoVoltageAction(Constants.VIPER_SLIDES_VOLTS_MAX),
-                        new InstantAction(() -> { this.compBot.setArmPos(CompBot.ArmPos.SAMPLE_DROP_HIGH_READY); })
-                );
 
-                this.compBot.runAction(action);
+                this.compBot.runAction(this.compBot.getActionFactory().extendToSampleDropHigh());
             }
             else if (this.compBot.getArmPos().equals(CompBot.ArmPos.SAMPLE_DROP_HIGH_READY)) {
-                Action action = new SequentialAction(
+                AbstractAction action = new SequentialActionImpl(
                         this.compBot.littleArm.clawPincher.gotoPositionAction(Constants.CLAW_PINCHER_OPEN_POS, 1),
-                        new InstantAction(() -> { this.compBot.setArmPos(CompBot.ArmPos.SAMPLE_DROPPING_HIGH); })
+                        new InstantActionImpl(() -> { this.compBot.setArmPos(CompBot.ArmPos.SAMPLE_DROPPING_HIGH); })
                 );
 
                 this.compBot.runAction(action);

@@ -1,11 +1,10 @@
 package org.firstinspires.ftc.teamcode.library.potentiometermotor;
 
-import com.acmerobotics.roadrunner.Action;
-import com.qualcomm.robotcore.hardware.TouchSensor;
+import com.qualcomm.robotcore.hardware.DcMotor;
 
+import org.firstinspires.ftc.teamcode.library.action.AbstractAction;
 import org.firstinspires.ftc.teamcode.library.encodedmotor.EncodedMotor;
 import org.firstinspires.ftc.teamcode.library.potentiometer.Potentiometer;
-import org.firstinspires.ftc.teamcode.metalheads.compbot.Constants;
 
 /**
  *
@@ -19,10 +18,6 @@ public class PotentiometerMotor extends EncodedMotor {
     /**
      */
     private boolean holding;
-
-    /**
-     */
-    private TouchSensor touchSensor;
 
     /**
      * Constructor
@@ -57,14 +52,6 @@ public class PotentiometerMotor extends EncodedMotor {
      *
      * @return
      */
-    public TouchSensor getTouchSensor() {
-        return this.touchSensor;
-    }
-
-    /**
-     *
-     * @return
-     */
     public double getVoltage() {
         return this.potentiometer.getVoltage();
     }
@@ -73,7 +60,7 @@ public class PotentiometerMotor extends EncodedMotor {
      *
      * @param voltage
      */
-    public Action gotoVoltageAction (double voltage) {
+    public AbstractAction gotoVoltageAction (double voltage) {
         return this.gotoVoltageAction(voltage, 1);
     }
 
@@ -81,7 +68,7 @@ public class PotentiometerMotor extends EncodedMotor {
      *
      * @param voltage
      */
-    public Action gotoVoltageAction (double voltage, Boolean brake) {
+    public AbstractAction gotoVoltageAction (double voltage, Boolean brake) {
         return this.gotoVoltageAction(voltage, 1, brake);
     }
 
@@ -89,7 +76,7 @@ public class PotentiometerMotor extends EncodedMotor {
      *
      * @param position
      */
-    public Action gotoPositionAction (int position) {
+    public AbstractAction gotoPositionAction (int position) {
         return this.gotoPositionAction(position, 1);
     }
 
@@ -99,11 +86,11 @@ public class PotentiometerMotor extends EncodedMotor {
      * @param power
      * @return
      */
-    public Action gotoVoltageAction (double voltage, double power) {
+    public AbstractAction gotoVoltageAction (double voltage, double power) {
         return this.gotoVoltageAction(voltage, power, null);
     }
 
-    public Action gotoVoltageAction (double voltage, double power, Boolean brake) {
+    public AbstractAction gotoVoltageAction (double voltage, double power, Boolean brake) {
         return new PotentiometerMotorGoToVoltageAction(this, voltage, power, brake);
     }
 
@@ -113,7 +100,7 @@ public class PotentiometerMotor extends EncodedMotor {
      * @param power
      * @return
      */
-    public Action gotoPositionAction (int position, double power) {
+    public AbstractAction gotoPositionAction (int position, double power) {
         return new PotentiometerMotorGoToPositionAction(this, position, power);
     }
 
@@ -218,12 +205,13 @@ public class PotentiometerMotor extends EncodedMotor {
         if ((currentPosTicsByVolts + numTics) > maxTicsByVolts) {
             targetPosition = this.getCurrentPosition() + (maxTicsByVolts - currentPosTicsByVolts);
         }
-//        else if (currentPosTicsByVolts + numTics < 0) {
-//            targetPosition = this.getCurrentPosition() + (numTics - currentPosTicsByVolts);
-//        }
+        else if (currentPosTicsByVolts + numTics < 0) {
+            targetPosition = this.getCurrentPosition() + (numTics - currentPosTicsByVolts);
+        }
 
-
-        super.moveToPosition(power, targetPosition);
+        this.setTargetPosition(targetPosition);
+        this.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        this.setPower(power);
     }
 
     /**
@@ -243,17 +231,6 @@ public class PotentiometerMotor extends EncodedMotor {
      */
     public void run () {
         super.run();
-
-        if ((this.getTargetPosition() < 0) && (this.getVoltage() <= Constants.VIPER_SLIDES_VOLTS_MIN)) {
-            this.setPower(0);
-        }
     }
 
-    /**
-     *
-     * @parm sensor
-     */
-    public void setTouchSensor(TouchSensor sensor) {
-        this.touchSensor = sensor;
-    }
 }

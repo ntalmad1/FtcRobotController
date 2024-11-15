@@ -1,13 +1,8 @@
 package org.firstinspires.ftc.teamcode.library.encodedmotor;
 
-import com.acmerobotics.dashboard.telemetry.TelemetryPacket;
 import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.util.ElapsedTime;
 
-import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.teamcode.library.action.AbstractAction;
-import org.firstinspires.ftc.teamcode.library.command.AbstractSynchronousCommand;
-import org.firstinspires.ftc.teamcode.library.utility.Direction;
 
 /**
  *
@@ -20,7 +15,7 @@ public class EncodedMotorGoToPositionAction extends AbstractAction {
 
     /**
      */
-    private int position;
+    private int targetPosition;
 
     /**
      */
@@ -32,17 +27,17 @@ public class EncodedMotorGoToPositionAction extends AbstractAction {
 
     /**
      */
-    private int tolerance = 40;
+    private int lastPos;
 
     /**
      */
-    private ElapsedTime timer;
+    private int lastPosEqualsCount;
 
     /**
      */
-    private Direction direction;
+    private int timeoutAfterXCycles = 10;
 
-
+    private int startPos;
 
     /**
      *
@@ -52,26 +47,20 @@ public class EncodedMotorGoToPositionAction extends AbstractAction {
      */
     public EncodedMotorGoToPositionAction(EncodedMotor motor, int position, double power, Integer timeout) {
         this.motor = motor;
-        this.position = position;
+        this.targetPosition = position;
         this.power = power;
-
-        if (this.motor.getCurrentPosition() <= this.position) {
-            direction = Direction.FORWARD;
-        } else {
-            direction = Direction.REVERSE;
-        }
-
-
         this.timeout = timeout;
-
-
     }
 
     /**
      *
      */
     public void init () {
-        this.motor.moveToPosition(power, position);
+        this.startPos = this.motor.getCurrentPosition();
+
+        this.motor.setTargetPosition(this.targetPosition);
+        this.motor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        this.motor.setPower(power);
     }
 
     /**
@@ -80,59 +69,72 @@ public class EncodedMotorGoToPositionAction extends AbstractAction {
      */
     @Override
     public boolean run() {
-        if (this.timeout != null && this.withinTolerance()) {
-            if (this.timer == null) {
-                this.timer = new ElapsedTime();
-                this.timer.reset();
-            }
+        if (!this.motor.getMotor().getMode().equals(DcMotor.RunMode.RUN_TO_POSITION)) {
+            this.motor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         }
 
-        if (!this.isTimedOut() && this.motor.isBusy())
+        if (this.motor.getPower() != power) {
+            this.motor.setPower(power);
+        }
+
+        if (this.motor.isBusy())
         {
-            if (true && this.motor.getConfig().debug) {
-                this.motor.getRobot().telemetry.addData("Running to: ",  position);
+            if (this.motor.getConfig().debug) {
+                this.motor.getRobot().telemetry.addData("Running to: ", targetPosition);
                 this.motor.getRobot().telemetry.addData("Currently at: ", this.motor.getCurrentPosition());
                 this.motor.getRobot().telemetry.addData("Motor Power: ", this.motor.getPower());
                 this.motor.getRobot().telemetry.addData("Motor Direction: ", this.motor.getDirection());
-                //this.motor.getRobot().telemetry.update();
+                this.motor.getRobot().telemetry.update();
+            }
+
+            if (this.timeout != null) {
+
+                int currentPos = this.motor.getCurrentPosition();
+
+                if ((startPos < currentPos && currentPos > this.targetPosition - 40)
+                   || (startPos > currentPos && currentPos < this.targetPosition + 40)) {
+                    if (currentPos == lastPos) {
+                        this.lastPosEqualsCount++;
+                    } else {
+                        this.lastPos = currentPos;
+                        this.lastPosEqualsCount = 0;
+                    }
+
+                    if (this.lastPosEqualsCount > timeoutAfterXCycles) {
+                        if (this.targetPosition != 0 && this.motor.isBrakeOn())
+                        {
+                            this.motor.setTargetPosition(this.motor.getCurrentPosition());
+                            this.motor.setPower(1);
+                        }
+                        else {
+                            this.motor.setPower(0);
+                        }
+                        return STOP;
+                    }
+                }
             }
 
             return CONTIUE;
         }
         else {
-            return STOP;
-        }
 
-    }
+            if (this.startPos != this.motor.getCurrentPosition()) {
+               // if (this.timeout != null) {
+                    if (this.targetPosition != 0 && this.motor.isBrakeOn())
+                    {
+                        this.motor.setTargetPosition(this.motor.getCurrentPosition());
+                        this.motor.setPower(1);
+                    }
+                    else {
+                        this.motor.setPower(0);
+                    }
+               // }
 
-    /**
-     *
-     * @return
-     */
-    private boolean isTimedOut() {
-        if (this.timer == null) {
-            return false;
-        }
+                return STOP;
 
-        boolean timedOut = this.timer.milliseconds() > this.timeout;
-        if (timedOut) {
-            this.motor.setPower(0);
-            this.timer = null;
-        }
+            }
 
-        return timedOut;
-    }
-
-    /**
-     *
-     * @return
-     */
-    private boolean withinTolerance() {
-//        return position - this.motor.getCurrentPosition() <= tolerance || Math.abs(this.motor.getCurrentPosition() - position) <= tolerance;
-        if (Direction.FORWARD.equals(direction)) { // Opening
-            return this.motor.getCurrentPosition() >= position - tolerance;
-        } else {
-            return this.motor.getCurrentPosition() <= position + tolerance;
+            return CONTIUE;
         }
     }
 }

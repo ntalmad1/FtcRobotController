@@ -22,7 +22,7 @@ public class BigArmConfig {
 
     /**
      */
-    public PotentiometerMotorConfig viperSlideConfig;
+    public EncodedMotorConfig viperSlideConfig;
 
     /**
      * Constructor
@@ -33,6 +33,6 @@ public class BigArmConfig {
         this.robot = robot;
 
         this.mainBoomConfig = new EncodedMotorConfig(robot);
-        this.viperSlideConfig = new PotentiometerMotorConfig(robot);
+        this.viperSlideConfig = new EncodedMotorConfig(robot);
     }
 }
