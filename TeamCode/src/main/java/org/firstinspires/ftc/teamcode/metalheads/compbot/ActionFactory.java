@@ -105,9 +105,9 @@ public class ActionFactory {
      */
     public AbstractAction samplePickDown() {
         return new SequentialActionImpl(
-            this.compBot.littleArm.doubleServos.gotoPositionAction(Constants.SAMPLE_PICK_DOWN.doubleServosPos),
-            new WaitAction(75),
-            this.compBot.littleArm.middleServo.gotoPositionAction(Constants.SAMPLE_PICK_DOWN.middleServoPos),
+                this.compBot.littleArm.middleServo.gotoPositionAction(Constants.SAMPLE_PICK_DOWN.middleServoPos),
+                new WaitAction(75),
+                this.compBot.littleArm.doubleServos.gotoPositionAction(Constants.SAMPLE_PICK_DOWN.doubleServosPos),
             new InstantActionImpl(() -> this.compBot.setArmPos(CompBot.ArmPos.SAMPLE_PICK_DOWN))
         );
     }
@@ -134,7 +134,7 @@ public class ActionFactory {
                 this.compBot.getActionFactory().samplePickDown(),
                 new WaitAction(250),
                 this.compBot.littleArm.clawPincher.gotoPositionAction(Constants.CLAW_PINCHER_CLOSE_POS, 1),
-                new WaitAction(250),
+                new WaitAction(350),
                 this.compBot.getActionFactory().samplePickUp()
         );
     }

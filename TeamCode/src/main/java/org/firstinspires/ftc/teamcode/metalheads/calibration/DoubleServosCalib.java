@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode.metalheads.calibration;
 
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.qualcomm.robotcore.hardware.Servo;
 
 import org.firstinspires.ftc.teamcode.library.IsaacBot;
 import org.firstinspires.ftc.teamcode.library.event.gp1_dpad_press.gp1_dpad_down_press.Gp1_Dpad_Down_PressEvent;
@@ -45,15 +46,17 @@ public class DoubleServosCalib extends IsaacBot {
 
         config.servoName = "leftBoom";
 
-        config.maxIncrement = 0.006;
+        config.maxIncrement = 0.012;
 
         config.minPosition = 0;
-        config.maxPosition = 0.9;
+        config.maxPosition = 1;
 
         config.homePosition = 0.5;
         config.zeroDegreePosition = 0.5;
 
-        config.controllerInputMethod = Control.Gp1_LeftStickX;
+        config.controllerInputMethod = Control.Gp1_LeftStickY;
+
+        config.direction = Servo.Direction.REVERSE;
 
         config.isDualServo = true;
 

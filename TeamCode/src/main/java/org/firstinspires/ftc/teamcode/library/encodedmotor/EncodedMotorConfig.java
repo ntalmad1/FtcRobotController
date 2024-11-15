@@ -13,6 +13,10 @@ public class EncodedMotorConfig extends DcMotorComponentConfig {
 
     /**
      */
+    public Integer controllerMinTics;
+
+    /**
+     */
     public int minTics;
 
     /**
