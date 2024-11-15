@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode.library.encodedmotor;
 
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.TouchSensor;
 
 import org.firstinspires.ftc.teamcode.library.action.AbstractAction;
 import org.firstinspires.ftc.teamcode.library.dcmotor.DcMotorComponent;
@@ -10,6 +11,10 @@ import org.firstinspires.ftc.teamcode.library.dcmotor.MotorPos;
  *
  */
 public class EncodedMotor extends DcMotorComponent {
+
+    /**
+     */
+    protected TouchSensor touchSensor;
 
     /**
      * Constructor
@@ -26,6 +31,14 @@ public class EncodedMotor extends DcMotorComponent {
      */
     public EncodedMotorConfig getConfig() {
         return (EncodedMotorConfig)super.getConfig();
+    }
+
+    /**
+     *
+     * @return
+     */
+    public TouchSensor getTouchSensor() {
+        return this.touchSensor;
     }
 
     /**
@@ -116,8 +129,15 @@ public class EncodedMotor extends DcMotorComponent {
             this.setPower(power);
         }
         else {
-            this.setPower(0);
-            this.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+            if (this.isBrakeOn()) {
+//                this.setTargetPosition(this.getCurrentPosition());
+//                this.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+//                this.setPower(1);
+            }
+            else {
+                this.setPower(0);
+                this.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+            }
         }
     }
 
@@ -129,9 +149,28 @@ public class EncodedMotor extends DcMotorComponent {
         this.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
     }
 
+    boolean toggle;
+
     /**
      */
     public void run () {
         super.run();
+
+        if (this.touchSensor != null && this.touchSensor.isPressed() && this.toggle) {
+            this.toggle = false;
+            this.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        }
+
+        if (this.touchSensor != null && !this.touchSensor.isPressed()) {
+            toggle = true;
+        }
+    }
+
+    /**
+     *
+     * @parm sensor
+     */
+    public void setTouchSensor(TouchSensor sensor) {
+        this.touchSensor = sensor;
     }
 }

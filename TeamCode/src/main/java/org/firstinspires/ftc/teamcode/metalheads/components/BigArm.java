@@ -24,7 +24,7 @@ public class BigArm extends Component {
 
     /**
      */
-    public PotentiometerMotor viperSlide;
+    public EncodedMotor viperSlide;
 
     /**
      * Constructor
@@ -37,7 +37,7 @@ public class BigArm extends Component {
         this.config = bigArmConfig;
 
         this.mainBoom = new EncodedMotor(this.config.mainBoomConfig);
-        this.viperSlide = new PotentiometerMotor(this.config.viperSlideConfig);
+        this.viperSlide = new EncodedMotor(this.config.viperSlideConfig);
     }
 
     /**
