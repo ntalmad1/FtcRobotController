@@ -67,27 +67,54 @@ public class RightObsBot extends AutoBot {
     public void go() {
         super.go();
 
-        // step one - place speciman ready - drive it on
+        // step one - place speciman 1 ready - drive it on
         Actions.runBlocking(
             new ParallelAction(
                 this.getActionFactory().specimenPlaceHighReady(),
                 new SequentialAction(
                     new WaitAction(800),
-                    this.getTrajectoryFactory().stepOne_placeSpeciman(this.driveTrain.getDrive(), initialPose).build()
+                    this.getTrajectoryFactory().stepOne_placeSpeciman(initialPose).build()
                 )
             )
         );
 
-        // step two, three
+        // step two, three, & four
         Actions.runBlocking(
             new SequentialAction(
                 new ParallelAction(
                     this.getActionFactory().specimenPlaceHigh(),
-                    this.getTrajectoryFactory().releaseSpeciman(this.driveTrain.getDrive()).build()
+                    this.getTrajectoryFactory().releaseSpeciman().build()
                 ),
-                this.getTrajectoryFactory().stepThree_pushSamples(this.driveTrain.getDrive()).build()
+                this.getTrajectoryFactory().stepThree_pushSamples().build(),
+                this.getTrajectoryFactory().stepFour_arcToSpecimanPick().build()
             )
         );
+
+        // cycle speciman 2
+        Actions.runBlocking(
+                new SequentialAction(
+                        new WaitAction(1000),
+                        this.getActionFactory().specimenPick(),
+                        this.getTrajectoryFactory().splineToPlaceSpeciman().build(),
+                        this.getActionFactory().specimenPlaceHigh(),
+                        this.getTrajectoryFactory().splineToSpecimanPick().build()
+                )
+        );
+
+        // cycle speciman 3 & end
+        Actions.runBlocking(
+                new SequentialAction(
+                        new WaitAction(1000),
+                        this.getActionFactory().specimenPick(),
+                        this.getTrajectoryFactory().splineToPlaceSpeciman().build(),
+                        this.getActionFactory().specimenPlaceHigh(),
+                        new ParallelAction(
+                            this.getTrajectoryFactory().parkInObservation().build(),
+                            this.getActionFactory().initPos()
+                        )
+                )
+        );
+
 //
 //        Actions.runBlocking(new SequentialAction(
 //                new WaitAction(1000),

@@ -2,11 +2,9 @@ package org.firstinspires.ftc.teamcode.metalheads;
 
 import com.acmerobotics.roadrunner.Pose2d;
 import com.acmerobotics.roadrunner.TrajectoryActionBuilder;
-import com.acmerobotics.roadrunner.TranslationalVelConstraint;
 
 import org.firstinspires.ftc.teamcode.metalheads.compbot.AutoBot;
 import org.firstinspires.ftc.teamcode.metalheads.compbot.TrajectoryFactory;
-import org.firstinspires.ftc.teamcode.roadrunner.MecanumDrive;
 
 /**
  */
@@ -22,7 +20,7 @@ public class RightObsTrajectoryFactory extends TrajectoryFactory {
     /**
      * @return tab2
      */
-    public TrajectoryActionBuilder stepOne_placeSpeciman(MecanumDrive drive, Pose2d initialPose) {
+    public TrajectoryActionBuilder stepOne_placeSpeciman(Pose2d initialPose) {
         return null;
 //        return drive.actionBuilder(initialPose)
 //                .lineToY(-39);
@@ -31,10 +29,9 @@ public class RightObsTrajectoryFactory extends TrajectoryFactory {
 
     /**
      *
-     * @param drive
      * @return
      */
-    public TrajectoryActionBuilder releaseSpeciman(MecanumDrive drive) {
+    public TrajectoryActionBuilder releaseSpeciman() {
         return null;
 //        return drive.actionBuilder(drive.pose)
 //                .lineToY(-33.5, new TranslationalVelConstraint(10));
@@ -42,10 +39,9 @@ public class RightObsTrajectoryFactory extends TrajectoryFactory {
 
     /**
      *
-     * @param drive
      * @return
      */
-    public TrajectoryActionBuilder stepThree_pushSamples(MecanumDrive drive) {
+    public TrajectoryActionBuilder stepThree_pushSamples() {
         return null;
 //        return drive.actionBuilder(drive.pose)
 //                .lineToY(-33.5, new TranslationalVelConstraint(10));
@@ -53,10 +49,9 @@ public class RightObsTrajectoryFactory extends TrajectoryFactory {
 
     /**
      *
-     * @param drive
      * @return
      */
-    public TrajectoryActionBuilder stepFour_arcToSpecimanPick(MecanumDrive drive) {
+    public TrajectoryActionBuilder stepFour_arcToSpecimanPick() {
         return null;
 //        return drive.actionBuilder(drive.pose)
 //                .lineToY(-33.5, new TranslationalVelConstraint(10));
@@ -64,10 +59,9 @@ public class RightObsTrajectoryFactory extends TrajectoryFactory {
 
     /**
      *
-     * @param drive
      * @return
      */
-    public TrajectoryActionBuilder splineToPlaceSpeciman(MecanumDrive drive) {
+    public TrajectoryActionBuilder splineToPlaceSpeciman() {
         return null;
 //        return drive.actionBuilder(drive.pose)
 //                .lineToY(-33.5, new TranslationalVelConstraint(10));
@@ -75,10 +69,9 @@ public class RightObsTrajectoryFactory extends TrajectoryFactory {
 
     /**
      *
-     * @param drive
      * @return
      */
-    public TrajectoryActionBuilder splineToSpecimanPick(MecanumDrive drive) {
+    public TrajectoryActionBuilder splineToSpecimanPick() {
         return null;
 //        return drive.actionBuilder(drive.pose)
 //                .lineToY(-33.5, new TranslationalVelConstraint(10));
@@ -86,10 +79,9 @@ public class RightObsTrajectoryFactory extends TrajectoryFactory {
 
     /**
      *
-     * @param drive
      * @return
      */
-    public TrajectoryActionBuilder parkInObservation(MecanumDrive drive) {
+    public TrajectoryActionBuilder parkInObservation() {
         return null;
 //        return drive.actionBuilder(drive.pose)
 //                .lineToY(-33.5, new TranslationalVelConstraint(10));
