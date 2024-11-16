@@ -2,15 +2,11 @@ package org.firstinspires.ftc.teamcode.metalheads.calibration;
 
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 
 import org.firstinspires.ftc.teamcode.library.IsaacBot;
 import org.firstinspires.ftc.teamcode.library.encodedmotor.EncodedMotor;
 import org.firstinspires.ftc.teamcode.library.encodedmotor.EncodedMotorConfig;
-import org.firstinspires.ftc.teamcode.library.potentiometer.PotentiometerConfig;
-import org.firstinspires.ftc.teamcode.library.potentiometermotor.PotentiometerMotor;
-import org.firstinspires.ftc.teamcode.library.potentiometermotor.PotentiometerMotorConfig;
 import org.firstinspires.ftc.teamcode.library.utility.Control;
 
 /**
