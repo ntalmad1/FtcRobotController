@@ -56,37 +56,37 @@ public class SampleAutonTest extends LinearOpMode {
             double velocityLow = 25;
 
             TrajectoryActionBuilder tab2 = drive.actionBuilder(initialPose)
-                    .lineToY( -39) //Go infront of bar to hang specimen
+                    //.lineToY( -39) //Go infront of bar to hang specimen
 
 
-                    /**
-                     * First Sample
-                     */
-                    .setTangent(Math.toRadians(270))
-
-                    .splineToConstantHeading(new Vector2d(24, -44), Math.toRadians(0))//away + right of bar
-
-                    .splineToConstantHeading(new Vector2d(38, -18.6), Math.toRadians(0))// up torwards sample
-
-                    .splineToConstantHeading(new Vector2d(43, -12), Math.toRadians(0))//arc onto sample (left)
-
-                    .splineToConstantHeading(new Vector2d(45.3, -14), Math.toRadians(270))//arc onto sample (right)
-
-                    .lineToYConstantHeading(-52) //Go to Observation zone
-
-
-                    /**
-                     * Second Sample
-                     */
-                    .setTangent(Math.toRadians(270))
-
-                    .lineToYConstantHeading(-18.6) //towards sample
-
-                    .splineToConstantHeading(new Vector2d(52, -12), Math.toRadians(0)) //arc onto sample (left)
-
-                    .splineToConstantHeading(new Vector2d(56, -14), Math.toRadians(270)) //arc onto sample (right)
-
-                    .lineToYConstantHeading(-52) //Go to Observation zone
+//                    /**
+//                     * First Sample
+//                     */
+//                    .setTangent(Math.toRadians(270))
+//
+//                    .splineToConstantHeading(new Vector2d(24, -44), Math.toRadians(0))//away + right of bar
+//
+//                    .splineToConstantHeading(new Vector2d(38, -18.6), Math.toRadians(0))// up torwards sample
+//
+//                    .splineToConstantHeading(new Vector2d(43, -12), Math.toRadians(0))//arc onto sample (left)
+//
+//                    .splineToConstantHeading(new Vector2d(45.3, -14), Math.toRadians(270))//arc onto sample (right)
+//
+//                    .lineToYConstantHeading(-52) //Go to Observation zone
+//
+//
+//                    /**
+//                     * Second Sample
+//                     */
+//                    .setTangent(Math.toRadians(270))
+//
+//                    .lineToYConstantHeading(-18.6) //towards sample
+//
+//                    .splineToConstantHeading(new Vector2d(52, -12), Math.toRadians(0)) //arc onto sample (left)
+//
+//                    .splineToConstantHeading(new Vector2d(56, -14), Math.toRadians(270)) //arc onto sample (right)
+//
+//                    .lineToYConstantHeading(-52) //Go to Observation zone
 
 
                     /**
@@ -95,8 +95,8 @@ public class SampleAutonTest extends LinearOpMode {
                     .setTangent(Math.toRadians(90))
                     .splineToConstantHeading(new Vector2d(51,-44), Math.toRadians(180))
 
-                    .splineToConstantHeading(new Vector2d(46, -54), Math.toRadians(270),
-                            new TranslationalVelConstraint(15)
+                    .splineToConstantHeading(new Vector2d(46, -57.4), Math.toRadians(270),
+                            new TranslationalVelConstraint(8)
                     )
                     //TODO: SLOW!!
 
@@ -108,7 +108,7 @@ public class SampleAutonTest extends LinearOpMode {
                     /**
                      * hang First specimen
                      */
-                    .setTangent(Math.toRadians(90))
+                    .setTangent(Math.toRadians(150))
                     //.strafeTo(new Vector2d(15,-50))//Go towards bar
 
                     .splineToConstantHeading(new Vector2d(5,-48), Math.toRadians(90))
