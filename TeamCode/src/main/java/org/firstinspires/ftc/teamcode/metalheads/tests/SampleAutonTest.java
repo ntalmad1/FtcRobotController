@@ -66,7 +66,7 @@ public class SampleAutonTest extends LinearOpMode {
 
                     .splineToConstantHeading(new Vector2d(24, -44), Math.toRadians(0))//away + right of bar
 
-                    .splineToConstantHeading(new Vector2d(36, -18.6), Math.toRadians(0))// up torwards sample
+                    .splineToConstantHeading(new Vector2d(38, -18.6), Math.toRadians(0))// up torwards sample
 
                     .splineToConstantHeading(new Vector2d(43, -12), Math.toRadians(0))//arc onto sample (left)
 
@@ -93,13 +93,16 @@ public class SampleAutonTest extends LinearOpMode {
                     * Grab First Specimen
                     */
                     .setTangent(Math.toRadians(90))
-                    .splineToConstantHeading(new Vector2d(5,-47), Math.toRadians(90))
+                    .splineToConstantHeading(new Vector2d(51,-44), Math.toRadians(180))
 
-                    .splineToConstantHeading(new Vector2d(46, -54), Math.toRadians(270))
-                    //TODO: SLOW!!, Grab Specimen
+                    .splineToConstantHeading(new Vector2d(46, -54), Math.toRadians(270),
+                            new TranslationalVelConstraint(15)
+                    )
+                    //TODO: SLOW!!
 
-                    .waitSeconds(0.6)
                     //TODO:Grab Specimen
+                    .waitSeconds(0.6)
+
 
 
                     /**
@@ -117,11 +120,14 @@ public class SampleAutonTest extends LinearOpMode {
                      * Go Back to Obs. Zone
                      */
                     .setTangent(Math.toRadians(270))
-                    .lineToYConstantHeading(-47)
+                    .lineToYConstantHeading(-47)//Away from bar
 
                     .splineToConstantHeading(new Vector2d(33,-45), Math.toRadians(0))
 
-                    .splineToConstantHeading(new Vector2d(46, -54), Math.toRadians(270))
+                    .splineToConstantHeading(new Vector2d(46, -54), Math.toRadians(270),
+                            new TranslationalVelConstraint(15)
+                    )
+                    //TODO: Grab Specimen
 
 
 

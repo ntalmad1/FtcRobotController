@@ -24,15 +24,16 @@ public class RedSamples {
                         .lineTo(new Vector2d(8, -36))
                         //.lineToY( -39)
 
-                        //hang specimen
-                        .setTangent(Math.toRadians(270))
-                        .splineToConstantHeading(new Vector2d(24, -44), Math.toRadians(0)) //Go towards sample
-                        //.splineToConstantHeading(new Vector2d(24, -44), Math.toRadians(0))
+
 
                         /**
                         * first sample
                         */
-                        .splineToConstantHeading(new Vector2d(36, -18.6), Math.toRadians(90))
+                        .setTangent(Math.toRadians(270))
+                        .splineToConstantHeading(new Vector2d(24, -44), Math.toRadians(0)) //Go towards sample
+                        //.splineToConstantHeading(new Vector2d(24, -44), Math.toRadians(0))
+
+                        .splineToConstantHeading(new Vector2d(38, -18.6), Math.toRadians(90))
                         //.splineToConstantHeading(new Vector2d(36, -18.6), Math.toRadians(0))
 
                         .splineToConstantHeading(new Vector2d(43, -12), Math.toRadians(0))
@@ -88,9 +89,9 @@ public class RedSamples {
                         * Go Back to Obs. Zone
                         */
                         .setTangent(Math.toRadians(270))
-                        .lineToConstantHeading(new Vector2d(5,-47))
+                        .lineToConstantHeading(new Vector2d(5,-44))
 
-                        .splineToConstantHeading(new Vector2d(33,-45), Math.toRadians(0))
+                        .splineToConstantHeading(new Vector2d(34,-40), Math.toRadians(0))
 
                         .splineToConstantHeading(new Vector2d(46, -54), Math.toRadians(270))
 
