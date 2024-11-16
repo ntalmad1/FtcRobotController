@@ -106,28 +106,53 @@ public class SampleAutonTest extends LinearOpMode {
 
 
                     /**
-                     * hang specimen
+                     * hang First specimen
                      */
                     .setTangent(Math.toRadians(90))
                     //.strafeTo(new Vector2d(15,-50))//Go towards bar
 
-                    .splineToConstantHeading(new Vector2d(5,-47), Math.toRadians(90))
+                    .splineToConstantHeading(new Vector2d(5,-48), Math.toRadians(90))
 
-                    .lineToYConstantHeading(-36)//go forwards to hang specimen
+                    .lineToYConstantHeading(-39)//go forwards to hang specimen
 
 
                     /**
-                     * Go Back to Obs. Zone
-                     */
+                    * Grab Second Specimen
+                    */
                     .setTangent(Math.toRadians(270))
-                    .lineToYConstantHeading(-47)//Away from bar
+                    .lineToYConstantHeading(-42)//Away from bar
 
-                    .splineToConstantHeading(new Vector2d(33,-45), Math.toRadians(0))
+                    .splineToConstantHeading(new Vector2d(33,-45), Math.toRadians(0))//Towards Specimen
 
-                    .splineToConstantHeading(new Vector2d(46, -54), Math.toRadians(270),
+                    .splineToConstantHeading(new Vector2d(46, -54), Math.toRadians(270),//Specimen Grab
                             new TranslationalVelConstraint(15)
                     )
                     //TODO: Grab Specimen
+
+
+                    /**
+                    * Hang Second Specimen
+                    */
+                    .setTangent(Math.toRadians(90))
+                    //.strafeTo(new Vector2d(15,-50))//Go towards bar
+
+                    .splineToConstantHeading(new Vector2d(2,-48), Math.toRadians(90))
+
+                    .lineToYConstantHeading(-39)//go forwards to hang specimen
+
+                    /**
+                    * Back to Obs. Zone
+                    */
+                    .setTangent(Math.toRadians(270))
+                    .lineToYConstantHeading(-42)//Away from bar
+
+
+                    //TODO: INIT POSITION
+
+
+                    .splineToConstantHeading(new Vector2d(33,-45), Math.toRadians(0))//Towards Specimen
+
+                    .splineToConstantHeading(new Vector2d(46, -52), Math.toRadians(270))
 
 
 
