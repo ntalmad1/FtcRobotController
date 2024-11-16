@@ -17,18 +17,16 @@ import org.firstinspires.ftc.teamcode.metalheads.compbot.Constants;
 /**
  *
  */
-@TeleOp(name = "Right-Observation", group = "Auto")
+@TeleOp(name = "Right-Localization", group = "Auto")
 //@Disabled
-public class RightObsBot extends AutoBot {
+public class RightLocalization extends AutoBot {
 
     /**
      * Constructor
      *
      */
-    public RightObsBot() {
+    public RightLocalization() {
         super();
-
-        this.setTrajectoryFactory(new RightObsTrajectoryFactory(this));
 
         this.setConfig(new RightObsBotConfig(this));
         this.configureBot();
@@ -67,14 +65,16 @@ public class RightObsBot extends AutoBot {
     public void go() {
         super.go();
 
+        /*
         Actions.runBlocking(new ParallelAction(
                 this.getActionFactory().specimenPlaceHighReady(),
                 new SequentialAction(
-                   new WaitAction(800)
-                   //this.getTrajectoryFactory().stepOne_placeSpeciman(this.driveTrain.getDrive(), initialPose).build(),
-
+                   new WaitAction(800),
+                   this.getTrajectoryFactory().lineToChamber(this.driveTrain.getDrive(), initialPose).build()
                 )
         ));
+
+        */
 //
 //        Actions.runBlocking(new SequentialAction(
 //                new WaitAction(1000),
@@ -95,11 +95,4 @@ public class RightObsBot extends AutoBot {
 //        ));
     }
 
-    /**
-     *
-     * @return
-     */
-    protected RightObsTrajectoryFactory getTrajectoryFactory () {
-        return (RightObsTrajectoryFactory)super.getTrajectoryFactory();
-    }
 }
