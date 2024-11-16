@@ -2,6 +2,7 @@ package com.example.meepmeeptesting;
 
 import com.acmerobotics.roadrunner.geometry.Pose2d;
 import com.acmerobotics.roadrunner.geometry.Vector2d;
+import com.acmerobotics.roadrunner.trajectory.constraints.TranslationalVelocityConstraint;
 
 import org.rowlandhall.meepmeep.MeepMeep;
 import org.rowlandhall.meepmeep.roadrunner.DefaultBotBuilder;
@@ -29,8 +30,8 @@ public class RedSamples {
                         //.splineToConstantHeading(new Vector2d(24, -44), Math.toRadians(0))
 
                         /**
-                         * first sample
-                         */
+                        * first sample
+                        */
                         .splineToConstantHeading(new Vector2d(36, -18.6), Math.toRadians(90))
                         //.splineToConstantHeading(new Vector2d(36, -18.6), Math.toRadians(0))
 
@@ -58,22 +59,42 @@ public class RedSamples {
 
                         .lineToConstantHeading(new Vector2d(56, -52))
                         //.lineToYConstantHeading(-52)
-//
-//                        //grab first specimen
-//                        .waitSeconds(0.1)
-//                        .setTangent(Math.toRadians(90))
-//                        .splineToConstantHeading(new Vector2d(48, -47), Math.toRadians(180))
-//                        .splineToConstantHeading(new Vector2d(40, -54), Math.toRadians(270))
-//                        .lineTo(new Vector2d(40,-57))
-//                        //TODO: Grab Specimen
-//
-//                        /**
-//                         * hang specimen
-//                         */
-//                         //go to bar
-//                         .strafeTo(new Vector2d(6,-50))
-//                         //go forwards to hang specimen
-//                         .lineTo(new Vector2d(6,-36))
+
+                        /**
+                        *grab first specimen
+                        */
+                        .setTangent(Math.toRadians(90))
+                        .splineToConstantHeading(new Vector2d(51, -44), Math.toRadians(180))
+
+                        .splineToConstantHeading(new Vector2d(46, -54), Math.toRadians(270))
+                        //TODO: SLOW!!, Grab Specimen
+
+                        .waitSeconds(0.6)
+                        //TODO:Grab Specimen
+
+
+                        /**
+                        * hang specimen
+                        */
+                        .setTangent(Math.toRadians(90))
+                        //.strafeTo(new Vector2d(15,-50))//Go towards bar
+
+                        .splineToConstantHeading(new Vector2d(5,-47), Math.toRadians(90))
+
+                        .lineToConstantHeading(new Vector2d(5,-36))//go forwards to hang specimen
+
+
+                        /**
+                        * Go Back to Obs. Zone
+                        */
+                        .setTangent(Math.toRadians(270))
+                        .lineToConstantHeading(new Vector2d(5,-47))
+
+                        .splineToConstantHeading(new Vector2d(33,-45), Math.toRadians(0))
+
+                        .splineToConstantHeading(new Vector2d(46, -54), Math.toRadians(270))
+
+
 
                         .build());
 
