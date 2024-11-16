@@ -131,7 +131,7 @@ public class Constants {
         public void setValues() {
             mainBoomPos = new MotorPos(526);
             vSlidePos = new MotorPos(1271);
-            doubleServosPos = new ServoPos(0.296);
+            doubleServosPos = new ServoPos(0.260);
             middleServoPos = new ServoPos(0.0);
             clawRotatorPos = new ServoPos(Constants.CLAW_ROTATOR_0_DEG);
             clawPincherPos = new ServoPos(Constants.CLAW_PINCHER_CLOSE_POS);

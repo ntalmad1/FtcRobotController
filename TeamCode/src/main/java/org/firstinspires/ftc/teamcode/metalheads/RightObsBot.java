@@ -9,7 +9,9 @@ import com.acmerobotics.roadrunner.TrajectoryActionBuilder;
 import com.acmerobotics.roadrunner.TranslationalVelConstraint;
 import com.acmerobotics.roadrunner.Vector2d;
 import com.acmerobotics.roadrunner.ftc.Actions;
+import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.qualcomm.robotcore.hardware.DcMotor;
 
 import org.firstinspires.ftc.teamcode.library.action.AbstractAction;
 import org.firstinspires.ftc.teamcode.library.action.InstantActionImpl;
@@ -25,7 +27,7 @@ import org.firstinspires.ftc.teamcode.metalheads.compbot.Constants;
 /**
  *
  */
-@TeleOp(name = "Right-Observation", group = "Auto")
+@Autonomous(name = "Right-Observation", group = "Auto")
 //@Disabled
 public class RightObsBot extends AutoBot {
 
@@ -80,9 +82,19 @@ public class RightObsBot extends AutoBot {
         super.go();
 
         TrajectoryActionBuilder trajectory = this.getDrive().actionBuilder(this.initialPose)
-                .afterTime(0, this.getActionFactory().specimenPlaceHighReady())
+                .stopAndAdd(this.bigArm.mainBoom.gotoPositionAction(Constants.SPECIMEN_PLACE_HIGH_READY.mainBoomPos))
+                .stopAndAdd(() -> {
+                    this.littleArm.doubleServos.setPosition(Constants.SPECIMEN_PLACE_HIGH_READY.doubleServosPos.getPos());
+                    this.littleArm.middleServo.setPosition(Constants.SPECIMEN_PLACE_HIGH_READY.middleServoPos.getPos());
+                })
+                .waitSeconds(0.25)
+                .stopAndAdd(() -> this.littleArm.clawRotator.setPosition(Constants.SPECIMEN_PLACE_HIGH_READY.clawRotatorPos.getPos()))
+                .stopAndAdd(this.bigArm.viperSlide.viperSlidesGotoPositionAction(Constants.SPECIMEN_PLACE_HIGH_READY.vSlidePos))
+
                 .waitSeconds(0.8)
-                .lineToY(-38)
+                .lineToY(-37,
+                        new TranslationalVelConstraint(20),
+                        new ProfileAccelConstraint(-14, 14))
                 .stopAndAdd(this.littleArm.clawPincher.gotoPositionAction(Constants.CLAW_PINCHER_OPEN_POS, 1))
                 .waitSeconds(0.5)
                 .lineToYConstantHeading(-48)// Go back away from bar
@@ -147,7 +159,14 @@ public class RightObsBot extends AutoBot {
 
                 .lineToYConstantHeading(-52,
                         new TranslationalVelConstraint(20),
-                        new ProfileAccelConstraint(-15, 15));
+                        new ProfileAccelConstraint(-15, 15))
+                .stopAndAdd(() -> {
+                    this.littleArm.clawPincher.setPosition(Constants.CLAW_PINCHER_CLOSE_POS);
+                    this.bigArm.mainBoom.setTargetPosition(0);
+                    this.bigArm.mainBoom.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+                    this.bigArm.mainBoom.setPower(1);
+                });
+
 
             Actions.runBlocking(trajectory.build());
 
