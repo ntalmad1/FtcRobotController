@@ -84,39 +84,48 @@ public class RightObsBot extends AutoBot {
                     // step two, three, & four
                     new SequentialAction(
                             new ParallelAction(
-                                    this.getActionFactory().specimenPlaceHigh(), // release and goto speciman ready
-                                    this.getTrajectoryFactory().stepTwo_Three_releaseSpeciman_pushSamples().build()
+                                    this.getActionFactory().specimenPlaceHigh(),  // release and goto speciman ready
+                                    new SequentialAction(
+                                       new WaitAction(1000),
+                                       this.getTrajectoryFactory().stepTwo_Three_releaseSpeciman_pushSamples().build()
+                                    )
                             ),
                             this.getTrajectoryFactory().stepFour_arcToSpecimanPick().build()
-                    ),
+                    )
 
                     // cycle speciman 1
-                    new SequentialAction(
-                            new WaitAction(1000),
-                            this.getActionFactory().specimenPick(),
-                            new ParallelAction(
-                                    this.getActionFactory().specimenPlaceHighReady(),
-                                    this.getTrajectoryFactory().splineToPlaceFirstSpeciman().build()
-                            ),
-                            this.getActionFactory().specimenPlaceHigh(), // let go and return to specimen ready
-                            this.getTrajectoryFactory().splineToSecondSpecimanPick().build()
-                    ),
+//                    new SequentialAction(
+//                            new WaitAction(1000),
+//                            this.getActionFactory().specimenPick(),
+//                            new ParallelAction(
+//                                    this.getActionFactory().specimenPlaceHighReady(),
+//                                      new SequentialAction(
+//                                            new WaitAction(1000),
+//                                    this.getTrajectoryFactory().splineToPlaceFirstSpeciman().build()
+//        )
+//                            ),
+//                            this.getActionFactory().specimenPlaceHigh(), // let go and return to specimen ready
+//                            this.getTrajectoryFactory().splineToSecondSpecimanPick().build()
+//                    ),
 
                     // cycle speciman 2 & end
-                    new SequentialAction(
-                        new WaitAction(1000),
-                        this.getActionFactory().specimenPick(),
-                        new ParallelAction(
-                                this.getActionFactory().specimenPlaceHighReady(),
-                                this.getTrajectoryFactory().splineToPlaceSecondSpeciman().build()
-                        ),
-                        this.getActionFactory().specimenPlaceHigh(),
-                        new ParallelAction(
-                                this.getTrajectoryFactory().parkInObservationStepOne().build(),
-                                this.getActionFactory().initPos()
-                        ),
-                        this.getTrajectoryFactory().parkInObservationStepTwo().build()
-                    )
+//                    new SequentialAction(
+//                        new WaitAction(1000),
+//                        this.getActionFactory().specimenPick(),
+//                        new ParallelAction(
+//                                this.getActionFactory().specimenPlaceHighReady(),
+//                                new SequentialAction(
+//                                        new WaitAction(1000),
+//                                        this.getTrajectoryFactory().splineToPlaceSecondSpeciman().build()
+//                                 )
+//                        ),
+//                        this.getActionFactory().specimenPlaceHigh(),
+//                        new ParallelAction(
+//                                this.getTrajectoryFactory().parkInObservationStepOne().build(),
+//                                this.getActionFactory().initPos()
+//                        ),
+//                        this.getTrajectoryFactory().parkInObservationStepTwo().build()
+//                    )
             )
         );
     }

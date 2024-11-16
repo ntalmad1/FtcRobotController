@@ -87,7 +87,7 @@ public class ViperSlidsGoToPositionAction extends AbstractAction {
                 return STOP;
             }
 
-            return STOP;
+            return CONTIUE;
         }
     }
 }
