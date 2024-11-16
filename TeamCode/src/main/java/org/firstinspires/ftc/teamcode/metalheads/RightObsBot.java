@@ -67,14 +67,27 @@ public class RightObsBot extends AutoBot {
     public void go() {
         super.go();
 
-        Actions.runBlocking(new ParallelAction(
+        // step one - place speciman ready - drive it on
+        Actions.runBlocking(
+            new ParallelAction(
                 this.getActionFactory().specimenPlaceHighReady(),
                 new SequentialAction(
-                   new WaitAction(800)
-                   //this.getTrajectoryFactory().stepOne_placeSpeciman(this.driveTrain.getDrive(), initialPose).build(),
-
+                    new WaitAction(800),
+                    this.getTrajectoryFactory().stepOne_placeSpeciman(this.driveTrain.getDrive(), initialPose).build()
                 )
-        ));
+            )
+        );
+
+        // step two, three
+        Actions.runBlocking(
+            new SequentialAction(
+                new ParallelAction(
+                    this.getActionFactory().specimenPlaceHigh(),
+                    this.getTrajectoryFactory().releaseSpeciman(this.driveTrain.getDrive()).build()
+                ),
+                this.getTrajectoryFactory().stepThree_pushSamples(this.driveTrain.getDrive()).build()
+            )
+        );
 //
 //        Actions.runBlocking(new SequentialAction(
 //                new WaitAction(1000),
