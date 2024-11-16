@@ -16,7 +16,7 @@ import org.firstinspires.ftc.teamcode.roadrunner.MecanumDrive;
 
 @Config
 @Autonomous(name = "RoadrunnerSampleTester", group = "Autonomous")
-//@Disabled
+@Disabled
 public class SampleAutonTest extends LinearOpMode {
 
     /**

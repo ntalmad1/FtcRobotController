@@ -147,7 +147,7 @@ public class CompBotConfig {
         // claw rotator
         this.littleArmConfig.clawRotatorConfig = new ServoComponentConfig(robot);
         this.littleArmConfig.clawRotatorConfig.servoName = "clawRotator";
-        this.littleArmConfig.clawRotatorConfig.homePosition = Constants.CLAW_ROTATOR_0_DEG;
+        this.littleArmConfig.clawRotatorConfig.homePosition = Constants.CLAW_ROTATOR_180_DEG;
         this.littleArmConfig.clawRotatorConfig.zeroDegreePosition = Constants.CLAW_ROTATOR_0_DEG;
         this.littleArmConfig.clawRotatorConfig.minPosition = Constants.MIDDLE_SERVO_MIN_POS;
         this.littleArmConfig.clawRotatorConfig.maxPosition = Constants.CLAW_ROTATOR_MAX_POS;

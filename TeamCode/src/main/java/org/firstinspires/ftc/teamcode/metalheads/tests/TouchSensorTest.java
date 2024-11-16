@@ -7,7 +7,7 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.TouchSensor;
 
 @TeleOp(name = "TouchSensorTest", group = "Tests")
-//@Disabled
+@Disabled
 public class TouchSensorTest extends LinearOpMode {
     @Override
     public void runOpMode() throws InterruptedException {

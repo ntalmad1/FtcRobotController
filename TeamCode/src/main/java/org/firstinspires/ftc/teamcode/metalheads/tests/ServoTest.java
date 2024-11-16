@@ -14,7 +14,7 @@ import org.firstinspires.ftc.teamcode.library.event.gp1_dpad_press.gp1_dpad_up_p
  *
  */
 @TeleOp(name="ServoTest", group="Tests")
-//@Disabled
+@Disabled
 public class ServoTest extends IsaacBot {
 
     /**

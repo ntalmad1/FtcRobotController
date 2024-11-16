@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode.metalheads.tests;
 
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 
@@ -9,7 +10,7 @@ import org.firstinspires.ftc.teamcode.library.encodedmotor.EncodedMotorConfig;
 import org.firstinspires.ftc.teamcode.library.utility.Control;
 
 @TeleOp(name="ViperSlidesTest", group="Tests")
-//@Disabled
+@Disabled
 public class ViperSlidesTest extends IsaacBot {
 
     /**

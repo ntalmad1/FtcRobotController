@@ -13,7 +13,7 @@ import org.firstinspires.ftc.teamcode.library.utility.Control;
  *
  */
 @TeleOp(name="MainBoomCalib", group="Calibration")
-//@Disabled
+@Disabled
 public class MainBoomCalib extends IsaacBot {
 
     /**

@@ -17,7 +17,7 @@ import org.firstinspires.ftc.teamcode.library.utility.Control;
  * max motor position 2977
  */
 @TeleOp(name="ViperSlideCalib", group="Calibration")
-//@Disabled
+@Disabled
 public class ViperSlideCalib extends IsaacBot {
 
     /**

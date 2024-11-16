@@ -5,6 +5,7 @@ import com.acmerobotics.roadrunner.ParallelAction;
 import com.acmerobotics.roadrunner.Pose2d;
 import com.acmerobotics.roadrunner.SequentialAction;
 import com.acmerobotics.roadrunner.ftc.Actions;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import org.firstinspires.ftc.teamcode.library.action.AbstractAction;
@@ -18,7 +19,7 @@ import org.firstinspires.ftc.teamcode.metalheads.compbot.Constants;
  *
  */
 @TeleOp(name = "Right-Localization", group = "Auto")
-//@Disabled
+@Disabled
 public class RightLocalization extends AutoBot {
 
     /**

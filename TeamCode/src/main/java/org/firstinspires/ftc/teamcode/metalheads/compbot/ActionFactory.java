@@ -56,10 +56,17 @@ public class ActionFactory {
      * @return
      */
     public AbstractAction initPos() {
+        return initPos(1500);
+    }
+
+    /**
+     * @return
+     */
+    public AbstractAction initPos(int viperSlideWait) {
         return new SequentialActionImpl(
                 new InstantActionImpl(() -> { ActionFactory.this.compBot.setArmPos(CompBot.ArmPos.INIT_READY); }),
             ActionFactory.this.compBot.bigArm.viperSlide.viperSlidesGotoPositionAction(Constants.VIPER_SLIDES_MIN_TICS),
-            new WaitAction(1500),
+            new WaitAction(viperSlideWait),
             new ParallelActionImpl(
                 ActionFactory.this.compBot.littleArm.doubleServos.gotoPositionAction(
                         ActionFactory.this.compBot.getConfig().littleArmConfig.doubleServosConfig.homePosition, 1),
