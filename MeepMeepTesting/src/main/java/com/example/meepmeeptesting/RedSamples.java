@@ -80,9 +80,9 @@ public class RedSamples {
                         .setTangent(Math.toRadians(90))
                         //.strafeTo(new Vector2d(15,-50))//Go towards bar
 
-                        .splineToConstantHeading(new Vector2d(5,-47), Math.toRadians(90))
+                        .splineToConstantHeading(new Vector2d(5,-48), Math.toRadians(90))
 
-                        .lineToConstantHeading(new Vector2d(5,-36))//go forwards to hang specimen
+                        .lineToConstantHeading(new Vector2d(5,-39))//go forwards to hang specimen
 
 
                         /**
