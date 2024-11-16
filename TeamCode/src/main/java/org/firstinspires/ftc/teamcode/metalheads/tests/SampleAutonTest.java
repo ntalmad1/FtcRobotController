@@ -75,16 +75,17 @@ public class SampleAutonTest extends LinearOpMode {
                     .lineToYConstantHeading(-52) //Go to Observation zone
 
 
-//                    /**
-//                     * Second Sample
-//                     */
-//                    .splineToConstantHeading(new Vector2d(51, -12), Math.toRadians(0))
-//
-//                    .splineToConstantHeading(new Vector2d(58, -30), Math.toRadians(270))
-//
-//                    .lineToYConstantHeading(-57.5) //Go to Observation zone
-//
-//
+                    /**
+                     * Second Sample
+                     */
+                    .lineToY(-18.6) //towards sample
+
+                    .splineToConstantHeading(new Vector2d(52, -12), Math.toRadians(0)) //arc onto sample (left)
+
+                    .splineToConstantHeading(new Vector2d(56, -14), Math.toRadians(270)) //arc onto sample (right)
+
+                    .lineToYConstantHeading(-52) //Go to Observation zone
+
 //                    /**
 //                     * Grab Specimen 2
 //                     */

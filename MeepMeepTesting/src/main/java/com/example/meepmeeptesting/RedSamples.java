@@ -44,12 +44,20 @@ public class RedSamples {
                         //.lineToYConstantHeading(-52) //Go to Observation zone
 
 
-                          /**
-                          * second sample
-                          */
-//                        .splineToConstantHeading(new Vector2d(51, -12), Math.toRadians(0)) //left side of arc
-//                        .splineToConstantHeading(new Vector2d(58, -30), Math.toRadians(270)) //right side
-//                        .lineToConstantHeading(new Vector2d(58, -57.5))
+                        /**
+                        * second sample
+                        */
+                        .lineTo(new Vector2d(45.3, -18.6))
+                        //.lineToY(-18.6)
+
+                        .splineToConstantHeading(new Vector2d(52, -12), Math.toRadians(0))
+                        //.splineToConstantHeading(new Vector2d(52, -12), Math.toRadians(0))
+
+                        .splineToConstantHeading(new Vector2d(56, -14), Math.toRadians(270))
+                        //.splineToConstantHeading(new Vector2d(56, -14), Math.toRadians(270))
+
+                        .lineToConstantHeading(new Vector2d(56, -52))
+                        //.lineToYConstantHeading(-52)
 //
 //                        //grab first specimen
 //                        .waitSeconds(0.1)
