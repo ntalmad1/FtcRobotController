@@ -11,6 +11,7 @@ import org.firstinspires.ftc.teamcode.library.action.AbstractAction;
 import org.firstinspires.ftc.teamcode.library.action.InstantActionImpl;
 import org.firstinspires.ftc.teamcode.library.action.SequentialActionImpl;
 import org.firstinspires.ftc.teamcode.library.action.WaitAction;
+import org.firstinspires.ftc.teamcode.metalheads.compbot.AutoActionFactory;
 import org.firstinspires.ftc.teamcode.metalheads.compbot.AutoBot;
 import org.firstinspires.ftc.teamcode.metalheads.compbot.Constants;
 
@@ -20,6 +21,8 @@ import org.firstinspires.ftc.teamcode.metalheads.compbot.Constants;
 @TeleOp(name = "Right-Observation", group = "Auto")
 //@Disabled
 public class RightObsBot extends AutoBot {
+
+    private AutoActionFactory autoActionFactory;
 
     /**
      * Constructor
@@ -40,6 +43,8 @@ public class RightObsBot extends AutoBot {
     @Override
     protected void configureBot() {
         super.configureBot();
+
+        this.autoActionFactory = new AutoActionFactory(this);
 
         // initialize roadrunner from last op pose
         this.setInitialPose(new Pose2d(8, -61, Math.toRadians(90)));
@@ -73,7 +78,7 @@ public class RightObsBot extends AutoBot {
 
                     // step one - place speciman 1 ready - drive it on
                     new ParallelAction(
-                            this.getActionFactory().specimenPlaceHighReady(),
+                            this.getAutoActionFactory().specimenPlaceHighReady(),
                             new SequentialAction(
                                     new WaitAction(800),
                                     // single line forward
@@ -83,46 +88,42 @@ public class RightObsBot extends AutoBot {
 
                     // step two, three, & four
                     new SequentialAction(
-                            new ParallelAction(
-                                    this.getActionFactory().specimenPlaceHigh(),  // release and goto speciman ready
-                                    new SequentialAction(
-                                       new WaitAction(1000),
-                                       this.getTrajectoryFactory().stepTwo_Three_releaseSpeciman_pushSamples().build()
-                                    )
-                            ),
+                            this.getAutoActionFactory().specimenPlaceHigh(),  // release and goto speciman ready
+                            new WaitAction(1000),
+                            this.getTrajectoryFactory().stepTwo_Three_releaseSpeciman_pushSamples().build(),
                             this.getTrajectoryFactory().stepFour_arcToSpecimanPick().build()
                     )
 
                     // cycle speciman 1
 //                    new SequentialAction(
 //                            new WaitAction(1000),
-//                            this.getActionFactory().specimenPick(),
+//                            this.getAutoActionFactory().specimenPick(),
 //                            new ParallelAction(
-//                                    this.getActionFactory().specimenPlaceHighReady(),
+//                                    this.getAutoActionFactory().specimenPlaceHighReady(),
 //                                      new SequentialAction(
 //                                            new WaitAction(1000),
 //                                    this.getTrajectoryFactory().splineToPlaceFirstSpeciman().build()
 //        )
 //                            ),
-//                            this.getActionFactory().specimenPlaceHigh(), // let go and return to specimen ready
+//                            this.getAutoActionFactory().specimenPlaceHigh(), // let go and return to specimen ready
 //                            this.getTrajectoryFactory().splineToSecondSpecimanPick().build()
 //                    ),
 
                     // cycle speciman 2 & end
 //                    new SequentialAction(
 //                        new WaitAction(1000),
-//                        this.getActionFactory().specimenPick(),
+//                        this.getAutoActionFactory().specimenPick(),
 //                        new ParallelAction(
-//                                this.getActionFactory().specimenPlaceHighReady(),
+//                                this.getAutoActionFactory().specimenPlaceHighReady(),
 //                                new SequentialAction(
 //                                        new WaitAction(1000),
 //                                        this.getTrajectoryFactory().splineToPlaceSecondSpeciman().build()
 //                                 )
 //                        ),
-//                        this.getActionFactory().specimenPlaceHigh(),
+//                        this.getAutoActionFactory().specimenPlaceHigh(),
 //                        new ParallelAction(
 //                                this.getTrajectoryFactory().parkInObservationStepOne().build(),
-//                                this.getActionFactory().initPos()
+//                                this.getAutoActionFactory().initPos()
 //                        ),
 //                        this.getTrajectoryFactory().parkInObservationStepTwo().build()
 //                    )
@@ -136,5 +137,13 @@ public class RightObsBot extends AutoBot {
      */
     protected RightObsTrajectoryFactory getTrajectoryFactory () {
         return (RightObsTrajectoryFactory)super.getTrajectoryFactory();
+    }
+
+    /**
+     *
+     * @return
+     */
+    public AutoActionFactory getAutoActionFactory () {
+        return this.autoActionFactory;
     }
 }

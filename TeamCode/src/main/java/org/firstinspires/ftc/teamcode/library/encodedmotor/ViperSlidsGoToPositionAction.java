@@ -27,6 +27,22 @@ public class ViperSlidsGoToPositionAction extends AbstractAction {
     private int startPos;
 
     /**
+     */
+    private Integer timeout;
+
+    /**
+     */
+    private int lastPos;
+
+    /**
+     */
+    private int lastPosEqualsCount;
+
+    /**
+     */
+    private int timeoutAfterXCycles = 10;
+
+    /**
      *
      * @param motor
      * @param position
@@ -47,6 +63,8 @@ public class ViperSlidsGoToPositionAction extends AbstractAction {
         this.motor.setTargetPosition(this.targetPosition);
         this.motor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         this.motor.setPower(power);
+
+        this.timeout = 1;
     }
 
     /**
@@ -76,6 +94,26 @@ public class ViperSlidsGoToPositionAction extends AbstractAction {
             if ((this.targetPosition == Constants.VIPER_SLIDES_MIN_TICS)
                 && this.motor.getCurrentPosition() < 60) {
                 return STOP;
+            }
+
+            if (this.timeout != null) {
+                int currentPos = this.motor.getCurrentPosition();
+
+                if ((startPos < currentPos && currentPos > this.targetPosition - 40)
+                        || (startPos > currentPos && currentPos < this.targetPosition + 40)) {
+
+                    if (currentPos == lastPos) {
+                        this.lastPosEqualsCount++;
+                    } else {
+                        this.lastPos = currentPos;
+                        this.lastPosEqualsCount = 0;
+                    }
+
+                    if (this.lastPosEqualsCount > timeoutAfterXCycles) {
+                        this.motor.setPower(0);
+                        return STOP;
+                    }
+                }
             }
 
             return CONTIUE;
