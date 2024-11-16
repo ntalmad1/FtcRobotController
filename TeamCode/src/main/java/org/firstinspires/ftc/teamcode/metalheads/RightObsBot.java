@@ -82,10 +82,9 @@ public class RightObsBot extends AutoBot {
         Actions.runBlocking(
             new SequentialAction(
                 new ParallelAction(
-                    this.getActionFactory().specimenPlaceHigh(),
-                    this.getTrajectoryFactory().releaseSpeciman().build()
+                    this.getActionFactory().specimenPlaceHigh(), // release and goto speciman ready
+                    this.getTrajectoryFactory().stepTwo_Three_releaseSpeciman_pushSamples().build()
                 ),
-                this.getTrajectoryFactory().stepThree_pushSamples().build(),
                 this.getTrajectoryFactory().stepFour_arcToSpecimanPick().build()
             )
         );
@@ -95,9 +94,9 @@ public class RightObsBot extends AutoBot {
                 new SequentialAction(
                         new WaitAction(1000),
                         this.getActionFactory().specimenPick(),
-                        this.getTrajectoryFactory().splineToPlaceSpeciman().build(),
+                        this.getTrajectoryFactory().splineToPlaceFirstSpeciman().build(),
                         this.getActionFactory().specimenPlaceHigh(),
-                        this.getTrajectoryFactory().splineToSpecimanPick().build()
+                        this.getTrajectoryFactory().splineToSecondSpecimanPick().build()
                 )
         );
 
@@ -106,12 +105,13 @@ public class RightObsBot extends AutoBot {
                 new SequentialAction(
                         new WaitAction(1000),
                         this.getActionFactory().specimenPick(),
-                        this.getTrajectoryFactory().splineToPlaceSpeciman().build(),
+                        this.getTrajectoryFactory().splineToPlaceSecondSpeciman().build(),
                         this.getActionFactory().specimenPlaceHigh(),
                         new ParallelAction(
-                            this.getTrajectoryFactory().parkInObservation().build(),
+                            this.getTrajectoryFactory().parkInObservationStepOne().build(),
                             this.getActionFactory().initPos()
-                        )
+                        ),
+                        this.getTrajectoryFactory().parkInObservationStepTwo().build()
                 )
         );
 

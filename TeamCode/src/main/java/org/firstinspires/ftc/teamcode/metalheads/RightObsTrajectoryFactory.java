@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode.metalheads;
 
 import com.acmerobotics.roadrunner.Pose2d;
 import com.acmerobotics.roadrunner.TrajectoryActionBuilder;
+import com.acmerobotics.roadrunner.TranslationalVelConstraint;
 import com.acmerobotics.roadrunner.Vector2d;
 
 import org.firstinspires.ftc.teamcode.metalheads.compbot.AutoBot;
@@ -57,39 +58,72 @@ public class RightObsTrajectoryFactory extends TrajectoryFactory {
      * @return
      */
     public TrajectoryActionBuilder stepFour_arcToSpecimanPick() {
-        return null;
-//        return drive.actionBuilder(drive.pose)
-//                .lineToY(-33.5, new TranslationalVelConstraint(10));
+        return this.getAutoBot().getDrive().actionBuilder(this.getAutoBot().getDrive().pose)
+                .setTangent(Math.toRadians(90))
+                .splineToConstantHeading(new Vector2d(51,-44), Math.toRadians(180))
+
+                .splineToConstantHeading(new Vector2d(46, -57.4), Math.toRadians(270),
+                        new TranslationalVelConstraint(8)
+                );
     }
 
     /**
      *
      * @return
      */
-    public TrajectoryActionBuilder splineToPlaceSpeciman() {
-        return null;
-//        return drive.actionBuilder(drive.pose)
-//                .lineToY(-33.5, new TranslationalVelConstraint(10));
+    public TrajectoryActionBuilder splineToPlaceFirstSpeciman() {
+        return this.getAutoBot().getDrive().actionBuilder(this.getAutoBot().getDrive().pose)
+                .setTangent(Math.toRadians(150))
+                .splineToConstantHeading(new Vector2d(5,-48), Math.toRadians(90))
+                .lineToYConstantHeading(-39);
     }
 
     /**
      *
      * @return
      */
-    public TrajectoryActionBuilder splineToSpecimanPick() {
-        return null;
-//        return drive.actionBuilder(drive.pose)
-//                .lineToY(-33.5, new TranslationalVelConstraint(10));
+    public TrajectoryActionBuilder splineToSecondSpecimanPick() {
+        return this.getAutoBot().getDrive().actionBuilder(this.getAutoBot().getDrive().pose)
+                .setTangent(Math.toRadians(270))
+                .lineToYConstantHeading(-42)//Away from bar
+
+                .splineToConstantHeading(new Vector2d(33,-45), Math.toRadians(0))//Towards Specimen
+
+                .splineToConstantHeading(new Vector2d(46, -57.4), Math.toRadians(270),//Specimen Grab
+                        new TranslationalVelConstraint(8)
+                );
+    }
+
+
+    /**
+     *
+     * @return
+     */
+    public TrajectoryActionBuilder splineToPlaceSecondSpeciman() {
+        return this.getAutoBot().getDrive().actionBuilder(this.getAutoBot().getDrive().pose)
+                .setTangent(Math.toRadians(150))
+                .splineToConstantHeading(new Vector2d(2,-48), Math.toRadians(90))
+                .lineToYConstantHeading(-39);
     }
 
     /**
      *
      * @return
      */
-    public TrajectoryActionBuilder parkInObservation() {
-        return null;
-//        return drive.actionBuilder(drive.pose)
-//                .lineToY(-33.5, new TranslationalVelConstraint(10));
+    public TrajectoryActionBuilder parkInObservationStepOne() {
+        return this.getAutoBot().getDrive().actionBuilder(this.getAutoBot().getDrive().pose)
+                .setTangent(Math.toRadians(270))
+                .lineToYConstantHeading(-42);
+    }
+
+    /**
+     *
+     * @return
+     */
+    public TrajectoryActionBuilder parkInObservationStepTwo() {
+        return this.getAutoBot().getDrive().actionBuilder(this.getAutoBot().getDrive().pose)
+            .splineToConstantHeading(new Vector2d(33,-45), Math.toRadians(0))
+            .splineToConstantHeading(new Vector2d(46, -52), Math.toRadians(270));
     }
 
 }

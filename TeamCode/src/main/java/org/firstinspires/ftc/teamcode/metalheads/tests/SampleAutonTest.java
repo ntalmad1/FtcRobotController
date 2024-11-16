@@ -53,12 +53,12 @@ public class SampleAutonTest extends LinearOpMode {
          * @return tab2
          */
         public TrajectoryActionBuilder getTab2() {
-            double velocityLow = 25;
+//            double velocityLow = 25;
 
             TrajectoryActionBuilder tab2 = drive.actionBuilder(initialPose)
-                    //.lineToY( -39) //Go infront of bar to hang specimen
-
-
+//                    .lineToY( -39) //Go infront of bar to hang specimen
+//
+//
 //                    /**
 //                     * First Sample
 //                     */
@@ -87,49 +87,49 @@ public class SampleAutonTest extends LinearOpMode {
 //                    .splineToConstantHeading(new Vector2d(56, -14), Math.toRadians(270)) //arc onto sample (right)
 //
 //                    .lineToYConstantHeading(-52) //Go to Observation zone
+//
+//
+//                    /**
+//                    * Grab First Specimen
+//                    */
+//                    .setTangent(Math.toRadians(90))
+//                    .splineToConstantHeading(new Vector2d(51,-44), Math.toRadians(180))
+//
+//                    .splineToConstantHeading(new Vector2d(46, -57.4), Math.toRadians(270),
+//                            new TranslationalVelConstraint(8)
+//                    )
+//                    //TODO: SLOW!!
+//
+//                    //TODO:Grab Specimen
+//                    .waitSeconds(0.6)
 
 
-                    /**
-                    * Grab First Specimen
-                    */
-                    .setTangent(Math.toRadians(90))
-                    .splineToConstantHeading(new Vector2d(51,-44), Math.toRadians(180))
 
-                    .splineToConstantHeading(new Vector2d(46, -57.4), Math.toRadians(270),
-                            new TranslationalVelConstraint(8)
-                    )
-                    //TODO: SLOW!!
-
-                    //TODO:Grab Specimen
-                    .waitSeconds(0.6)
-
-
-
-                    /**
-                     * hang First specimen
-                     */
-                    .setTangent(Math.toRadians(150))
-                    //.strafeTo(new Vector2d(15,-50))//Go towards bar
-
-                    .splineToConstantHeading(new Vector2d(5,-48), Math.toRadians(90))
-
-                    .lineToYConstantHeading(-39)//go forwards to hang specimen
-
-
-                    /**
-                    * Grab Second Specimen
-                    */
-                    .setTangent(Math.toRadians(270))
-                    .lineToYConstantHeading(-42)//Away from bar
-
-                    .splineToConstantHeading(new Vector2d(33,-45), Math.toRadians(0))//Towards Specimen
-
-                    .splineToConstantHeading(new Vector2d(46, -57.4), Math.toRadians(270),//Specimen Grab
-                            new TranslationalVelConstraint(8)
-                    )
-                    //TODO: Grab Specimen
-
-                    .waitSeconds(0.6)
+//                    /**
+//                     * hang First specimen
+//                     */
+//                    .setTangent(Math.toRadians(150))
+//                    //.strafeTo(new Vector2d(15,-50))//Go towards bar
+//
+//                    .splineToConstantHeading(new Vector2d(5,-48), Math.toRadians(90))
+//
+//                    .lineToYConstantHeading(-39)//go forwards to hang specimen
+//
+//
+//                    /**
+//                    * Grab Second Specimen
+//                    */
+//                    .setTangent(Math.toRadians(270))
+//                    .lineToYConstantHeading(-42)//Away from bar
+//
+//                    .splineToConstantHeading(new Vector2d(33,-45), Math.toRadians(0))//Towards Specimen
+//
+//                    .splineToConstantHeading(new Vector2d(46, -57.4), Math.toRadians(270),//Specimen Grab
+//                            new TranslationalVelConstraint(8)
+//                    )
+//                    //TODO: Grab Specimen
+//
+//                    .waitSeconds(0.6)
 
 
                     /**
@@ -152,7 +152,7 @@ public class SampleAutonTest extends LinearOpMode {
                     //TODO: INIT POSITION
 
 
-                    .splineToConstantHeading(new Vector2d(33,-45), Math.toRadians(0))//Towards Specimen
+                    .splineToConstantHeading(new Vector2d(33,-45), Math.toRadians(0))
 
                     .splineToConstantHeading(new Vector2d(46, -52), Math.toRadians(270))
 
