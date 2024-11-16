@@ -32,12 +32,14 @@ public class RightObsTrajectoryFactory extends TrajectoryFactory {
      * @return
      */
     public TrajectoryActionBuilder stepTwo_Three_releaseSpeciman_pushSamples() {
+        
+
         return this.getAutoBot().getDrive().actionBuilder(this.getAutoBot().getDrive().pose)
                 /*
                  * First Sample
                  */
                 .setTangent(Math.toRadians(270))
-                .splineToConstantHeading(new Vector2d(24, -44), Math.toRadians(0))//away + right of bar
+                .splineToConstantHeading(new Vector2d(28, -44), Math.toRadians(0))//away + right of bar
                 .splineToConstantHeading(new Vector2d(38, -18.6), Math.toRadians(0))// up torwards sample
                 .splineToConstantHeading(new Vector2d(43, -12), Math.toRadians(0))//arc onto sample (left)
                 .splineToConstantHeading(new Vector2d(45.3, -14), Math.toRadians(270))//arc onto sample (right)
@@ -61,7 +63,6 @@ public class RightObsTrajectoryFactory extends TrajectoryFactory {
         return this.getAutoBot().getDrive().actionBuilder(this.getAutoBot().getDrive().pose)
                 .setTangent(Math.toRadians(90))
                 .splineToConstantHeading(new Vector2d(51,-44), Math.toRadians(180))
-
                 .splineToConstantHeading(new Vector2d(46, -57.4), Math.toRadians(270),
                         new TranslationalVelConstraint(8)
                 );

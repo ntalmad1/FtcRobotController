@@ -67,72 +67,58 @@ public class RightObsBot extends AutoBot {
     public void go() {
         super.go();
 
-        // step one - place speciman 1 ready - drive it on
-        Actions.runBlocking(
-            new ParallelAction(
-                this.getActionFactory().specimenPlaceHighReady(),
-                new SequentialAction(
-                    new WaitAction(800),
-                    this.getTrajectoryFactory().stepOne_placeSpeciman(initialPose).build()
-                )
-            )
-        );
 
-        // step two, three, & four
         Actions.runBlocking(
             new SequentialAction(
-                new ParallelAction(
-                    this.getActionFactory().specimenPlaceHigh(), // release and goto speciman ready
-                    this.getTrajectoryFactory().stepTwo_Three_releaseSpeciman_pushSamples().build()
-                ),
-                this.getTrajectoryFactory().stepFour_arcToSpecimanPick().build()
-            )
-        );
 
-        // cycle speciman 2
-        Actions.runBlocking(
-                new SequentialAction(
+                    // step one - place speciman 1 ready - drive it on
+                    new ParallelAction(
+                            this.getActionFactory().specimenPlaceHighReady(),
+                            new SequentialAction(
+                                    new WaitAction(800),
+                                    // single line forward
+                                    this.getTrajectoryFactory().stepOne_placeSpeciman(initialPose).build()
+                            )
+                    ),
+
+                    // step two, three, & four
+                    new SequentialAction(
+                            new ParallelAction(
+                                    this.getActionFactory().specimenPlaceHigh(), // release and goto speciman ready
+                                    this.getTrajectoryFactory().stepTwo_Three_releaseSpeciman_pushSamples().build()
+                            ),
+                            this.getTrajectoryFactory().stepFour_arcToSpecimanPick().build()
+                    ),
+
+                    // cycle speciman 1
+                    new SequentialAction(
+                            new WaitAction(1000),
+                            this.getActionFactory().specimenPick(),
+                            new ParallelAction(
+                                    this.getActionFactory().specimenPlaceHighReady(),
+                                    this.getTrajectoryFactory().splineToPlaceFirstSpeciman().build()
+                            ),
+                            this.getActionFactory().specimenPlaceHigh(), // let go and return to specimen ready
+                            this.getTrajectoryFactory().splineToSecondSpecimanPick().build()
+                    ),
+
+                    // cycle speciman 2 & end
+                    new SequentialAction(
                         new WaitAction(1000),
                         this.getActionFactory().specimenPick(),
-                        this.getTrajectoryFactory().splineToPlaceFirstSpeciman().build(),
-                        this.getActionFactory().specimenPlaceHigh(),
-                        this.getTrajectoryFactory().splineToSecondSpecimanPick().build()
-                )
-        );
-
-        // cycle speciman 3 & end
-        Actions.runBlocking(
-                new SequentialAction(
-                        new WaitAction(1000),
-                        this.getActionFactory().specimenPick(),
-                        this.getTrajectoryFactory().splineToPlaceSecondSpeciman().build(),
+                        new ParallelAction(
+                                this.getActionFactory().specimenPlaceHighReady(),
+                                this.getTrajectoryFactory().splineToPlaceSecondSpeciman().build()
+                        ),
                         this.getActionFactory().specimenPlaceHigh(),
                         new ParallelAction(
-                            this.getTrajectoryFactory().parkInObservationStepOne().build(),
-                            this.getActionFactory().initPos()
+                                this.getTrajectoryFactory().parkInObservationStepOne().build(),
+                                this.getActionFactory().initPos()
                         ),
                         this.getTrajectoryFactory().parkInObservationStepTwo().build()
-                )
+                    )
+            )
         );
-
-//
-//        Actions.runBlocking(new SequentialAction(
-//                new WaitAction(1000),
-//                this.getTrajectoryFactory().lineToPlaceSpeciman(this.driveTrain.getDrive()).build(),
-//                new WaitAction(500),
-//                this.arm.mainBoom.gotoPositionAction(new MotorPos(1354, 0.5)),
-//                new ParallelAction(
-//                    this.getActionFactory().specimenPlaceHigh(),
-//                    this.getTrajectoryFactory().lineBackAfterPlaceSpeciman(this.driveTrain.getDrive()).build()),
-//                new WaitAction(1000),
-//                this.claw.openClawAction(),
-//                new WaitAction(1000),
-//                new ParallelAction(
-//                    this.getActionFactory().moveArmToInitPos(),
-//                    new InstantAction(() -> this.claw.pincher.setPosition(Constants.CLAW_PINCHER_CLOSE_POS))),
-//                this.arm.viperSlide.gotoVoltageAction(this.getConfig().armConfig.viperSlideConfig.minVolts),
-//                this.getTrajectoryFactory().pushSamples(this.driveTrain.getDrive()).build()
-//        ));
     }
 
     /**
