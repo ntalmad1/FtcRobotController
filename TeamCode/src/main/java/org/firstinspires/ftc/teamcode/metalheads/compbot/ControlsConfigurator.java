@@ -35,7 +35,8 @@ public class ControlsConfigurator {
 
         // panic button / kill switch
         this.compBot.addGp1_Back_PressHandler(event -> {
-            this.compBot.terminateOpModeNow();
+            // this.compBot.terminateOpModeNow();
+            this.compBot.killAllActions();
         });
 
         // clear and re-init
@@ -56,7 +57,8 @@ public class ControlsConfigurator {
 
         // Panic Button / Kill Switch
         this.compBot.addGp2_Back_PressHandler(event -> {
-            this.compBot.terminateOpModeNow();
+            //this.compBot.terminateOpModeNow();
+            this.compBot.killAllActions();
         });
 
         // main boom

@@ -59,4 +59,13 @@ public class ActionQueue {
     public void add(AbstractAction action) {
         this.actions.add(action);
     }
+
+    /**
+     *
+     */
+    public void killAllActions() {
+       for (AbstractAction action : this.actions) {
+           action.markAsCompleted();
+       }
+    }
 }

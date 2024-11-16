@@ -112,7 +112,6 @@ public class EncodedMotorGoToPositionAction extends AbstractAction {
         else {
 
             if (this.startPos != this.motor.getCurrentPosition()) {
-                this.motor.getSecondaryMotor().setPower(0);
                 return STOP;
             }
 

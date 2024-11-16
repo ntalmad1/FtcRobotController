@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode.metalheads.compbot;
 
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
+import com.qualcomm.robotcore.hardware.Servo;
 
 import org.firstinspires.ftc.teamcode.library.IsaacBot;
 import org.firstinspires.ftc.teamcode.library.drivetrain.RoadrunnerDriveTrainConfig;
@@ -129,6 +130,7 @@ public class CompBotConfig {
         this.littleArmConfig.doubleServosConfig.minPosition = Constants.DOUBLE_SERVOS_MIN_POS;
         this.littleArmConfig.doubleServosConfig.maxPosition = Constants.DOUBLE_SERVOS_MAX_POS;
         this.littleArmConfig.doubleServosConfig.homePosition = Constants.DOUBLE_SERVOS_INIT_POS;
+        this.littleArmConfig.doubleServosConfig.direction = Servo.Direction.REVERSE;
         this.littleArmConfig.doubleServosConfig.zeroDegreePosition = 0.5;
         this.littleArmConfig.doubleServosConfig.isDualServo = true;
         this.littleArmConfig.doubleServosConfig.secondaryServoName = "rightBoom";
