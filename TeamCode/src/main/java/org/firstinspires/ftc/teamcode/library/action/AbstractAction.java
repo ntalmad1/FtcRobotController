@@ -143,6 +143,10 @@ public abstract class AbstractAction implements Action {
      * @return
      */
     public boolean run(TelemetryPacket tp) {
+        if (this.isCompleted()) {
+            return STOP;
+        }
+
         this.telemetryPacket = tp;
 
         if (!this.initialized) {
