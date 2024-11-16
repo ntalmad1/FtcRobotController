@@ -56,80 +56,80 @@ public class SampleAutonTest extends LinearOpMode {
 //            double velocityLow = 25;
 
             TrajectoryActionBuilder tab2 = drive.actionBuilder(initialPose)
-//                    .lineToY( -39) //Go infront of bar to hang specimen
-//
-//
-//                    /**
-//                     * First Sample
-//                     */
-//                    .setTangent(Math.toRadians(270))
-//
-//                    .splineToConstantHeading(new Vector2d(24, -44), Math.toRadians(0))//away + right of bar
-//
-//                    .splineToConstantHeading(new Vector2d(38, -18.6), Math.toRadians(0))// up torwards sample
-//
-//                    .splineToConstantHeading(new Vector2d(43, -12), Math.toRadians(0))//arc onto sample (left)
-//
-//                    .splineToConstantHeading(new Vector2d(45.3, -14), Math.toRadians(270))//arc onto sample (right)
-//
-//                    .lineToYConstantHeading(-52) //Go to Observation zone
-//
-//
-//                    /**
-//                     * Second Sample
-//                     */
-//                    .setTangent(Math.toRadians(270))
-//
-//                    .lineToYConstantHeading(-18.6) //towards sample
-//
-//                    .splineToConstantHeading(new Vector2d(52, -12), Math.toRadians(0)) //arc onto sample (left)
-//
-//                    .splineToConstantHeading(new Vector2d(56, -14), Math.toRadians(270)) //arc onto sample (right)
-//
-//                    .lineToYConstantHeading(-52) //Go to Observation zone
-//
-//
-//                    /**
-//                    * Grab First Specimen
-//                    */
-//                    .setTangent(Math.toRadians(90))
-//                    .splineToConstantHeading(new Vector2d(51,-44), Math.toRadians(180))
-//
-//                    .splineToConstantHeading(new Vector2d(46, -57.4), Math.toRadians(270),
-//                            new TranslationalVelConstraint(8)
-//                    )
-//                    //TODO: SLOW!!
-//
-//                    //TODO:Grab Specimen
-//                    .waitSeconds(0.6)
+                    .lineToY( -39) //Go infront of bar to hang specimen
+
+
+                    /**
+                     * First Sample
+                     */
+                    .setTangent(Math.toRadians(270))
+
+                    .splineToConstantHeading(new Vector2d(24, -44), Math.toRadians(0))//away + right of bar
+
+                    .splineToConstantHeading(new Vector2d(38, -18.6), Math.toRadians(0))// up torwards sample
+
+                    .splineToConstantHeading(new Vector2d(43, -12), Math.toRadians(0))//arc onto sample (left)
+
+                    .splineToConstantHeading(new Vector2d(45.3, -14), Math.toRadians(270))//arc onto sample (right)
+
+                    .lineToYConstantHeading(-52) //Go to Observation zone
+
+
+                    /**
+                     * Second Sample
+                     */
+                    .setTangent(Math.toRadians(270))
+
+                    .lineToYConstantHeading(-18.6) //towards sample
+
+                    .splineToConstantHeading(new Vector2d(52, -12), Math.toRadians(0)) //arc onto sample (left)
+
+                    .splineToConstantHeading(new Vector2d(56, -14), Math.toRadians(270)) //arc onto sample (right)
+
+                    .lineToYConstantHeading(-52) //Go to Observation zone
+
+
+                    /**
+                    * Grab First Specimen
+                    */
+                    .setTangent(Math.toRadians(90))
+                    .splineToConstantHeading(new Vector2d(51,-44), Math.toRadians(180))
+
+                    .splineToConstantHeading(new Vector2d(46, -57.4), Math.toRadians(270),
+                            new TranslationalVelConstraint(8)
+                    )
+                    //TODO: SLOW!!
+
+                    //TODO:Grab Specimen
+                    .waitSeconds(0.6)
 
 
 
-//                    /**
-//                     * hang First specimen
-//                     */
-//                    .setTangent(Math.toRadians(150))
-//                    //.strafeTo(new Vector2d(15,-50))//Go towards bar
-//
-//                    .splineToConstantHeading(new Vector2d(5,-48), Math.toRadians(90))
-//
-//                    .lineToYConstantHeading(-39)//go forwards to hang specimen
-//
-//
-//                    /**
-//                    * Grab Second Specimen
-//                    */
-//                    .setTangent(Math.toRadians(270))
-//                    .lineToYConstantHeading(-42)//Away from bar
-//
-//                    .splineToConstantHeading(new Vector2d(33,-45), Math.toRadians(0))//Towards Specimen
-//
-//                    .splineToConstantHeading(new Vector2d(46, -57.4), Math.toRadians(270),//Specimen Grab
-//                            new TranslationalVelConstraint(8)
-//                    )
-//                    //TODO: Grab Specimen
-//
-//                    .waitSeconds(0.6)
+                    /**
+                     * hang First specimen
+                     */
+                    .setTangent(Math.toRadians(150))
+                    //.strafeTo(new Vector2d(15,-50))//Go towards bar
+
+                    .splineToConstantHeading(new Vector2d(5,-48), Math.toRadians(90))
+
+                    .lineToYConstantHeading(-39)//go forwards to hang specimen
+
+
+                    /**
+                    * Grab Second Specimen
+                    */
+                    .setTangent(Math.toRadians(270))
+                    .lineToYConstantHeading(-42)//Away from bar
+
+                    .splineToConstantHeading(new Vector2d(33,-45), Math.toRadians(0))//Towards Specimen
+
+                    .splineToConstantHeading(new Vector2d(46, -57.4), Math.toRadians(270),//Specimen Grab
+                            new TranslationalVelConstraint(8)
+                    )
+                    //TODO: Grab Specimen
+
+                    .waitSeconds(0.6)
 
 
                     /**
