@@ -156,8 +156,8 @@ public class EncodedMotor extends DcMotorComponent {
             } else if (power < 0) {
                 int newPosition = (int) (this.getCurrentPosition() - Math.abs(this.getConfig().scale * power));
 
-                if (newPosition <= this.getControllerMinTics()) {
-                    newPosition = this.getControllerMinTics();
+                if (newPosition <= this.getConfig().minTics) {
+                    newPosition = this.getConfig().minTics;
                 }
 
                 power = -1;
@@ -166,8 +166,14 @@ public class EncodedMotor extends DcMotorComponent {
                 this.setMode(DcMotor.RunMode.RUN_TO_POSITION);
                 this.setPower(power);
             } else {
-                this.setPower(0);
-                this.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+                if (this.isBrakeOn()) {
+                    //                this.setTargetPosition(this.getCurrentPosition());
+                    //                this.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+                    //                this.setPower(1);
+                } else {
+                    this.setPower(0);
+                    this.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+                }
             }
         }
         else {
@@ -200,8 +206,14 @@ public class EncodedMotor extends DcMotorComponent {
                 this.setPower(power);
 
             } else {
-                this.setPower(0);
-                this.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+                if (this.isBrakeOn()) {
+                    //                this.setTargetPosition(this.getCurrentPosition());
+                    //                this.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+                    //                this.setPower(1);
+                } else {
+                    this.setPower(0);
+                    this.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+                }
             }
         }
     }
@@ -220,6 +232,18 @@ public class EncodedMotor extends DcMotorComponent {
      */
     public void run () {
         super.run();
+
+//        if (this.touchSensor != null && this.touchSensor.isPressed() && this.toggle) {
+//            this.toggle = false;
+//            this.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+//            this.setTargetPosition(10);
+//            this.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+//            this.setPower(1);
+//        }
+//
+//        if (this.touchSensor != null && !this.touchSensor.isPressed()) {
+//            toggle = true;
+//        }
     }
 
     /**
@@ -228,18 +252,5 @@ public class EncodedMotor extends DcMotorComponent {
      */
     public void setTouchSensor(TouchSensor sensor) {
         this.touchSensor = sensor;
-    }
-
-    /**
-     *
-     * @return
-     */
-    private int getControllerMinTics() {
-        if (this.getConfig().controllerMinTics != null) {
-            return this.getConfig().controllerMinTics;
-        }
-        else {
-            return this.getConfig().minTics;
-        }
     }
 }

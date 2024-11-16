@@ -580,6 +580,8 @@ public abstract class  IsaacBot extends LinearOpMode implements IComponent
      * @param action
      */
     public void runAction (AbstractAction action) {
+        this.killAllActions();
+
         this.actionQueue.add(action);
     }
 

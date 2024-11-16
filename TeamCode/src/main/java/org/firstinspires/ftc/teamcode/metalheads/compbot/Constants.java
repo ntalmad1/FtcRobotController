@@ -28,7 +28,7 @@ public class Constants {
      */
     public static final double DOUBLE_SERVOS_MIN_POS = 0;
     public static final double DOUBLE_SERVOS_MAX_POS = 1;
-    public static final double DOUBLE_SERVOS_INIT_POS = 0.9;
+    public static final double DOUBLE_SERVOS_INIT_POS = 1;
     public static final double DOUBLE_SERVOS_INCREMENT = 0.006;
 
     /**
@@ -45,7 +45,7 @@ public class Constants {
     public static final double CLAW_ROTATOR_90_DEG = 0.3;
     public static final double CLAW_ROTATOR_180_DEG = 0.64;
     public static final double CLAW_ROTATOR_MAX_POS = 1;
-    public static final double CLAW_ROTATOR_INIT_POS = 0;
+    public static final double CLAW_ROTATOR_INIT_POS = 0.64;
     public static final double CLAW_ROTATOR_INCREMENT = 0.006;
 
     /**
