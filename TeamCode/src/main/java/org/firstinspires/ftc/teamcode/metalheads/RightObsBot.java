@@ -71,8 +71,8 @@ public class RightObsBot extends AutoBot {
         Actions.runBlocking(new ParallelAction(
                 this.getActionFactory().specimenPlaceHighReady(),
                 new SequentialAction(
-                   new WaitAction(800)
-                   //this.getTrajectoryFactory().splineToChamber(this.driveTrain.getDrive(), initialPose).build()
+                   new WaitAction(800),
+                   this.getTrajectoryFactory().lineToChamber(this.driveTrain.getDrive(), initialPose).build()
                 )
         ));
 //

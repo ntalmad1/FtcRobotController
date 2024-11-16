@@ -19,38 +19,53 @@ public class RedSamples {
 //                .followTrajectorySequence(drive -> drive.trajectorySequenceBuilder(new Pose2d(35, -61, Math.toRadians(90)))
 //                .followTrajectorySequence(drive -> drive.trajectorySequenceBuilder(new Pose2d(35.5, -61, Math.toRadians(90)))
                 .followTrajectorySequence(drive -> drive.trajectorySequenceBuilder(new Pose2d(8, -61, Math.toRadians(90)))
-                        .lineTo(new Vector2d(8, -36)) //Go infront of bar to hang specimen
+
+                        .lineTo(new Vector2d(8, -36))
+                        //.lineToY( -39)
 
                         //hang specimen
                         .setTangent(Math.toRadians(270))
-                        .splineToConstantHeading(new Vector2d(26, -43), Math.toRadians(0)) //Go towards sample
-
-                        //first sample
-
-                        .splineToConstantHeading(new Vector2d(41, -12), Math.toRadians(0)) //left side of arc
-                        .splineToConstantHeading(new Vector2d(49, -30), Math.toRadians(270)) //right side
-                        .lineToConstantHeading(new Vector2d(49, -55))
-
-                        //second sample
-                        .splineToConstantHeading(new Vector2d(51, -12), Math.toRadians(0)) //left side of arc
-                        .splineToConstantHeading(new Vector2d(58, -30), Math.toRadians(270)) //right side
-                        .lineToConstantHeading(new Vector2d(58, -57.5))
-
-                        //grab first specimen
-                        .waitSeconds(0.1)
-                        .setTangent(Math.toRadians(90))
-                        .splineToConstantHeading(new Vector2d(48, -47), Math.toRadians(180))
-                        .splineToConstantHeading(new Vector2d(40, -54), Math.toRadians(270))
-                        .lineTo(new Vector2d(40,-57))
-                        //TODO: Grab Specimen
+                        .splineToConstantHeading(new Vector2d(24, -44), Math.toRadians(0)) //Go towards sample
+                        //.splineToConstantHeading(new Vector2d(24, -44), Math.toRadians(0))
 
                         /**
-                         * hang specimen
+                         * first sample
                          */
-                         //go to bar
-                         .strafeTo(new Vector2d(6,-50))
-                         //go forwards to hang specimen
-                         .lineTo(new Vector2d(6,-36))
+                        .splineToConstantHeading(new Vector2d(36, -18.6), Math.toRadians(90))
+                        //.splineToConstantHeading(new Vector2d(36, -18.6), Math.toRadians(0))
+
+                        .splineToConstantHeading(new Vector2d(43, -12), Math.toRadians(0))
+                        //.splineToConstantHeading(new Vector2d(43, -7), Math.toRadians(0))
+
+                        .splineToConstantHeading(new Vector2d(45.3, -14), Math.toRadians(270))
+                        //.splineToConstantHeading(new Vector2d(45.3, -14), Math.toRadians(270))
+
+                        .lineToConstantHeading(new Vector2d(45.3, -52))
+                        //.lineToYConstantHeading(-52) //Go to Observation zone
+
+
+                          /**
+                          * second sample
+                          */
+//                        .splineToConstantHeading(new Vector2d(51, -12), Math.toRadians(0)) //left side of arc
+//                        .splineToConstantHeading(new Vector2d(58, -30), Math.toRadians(270)) //right side
+//                        .lineToConstantHeading(new Vector2d(58, -57.5))
+//
+//                        //grab first specimen
+//                        .waitSeconds(0.1)
+//                        .setTangent(Math.toRadians(90))
+//                        .splineToConstantHeading(new Vector2d(48, -47), Math.toRadians(180))
+//                        .splineToConstantHeading(new Vector2d(40, -54), Math.toRadians(270))
+//                        .lineTo(new Vector2d(40,-57))
+//                        //TODO: Grab Specimen
+//
+//                        /**
+//                         * hang specimen
+//                         */
+//                         //go to bar
+//                         .strafeTo(new Vector2d(6,-50))
+//                         //go forwards to hang specimen
+//                         .lineTo(new Vector2d(6,-36))
 
                         .build());
 
