@@ -67,7 +67,7 @@ public class RedSamples {
                         .setTangent(Math.toRadians(90))
                         .splineToConstantHeading(new Vector2d(51, -44), Math.toRadians(180))
 
-                        .splineToConstantHeading(new Vector2d(46, -54), Math.toRadians(270))
+                        .splineToConstantHeading(new Vector2d(46, -57.5), Math.toRadians(270))
                         //TODO: SLOW!!, Grab Specimen
 
                         .waitSeconds(0.6)
@@ -77,10 +77,10 @@ public class RedSamples {
                         /**
                         * hang specimen
                         */
-                        .setTangent(Math.toRadians(90))
+                        .setTangent(Math.toRadians(160))
                         //.strafeTo(new Vector2d(15,-50))//Go towards bar
 
-                        .splineToConstantHeading(new Vector2d(5,-48), Math.toRadians(90))
+                        .splineToConstantHeading(new Vector2d(5,-52), Math.toRadians(90))
 
                         .lineToConstantHeading(new Vector2d(5,-39))//go forwards to hang specimen
 

@@ -124,16 +124,18 @@ public class SampleAutonTest extends LinearOpMode {
 
                     .splineToConstantHeading(new Vector2d(33,-45), Math.toRadians(0))//Towards Specimen
 
-                    .splineToConstantHeading(new Vector2d(46, -54), Math.toRadians(270),//Specimen Grab
-                            new TranslationalVelConstraint(15)
+                    .splineToConstantHeading(new Vector2d(46, -57.4), Math.toRadians(270),//Specimen Grab
+                            new TranslationalVelConstraint(8)
                     )
                     //TODO: Grab Specimen
+
+                    .waitSeconds(0.6)
 
 
                     /**
                     * Hang Second Specimen
                     */
-                    .setTangent(Math.toRadians(90))
+                    .setTangent(Math.toRadians(150))
                     //.strafeTo(new Vector2d(15,-50))//Go towards bar
 
                     .splineToConstantHeading(new Vector2d(2,-48), Math.toRadians(90))
