@@ -39,6 +39,8 @@ public class RightLocalization extends AutoBot {
     protected void configureBot() {
         super.configureBot();
 
+        this.getConfig().debugDriveTrain = true;
+
         // initialize roadrunner from last op pose
         this.setInitialPose(new Pose2d(8, -61, Math.toRadians(90)));
     }

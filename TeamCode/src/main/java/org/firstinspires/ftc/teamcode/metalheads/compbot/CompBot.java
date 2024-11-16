@@ -93,7 +93,7 @@ public abstract class CompBot extends IsaacBot {
             this.config = new CompBotConfig(this);
         }
 
-        this.config.debugDriveTrain = true;
+        this.config.debugDriveTrain = false;
         this.config.debugBigArm = true;
         this.config.debugLittleArm = true;
         this.config.debugAll = false;
@@ -184,6 +184,21 @@ public abstract class CompBot extends IsaacBot {
 //        telemetry.addData("M1 Mode: ", this.bigArm.mainBoom.getSecondaryMotor().getMode());
 //        telemetry.addData("M1 Brake: ", this.bigArm.mainBoom.getSecondaryMotor().getZeroPowerBehavior());
 //        telemetry.addData("M1 Busy: ", this.bigArm.mainBoom.getSecondaryMotor().isBusy());
+//        telemetry.update();
+
+//        telemetry.addData("M0 Target Pos: ", this.bigArm.viperSlide.getTargetPosition());
+//        telemetry.addData("M0 Current Pos: ", this.bigArm.viperSlide.getCurrentPosition());
+//        telemetry.addData("M0 Power: ", this.bigArm.viperSlide.getPower());
+//        telemetry.addData("M0 Mode: ", this.bigArm.viperSlide.getMotor().getMode());
+//        telemetry.addData("M0 Brake: ", this.bigArm.viperSlide.getMotor().getZeroPowerBehavior());
+//        telemetry.addData("M0 Busy: ", this.bigArm.viperSlide.getMotor().isBusy());
+//        telemetry.addLine("-----");
+//        telemetry.addData("M1 Target Pos: ", this.bigArm.viperSlide.getSecondaryMotor().getTargetPosition());
+//        telemetry.addData("M1 Current Pos: ", this.bigArm.viperSlide.getSecondaryMotor().getCurrentPosition());
+//        telemetry.addData("M1 Power: ", this.bigArm.viperSlide.getSecondaryMotor().getPower());
+//        telemetry.addData("M1 Mode: ", this.bigArm.viperSlide.getSecondaryMotor().getMode());
+//        telemetry.addData("M1 Brake: ", this.bigArm.viperSlide.getSecondaryMotor().getZeroPowerBehavior());
+//        telemetry.addData("M1 Busy: ", this.bigArm.viperSlide.getSecondaryMotor().isBusy());
 //        telemetry.update();
     }
 

@@ -27,22 +27,6 @@ public class ViperSlidsGoToPositionAction extends AbstractAction {
     private int startPos;
 
     /**
-     */
-    private Integer timeout;
-
-    /**
-     */
-    private int lastPos;
-
-    /**
-     */
-    private int lastPosEqualsCount;
-
-    /**
-     */
-    private int timeoutAfterXCycles = 10;
-
-    /**
      *
      * @param motor
      * @param position
@@ -63,8 +47,6 @@ public class ViperSlidsGoToPositionAction extends AbstractAction {
         this.motor.setTargetPosition(this.targetPosition);
         this.motor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         this.motor.setPower(power);
-
-        this.timeout = 1;
     }
 
     /**
@@ -73,59 +55,57 @@ public class ViperSlidsGoToPositionAction extends AbstractAction {
      */
     @Override
     public boolean run() {
-        if (!this.motor.getMotor().getMode().equals(DcMotor.RunMode.RUN_TO_POSITION)) {
-            this.motor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        }
+//        if (!this.motor.getMotor().getMode().equals(DcMotor.RunMode.RUN_TO_POSITION)) {
+//            this.motor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+//        }
+//
+//        if (this.motor.getPower() != power) {
+//            this.motor.setPower(power);
+//        }
 
-        if (this.motor.getPower() != power) {
-            this.motor.setPower(power);
-        }
+        return STOP;
 
-        if (this.motor.isBusy())
-        {
-            if (this.motor.getConfig().debug) {
-                this.motor.getRobot().telemetry.addData("Running to: ", targetPosition);
-                this.motor.getRobot().telemetry.addData("Currently at: ", this.motor.getCurrentPosition());
-                this.motor.getRobot().telemetry.addData("Motor Power: ", this.motor.getPower());
-                this.motor.getRobot().telemetry.addData("Motor Direction: ", this.motor.getDirection());
-                this.motor.getRobot().telemetry.update();
-            }
-
-            if ((this.targetPosition == Constants.VIPER_SLIDES_MIN_TICS)
-                && this.motor.getCurrentPosition() < 60) {
-                return STOP;
-            }
-
-            if (this.timeout != null) {
-                int currentPos = this.motor.getCurrentPosition();
-
-                if ((startPos < currentPos && currentPos > this.targetPosition - 40)
-                        || (startPos > currentPos && currentPos < this.targetPosition + 40)) {
-
-                    if (currentPos == lastPos) {
-                        this.lastPosEqualsCount++;
-                    } else {
-                        this.lastPos = currentPos;
-                        this.lastPosEqualsCount = 0;
-                    }
-
-                    if (this.lastPosEqualsCount > timeoutAfterXCycles) {
-                        this.motor.setPower(0);
-                        return STOP;
-                    }
-                }
-            }
-
-            return CONTIUE;
-        }
-        else {
-
-            if ((this.motor.getCurrentPosition() > (this.startPos + 10))
-                || (this.motor.getCurrentPosition() < (this.startPos - 10))) {
-                return STOP;
-            }
-
-            return CONTIUE;
-        }
+//        if (this.motor.isBusy())
+//        {
+//            if (this.motor.getConfig().debug) {
+//                this.motor.getRobot().telemetry.addData("Running to: ", targetPosition);
+//                this.motor.getRobot().telemetry.addData("Currently at: ", this.motor.getCurrentPosition());
+//                this.motor.getRobot().telemetry.addData("Motor Power: ", this.motor.getPower());
+//                this.motor.getRobot().telemetry.addData("Motor Direction: ", this.motor.getDirection());
+//                this.motor.getRobot().telemetry.update();
+//            }
+//
+//            if ((this.targetPosition == Constants.VIPER_SLIDES_MIN_TICS)
+//                    && this.motor.getCurrentPosition() < (Constants.VIPER_SLIDES_MIN_TICS + 60)) {
+//
+//                this.motor.getRobot().telemetry.log().add("HERE1");
+//                return STOP;
+//            }
+//
+//            if ((startPos < this.motor.getCurrentPosition() && this.motor.getCurrentPosition() > this.targetPosition - 40)
+//            || (startPos > this.motor.getCurrentPosition() && this.motor.getCurrentPosition() < this.targetPosition + 40)) {
+//                this.motor.getRobot().telemetry.log().add("HERE2");
+//                return STOP;
+//            }
+//
+//            this.motor.getRobot().telemetry.log().add("HERE5");
+//            return CONTIUE;
+//        }
+//        else {
+//            if ((startPos < this.motor.getCurrentPosition() && this.motor.getCurrentPosition() > this.targetPosition - 40)
+//                    || (startPos > this.motor.getCurrentPosition() && this.motor.getCurrentPosition() < this.targetPosition + 40)) {
+//                this.motor.getRobot().telemetry.log().add("HERE3");
+//                return STOP;
+//            }
+//
+//            if ((this.motor.getCurrentPosition() > (this.startPos + 10))
+//                    || (this.motor.getCurrentPosition() < (this.startPos - 10))) {
+//                this.motor.getRobot().telemetry.log().add("HERE1");
+//                return STOP;
+//            }
+//
+//            this.motor.getRobot().telemetry.log().add("HERE4");
+//            return CONTIUE;
+//        }
     }
 }

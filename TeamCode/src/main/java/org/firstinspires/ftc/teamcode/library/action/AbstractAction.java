@@ -96,8 +96,8 @@ public abstract class AbstractAction implements Action {
      */
     public void markAsCompleted (boolean fireEvents) {
         this.completed = true;
-        this.fireEvent(new ActionSuccessEvent(this));
-        this.fireEvent(new ActionAfterEvent(this));
+        //this.fireEvent(new ActionSuccessEvent(this));
+        //this.fireEvent(new ActionAfterEvent(this));
     }
 
     /**
@@ -106,8 +106,8 @@ public abstract class AbstractAction implements Action {
      */
     public void markAsFailed (Exception e) {
         this.completed = true;
-        this.fireEvent(new ActionFailureEvent(this, e));
-        this.fireEvent(new ActionAfterEvent(this));
+        //this.fireEvent(new ActionFailureEvent(this, e));
+        //this.fireEvent(new ActionAfterEvent(this));
     }
 
     /**

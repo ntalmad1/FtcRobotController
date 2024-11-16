@@ -18,7 +18,7 @@ public class ParallelActionImpl extends AbstractAction {
      */
     public ParallelActionImpl(AbstractAction... actions) {
         super();
-        this.setBlocking(true);
+        this.setBlocking(false);
         this.actions = Arrays.asList(actions);
     }
 
