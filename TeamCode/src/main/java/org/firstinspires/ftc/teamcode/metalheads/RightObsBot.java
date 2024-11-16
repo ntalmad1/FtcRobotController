@@ -3,8 +3,10 @@ package org.firstinspires.ftc.teamcode.metalheads;
 import com.acmerobotics.dashboard.telemetry.TelemetryPacket;
 import com.acmerobotics.roadrunner.ParallelAction;
 import com.acmerobotics.roadrunner.Pose2d;
+import com.acmerobotics.roadrunner.ProfileAccelConstraint;
 import com.acmerobotics.roadrunner.SequentialAction;
 import com.acmerobotics.roadrunner.TrajectoryActionBuilder;
+import com.acmerobotics.roadrunner.TranslationalVelConstraint;
 import com.acmerobotics.roadrunner.Vector2d;
 import com.acmerobotics.roadrunner.ftc.Actions;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
@@ -98,15 +100,21 @@ public class RightObsBot extends AutoBot {
                  * first sample
                  */
                 .setTangent(Math.toRadians(0))
-                .splineToConstantHeading(new Vector2d(38, -44), Math.toRadians(90)) //Go towards sample
+                .splineToConstantHeading(new Vector2d(35, -44), Math.toRadians(90)) //Go towards sample
 
-                .splineToConstantHeading(new Vector2d(38, -18.6), Math.toRadians(90))
+                .splineToConstantHeading(new Vector2d(35, -18.6), Math.toRadians(90))
 
-                .splineToConstantHeading(new Vector2d(43, -12), Math.toRadians(0))
+                .splineToConstantHeading(new Vector2d(43, -12), Math.toRadians(0),
+                        new TranslationalVelConstraint(20),
+                        new ProfileAccelConstraint(-15, 15))
 
-                .splineToConstantHeading(new Vector2d(45.3, -14), Math.toRadians(270))
+                .splineToConstantHeading(new Vector2d(45.3, -14), Math.toRadians(270),
+                        new TranslationalVelConstraint(20),
+                        new ProfileAccelConstraint(-15, 15))
 
-                .lineToYConstantHeading(-52)
+                .lineToYConstantHeading(-52,
+                        null,
+                        new ProfileAccelConstraint(-20, 20))
 
 
                 /*
@@ -129,14 +137,17 @@ public class RightObsBot extends AutoBot {
                  */
                 .lineToYConstantHeading(-18.6)
 
-                .splineToConstantHeading(new Vector2d(58, -12), Math.toRadians(0))
-                //.splineToConstantHeading(new Vector2d(52, -12), Math.toRadians(0))
+                .splineToConstantHeading(new Vector2d(58, -12), Math.toRadians(0),
+                        new TranslationalVelConstraint(20),
+                        new ProfileAccelConstraint(-15, 15))
 
-                .splineToConstantHeading(new Vector2d(61.4, -14), Math.toRadians(270))
-                //.splineToConstantHeading(new Vector2d(56, -14), Math.toRadians(270))
+                .splineToConstantHeading(new Vector2d(61.7, -14), Math.toRadians(270),
+                        new TranslationalVelConstraint(20),
+                        new ProfileAccelConstraint(-15, 15))
 
-                .lineToYConstantHeading(-52);
-        //.lineToYConstantHeading(-52)
+                .lineToYConstantHeading(-52,
+                        new TranslationalVelConstraint(20),
+                        new ProfileAccelConstraint(-15, 15));
 
             Actions.runBlocking(trajectory.build());
 

@@ -2,6 +2,8 @@ package com.example.meepmeeptesting;
 
 import com.acmerobotics.roadrunner.geometry.Pose2d;
 import com.acmerobotics.roadrunner.geometry.Vector2d;
+import com.acmerobotics.roadrunner.trajectory.constraints.TrajectoryVelocityConstraint;
+import com.acmerobotics.roadrunner.trajectory.constraints.TranslationalVelocityConstraint;
 
 import org.rowlandhall.meepmeep.MeepMeep;
 import org.rowlandhall.meepmeep.roadrunner.DefaultBotBuilder;
@@ -33,9 +35,9 @@ public class RedSamplesQUICK {
                         * first sample
                         */
                         .setTangent(Math.toRadians(0))
-                        .splineToConstantHeading(new Vector2d(38, -44), Math.toRadians(90)) //Go towards sample
+                        .splineToConstantHeading(new Vector2d(35, -44), Math.toRadians(90)) //Go towards sample
 
-                        .splineToConstantHeading(new Vector2d(38, -18.6), Math.toRadians(90))
+                        .splineToConstantHeading(new Vector2d(35, -18.6), Math.toRadians(90))
 
                         .splineToConstantHeading(new Vector2d(43, -12), Math.toRadians(0))
 
