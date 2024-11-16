@@ -118,7 +118,7 @@ public class Constants {
             mainBoomPos = new MotorPos(Constants.MAIN_BOOM_MAX_TICS);
             vSlidePos = new MotorPos(0);
             doubleServosPos = new ServoPos(0.973);
-            middleServoPos = new ServoPos(0.433);
+            middleServoPos = new ServoPos(0.408);
             clawRotatorPos = new ServoPos(Constants.CLAW_ROTATOR_180_DEG);
             clawPincherPos = new ServoPos(Constants.CLAW_PINCHER_OPEN_POS);
         }

@@ -1,12 +1,5 @@
 package org.firstinspires.ftc.teamcode.metalheads.compbot;
 
-import com.acmerobotics.roadrunner.Pose2d;
-import com.acmerobotics.roadrunner.TrajectoryActionBuilder;
-import com.acmerobotics.roadrunner.TranslationalVelConstraint;
-import com.acmerobotics.roadrunner.Vector2d;
-
-import org.firstinspires.ftc.teamcode.roadrunner.MecanumDrive;
-
 public class AutoBot extends CompBot {
 
     /**
@@ -19,8 +12,6 @@ public class AutoBot extends CompBot {
      */
     public AutoBot() {
         super();
-
-        this.trajectoryFactory = new TrajectoryFactory(this);
 
         //this.setInitialPose(new Pose2d(35.5, -61, Math.toRadians(90)));
         //this.setInitialPose(new Pose2d(31.35, -61, Math.toRadians(90)));
@@ -40,5 +31,13 @@ public class AutoBot extends CompBot {
      */
     protected TrajectoryFactory getTrajectoryFactory() {
         return this.trajectoryFactory;
+    }
+
+    /**
+     *
+     * @param trajectoryFactory
+     */
+    protected void setTrajectoryFactory(TrajectoryFactory trajectoryFactory) {
+        this.trajectoryFactory = trajectoryFactory;
     }
 }

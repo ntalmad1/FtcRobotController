@@ -81,6 +81,12 @@ public class ViperSlidsGoToPositionAction extends AbstractAction {
             return CONTIUE;
         }
         else {
+
+            if ((this.motor.getCurrentPosition() > (this.startPos + 10))
+                || (this.motor.getCurrentPosition() < (this.startPos - 10))) {
+                return STOP;
+            }
+
             return STOP;
         }
     }
