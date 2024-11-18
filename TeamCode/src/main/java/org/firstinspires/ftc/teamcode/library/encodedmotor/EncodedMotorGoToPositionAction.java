@@ -119,16 +119,16 @@ public class EncodedMotorGoToPositionAction extends AbstractAction {
         else {
 
             if (this.startPos != this.motor.getCurrentPosition()) {
-                // if (this.timeout != null) {
-                if (this.targetPosition != 0 && this.motor.isBrakeOn())
-                {
-                    this.motor.setTargetPosition(this.motor.getCurrentPosition());
-                    this.motor.setPower(1);
+                if (this.timeout != null) {
+                    if (this.targetPosition != 0 && this.motor.isBrakeOn())
+                    {
+                        this.motor.setTargetPosition(this.motor.getCurrentPosition());
+                        this.motor.setPower(1);
+                    }
+                    else {
+                        this.motor.setPower(0);
+                    }
                 }
-                else {
-                    this.motor.setPower(0);
-                }
-                // }
 
                 return STOP;
 

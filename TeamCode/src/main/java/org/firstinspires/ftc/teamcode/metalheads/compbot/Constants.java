@@ -28,7 +28,7 @@ public class Constants {
      */
     public static final double DOUBLE_SERVOS_MIN_POS = 0;
     public static final double DOUBLE_SERVOS_MAX_POS = 1;
-    public static final double DOUBLE_SERVOS_INIT_POS = 1;
+    public static final double DOUBLE_SERVOS_INIT_POS = 0.98;
     public static final double DOUBLE_SERVOS_INCREMENT = 0.006;
 
     /**
@@ -117,7 +117,7 @@ public class Constants {
         public void setValues() {
             mainBoomPos = new MotorPos(Constants.MAIN_BOOM_MAX_TICS);
             vSlidePos = new MotorPos(0);
-            doubleServosPos = new ServoPos(0.973);
+            doubleServosPos = new ServoPos(0.963);
             middleServoPos = new ServoPos(0.408);
             clawRotatorPos = new ServoPos(Constants.CLAW_ROTATOR_180_DEG);
             clawPincherPos = new ServoPos(Constants.CLAW_PINCHER_OPEN_POS);
@@ -130,7 +130,7 @@ public class Constants {
         @Override
         public void setValues() {
             mainBoomPos = new MotorPos(526);
-            vSlidePos = new MotorPos(1271);
+            vSlidePos = new MotorPos(1500);
             doubleServosPos = new ServoPos(0.260);
             middleServoPos = new ServoPos(0.0);
             clawRotatorPos = new ServoPos(Constants.CLAW_ROTATOR_0_DEG);

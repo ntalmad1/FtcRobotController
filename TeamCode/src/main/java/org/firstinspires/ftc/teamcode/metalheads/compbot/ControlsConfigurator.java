@@ -138,6 +138,16 @@ public class ControlsConfigurator {
     /**
      *
      */
+    public void gp1_B_Button()
+    {
+        this.compBot.addGp1_B_PressHandler(event -> {
+            this.compBot.bigArm.viperSlide.resetEncoder();
+        });
+    }
+
+    /**
+     *
+     */
     public void gp2_Dpad() {
         // dpad up
         this.compBot.addGp2_Dpad_Up_DownHandler(event -> {

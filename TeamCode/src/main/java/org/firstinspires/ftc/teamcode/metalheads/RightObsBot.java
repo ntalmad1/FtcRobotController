@@ -66,15 +66,13 @@ public class RightObsBot extends AutoBot {
     public void initBot() {
         super.initBot();
 
-        AbstractAction action = new SequentialActionImpl(
-                this.littleArm.clawPincher.gotoPositionAction(Constants.CLAW_PINCHER_CLOSE_POS, 1),
-                new WaitAction(300),
-                this.bigArm.mainBoom.gotoPositionAction(525),
-                new InstantActionImpl(() -> { this.setArmPos(ArmPos.INIT); })
-        );
+        this.littleArm.clawPincher.setPosition(Constants.CLAW_PINCHER_CLOSE_POS);
+        this.bigArm.mainBoom.setTargetPosition(525);
+        this.bigArm.mainBoom.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        this.bigArm.mainBoom.setPower(1);
+        this.setArmPos(ArmPos.INIT);
+        this.telemetry.log().add("INIT DONE");
 
-        TelemetryPacket tp = new TelemetryPacket();
-        while (action.run(tp) == AbstractAction.CONTIUE){}
     }
 
     @Override
@@ -82,7 +80,11 @@ public class RightObsBot extends AutoBot {
         super.go();
 
         TrajectoryActionBuilder trajectory = this.getDrive().actionBuilder(this.initialPose)
-                .stopAndAdd(this.bigArm.mainBoom.gotoPositionAction(Constants.SPECIMEN_PLACE_HIGH_READY.mainBoomPos))
+                .stopAndAdd(() -> {
+                    this.bigArm.mainBoom.setTargetPosition(Constants.SPECIMEN_PLACE_HIGH_READY.mainBoomPos.getPos());
+                    this.bigArm.mainBoom.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+                    this.bigArm.mainBoom.setPower(1);
+                }) //this.bigArm.mainBoom.gotoPositionAction(Constants.SPECIMEN_PLACE_HIGH_READY.mainBoomPos))
                 .stopAndAdd(() -> {
                     this.littleArm.doubleServos.setPosition(Constants.SPECIMEN_PLACE_HIGH_READY.doubleServosPos.getPos());
                     this.littleArm.middleServo.setPosition(Constants.SPECIMEN_PLACE_HIGH_READY.middleServoPos.getPos());
@@ -162,9 +164,14 @@ public class RightObsBot extends AutoBot {
                         new ProfileAccelConstraint(-15, 15))
                 .stopAndAdd(() -> {
                     this.littleArm.clawPincher.setPosition(Constants.CLAW_PINCHER_CLOSE_POS);
+
                     this.bigArm.mainBoom.setTargetPosition(0);
                     this.bigArm.mainBoom.setMode(DcMotor.RunMode.RUN_TO_POSITION);
                     this.bigArm.mainBoom.setPower(1);
+
+                    this.bigArm.viperSlide.setTargetPosition(0);
+                    this.bigArm.viperSlide.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+                    this.bigArm.viperSlide.setPower(1);
                 });
 
 
