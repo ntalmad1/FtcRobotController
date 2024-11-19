@@ -1,35 +1,24 @@
 package org.firstinspires.ftc.teamcode.metalheads;
 
-import com.acmerobotics.dashboard.telemetry.TelemetryPacket;
-import com.acmerobotics.roadrunner.ParallelAction;
 import com.acmerobotics.roadrunner.Pose2d;
 import com.acmerobotics.roadrunner.ProfileAccelConstraint;
-import com.acmerobotics.roadrunner.SequentialAction;
 import com.acmerobotics.roadrunner.TrajectoryActionBuilder;
 import com.acmerobotics.roadrunner.TranslationalVelConstraint;
 import com.acmerobotics.roadrunner.Vector2d;
 import com.acmerobotics.roadrunner.ftc.Actions;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
-import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 
-import org.firstinspires.ftc.teamcode.library.action.AbstractAction;
-import org.firstinspires.ftc.teamcode.library.action.InstantActionImpl;
-import org.firstinspires.ftc.teamcode.library.action.ParallelActionImpl;
-import org.firstinspires.ftc.teamcode.library.action.SequentialActionImpl;
-import org.firstinspires.ftc.teamcode.library.action.WaitAction;
-import org.firstinspires.ftc.teamcode.metalheads.compbot.ActionFactory;
 import org.firstinspires.ftc.teamcode.metalheads.compbot.AutoActionFactory;
 import org.firstinspires.ftc.teamcode.metalheads.compbot.AutoBot;
-import org.firstinspires.ftc.teamcode.metalheads.compbot.CompBot;
 import org.firstinspires.ftc.teamcode.metalheads.compbot.Constants;
 
 /**
  *
  */
-@Autonomous(name = "Right-Observation", group = "Auto")
+@Autonomous(name = "Right-Observation_OLD", group = "Auto")
 //@Disabled
-public class RightObsBot extends AutoBot {
+public class RightObsBot_OLD extends AutoBot {
 
     private AutoActionFactory autoActionFactory;
 
@@ -37,7 +26,7 @@ public class RightObsBot extends AutoBot {
      * Constructor
      *
      */
-    public RightObsBot() {
+    public RightObsBot_OLD() {
         super();
 
         this.setTrajectoryFactory(new RightObsTrajectoryFactory(this));
@@ -80,14 +69,11 @@ public class RightObsBot extends AutoBot {
         super.go();
 
         TrajectoryActionBuilder trajectory = this.getDrive().actionBuilder(this.initialPose)
-
-                //SPECIMEN_PLACE_HIGH_READY
                 .stopAndAdd(() -> {
                     this.bigArm.mainBoom.setTargetPosition(Constants.SPECIMEN_PLACE_HIGH_READY.mainBoomPos.getPos());
                     this.bigArm.mainBoom.setMode(DcMotor.RunMode.RUN_TO_POSITION);
                     this.bigArm.mainBoom.setPower(1);
-                })
-
+                }) //this.bigArm.mainBoom.gotoPositionAction(Constants.SPECIMEN_PLACE_HIGH_READY.mainBoomPos))
                 .stopAndAdd(() -> {
                     this.littleArm.doubleServos.setPosition(Constants.SPECIMEN_PLACE_HIGH_READY.doubleServosPos.getPos());
                     this.littleArm.middleServo.setPosition(Constants.SPECIMEN_PLACE_HIGH_READY.middleServoPos.getPos());

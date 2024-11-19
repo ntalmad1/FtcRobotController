@@ -1,98 +1,87 @@
 package org.firstinspires.ftc.teamcode.metalheads.tests;
 
 import com.acmerobotics.roadrunner.Action;
-import com.acmerobotics.roadrunner.InstantAction;
 import com.acmerobotics.roadrunner.ParallelAction;
-import com.acmerobotics.roadrunner.SequentialAction;
+import com.acmerobotics.roadrunner.Pose2d;
+import com.acmerobotics.roadrunner.ProfileAccelConstraint;
+import com.acmerobotics.roadrunner.TrajectoryActionBuilder;
+import com.acmerobotics.roadrunner.TranslationalVelConstraint;
+import com.acmerobotics.roadrunner.Vector2d;
 import com.acmerobotics.roadrunner.ftc.Actions;
-import com.qualcomm.robotcore.eventloop.opmode.Disabled;
-import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.hardware.DcMotor;
 
-import org.firstinspires.ftc.teamcode.library.IsaacBot;
-import org.firstinspires.ftc.teamcode.library.action.AbstractAction;
-import org.firstinspires.ftc.teamcode.library.action.InstantActionImpl;
-import org.firstinspires.ftc.teamcode.library.action.WaitAction;
+import org.firstinspires.ftc.teamcode.metalheads.RightObsBotConfig;
+import org.firstinspires.ftc.teamcode.metalheads.RightObsTrajectoryFactory;
+import org.firstinspires.ftc.teamcode.metalheads.compbot.AutoActionFactory;
+import org.firstinspires.ftc.teamcode.metalheads.compbot.AutoBot;
+import org.firstinspires.ftc.teamcode.metalheads.compbot.Constants;
 
-@TeleOp(name = "RoadrunnerTest", group = "Tests")
-@Disabled
-public class RoadrunnerTest extends IsaacBot {
+/**
+ *
+ */
+@Autonomous(name = "Roadrunner Tester", group = "Auto")
+//@Disabled
+public class RoadrunnerTest extends AutoBot {
 
+    private AutoActionFactory autoActionFactory;
 
+    /**
+     * Constructor
+     *
+     */
     public RoadrunnerTest() {
         super();
+
+        this.setTrajectoryFactory(new RightObsTrajectoryFactory(this));
+
+        this.setConfig(new RightObsBotConfig(this));
+        this.configureBot();
     }
 
+    /**
+     *
+     */
+    @Override
+    protected void configureBot() {
+        super.configureBot();
 
+        this.autoActionFactory = new AutoActionFactory(this);
+
+        // initialize roadrunner from last op pose
+        this.setInitialPose(new Pose2d(8, -61, Math.toRadians(90)));
+    }
+
+    /**
+     *
+     */
+    @Override
     public void initBot() {
         super.initBot();
-
-        this.addGp1_A_PressHandler(event -> {
-            telemetry.log().add("A");
-        });
-
-        this.addGp1_B_PressHandler(event -> {
-
-            telemetry.log().add("B");
-
-            AbstractAction myAction = new InstantActionImpl(() -> telemetry.log().add("Hello World"));
-
-            RoadrunnerTest.this.runAction(myAction);
-
-//            RoadrunnerTest.this.runAction(new ParallelAction(
-//                        new InstantAction(() -> Actions.runBlocking(new SequentialAction(myAction,
-//                        new WaitAction(4000),
-//                        new InstantAction(() -> telemetry.log().add("Done")))))));
-        });
-
     }
 
+    @Override
     public void go() {
-//        Action myAction = new InstantAction(() -> telemetry.log().add("Hello World"));
-//
-//        Actions.runBlocking(
-//                );
+        super.go();
 
-//        Actions.runBlocking(
-//                new ParallelAction(
-//                        );
+        TrajectoryActionBuilder trajectory = this.getDrive().actionBuilder(this.initialPose)
+
+                .turnTo(Math.toRadians(45))
+                .setTangent(45)
+                .lineToY(-15)
+
+
+
+                ;
+        Actions.runBlocking(trajectory.build());
     }
 
-//    public void run() {
-//        super.run();
-//    }
+    /**
+     *
+     * @return
+     */
+    protected RightObsTrajectoryFactory getTrajectoryFactory () {
+        return (RightObsTrajectoryFactory)super.getTrajectoryFactory();
+    }
 
-
-//    @Override
-//    public void runOpMode() throws InterruptedException {
-//
-//        Pose2d beginPose = new Pose2d(0, 0, 0);
-//
-//        //MecanumDrive drive = new MecanumDrive(hardwareMap, beginPose);
-//
-//        Action myAction = new InstantAction(() -> telemetry.log().add("Hello World"));
-//
-//        waitForStart();
-//
-//        Actions.runBlocking(
-//                new ParallelAction(
-//                        myAction,
-//                        new WaitAction(2000),
-//                        new InstantAction(() -> telemetry.log().add("Done"))));
-//
-//        telemetry.log().add("my event");
-//
-//        Actions.runBlocking(new InstantAction(() -> telemetry.log().add("HERE!")));
-//
-//
-//        while (opModeIsActive()){
-//            // wait for user input to stop
-//        }
-//
-////        Actions.runBlocking(
-////                    drive.actionBuilder(beginPose)
-////                            .lineToX(10)
-////                            .lineToX(0)
-////                            .build());
-//
-//    }
 }
