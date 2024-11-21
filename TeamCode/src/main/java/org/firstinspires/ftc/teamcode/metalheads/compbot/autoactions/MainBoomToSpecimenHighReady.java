@@ -29,8 +29,9 @@ public class MainBoomToSpecimenHighReady implements Action {
     // actions are formatted via telemetry packets as below
     @Override
     public boolean run(@NonNull TelemetryPacket packet) {
-        // powers on motor, if it is not on
         int targetPosition = Constants.SPECIMEN_PLACE_HIGH_READY.mainBoomPos.getPos();
+
+        // powers on motor, if it is not on
         if (!initialized) {
             mainBoom.setTargetPosition(targetPosition);
             mainBoom.setMode(DcMotor.RunMode.RUN_TO_POSITION);
@@ -41,7 +42,7 @@ public class MainBoomToSpecimenHighReady implements Action {
         // checks lift's current position
         double pos = mainBoom.getCurrentPosition();
         packet.put("mainBoomPos", pos);
-        if (pos > targetPosition -20 || pos < targetPosition +20) {
+        if (pos > targetPosition -20 || pos < targetPosition + 20) {
             // true causes the action to rerun
             return CONTINUE;
         } else {

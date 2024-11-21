@@ -2,6 +2,8 @@ package com.example.meepmeeptesting;
 
 import com.acmerobotics.roadrunner.geometry.Pose2d;
 import com.acmerobotics.roadrunner.geometry.Vector2d;
+import com.acmerobotics.roadrunner.trajectory.constraints.ProfileAccelerationConstraint;
+import com.acmerobotics.roadrunner.trajectory.constraints.TranslationalVelocityConstraint;
 
 import org.rowlandhall.meepmeep.MeepMeep;
 import org.rowlandhall.meepmeep.roadrunner.DefaultBotBuilder;
@@ -18,13 +20,15 @@ public class RedBasket {
                 .setConstraints(60, 60, Math.toRadians(180), Math.toRadians(180), 15)
 //                .followTrajectorySequence(drive -> drive.trajectorySequenceBuilder(new Pose2d(35, -61, Math.toRadians(90)))
 //                .followTrajectorySequence(drive -> drive.trajectorySequenceBuilder(new Pose2d(35.5, -61, Math.toRadians(90)))
-                .followTrajectorySequence(drive -> drive.trajectorySequenceBuilder(new Pose2d(8, -37, Math.toRadians(90)))
+                .followTrajectorySequence(drive -> drive.trajectorySequenceBuilder(new Pose2d(62, -52, Math.toRadians(90)))
 
-                        .lineToConstantHeading(new Vector2d(8, -33.13))
-                        .turn(Math.toRadians(-61.6))
 
-                        .setTangent(Math.toRadians((0-28.4)))
-                        .splineToConstantHeading(new Vector2d(12.36, -33.13), Math.toRadians(0))
+                        .setTangent(Math.toRadians(90))
+                        .splineToConstantHeading(new Vector2d(52, -45), Math.toRadians(180))
+                        .splineToConstantHeading(new Vector2d(42, -55), Math.toRadians(270),
+                                new TranslationalVelocityConstraint(60),
+                                new ProfileAccelerationConstraint(30)
+                        )
 
                         .build());
 

@@ -11,41 +11,41 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import org.firstinspires.ftc.teamcode.library.encodedmotor.EncodedMotor;
 import org.firstinspires.ftc.teamcode.metalheads.compbot.Constants;
 
-public class MainBoomToZero implements Action {
+public class ViperSlideToZero implements Action {
     // checks if the lift motor has been powered on
     private boolean initialized = false;
-    private EncodedMotor mainBoom;
+    private EncodedMotor viperSlide;
 
     /**
      * Constructor
-     * @param mainBoom
+     * @param viperSlide
      */
-    public MainBoomToZero(EncodedMotor mainBoom) {
-        this.mainBoom = mainBoom;
+    public ViperSlideToZero(EncodedMotor viperSlide) {
+        this.viperSlide = viperSlide;
     }
 
     // actions are formatted via telemetry packets as below
     @Override
     public boolean run(@NonNull TelemetryPacket packet) {
-        int targetPosition = Constants.MAIN_BOOM_MIN_TICS;
+
+        int targetPosition = Constants.VIPER_SLIDES_MIN_TICS;
 
         // powers on motor, if it is not on
         if (!initialized) {
-            mainBoom.setTargetPosition(targetPosition);
-            mainBoom.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            mainBoom.setPower(1);
+            viperSlide.setTargetPosition(targetPosition);
+            viperSlide.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            viperSlide.setPower(1);
             initialized = true;
         }
 
         // checks lift's current position
-        double pos = mainBoom.getCurrentPosition();
-        packet.put("mainBoomPos", pos);
-        if (pos > targetPosition -20 || pos < targetPosition + 20) {
+        double pos = viperSlide.getCurrentPosition();
+        packet.put("viperSlidePos", pos);
+        if (pos > targetPosition - 30 || pos < targetPosition + 30) {
             // true causes the action to rerun
             return CONTINUE;
         } else {
             // false stops action rerun
-            mainBoom.setPower(0);
             return STOP;
         }
         // overall, the action powers the lift until it surpasses

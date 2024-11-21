@@ -11,7 +11,7 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import org.firstinspires.ftc.teamcode.library.encodedmotor.EncodedMotor;
 import org.firstinspires.ftc.teamcode.metalheads.compbot.Constants;
 
-public class MainBoomToZero implements Action {
+public class MainBoomToSpecimenPickReady implements Action {
     // checks if the lift motor has been powered on
     private boolean initialized = false;
     private EncodedMotor mainBoom;
@@ -20,14 +20,14 @@ public class MainBoomToZero implements Action {
      * Constructor
      * @param mainBoom
      */
-    public MainBoomToZero(EncodedMotor mainBoom) {
+    public MainBoomToSpecimenPickReady(EncodedMotor mainBoom) {
         this.mainBoom = mainBoom;
     }
 
     // actions are formatted via telemetry packets as below
     @Override
     public boolean run(@NonNull TelemetryPacket packet) {
-        int targetPosition = Constants.MAIN_BOOM_MIN_TICS;
+        int targetPosition = Constants.SPECIMEN_PICK_READY.mainBoomPos.getPos();
 
         // powers on motor, if it is not on
         if (!initialized) {

@@ -4,6 +4,8 @@ import com.acmerobotics.roadrunner.Action;
 import com.acmerobotics.roadrunner.ParallelAction;
 import com.acmerobotics.roadrunner.Pose2d;
 import com.acmerobotics.roadrunner.ProfileAccelConstraint;
+import com.acmerobotics.roadrunner.SequentialAction;
+import com.acmerobotics.roadrunner.Trajectory;
 import com.acmerobotics.roadrunner.TrajectoryActionBuilder;
 import com.acmerobotics.roadrunner.TranslationalVelConstraint;
 import com.acmerobotics.roadrunner.Vector2d;
@@ -16,6 +18,12 @@ import org.firstinspires.ftc.teamcode.metalheads.RightObsTrajectoryFactory;
 import org.firstinspires.ftc.teamcode.metalheads.compbot.AutoActionFactory;
 import org.firstinspires.ftc.teamcode.metalheads.compbot.AutoBot;
 import org.firstinspires.ftc.teamcode.metalheads.compbot.Constants;
+import org.firstinspires.ftc.teamcode.metalheads.compbot.autoactions.MainBoomToSpecimenHighReady;
+import org.firstinspires.ftc.teamcode.metalheads.compbot.autoactions.MainBoomToZero;
+import org.firstinspires.ftc.teamcode.metalheads.compbot.autoactions.ViperSlideToSpecimenHighReady;
+import org.firstinspires.ftc.teamcode.metalheads.compbot.autoactions.ViperSlideToZero;
+
+import org.firstinspires.ftc.teamcode.metalheads.compbot.AutoBot;
 
 /**
  *
@@ -66,9 +74,20 @@ public class RoadrunnerTest extends AutoBot {
 
         TrajectoryActionBuilder trajectory = this.getDrive().actionBuilder(this.initialPose)
 
-                .turnTo(Math.toRadians(45))
-                .setTangent(45)
-                .lineToY(-15)
+                .afterTime(0, new ParallelAction(
+                                new SequentialAction(
+                                        new MainBoomToSpecimenHighReady(this.bigArm.mainBoom)
+                                ),
+                            new ViperSlideToSpecimenHighReady(this.bigArm.viperSlide)
+                        )
+                )
+
+                .lineToY(-30)
+
+                .waitSeconds(3)
+
+                .afterTime(0, new SequentialAction(new ViperSlideToZero(this.bigArm.viperSlide)))
+                .afterTime(0, new MainBoomToZero(this.bigArm.mainBoom))
 
 
 
@@ -81,7 +100,12 @@ public class RoadrunnerTest extends AutoBot {
      * @return
      */
     protected RightObsTrajectoryFactory getTrajectoryFactory () {
-        return (RightObsTrajectoryFactory)super.getTrajectoryFactory();
+        return this.getAutoBot().getDrive().actionBuilder(this.getAutoBot().getDrive().pose)
+                .setTangent(Math.toRadians(90))
+                .splineToConstantHeading(new Vector2d(51,-44), Math.toRadians(180))
+                .splineToConstantHeading(new Vector2d(46, -57.4), Math.toRadians(270),
+                        new TranslationalVelConstraint(8)
+                );
     }
 
 }
