@@ -5,7 +5,6 @@ import com.acmerobotics.roadrunner.ParallelAction;
 import com.acmerobotics.roadrunner.Pose2d;
 import com.acmerobotics.roadrunner.ProfileAccelConstraint;
 import com.acmerobotics.roadrunner.SequentialAction;
-import com.acmerobotics.roadrunner.Trajectory;
 import com.acmerobotics.roadrunner.TrajectoryActionBuilder;
 import com.acmerobotics.roadrunner.TranslationalVelConstraint;
 import com.acmerobotics.roadrunner.Vector2d;
@@ -22,8 +21,6 @@ import org.firstinspires.ftc.teamcode.metalheads.compbot.autoactions.MainBoomToS
 import org.firstinspires.ftc.teamcode.metalheads.compbot.autoactions.MainBoomToZero;
 import org.firstinspires.ftc.teamcode.metalheads.compbot.autoactions.ViperSlideToSpecimenHighReady;
 import org.firstinspires.ftc.teamcode.metalheads.compbot.autoactions.ViperSlideToZero;
-
-import org.firstinspires.ftc.teamcode.metalheads.compbot.AutoBot;
 
 /**
  *
@@ -74,20 +71,93 @@ public class RoadrunnerTest extends AutoBot {
 
         TrajectoryActionBuilder trajectory = this.getDrive().actionBuilder(this.initialPose)
 
-                .afterTime(0, new ParallelAction(
-                                new SequentialAction(
-                                        new MainBoomToSpecimenHighReady(this.bigArm.mainBoom)
-                                ),
-                            new ViperSlideToSpecimenHighReady(this.bigArm.viperSlide)
-                        )
+                //Go to Bar
+                .lineToY(-36,
+                        new TranslationalVelConstraint(50),
+                        new ProfileAccelConstraint(-60, 30))
+
+
+                // Go back away from bar
+                .lineToYConstantHeading(-50)
+
+
+
+
+//              Samples
+//              ---------------------------------------------------------------------------------------------------
+
+
+
+                /*
+                 * First Sample
+                 */
+                .setTangent(Math.toRadians(0))
+                .splineToConstantHeading(new Vector2d(34, -44), Math.toRadians(90)) //Go towards sample
+
+                .splineToConstantHeading(new Vector2d(34, -18.6), Math.toRadians(90))
+
+
+                .splineToConstantHeading(new Vector2d(43, -10), Math.toRadians(0),
+                        new TranslationalVelConstraint(30))
+
+                .splineToConstantHeading(new Vector2d(46, -14), Math.toRadians(270),
+                        new TranslationalVelConstraint(25),
+                        new ProfileAccelConstraint(-25, 60))
+
+                .lineToYConstantHeading(-48)
+                .splineToConstantHeading(new Vector2d(46,-52), Math.toRadians(90),
+                        null,
+                        new ProfileAccelConstraint(-15, 60)
                 )
 
-                .lineToY(-30)
 
-                .waitSeconds(3)
+                /*
+                 * second sample
+                 */
+                .lineToYConstantHeading(-22)
 
-                .afterTime(0, new SequentialAction(new ViperSlideToZero(this.bigArm.viperSlide)))
-                .afterTime(0, new MainBoomToZero(this.bigArm.mainBoom))
+                .lineToYConstantHeading(-18.6,
+                        new TranslationalVelConstraint(30)
+                )
+
+                .splineToConstantHeading(new Vector2d(52, -9), Math.toRadians(0),
+                        new TranslationalVelConstraint(30)
+                )
+
+                .splineToConstantHeading(new Vector2d(58, -14), Math.toRadians(270),
+                        new TranslationalVelConstraint(30)
+                )
+
+                .lineToYConstantHeading(-48)
+                .splineToConstantHeading(new Vector2d(58,-52), Math.toRadians(90),
+                        new TranslationalVelConstraint(25)
+                )
+
+
+                /*
+                 * Third sample
+                 */
+                .lineToYConstantHeading(-22)
+
+                .lineToYConstantHeading(-18.6,
+                        new TranslationalVelConstraint(30)
+                )
+
+                .splineToConstantHeading(new Vector2d(58, -10), Math.toRadians(0),
+                        new TranslationalVelConstraint(30)
+                )
+
+                .splineToConstantHeading(new Vector2d(62, -14), Math.toRadians(270),
+                        new TranslationalVelConstraint(25)
+                )
+
+                .lineToYConstantHeading(-48)
+                .splineToConstantHeading(new Vector2d(62,-52), Math.toRadians(90),
+                        null,
+                        new ProfileAccelConstraint(-15, 60)
+                )
+
+
 
 
 
@@ -100,12 +170,7 @@ public class RoadrunnerTest extends AutoBot {
      * @return
      */
     protected RightObsTrajectoryFactory getTrajectoryFactory () {
-        return this.getAutoBot().getDrive().actionBuilder(this.getAutoBot().getDrive().pose)
-                .setTangent(Math.toRadians(90))
-                .splineToConstantHeading(new Vector2d(51,-44), Math.toRadians(180))
-                .splineToConstantHeading(new Vector2d(46, -57.4), Math.toRadians(270),
-                        new TranslationalVelConstraint(8)
-                );
+        return (RightObsTrajectoryFactory)super.getTrajectoryFactory();
     }
 
 }

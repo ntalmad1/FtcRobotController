@@ -20,15 +20,12 @@ public class RedBasket {
                 .setConstraints(60, 60, Math.toRadians(180), Math.toRadians(180), 15)
 //                .followTrajectorySequence(drive -> drive.trajectorySequenceBuilder(new Pose2d(35, -61, Math.toRadians(90)))
 //                .followTrajectorySequence(drive -> drive.trajectorySequenceBuilder(new Pose2d(35.5, -61, Math.toRadians(90)))
-                .followTrajectorySequence(drive -> drive.trajectorySequenceBuilder(new Pose2d(62, -52, Math.toRadians(90)))
+                .followTrajectorySequence(drive -> drive.trajectorySequenceBuilder(new Pose2d(50, 10, Math.toRadians(90)))
 
 
-                        .setTangent(Math.toRadians(90))
-                        .splineToConstantHeading(new Vector2d(52, -45), Math.toRadians(180))
-                        .splineToConstantHeading(new Vector2d(42, -55), Math.toRadians(270),
-                                new TranslationalVelocityConstraint(60),
-                                new ProfileAccelerationConstraint(30)
-                        )
+                        .lineTo(new Vector2d(50, -52))
+                        .splineToConstantHeading(new Vector2d(50,-55), Math.toRadians(90))
+                        .lineTo(new Vector2d(50,10))
 
                         .build());
 
