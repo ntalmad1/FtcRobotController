@@ -171,7 +171,7 @@ public class RoadrunnerAuton extends AutoBot {
 
 
                 // Go back away from bar
-                .lineToYConstantHeading(-50)
+                .lineToYConstantHeading(-42)
 
                 .afterTime(0.2, () -> {
                     this.littleArm.doubleServos.setPosition(Constants.SPECIMEN_PICK_READY.doubleServosPos.getPos());
@@ -185,6 +185,7 @@ public class RoadrunnerAuton extends AutoBot {
 
 
 
+
 //              Samples
 //              ---------------------------------------------------------------------------------------------------
 
@@ -193,58 +194,68 @@ public class RoadrunnerAuton extends AutoBot {
                 /*
                  * First Sample
                  */
-                .setTangent(Math.toRadians(0))
-                .splineToConstantHeading(new Vector2d(34, -44), Math.toRadians(90)) //Go towards sample
 
-                .splineToConstantHeading(new Vector2d(34, -18.6), Math.toRadians(90))
+                .splineToConstantHeading(new Vector2d(12,-50), Math.toRadians(0))
 
-                .splineToConstantHeading(new Vector2d(43, -10), Math.toRadians(0))
+                .splineToConstantHeading(new Vector2d(36, -46), Math.toRadians(90)) //Go towards sample
 
-                .splineToConstantHeading(new Vector2d(46, -14), Math.toRadians(270),
-                        new TranslationalVelConstraint(40),
+                .splineToConstantHeading(new Vector2d(36, -18.6), Math.toRadians(90))
+
+
+                .splineToConstantHeading(new Vector2d(44, -10), Math.toRadians(0),
+                        new TranslationalVelConstraint(30))
+
+                .splineToConstantHeading(new Vector2d(49, -14), Math.toRadians(270),
+                        new TranslationalVelConstraint(25),
                         new ProfileAccelConstraint(-25, 60))
 
                 .lineToYConstantHeading(-48)
-                .splineToConstantHeading(new Vector2d(46,-52), Math.toRadians(90),
+                .splineToConstantHeading(new Vector2d(49,-52), Math.toRadians(90),
                         null,
-                        new ProfileAccelConstraint(-15, 60)
+                        new ProfileAccelConstraint(-60, 25)
                 )
 
 
                 /*
                  * second sample
                  */
+                .lineToYConstantHeading(-22)
+
                 .lineToYConstantHeading(-18.6,
-                        null,
-                        new ProfileAccelConstraint(-60, 45)
+                        new TranslationalVelConstraint(25)
                 )
 
-                .splineToConstantHeading(new Vector2d(52, -9), Math.toRadians(0))
+                .splineToConstantHeading(new Vector2d(50, -9), Math.toRadians(0),
+                        new TranslationalVelConstraint(25)
+                )
 
-                .splineToConstantHeading(new Vector2d(58, -14), Math.toRadians(270))
+                .splineToConstantHeading(new Vector2d(58, -14), Math.toRadians(270),
+                        new TranslationalVelConstraint(30)
+                )
 
                 .lineToYConstantHeading(-48)
-                .splineToConstantHeading(new Vector2d(58,-52), Math.toRadians(90),
+                .splineToConstantHeading(new Vector2d(56,-52), Math.toRadians(90),
                         null,
-                        new ProfileAccelConstraint(-15, 60)
+                        new ProfileAccelConstraint(-60,25)
                 )
 
 
                 /*
                  * Third sample
                  */
+                .lineToYConstantHeading(-22)
+
                 .lineToYConstantHeading(-18.6,
-                        null,
-                        new ProfileAccelConstraint(-60, 45)
+                        new TranslationalVelConstraint(28)
                 )
 
-                .splineToConstantHeading(new Vector2d(58, -10), Math.toRadians(0),
-                        new TranslationalVelConstraint(20),
-                        new ProfileAccelConstraint(-15, 15))
+                .splineToConstantHeading(new Vector2d(59, -10), Math.toRadians(0),
+                        new TranslationalVelConstraint(16)
+                )
 
-                .splineToConstantHeading(new Vector2d(62, -14), Math.toRadians(270),
-                        new TranslationalVelConstraint(60),
-                        new ProfileAccelConstraint(-20, 60))
+                .splineToConstantHeading(new Vector2d(63, -14), Math.toRadians(270),
+                        new TranslationalVelConstraint(18)
+                )
 
                 .lineToYConstantHeading(-48)
                 .splineToConstantHeading(new Vector2d(62,-52), Math.toRadians(90),
