@@ -18,6 +18,7 @@ import org.firstinspires.ftc.teamcode.metalheads.compbot.AutoActionFactory;
 import org.firstinspires.ftc.teamcode.metalheads.compbot.AutoBot;
 import org.firstinspires.ftc.teamcode.metalheads.compbot.Constants;
 import org.firstinspires.ftc.teamcode.metalheads.compbot.autoactions.MainBoomToSpecimenHighReady;
+import org.firstinspires.ftc.teamcode.metalheads.compbot.autoactions.MainBoomToSpecimenPickReady;
 import org.firstinspires.ftc.teamcode.metalheads.compbot.autoactions.MainBoomToZero;
 import org.firstinspires.ftc.teamcode.metalheads.compbot.autoactions.ViperSlideToSpecimenHighReady;
 import org.firstinspires.ftc.teamcode.metalheads.compbot.autoactions.ViperSlideToZero;
@@ -79,6 +80,13 @@ public class RoadrunnerTest extends AutoBot {
 
                 // Go back away from bar
                 .lineToYConstantHeading(-42)
+                .afterTime(0, () -> {
+                    this.littleArm.doubleServos.setPosition(Constants.SPECIMEN_PICK_READY.doubleServosPos.getPos());
+                    this.littleArm.middleServo.setPosition(Constants.SPECIMEN_PICK_READY.middleServoPos.getPos());
+                    this.littleArm.clawRotator.setPosition(Constants.SPECIMEN_PICK_READY.clawRotatorPos.getPos());
+                    this.littleArm.clawPincher.setPosition(Constants.SAMPLE_PICK_READY.clawPincherPos.getPos());
+                })
+                .afterTime(0, new MainBoomToSpecimenPickReady(this.bigArm.mainBoom))
                 .splineToConstantHeading(new Vector2d(12,-50), Math.toRadians(0))
 
 
@@ -120,7 +128,7 @@ public class RoadrunnerTest extends AutoBot {
                         new TranslationalVelConstraint(25)
                 )
 
-                .splineToConstantHeading(new Vector2d(50, -9), Math.toRadians(0),
+                .splineToConstantHeading(new Vector2d(53, -9), Math.toRadians(0),
                         new TranslationalVelConstraint(25)
                 )
 
@@ -173,10 +181,7 @@ public class RoadrunnerTest extends AutoBot {
                  * Specimens
                  */
                 .splineToConstantHeading(new Vector2d(52, -48), Math.toRadians(180))
-                .splineToConstantHeading(new Vector2d(42, -56.8), Math.toRadians(270),
-                        new TranslationalVelConstraint(45),
-                        new ProfileAccelConstraint(-15, 60)
-                )
+                .splineToConstantHeading(new Vector2d(42, -56.8), Math.toRadians(270))
 
 
                 .waitSeconds(0.3)
@@ -187,10 +192,10 @@ public class RoadrunnerTest extends AutoBot {
 
 
                 .setTangent(Math.toRadians(270))
-                .splineToConstantHeading(new Vector2d(20, -54), Math.toRadians(0))
+                .splineToConstantHeading(new Vector2d(24, -51), Math.toRadians(0))
                 .splineToConstantHeading(new Vector2d(42, -56.5), Math.toRadians(270),
                         null,
-                        new ProfileAccelConstraint(-12, 50)
+                        new ProfileAccelConstraint(-60, 45)
                 )
 
                 .waitSeconds(0.3)
@@ -201,10 +206,10 @@ public class RoadrunnerTest extends AutoBot {
 
 
                 .setTangent(Math.toRadians(270))
-                .splineToConstantHeading(new Vector2d(20, -54), Math.toRadians(0))
+                .splineToConstantHeading(new Vector2d(24, -51), Math.toRadians(0))
                 .splineToConstantHeading(new Vector2d(42, -56.5), Math.toRadians(270),
                         null,
-                        new ProfileAccelConstraint(-12, 50)
+                        new ProfileAccelConstraint(-60, 45)
                 )
 
                 .waitSeconds(0.3)
@@ -215,40 +220,11 @@ public class RoadrunnerTest extends AutoBot {
 
 
                 .setTangent(Math.toRadians(270))
-                .splineToConstantHeading(new Vector2d(20, -54), Math.toRadians(0))
+                .splineToConstantHeading(new Vector2d(24, -51), Math.toRadians(0))
                 .splineToConstantHeading(new Vector2d(42, -56.5), Math.toRadians(270),
                         null,
-                        new ProfileAccelConstraint(-12, 50)
+                        new ProfileAccelConstraint(-60, 45)
                 )
-
-                .waitSeconds(0.3)
-
-                .setTangent(Math.toRadians(140))
-                .splineToConstantHeading(new Vector2d(15,-60), Math.toRadians(180))
-                .splineToConstantHeading(new Vector2d(6,-36), Math.toRadians(90))
-
-
-                .setTangent(Math.toRadians(270))
-                .splineToConstantHeading(new Vector2d(20, -54), Math.toRadians(0))
-                .splineToConstantHeading(new Vector2d(42, -56.5), Math.toRadians(270),
-                        null,
-                        new ProfileAccelConstraint(-12, 50)
-                )
-
-                .waitSeconds(0.3)
-
-                .setTangent(Math.toRadians(140))
-                .splineToConstantHeading(new Vector2d(15,-60), Math.toRadians(180))
-                .splineToConstantHeading(new Vector2d(6,-36), Math.toRadians(90))
-
-
-                .setTangent(Math.toRadians(270))
-                .splineToConstantHeading(new Vector2d(20, -54), Math.toRadians(0))
-                .splineToConstantHeading(new Vector2d(42, -56.5), Math.toRadians(270),
-                        null,
-                        new ProfileAccelConstraint(-12, 50)
-                )
-
 
 
 

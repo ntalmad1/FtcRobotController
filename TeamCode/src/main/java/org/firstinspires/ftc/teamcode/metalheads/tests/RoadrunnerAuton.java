@@ -79,58 +79,6 @@ public class RoadrunnerAuton extends AutoBot {
     public void go() {
         super.go();
 
-        TrajectoryActionBuilder cycleSpecimen = this.getDrive().actionBuilder(this.getDrive().pose)
-
-
-                .afterTime(0.0, () -> {
-                    this.littleArm.clawPincher.setPosition(Constants.CLAW_PINCHER_CLOSE_POS);
-                })
-
-                .waitSeconds(0.2)
-
-                .afterTime(0, new MainBoomToSpecimenHighReady(this.bigArm.mainBoom))
-
-                .waitSeconds(0.1)
-
-                .afterTime(0, () -> {
-                    this.littleArm.doubleServos.setPosition(Constants.SPECIMEN_PLACE_HIGH_READY.doubleServosPos.getPos());
-                    this.littleArm.middleServo.setPosition(Constants.SPECIMEN_PLACE_HIGH_READY.middleServoPos.getPos());
-                    this.littleArm.clawRotator.setPosition(Constants.SPECIMEN_PLACE_HIGH_READY.clawRotatorPos.getPos());
-                })
-
-                .afterTime(0.1, new ViperSlideToSpecimenHighReady(this.bigArm.viperSlide))
-
-                //Hang Specimen
-                .setTangent(140)
-                .splineToConstantHeading(new Vector2d(9,-56), Math.toRadians(180))
-                .splineToConstantHeading(new Vector2d(6,-36), Math.toRadians(90))
-
-                .afterTime(0, () -> this.littleArm.clawPincher.setPosition(Constants.CLAW_PINCHER_OPEN_POS))
-                .afterTime(0.1, new ViperSlideToZero(this.bigArm.viperSlide))
-
-
-
-
-                //Retreat back to next Specimen
-                .afterTime(1, ()-> {
-                    this.littleArm.doubleServos.setPosition(Constants.SPECIMEN_PICK_READY.doubleServosPos.getPos());
-                    this.littleArm.middleServo.setPosition(Constants.SPECIMEN_PICK_READY.middleServoPos.getPos());
-                    this.littleArm.clawRotator.setPosition(Constants.SPECIMEN_PICK_READY.clawRotatorPos.getPos());
-                })
-
-                .afterTime(1, new MainBoomToSpecimenPickReady(this.bigArm.mainBoom))
-
-
-
-                .setTangent(270)
-                .splineToConstantHeading(new Vector2d(20, -45), Math.toRadians(0))
-                .splineToConstantHeading(new Vector2d(42, -56.5), Math.toRadians(270),
-                        null,
-                        new ProfileAccelConstraint(-12, 50)
-                );
-
-
-
 
         TrajectoryActionBuilder mainTrajectory = this.getDrive().actionBuilder(this.initialPose)
 
