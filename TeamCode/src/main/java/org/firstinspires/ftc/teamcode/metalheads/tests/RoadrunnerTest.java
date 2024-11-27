@@ -78,15 +78,7 @@ public class RoadrunnerTest extends AutoBot {
                         new ProfileAccelConstraint(-60, 30))
 
 
-                // Go back away from bar
-                .lineToYConstantHeading(-42)
-                .afterTime(0, () -> {
-                    this.littleArm.doubleServos.setPosition(Constants.SPECIMEN_PICK_READY.doubleServosPos.getPos());
-                    this.littleArm.middleServo.setPosition(Constants.SPECIMEN_PICK_READY.middleServoPos.getPos());
-                    this.littleArm.clawRotator.setPosition(Constants.SPECIMEN_PICK_READY.clawRotatorPos.getPos());
-                    this.littleArm.clawPincher.setPosition(Constants.SAMPLE_PICK_READY.clawPincherPos.getPos());
-                })
-                .afterTime(0, new MainBoomToSpecimenPickReady(this.bigArm.mainBoom))
+
                 .splineToConstantHeading(new Vector2d(12,-50), Math.toRadians(0))
 
 
@@ -177,9 +169,20 @@ public class RoadrunnerTest extends AutoBot {
 
 
 
-                /*
-                 * Specimens
-                 */
+//                Specimens
+//                ---------------------------------------------------------------------------------------
+
+
+
+
+
+
+
+
+
+
+
+
                 .splineToConstantHeading(new Vector2d(52, -48), Math.toRadians(180))
                 .splineToConstantHeading(new Vector2d(42, -56.8), Math.toRadians(270))
 

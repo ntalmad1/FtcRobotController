@@ -15,20 +15,22 @@ public class ViperSlideToSpecimenHighReady implements Action {
     // checks if the lift motor has been powered on
     private boolean initialized = false;
     private EncodedMotor viperSlide;
+    private int extraTicks;
 
     /**
      * Constructor
      * @param viperSlide
      */
-    public ViperSlideToSpecimenHighReady(EncodedMotor viperSlide) {
+    public ViperSlideToSpecimenHighReady(EncodedMotor viperSlide, int extraTicks) {
         this.viperSlide = viperSlide;
+        this.extraTicks = extraTicks;
     }
 
     // actions are formatted via telemetry packets as below
     @Override
     public boolean run(@NonNull TelemetryPacket packet) {
 
-        int targetPosition = Constants.SPECIMEN_PLACE_HIGH_READY.vSlidePos.getPos();
+        int targetPosition = (Constants.SPECIMEN_PLACE_HIGH_READY.vSlidePos.getPos() + extraTicks);
 
         // powers on motor, if it is not on
         if (!initialized) {

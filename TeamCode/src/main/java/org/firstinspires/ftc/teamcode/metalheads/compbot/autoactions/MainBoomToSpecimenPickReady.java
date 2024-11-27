@@ -15,19 +15,22 @@ public class MainBoomToSpecimenPickReady implements Action {
     // checks if the lift motor has been powered on
     private boolean initialized = false;
     private EncodedMotor mainBoom;
+    private int extraTicks;
 
     /**
      * Constructor
      * @param mainBoom
      */
-    public MainBoomToSpecimenPickReady(EncodedMotor mainBoom) {
+    public MainBoomToSpecimenPickReady(EncodedMotor mainBoom, int extraTicks) {
         this.mainBoom = mainBoom;
+        this.extraTicks = extraTicks;
     }
 
     // actions are formatted via telemetry packets as below
     @Override
     public boolean run(@NonNull TelemetryPacket packet) {
-        int targetPosition = Constants.SPECIMEN_PICK_READY.mainBoomPos.getPos();
+
+        int targetPosition = (Constants.SPECIMEN_PICK_READY.mainBoomPos.getPos() + extraTicks);
 
         // powers on motor, if it is not on
         if (!initialized) {
