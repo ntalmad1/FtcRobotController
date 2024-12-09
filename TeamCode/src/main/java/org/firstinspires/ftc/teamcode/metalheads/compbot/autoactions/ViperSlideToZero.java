@@ -41,7 +41,7 @@ public class ViperSlideToZero implements Action {
         // checks lift's current position
         double pos = viperSlide.getCurrentPosition();
         packet.put("viperSlidePos", pos);
-        if (pos > targetPosition - 30 || pos < targetPosition + 30) {
+        if (pos > targetPosition - 20 || pos < targetPosition + 20) {
             // true causes the action to rerun
             return CONTINUE;
         } else {

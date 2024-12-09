@@ -79,7 +79,7 @@ public class RoadrunnerAuton extends AutoBot {
     public void go() {
         super.go();
 
-        int extraticks = 15;
+        int extraticks = 20;
 
 
         TrajectoryActionBuilder mainTrajectory = this.getDrive().actionBuilder(this.initialPose)
@@ -161,9 +161,9 @@ public class RoadrunnerAuton extends AutoBot {
                         new ProfileAccelConstraint(-25, 60))
 
                 .lineToYConstantHeading(-48)
-                .splineToConstantHeading(new Vector2d(49,-52), Math.toRadians(90),
+                .splineToConstantHeading(new Vector2d(47,-52), Math.toRadians(90),
                         null,
-                        new ProfileAccelConstraint(-60, 25)
+                        new ProfileAccelConstraint(-60, 18)
                 )
 
 
@@ -176,25 +176,28 @@ public class RoadrunnerAuton extends AutoBot {
                         new TranslationalVelConstraint(25)
                 )
 
-                .splineToConstantHeading(new Vector2d(54, -9), Math.toRadians(0),
+                .splineToConstantHeading(new Vector2d(53, -9), Math.toRadians(0),
                         new TranslationalVelConstraint(25)
                 )
 
-                .splineToConstantHeading(new Vector2d(58, -14), Math.toRadians(270),
+                .splineToConstantHeading(new Vector2d(55.4, -14), Math.toRadians(270),
                         new TranslationalVelConstraint(30)
                 )
 
                 .lineToYConstantHeading(-48)
-                .splineToConstantHeading(new Vector2d(58,-52), Math.toRadians(90),
+                .splineToConstantHeading(new Vector2d(53,-52), Math.toRadians(90),
                         null,
-                        new ProfileAccelConstraint(-60,25)
+                        new ProfileAccelConstraint(-60,18)
                 )
 
 
                 /*
                  * Third sample
                  */
-                .lineToYConstantHeading(-22)
+                .lineToYConstantHeading(-22,
+                        null,
+                        new ProfileAccelConstraint(-60,30)
+                )
 
                 .lineToYConstantHeading(-18.6,
                         new TranslationalVelConstraint(28)
@@ -272,7 +275,7 @@ public class RoadrunnerAuton extends AutoBot {
 
 
                 .afterTime(0, () -> this.littleArm.clawPincher.setPosition(Constants.CLAW_PINCHER_OPEN_POS))
-                .afterTime(0.1, new ViperSlideToZero(this.bigArm.viperSlide))
+                .afterTime(0.5, new ViperSlideToZero(this.bigArm.viperSlide))
 
 
 
@@ -329,7 +332,7 @@ public class RoadrunnerAuton extends AutoBot {
                 //Hang Specimen
                 .setTangent(Math.toRadians(140))
                 .splineToConstantHeading(new Vector2d(15,-60), Math.toRadians(180))
-                .splineToConstantHeading(new Vector2d(6,-36), Math.toRadians(90))
+                .splineToConstantHeading(new Vector2d(3,-36), Math.toRadians(90))
 
                 .afterTime(0, () -> this.littleArm.clawPincher.setPosition(Constants.CLAW_PINCHER_OPEN_POS))
                 .afterTime(0.1, new ViperSlideToZero(this.bigArm.viperSlide))
@@ -368,9 +371,15 @@ public class RoadrunnerAuton extends AutoBot {
 
                 //Finish no 4th
 
-                .lineToY(-48)
+                .lineToY(-50)
                 .afterTime(0, new MainBoomToZero(this.bigArm.mainBoom))
                 .afterTime(0, new ViperSlideToZero(this.bigArm.viperSlide))
+                .afterTime(0.4, () -> {
+                    this.littleArm.clawPincher.setPosition(this.littleArm.clawPincher.getConfig().homePosition);
+                    this.littleArm.clawRotator.setPosition(this.littleArm.clawRotator.getConfig().homePosition);
+                    this.littleArm.middleServo.setPosition(this.littleArm.middleServo.getConfig().homePosition);
+                    this.littleArm.doubleServos.setPosition(this.littleArm.doubleServos.getConfig().homePosition);
+                })
 
 
 

@@ -8,6 +8,7 @@ import com.acmerobotics.dashboard.telemetry.TelemetryPacket;
 import com.acmerobotics.roadrunner.Action;
 import com.qualcomm.robotcore.hardware.DcMotor;
 
+import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.teamcode.library.encodedmotor.EncodedMotor;
 import org.firstinspires.ftc.teamcode.metalheads.compbot.Constants;
 
@@ -40,17 +41,17 @@ public class ViperSlideToSpecimenHighReady implements Action {
             initialized = true;
         }
 
-        // checks lift's current position
+        // checks Slides current position
         double pos = viperSlide.getCurrentPosition();
         packet.put("viperSlidePos", pos);
-        if (pos > targetPosition - 30 || pos < targetPosition + 30) {
+
+        if (pos > targetPosition - 20 || pos < targetPosition + 20) {
             // true causes the action to rerun
             return CONTINUE;
+
         } else {
             // false stops action rerun
             return STOP;
         }
-        // overall, the action powers the lift until it surpasses
-        // 3000 encoder ticks, then powers it off
     }
 }
