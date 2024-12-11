@@ -37,6 +37,7 @@ public class Constants {
     public static final double MIDDLE_SERVO_MAX_POS = 0.783;
     public static final double MIDDLE_SERVO_INIT_POS = 0.783;
     public static final double MIDDLE_SERVO_INCREMENT = 0.006;
+    public static final double MIDDLE_SERVO_SPECIMEN_PLACED = 0.173;
 
     /**
      */

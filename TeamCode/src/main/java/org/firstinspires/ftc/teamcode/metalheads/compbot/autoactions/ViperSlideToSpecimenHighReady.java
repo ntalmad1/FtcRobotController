@@ -45,13 +45,12 @@ public class ViperSlideToSpecimenHighReady implements Action {
         double pos = viperSlide.getCurrentPosition();
         packet.put("viperSlidePos", pos);
 
-        if (pos > targetPosition - 20 || pos < targetPosition + 20) {
-            // true causes the action to rerun
-            return CONTINUE;
+        if ((pos > targetPosition - 20) && (pos < targetPosition + 20)) {
 
-        } else {
-            // false stops action rerun
             return STOP;
+        } else {
+
+            return CONTINUE;
         }
     }
 }

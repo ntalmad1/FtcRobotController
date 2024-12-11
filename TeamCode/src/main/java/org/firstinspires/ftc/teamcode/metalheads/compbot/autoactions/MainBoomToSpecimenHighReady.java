@@ -42,12 +42,12 @@ public class MainBoomToSpecimenHighReady implements Action {
         // checks lift's current position
         double pos = mainBoom.getCurrentPosition();
         packet.put("mainBoomPos", pos);
-        if (pos > targetPosition -20 || pos < targetPosition + 20) {
-            // true causes the action to rerun
-            return CONTINUE;
-        } else {
-            // false stops action rerun
+        if ((pos > targetPosition -20) && (pos < targetPosition + 20)) {
+
             return STOP;
+        } else {
+
+            return CONTINUE;
         }
         // overall, the action powers the lift until it surpasses
         // 3000 encoder ticks, then powers it off
