@@ -22,6 +22,10 @@ public class ViperSlideToSpecimenHighReady implements Action {
      * Constructor
      * @param viperSlide
      */
+    public ViperSlideToSpecimenHighReady(EncodedMotor viperSlide) {
+        this(viperSlide, 0);
+    }
+
     public ViperSlideToSpecimenHighReady(EncodedMotor viperSlide, int extraTicks) {
         this.viperSlide = viperSlide;
         this.extraTicks = extraTicks;
@@ -46,8 +50,8 @@ public class ViperSlideToSpecimenHighReady implements Action {
         packet.put("viperSlidePos", pos);
 
         if ((pos > targetPosition - 20) && (pos < targetPosition + 20)) {
-
             return STOP;
+
         } else {
 
             return CONTINUE;

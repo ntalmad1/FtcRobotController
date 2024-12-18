@@ -4,6 +4,7 @@ import static org.firstinspires.ftc.teamcode.metalheads.compbot.autoactions.Acti
 import static org.firstinspires.ftc.teamcode.metalheads.compbot.autoactions.ActionsUtil.STOP;
 
 import androidx.annotation.NonNull;
+
 import com.acmerobotics.dashboard.telemetry.TelemetryPacket;
 import com.acmerobotics.roadrunner.Action;
 import com.qualcomm.robotcore.hardware.DcMotor;
@@ -11,42 +12,30 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import org.firstinspires.ftc.teamcode.library.encodedmotor.EncodedMotor;
 import org.firstinspires.ftc.teamcode.metalheads.compbot.Constants;
 
-public class MainBoomToSpecimenPickReady implements Action {
+public class ViperSlideReachedTargetPosition implements Action {
     // checks if the lift motor has been powered on
     private boolean initialized = false;
-    private EncodedMotor mainBoom;
-    private int extraTicks;
+
+    private int targetPosition;
+
+    private EncodedMotor viperSlide;
 
     /**
      * Constructor
-     * @param mainBoom
+     * @param targetPosition
      */
-    public MainBoomToSpecimenPickReady(EncodedMotor mainBoom) {
-        this(mainBoom, 0);
-    }
-
-    public MainBoomToSpecimenPickReady(EncodedMotor mainBoom, int extraTicks) {
-        this.mainBoom = mainBoom;
-        this.extraTicks = extraTicks;
+    public ViperSlideReachedTargetPosition(EncodedMotor viperSlide, int targetPosition) {
+        this.viperSlide = viperSlide;
+        this.targetPosition = targetPosition;
     }
 
     // actions are formatted via telemetry packets as below
     @Override
     public boolean run(@NonNull TelemetryPacket packet) {
 
-        int targetPosition = (Constants.SPECIMEN_PICK_READY.mainBoomPos.getPos() + extraTicks);
-
-        // powers on motor, if it is not on
-        if (!initialized) {
-            mainBoom.setTargetPosition(targetPosition);
-            mainBoom.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            mainBoom.setPower(1);
-            initialized = true;
-        }
-
         // checks lift's current position
-        double pos = mainBoom.getCurrentPosition();
-        packet.put("mainBoomPos", pos);
+        double pos = viperSlide.getCurrentPosition();
+        packet.put("viperSlidePos", pos);
         if ((pos > targetPosition - 20) && (pos < targetPosition + 20)) {
 
             return STOP;
