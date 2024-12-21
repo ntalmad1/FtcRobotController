@@ -159,7 +159,7 @@ public class Constants {
         @Override
         public void setValues() {
             mainBoomPos = new MotorPos(863);
-            vSlidePos = new MotorPos(935);
+            vSlidePos = new MotorPos(30);
         }
     };
 
