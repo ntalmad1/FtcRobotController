@@ -81,7 +81,7 @@ public class RoadrunnerAuton extends AutoBot {
         super.go();
 
         int initialHangExtraTicks = 8;
-        int specimenCycleExtraTicks = 45;
+        int specimenCycleExtraTicks = 32;
 
 
         TrajectoryActionBuilder mainTrajectory = this.getDrive().actionBuilder(this.initialPose)
@@ -171,7 +171,7 @@ public class RoadrunnerAuton extends AutoBot {
                 .splineToConstantHeading(new Vector2d(44, -11), Math.toRadians(0),
                         new TranslationalVelConstraint(30))
 
-                .splineToConstantHeading(new Vector2d(47, -14), Math.toRadians(270),
+                .splineToConstantHeading(new Vector2d(48.6, -14), Math.toRadians(270),
                         new TranslationalVelConstraint(25),
                         new ProfileAccelConstraint(-25, 60))
 
@@ -195,7 +195,7 @@ public class RoadrunnerAuton extends AutoBot {
                         new TranslationalVelConstraint(25)
                 )
 
-                .splineToConstantHeading(new Vector2d(55, -14), Math.toRadians(270),
+                .splineToConstantHeading(new Vector2d(57, -14), Math.toRadians(270),
                         new TranslationalVelConstraint(20)
                 )
 
@@ -222,7 +222,7 @@ public class RoadrunnerAuton extends AutoBot {
                         new TranslationalVelConstraint(16)
                 )
 
-                .splineToConstantHeading(new Vector2d(63, -14), Math.toRadians(270),
+                .splineToConstantHeading(new Vector2d(62.2, -14), Math.toRadians(270),
                         new TranslationalVelConstraint(18)
                 )
 
@@ -280,8 +280,8 @@ public class RoadrunnerAuton extends AutoBot {
                         new ParallelAction(
                                 new SequentialAction(
 
-                                        new ViperSlideToSpecimenHighReady(this.bigArm.viperSlide, 0),
-                                        new ViperSlideToSpecimenHighReady(this.bigArm.viperSlide, 16)),
+                                        new ViperSlideToSpecimenHighReady(this.bigArm.viperSlide, specimenCycleExtraTicks),
+                                        new ViperSlideToSpecimenHighReady(this.bigArm.viperSlide, specimenCycleExtraTicks)),
 
                                 new InstantAction(() -> {
 
@@ -378,8 +378,8 @@ public class RoadrunnerAuton extends AutoBot {
                         new ParallelAction(
                                 new SequentialAction(
 
-                                    new ViperSlideToSpecimenHighReady(this.bigArm.viperSlide, 0),
-                                    new ViperSlideToSpecimenHighReady(this.bigArm.viperSlide, 16)),
+                                    new ViperSlideToSpecimenHighReady(this.bigArm.viperSlide, specimenCycleExtraTicks),
+                                    new ViperSlideToSpecimenHighReady(this.bigArm.viperSlide, specimenCycleExtraTicks)),
 
                             new InstantAction(() -> {
 
