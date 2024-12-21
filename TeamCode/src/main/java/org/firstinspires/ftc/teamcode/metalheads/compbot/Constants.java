@@ -14,6 +14,7 @@ public class Constants {
     public static final int MAIN_BOOM_MAX_TICS = 1155;
     public static final int MAIN_BOOM_INIT_TICS = 525;
     public static final int MAIN_BOOM_SCALE = 200;
+    public static final int MAIN_BOOM_SPECIMEN_TEST = 680;
 
     /**
      */
@@ -23,12 +24,14 @@ public class Constants {
     //public static final double VIPER_SLIDES_VOLTS_MIN = 0.43;
     //public static final double VIPER_SLIDES_VOLTS_MAX = 1.184;
     //public static final double VIPER_SLIDES_VOLTS_MAX = 1.209;
+    public static final int VIPER_SLIDES_SPECIMEN_TEST = 680;
     public static final int VIPER_SLIDES_SCALE = 200;
     /**
      */
     public static final double DOUBLE_SERVOS_MIN_POS = 0;
     public static final double DOUBLE_SERVOS_MAX_POS = 1;
     public static final double DOUBLE_SERVOS_INIT_POS = 0.98;
+    public static final double DOUBLE_SERVOS_SPECIMEN_TEST = 0.006;
     public static final double DOUBLE_SERVOS_INCREMENT = 0.006;
 
     /**
@@ -38,6 +41,7 @@ public class Constants {
     public static final double MIDDLE_SERVO_INIT_POS = 0.783;
     public static final double MIDDLE_SERVO_INCREMENT = 0.006;
     public static final double MIDDLE_SERVO_SPECIMEN_PLACED = 0.173;
+    public static final double MIDDLE_SERVO_SPECIMEN_TEST = 0;
 
     /**
      */

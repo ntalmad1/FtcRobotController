@@ -272,32 +272,56 @@ public class RoadrunnerAuton extends AutoBot {
                 .waitSeconds(0.15)
 
 
-                //Raise Up Boom, Then Extend ViperSLide
-                .afterTime(0, new SequentialAction(
-                        new MainBoomToSpecimenHighReady(this.bigArm.mainBoom),
-                        new ViperSlideToSpecimenHighReady(this.bigArm.viperSlide, specimenCycleExtraTicks),
-                        new InstantAction(() -> {
-                            this.littleArm.doubleServos.setPosition(Constants.SPECIMEN_PLACE_HIGH_READY.doubleServosPos.getPos());
-                            this.littleArm.middleServo.setPosition(Constants.SPECIMEN_PLACE_HIGH_READY.middleServoPos.getPos());
-                            this.littleArm.clawRotator.setPosition(Constants.SPECIMEN_PLACE_HIGH_READY.clawRotatorPos.getPos());
-                        })
-                ))
+//                //Raise Up Boom, Then Extend ViperSLide
+//                .afterTime(0, new SequentialAction(
+//                        new MainBoomToSpecimenHighReady(this.bigArm.mainBoom),
+//
+//                        new InstantAction(() -> this.littleArm.doubleServos.setPosition(Constants.SPECIMEN_PLACE_HIGH_READY.doubleServosPos.getPos())),
+//
+//                        new ViperSlideToSpecimenHighReady(this.bigArm.viperSlide),
+//
+//                        new InstantAction(() -> {
+//                            this.littleArm.middleServo.setPosition(Constants.SPECIMEN_PLACE_HIGH_READY.middleServoPos.getPos());
+//                            this.littleArm.clawRotator.setPosition(Constants.SPECIMEN_PLACE_HIGH_READY.clawRotatorPos.getPos());
+//                        })
+//                ))
+//
+////                //Move Servos
+////                .afterTime(0.15, () -> {
+////                    this.littleArm.doubleServos.setPosition(Constants.SPECIMEN_PLACE_HIGH_READY.doubleServosPos.getPos());
+////                    this.littleArm.middleServo.setPosition(Constants.SPECIMEN_PLACE_HIGH_READY.middleServoPos.getPos());
+////                    this.littleArm.clawRotator.setPosition(Constants.SPECIMEN_PLACE_HIGH_READY.clawRotatorPos.getPos());
+////                })
 
-//                //Move Servos
-//                .afterTime(0.15, () -> {
-//                    this.littleArm.doubleServos.setPosition(Constants.SPECIMEN_PLACE_HIGH_READY.doubleServosPos.getPos());
-//                    this.littleArm.middleServo.setPosition(Constants.SPECIMEN_PLACE_HIGH_READY.middleServoPos.getPos());
-//                    this.littleArm.clawRotator.setPosition(Constants.SPECIMEN_PLACE_HIGH_READY.clawRotatorPos.getPos());
-//                })
+
+
+                .afterTime(0, () -> {
+                    this.bigArm.mainBoom.setTargetPosition(Constants.MAIN_BOOM_SPECIMEN_TEST);
+                    this.bigArm.mainBoom.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+                    this.bigArm.mainBoom.setPower(1);
+                })
+
+                .afterTime(0.3, ()-> {
+                    this.littleArm.doubleServos.setPosition(Constants.DOUBLE_SERVOS_SPECIMEN_TEST);
+                    this.littleArm.middleServo.setPosition(0);
+                })
 
 
 
                 //Hang Specimen
                 .setTangent(Math.toRadians(140))
-                .splineToConstantHeading(new Vector2d(15,-60), Math.toRadians(180),
+                .splineToConstantHeading(new Vector2d(15,-63), Math.toRadians(180),
                         new TranslationalVelConstraint(40),
                         new ProfileAccelConstraint(-60, 25)
                 )
+
+                .afterTime(0.9, new InstantAction(() -> {
+                    this.bigArm.mainBoom.setTargetPosition(Constants.VIPER_SLIDES_SPECIMEN_TEST);
+                    this.bigArm.viperSlide.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+                    this.bigArm.viperSlide.setPower(1);
+                }))
+
+
                 .splineToConstantHeading(new Vector2d(6,-38), Math.toRadians(90),
                         null,
                         new ProfileAccelConstraint(-60,30)
@@ -305,17 +329,12 @@ public class RoadrunnerAuton extends AutoBot {
 
 
 
-
+                .waitSeconds(0.2)
                 .afterTime(0, () -> this.littleArm.clawPincher.setPosition(Constants.CLAW_PINCHER_OPEN_POS))
-
-                .afterTime(0.18, () -> this.littleArm.middleServo.setPosition((Constants.MIDDLE_SERVO_SPECIMEN_PLACED)))
 
 
 
                 .afterTime(0.5, new SequentialAction(
-
-                        //Run Again to ensure it reaches position
-                        new ViperSlideToSpecimenHighReady(this.bigArm.viperSlide, specimenCycleExtraTicks),
 
                         new ViperSlideToZero(this.bigArm.viperSlide),
 
@@ -334,8 +353,6 @@ public class RoadrunnerAuton extends AutoBot {
 
 
 
-                //TODO:See if this changes anything
-                .waitSeconds(0.2)
 
 
 
@@ -370,13 +387,17 @@ public class RoadrunnerAuton extends AutoBot {
                 //Raise Up Boom, Then Extend ViperSLide
                 .afterTime(0, new SequentialAction(
                         new MainBoomToSpecimenHighReady(this.bigArm.mainBoom),
-                        new ViperSlideToSpecimenHighReady(this.bigArm.viperSlide, specimenCycleExtraTicks),
+
+                        new InstantAction(() -> this.littleArm.doubleServos.setPosition(Constants.SPECIMEN_PLACE_HIGH_READY.doubleServosPos.getPos())),
+
+                        new ViperSlideToSpecimenHighReady(this.bigArm.viperSlide),
+
                         new InstantAction(() -> {
-                            this.littleArm.doubleServos.setPosition(Constants.SPECIMEN_PLACE_HIGH_READY.doubleServosPos.getPos());
                             this.littleArm.middleServo.setPosition(Constants.SPECIMEN_PLACE_HIGH_READY.middleServoPos.getPos());
                             this.littleArm.clawRotator.setPosition(Constants.SPECIMEN_PLACE_HIGH_READY.clawRotatorPos.getPos());
                         })
                 ))
+
 
 //                //Move Servos
 //                .afterTime(0.15, () -> {
@@ -404,7 +425,7 @@ public class RoadrunnerAuton extends AutoBot {
                 .afterTime(0.5, new SequentialAction(
 
                         //run again to ensure it reaches the right position
-                        new ViperSlideToSpecimenHighReady(this.bigArm.viperSlide, specimenCycleExtraTicks),
+                        new ViperSlideToSpecimenHighReady(this.bigArm.viperSlide),
 
                         new ViperSlideToZero(this.bigArm.viperSlide),
 
@@ -461,9 +482,12 @@ public class RoadrunnerAuton extends AutoBot {
                 //Raise Up Boom, Then Extend ViperSLide
                 .afterTime(0, new SequentialAction(
                         new MainBoomToSpecimenHighReady(this.bigArm.mainBoom),
-                        new ViperSlideToSpecimenHighReady(this.bigArm.viperSlide, specimenCycleExtraTicks),
+
+                        new InstantAction(() -> this.littleArm.doubleServos.setPosition(Constants.SPECIMEN_PLACE_HIGH_READY.doubleServosPos.getPos())),
+
+                        new ViperSlideToSpecimenHighReady(this.bigArm.viperSlide),
+
                         new InstantAction(() -> {
-                            this.littleArm.doubleServos.setPosition(Constants.SPECIMEN_PLACE_HIGH_READY.doubleServosPos.getPos());
                             this.littleArm.middleServo.setPosition(Constants.SPECIMEN_PLACE_HIGH_READY.middleServoPos.getPos());
                             this.littleArm.clawRotator.setPosition(Constants.SPECIMEN_PLACE_HIGH_READY.clawRotatorPos.getPos());
                         })
@@ -495,7 +519,7 @@ public class RoadrunnerAuton extends AutoBot {
                 .afterTime(0.5, new SequentialAction(
 
                         //Run Again to ensure it reaches position
-                        new ViperSlideToSpecimenHighReady(this.bigArm.viperSlide, specimenCycleExtraTicks),
+                        new ViperSlideToSpecimenHighReady(this.bigArm.viperSlide),
 
                         new ViperSlideToZero(this.bigArm.viperSlide),
 
