@@ -1,6 +1,6 @@
 package org.firstinspires.ftc.teamcode.metalheads;
 
-import com.acmerobotics.dashboard.telemetry.TelemetryPacket;
+import com.acmerobotics.roadrunner.InstantAction;
 import com.acmerobotics.roadrunner.ParallelAction;
 import com.acmerobotics.roadrunner.Pose2d;
 import com.acmerobotics.roadrunner.ProfileAccelConstraint;
@@ -10,24 +10,22 @@ import com.acmerobotics.roadrunner.TranslationalVelConstraint;
 import com.acmerobotics.roadrunner.Vector2d;
 import com.acmerobotics.roadrunner.ftc.Actions;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
-import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 
-import org.firstinspires.ftc.teamcode.library.action.AbstractAction;
-import org.firstinspires.ftc.teamcode.library.action.InstantActionImpl;
-import org.firstinspires.ftc.teamcode.library.action.ParallelActionImpl;
-import org.firstinspires.ftc.teamcode.library.action.SequentialActionImpl;
 import org.firstinspires.ftc.teamcode.library.action.WaitAction;
-import org.firstinspires.ftc.teamcode.metalheads.compbot.ActionFactory;
 import org.firstinspires.ftc.teamcode.metalheads.compbot.AutoActionFactory;
 import org.firstinspires.ftc.teamcode.metalheads.compbot.AutoBot;
-import org.firstinspires.ftc.teamcode.metalheads.compbot.CompBot;
 import org.firstinspires.ftc.teamcode.metalheads.compbot.Constants;
+import org.firstinspires.ftc.teamcode.metalheads.compbot.autoactions.MainBoomToSpecimenHighReady;
+import org.firstinspires.ftc.teamcode.metalheads.compbot.autoactions.MainBoomToSpecimenPickReady;
+import org.firstinspires.ftc.teamcode.metalheads.compbot.autoactions.MainBoomToZero;
+import org.firstinspires.ftc.teamcode.metalheads.compbot.autoactions.ViperSlideToSpecimenHighReady;
+import org.firstinspires.ftc.teamcode.metalheads.compbot.autoactions.ViperSlideToZero;
 
 /**
  *
  */
-@Autonomous(name = "Right-Observation", group = "Auto")
+@Autonomous(name = "RightObsBot", group = "Auto")
 //@Disabled
 public class RightObsBot extends AutoBot {
 
@@ -79,168 +77,459 @@ public class RightObsBot extends AutoBot {
     public void go() {
         super.go();
 
-        TrajectoryActionBuilder trajectory = this.getDrive().actionBuilder(this.initialPose)
+        int initialHangExtraTicks = 8;
+        int specimenCycleExtraTicks = 38;
 
-                //SPECIMEN_PLACE_HIGH_READY
-                .stopAndAdd(() -> {
-                    this.bigArm.mainBoom.setTargetPosition(Constants.SPECIMEN_PLACE_HIGH_READY.mainBoomPos.getPos());
-                    this.bigArm.mainBoom.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-                    this.bigArm.mainBoom.setPower(1);
-                })
 
-                .stopAndAdd(() -> {
+        TrajectoryActionBuilder mainTrajectory = this.getDrive().actionBuilder(this.initialPose)
+
+//              Arm -> Specimen High Ready
+//              ----------------------------------------------------------------------------------------------
+
+                //SPECIMEN PLACE HIGH READY (Main Boom + Viper Slide)
+                // BEGINING
+                //
+                .afterTime(0, new InstantAction(()->{
+                    int targetPosition = Constants.SPECIMEN_PLACE_HIGH_READY.mainBoomPos.getPos();
+
+                    this.bigArm.mainBoom.getMotor().setTargetPosition(targetPosition);
+                    this.bigArm.mainBoom.getSecondaryMotor().setTargetPosition(targetPosition);
+
+                    this.bigArm.mainBoom.getMotor().setMode(DcMotor.RunMode.RUN_TO_POSITION);
+                    this.bigArm.mainBoom.getSecondaryMotor().setMode(DcMotor.RunMode.RUN_TO_POSITION);
+
+                    this.bigArm.mainBoom.getMotor().setPower(1);
+                    this.bigArm.mainBoom.getSecondaryMotor().setPower(1);
+
+                }))
+                .afterTime(0.3, new SequentialAction(
+                        new InstantAction(() -> {
+                            this.telemetry.log().add("1.1 Left MainBoom: " + this.bigArm.mainBoom.getSecondaryMotor().getCurrentPosition());
+                            this.telemetry.log().add("1.1 Right MainBoom: " + this.bigArm.mainBoom.getMotor().getCurrentPosition());
+                            this.telemetry.update();
+                        }),
+
+                        new ViperSlideToSpecimenHighReady(this.bigArm.viperSlide),
+
+                        new InstantAction(() -> {
+                            this.telemetry.log().add("1.2 Left MainBoom: " + this.bigArm.mainBoom.getSecondaryMotor().getCurrentPosition());
+                            this.telemetry.log().add("1.2 Right MainBoom: " + this.bigArm.mainBoom.getMotor().getCurrentPosition());
+                            this.telemetry.update();
+                        })
+                ))
+
+                //SPECIMEN PLACE HIGH READY (Servos)
+                .afterTime(0.2, () -> {
+
                     this.littleArm.doubleServos.setPosition(Constants.SPECIMEN_PLACE_HIGH_READY.doubleServosPos.getPos());
                     this.littleArm.middleServo.setPosition(Constants.SPECIMEN_PLACE_HIGH_READY.middleServoPos.getPos());
-                })
-                .waitSeconds(0.25)
-                .stopAndAdd(() -> this.littleArm.clawRotator.setPosition(Constants.SPECIMEN_PLACE_HIGH_READY.clawRotatorPos.getPos()))
-                .stopAndAdd(this.bigArm.viperSlide.viperSlidesGotoPositionAction(Constants.SPECIMEN_PLACE_HIGH_READY.vSlidePos))
+                    this.littleArm.clawRotator.setPosition(Constants.SPECIMEN_PLACE_HIGH_READY.clawRotatorPos.getPos());
 
-                .waitSeconds(0.8)
-                .lineToY(-37,
-                        new TranslationalVelConstraint(20),
-                        new ProfileAccelConstraint(-14, 14))
-                .stopAndAdd(this.littleArm.clawPincher.gotoPositionAction(Constants.CLAW_PINCHER_OPEN_POS, 1))
-                .waitSeconds(0.5)
-                .lineToYConstantHeading(-48)// Go back away from bar
-                .stopAndAdd(this.bigArm.viperSlide.viperSlidesGotoPositionAction(Constants.VIPER_SLIDES_MIN_TICS))
-                .waitSeconds(0.8)
-                .stopAndAdd(() -> {
-                    this.littleArm.doubleServos.setPosition(this.littleArm.doubleServos.getConfig().homePosition);
-                    this.littleArm.middleServo.setPosition(this.littleArm.middleServo.getConfig().homePosition);
-                    this.littleArm.clawRotator.setPosition(this.littleArm.clawRotator.getConfig().homePosition);
                 })
-                .waitSeconds(1)
-                .stopAndAdd(this.bigArm.mainBoom.gotoPositionAction(0, 1, 300))
+
+
+//              Hang Specimen
+//              ----------------------------------------------------------------------------------------------
+
+
+                //Go To bar
+                .lineToY(-37,
+                        new TranslationalVelConstraint(50),
+                        new ProfileAccelConstraint(-60, 20))
+
+
+                //Open Claw to release Specimen
+                .afterTime(0, () -> {
+                    this.littleArm.clawPincher.setPosition(Constants.CLAW_PINCHER_OPEN_POS);
+                    this.littleArm.middleServo.setPosition(Constants.MIDDLE_SERVO_SPECIMEN_PLACED);
+                })
+                //Viper Slide -> 0
+                .afterTime(0.4, new SequentialAction(
+                        new ViperSlideToZero(this.bigArm.viperSlide),
+                        new ParallelAction(
+                                new MainBoomToZero(this.bigArm.mainBoom),
+                                new InstantAction(() -> {
+                                    this.littleArm.doubleServos.setPosition(Constants.SPECIMEN_PICK_READY.doubleServosPos.getPos());
+                                    this.littleArm.middleServo.setPosition(Constants.SPECIMEN_PICK_READY.middleServoPos.getPos());
+                                    this.littleArm.clawRotator.setPosition(Constants.SPECIMEN_PICK_READY.clawRotatorPos.getPos());
+                                    this.littleArm.clawPincher.setPosition(Constants.SAMPLE_PICK_READY.clawPincherPos.getPos());
+
+                                })
+                        )
+                ))
+
+
+                //Retreat from Bar
+                .splineToConstantHeading(new Vector2d(12,-50), Math.toRadians(0),
+                        new TranslationalVelConstraint(40),
+                        new ProfileAccelConstraint(-60, 20)
+                )
+
+
+
+
+
+//              Samples
+//              ---------------------------------------------------------------------------------------------------
+
+
 
                 /*
-                 * first sample
+                 * First Sample
                  */
-                .setTangent(Math.toRadians(0))
-                .splineToConstantHeading(new Vector2d(35, -44), Math.toRadians(90)) //Go towards sample
+                .splineToConstantHeading(new Vector2d(36, -46), Math.toRadians(90)) //Go towards sample
 
-                .splineToConstantHeading(new Vector2d(35, -18.6), Math.toRadians(90))
 
-                .splineToConstantHeading(new Vector2d(43, -12), Math.toRadians(0),
-                        new TranslationalVelConstraint(20),
-                        new ProfileAccelConstraint(-15, 15))
+                //set power 0 in case of voltage draw
+                .afterTime(0, () -> {
+                    this.bigArm.mainBoom.setPower(0);
+                    this.bigArm.viperSlide.setPower(0);
+                })
 
-                .splineToConstantHeading(new Vector2d(45.3, -14), Math.toRadians(270),
-                        new TranslationalVelConstraint(20),
-                        new ProfileAccelConstraint(-15, 15))
 
-                .lineToYConstantHeading(-52,
+
+                .splineToConstantHeading(new Vector2d(36, -18.6), Math.toRadians(90))
+
+
+                .splineToConstantHeading(new Vector2d(44, -11), Math.toRadians(0),
+                        new TranslationalVelConstraint(30))
+
+                .splineToConstantHeading(new Vector2d(48.6, -14), Math.toRadians(270),
+                        new TranslationalVelConstraint(25),
+                        new ProfileAccelConstraint(-25, 60))
+
+                .lineToYConstantHeading(-48)
+                .splineToConstantHeading(new Vector2d(47,-52), Math.toRadians(90),
                         null,
-                        new ProfileAccelConstraint(-20, 20))
+                        new ProfileAccelConstraint(-60, 18)
+                )
 
 
                 /*
                  * second sample
                  */
-                .lineToYConstantHeading(-18.6)
+                .lineToYConstantHeading(-22)
 
-                .splineToConstantHeading(new Vector2d(52, -12), Math.toRadians(0))
-                //.splineToConstantHeading(new Vector2d(52, -12), Math.toRadians(0))
+                .lineToYConstantHeading(-18.6,
+                        new TranslationalVelConstraint(25)
+                )
 
-                .splineToConstantHeading(new Vector2d(56, -14), Math.toRadians(270))
-                //.splineToConstantHeading(new Vector2d(56, -14), Math.toRadians(270))
+                .splineToConstantHeading(new Vector2d(53, -10), Math.toRadians(0),
+                        new TranslationalVelConstraint(25)
+                )
 
-                .lineToYConstantHeading(-52)
-                //.lineToYConstantHeading(-52)
+                .splineToConstantHeading(new Vector2d(57, -14), Math.toRadians(270),
+                        new TranslationalVelConstraint(20)
+                )
+
+                .lineToYConstantHeading(-45)
+                .splineToConstantHeading(new Vector2d(55,-49), Math.toRadians(90),
+                        null,
+                        new ProfileAccelConstraint(-60,18)
+                )
 
 
                 /*
                  * Third sample
                  */
-                .lineToYConstantHeading(-18.6)
+                .lineToYConstantHeading(-22,
+                        null,
+                        new ProfileAccelConstraint(-60,30)
+                )
 
-                .splineToConstantHeading(new Vector2d(58, -12), Math.toRadians(0),
-                        new TranslationalVelConstraint(20),
-                        new ProfileAccelConstraint(-15, 15))
+                .lineToYConstantHeading(-18.6,
+                        new TranslationalVelConstraint(28)
+                )
 
-                .splineToConstantHeading(new Vector2d(61.7, -14), Math.toRadians(270),
-                        new TranslationalVelConstraint(20),
-                        new ProfileAccelConstraint(-15, 15))
+                .splineToConstantHeading(new Vector2d(59, -10), Math.toRadians(0),
+                        new TranslationalVelConstraint(16)
+                )
 
-                .lineToYConstantHeading(-52,
+                .splineToConstantHeading(new Vector2d(62.2, -14), Math.toRadians(270),
+                        new TranslationalVelConstraint(18)
+                )
+
+                .lineToYConstantHeading(-48)
+                .splineToConstantHeading(new Vector2d(63,-52), Math.toRadians(90),
+                        null,
+                        new ProfileAccelConstraint(-15, 60)
+                )
+
+
+
+
+//                Specimens
+//                ---------------------------------------------------------------------------------------
+
+
+
+
+                .afterTime(0, new MainBoomToSpecimenPickReady(this.bigArm.mainBoom))
+
+                //Arc To Specimen
+                .splineToConstantHeading(new Vector2d(52, -48), Math.toRadians(180))
+                .splineToConstantHeading(new Vector2d(42, -57.5), Math.toRadians(270),
                         new TranslationalVelConstraint(20),
-                        new ProfileAccelConstraint(-15, 15))
-                .stopAndAdd(() -> {
+                        new ProfileAccelConstraint(-15,45)
+                )
+
+
+
+
+
+//              Cycle Specimen (2nd total)
+//              ----------------------------------------------------------------------------
+
+
+
+
+
+
+
+                .waitSeconds(0.3)
+
+                .afterTime(0.0, () -> {
                     this.littleArm.clawPincher.setPosition(Constants.CLAW_PINCHER_CLOSE_POS);
+                })
 
-                    this.bigArm.mainBoom.setTargetPosition(0);
-                    this.bigArm.mainBoom.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-                    this.bigArm.mainBoom.setPower(1);
-
-                    this.bigArm.viperSlide.setTargetPosition(0);
-                    this.bigArm.viperSlide.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-                    this.bigArm.viperSlide.setPower(1);
-                });
+                .waitSeconds(0.15)
 
 
-            Actions.runBlocking(trajectory.build());
+                //Raise Up Boom, Then Extend ViperSLide
+                .afterTime(0, new SequentialAction(
+
+                        new MainBoomToSpecimenHighReady(this.bigArm.mainBoom),
+                        new WaitAction(0.3),
+
+                        new ParallelAction(
+
+                                new InstantAction(() -> {
+                                    this.telemetry.log().add("2.1 Left MainBoom: " + this.bigArm.mainBoom.getSecondaryMotor().getCurrentPosition());
+                                    this.telemetry.log().add("2.1 Right MainBoom: " + this.bigArm.mainBoom.getMotor().getCurrentPosition());
+                                    this.telemetry.update();
+                                }),
+
+                                new ViperSlideToSpecimenHighReady(this.bigArm.viperSlide, specimenCycleExtraTicks),
+
+                                new InstantAction(() -> {
+
+                                    this.littleArm.doubleServos.setPosition(Constants.SPECIMEN_PLACE_HIGH_READY.doubleServosPos.getPos());
+                                    this.littleArm.middleServo.setPosition(Constants.SPECIMEN_PLACE_HIGH_READY.middleServoPos.getPos());
+                                    this.littleArm.clawRotator.setPosition(Constants.SPECIMEN_PLACE_HIGH_READY.clawRotatorPos.getPos());
+                                }),
+
+                                new InstantAction(() -> {
+                                    this.telemetry.log().add("2.2 Left MainBoom: " + this.bigArm.mainBoom.getSecondaryMotor().getCurrentPosition());
+                                    this.telemetry.log().add("2.2 Right MainBoom: " + this.bigArm.mainBoom.getMotor().getCurrentPosition());
+                                    this.telemetry.update();
+                                })
+
+                        ))
+                )
+
+
+
+                //Hang Specimen
+                .setTangent(Math.toRadians(140))
+                .splineToConstantHeading(new Vector2d(3,-60), Math.toRadians(180),
+                        new TranslationalVelConstraint(20))
+                .splineToConstantHeading(new Vector2d(3,-38), Math.toRadians(90),
+                        new TranslationalVelConstraint(17))
+
+
+
+
+                .afterTime(0, () -> this.littleArm.clawPincher.setPosition(Constants.CLAW_PINCHER_OPEN_POS))
+
+                .afterTime(0.18, () -> this.littleArm.middleServo.setPosition((Constants.MIDDLE_SERVO_SPECIMEN_PLACED)))
+
+
+
+                .afterTime(0.5, new SequentialAction(
+
+                        new ViperSlideToZero(this.bigArm.viperSlide),
+
+                        new ParallelAction(
+                                new MainBoomToSpecimenPickReady(this.bigArm.mainBoom),
+
+                                new InstantAction(() -> {
+
+                                    this.littleArm.doubleServos.setPosition(Constants.SPECIMEN_PICK_READY.doubleServosPos.getPos());
+                                    this.littleArm.middleServo.setPosition(Constants.SPECIMEN_PICK_READY.middleServoPos.getPos());
+                                    this.littleArm.clawRotator.setPosition(Constants.SPECIMEN_PICK_READY.clawRotatorPos.getPos());
+
+                                })
+                        )
+                ))
+
+
+
+                //TODO:See if this changes anything
+                .waitSeconds(0.2)
+
+
+
+                //Retreat back to next Specimen
+                .setTangent(Math.toRadians(270))
+                .splineToConstantHeading(new Vector2d(24, -51), Math.toRadians(0))
+                .splineToConstantHeading(new Vector2d(42, -57.5), Math.toRadians(270),
+                        new TranslationalVelConstraint(18),
+                        new ProfileAccelConstraint(-60, 45)
+                )
+
+
+
+
+
+//              Cycle Specimen (3rd total)
+//              -----------------------------------------------------------------------------------------
+
+
+
+
+
+                .waitSeconds(0.25)
+
+                .afterTime(0.0, () -> {
+                    this.littleArm.clawPincher.setPosition(Constants.CLAW_PINCHER_CLOSE_POS);
+                })
+
+                .waitSeconds(0.15)
+
+
+                //Raise Up Boom, Then Extend ViperSLide
+                .afterTime(0, new SequentialAction(
+
+                        new MainBoomToSpecimenHighReady(this.bigArm.mainBoom),
+                        new WaitAction(0.3),
+
+                        new ParallelAction(
+
+                                new InstantAction(() -> {
+                                    this.telemetry.log().add("3.1 Left MainBoom: " + this.bigArm.mainBoom.getSecondaryMotor().getCurrentPosition());
+                                    this.telemetry.log().add("3.1 Right MainBoom: " + this.bigArm.mainBoom.getMotor().getCurrentPosition());
+                                    this.telemetry.update();
+                                }),
+
+                                new ViperSlideToSpecimenHighReady(this.bigArm.viperSlide, specimenCycleExtraTicks),
+
+                                new InstantAction(() -> {
+
+                                    this.littleArm.doubleServos.setPosition(Constants.SPECIMEN_PLACE_HIGH_READY.doubleServosPos.getPos());
+                                    this.littleArm.middleServo.setPosition(Constants.SPECIMEN_PLACE_HIGH_READY.middleServoPos.getPos());
+                                    this.littleArm.clawRotator.setPosition(Constants.SPECIMEN_PLACE_HIGH_READY.clawRotatorPos.getPos());
+
+                                }),
+
+                                new InstantAction(() -> {
+                                    this.telemetry.log().add("3.2 Left MainBoom: " + this.bigArm.mainBoom.getSecondaryMotor().getCurrentPosition());
+                                    this.telemetry.log().add("3.2 Right MainBoom: " + this.bigArm.mainBoom.getMotor().getCurrentPosition());
+                                    this.telemetry.update();
+                                })
+                        )
+                ))
+
+
+
+
+                //Hang Specimen
+                .setTangent(Math.toRadians(140))
+                .splineToConstantHeading(new Vector2d(15,-60), Math.toRadians(180),
+                        new TranslationalVelConstraint(20))
+                .splineToConstantHeading(new Vector2d(3,-38), Math.toRadians(90),
+                        new TranslationalVelConstraint(17))
+
+
+
+
+
+                .afterTime(0, () -> this.littleArm.clawPincher.setPosition(Constants.CLAW_PINCHER_OPEN_POS))
+
+                .afterTime(0.18, () -> this.littleArm.middleServo.setPosition((Constants.MIDDLE_SERVO_SPECIMEN_PLACED)))
+
+
+
+                .afterTime(0.5, new SequentialAction(
+
+                        new ViperSlideToZero(this.bigArm.viperSlide),
+
+                        new ParallelAction(
+                                new MainBoomToZero(this.bigArm.mainBoom),
+
+                                new InstantAction(() -> {
+
+                                    this.littleArm.middleServo.setPosition(Constants.MIDDLE_SERVO_INIT_POS);
+                                    this.littleArm.doubleServos.setPosition(Constants.DOUBLE_SERVOS_INIT_POS);
+                                    this.littleArm.clawRotator.setPosition(Constants.CLAW_ROTATOR_INIT_POS);
+                                    this.littleArm.clawPincher.setPosition(Constants.CLAW_PINCHER_CLOSE_POS);
+
+                                })
+                        )
+                ))
+
+
+                //TODO:See if this changes anything
+                .waitSeconds(0.2)
+
+
+//                //Retreat back to next Specimen
+//                .setTangent(Math.toRadians(270))
+//                .splineToConstantHeading(new Vector2d(24, -51), Math.toRadians(0))
+//                .splineToConstantHeading(new Vector2d(40, -57.5), Math.toRadians(270),
+//                        new TranslationalVelConstraint(18),
+//                        new ProfileAccelConstraint(-60, 45)
+//                )
+
+                //Retreat back to observation zone
+                .setTangent(Math.toRadians(270))
+                .splineToConstantHeading(new Vector2d(24, -51), Math.toRadians(0),
+                        new TranslationalVelConstraint(25))
+                .splineToConstantHeading(new Vector2d(44, -52), Math.toRadians(270),
+                        new TranslationalVelConstraint(20))
+
+                .waitSeconds(80)
 
 
 
 
 
 
-//        Actions.runBlocking(
-//            new SequentialAction(
-//
-//                    // step one - place speciman 1 ready - drive it on
-//                    new ParallelAction(
-//                            this.getAutoActionFactory().specimenPlaceHighReady(),
-//                            new SequentialAction(
-//                                    new WaitAction(800),
-//                                    // single line forward
-//                                    this.getTrajectoryFactory().stepOne_placeSpeciman(initialPose).build()
-//                            )
-//                    ),
-//
-//                    // step two, three, & four
-//                    new SequentialAction(
-//                            this.getAutoActionFactory().specimenPlaceHigh(),  // release and goto speciman ready
-//                            new WaitAction(1000),
-//                            this.getTrajectoryFactory().stepTwo_Three_releaseSpeciman_pushSamples().build(),
-//                            this.getTrajectoryFactory().stepFour_arcToSpecimanPick().build()
-//                    )
-//
-//                    // cycle speciman 1
-////                    new SequentialAction(
-////                            new WaitAction(1000),
-////                            this.getAutoActionFactory().specimenPick(),
-////                            new ParallelAction(
-////                                    this.getAutoActionFactory().specimenPlaceHighReady(),
-////                                      new SequentialAction(
-////                                            new WaitAction(1000),
-////                                    this.getTrajectoryFactory().splineToPlaceFirstSpeciman().build()
-////        )
-////                            ),
-////                            this.getAutoActionFactory().specimenPlaceHigh(), // let go and return to specimen ready
-////                            this.getTrajectoryFactory().splineToSecondSpecimanPick().build()
-////                    ),
-//
-//                    // cycle speciman 2 & end
-////                    new SequentialAction(
-////                        new WaitAction(1000),
-////                        this.getAutoActionFactory().specimenPick(),
-////                        new ParallelAction(
-////                                this.getAutoActionFactory().specimenPlaceHighReady(),
-////                                new SequentialAction(
-////                                        new WaitAction(1000),
-////                                        this.getTrajectoryFactory().splineToPlaceSecondSpeciman().build()
-////                                 )
-////                        ),
-////                        this.getAutoActionFactory().specimenPlaceHigh(),
-////                        new ParallelAction(
-////                                this.getTrajectoryFactory().parkInObservationStepOne().build(),
-////                                this.getAutoActionFactory().initPos()
-////                        ),
-////                        this.getTrajectoryFactory().parkInObservationStepTwo().build()
-////                    )
-//            )
-//        );
+
+
+
+
+//              //TODO: Cycle Specimen (4th total)
+//              -----------------------------------------------------------------------------------------
+
+
+
+
+
+//              //TODO: Cycle Specimen (5th total)
+//              -----------------------------------------------------------------------------------------
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                ;
+        Actions.runBlocking(mainTrajectory.build());
+
     }
 
     /**
@@ -251,11 +540,6 @@ public class RightObsBot extends AutoBot {
         return (RightObsTrajectoryFactory)super.getTrajectoryFactory();
     }
 
-    /**
-     *
-     * @return
-     */
-    public AutoActionFactory getAutoActionFactory () {
-        return this.autoActionFactory;
-    }
+
+
 }

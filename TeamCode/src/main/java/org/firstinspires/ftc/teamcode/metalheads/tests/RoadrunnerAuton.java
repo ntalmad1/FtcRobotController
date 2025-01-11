@@ -11,8 +11,10 @@ import com.acmerobotics.roadrunner.TranslationalVelConstraint;
 import com.acmerobotics.roadrunner.Vector2d;
 import com.acmerobotics.roadrunner.ftc.Actions;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.hardware.DcMotor;
 
+import org.firstinspires.ftc.teamcode.library.action.WaitAction;
 import org.firstinspires.ftc.teamcode.metalheads.RightObsBotConfig;
 import org.firstinspires.ftc.teamcode.metalheads.RightObsTrajectoryFactory;
 import org.firstinspires.ftc.teamcode.metalheads.compbot.AutoActionFactory;
@@ -21,7 +23,6 @@ import org.firstinspires.ftc.teamcode.metalheads.compbot.Constants;
 import org.firstinspires.ftc.teamcode.metalheads.compbot.autoactions.MainBoomToSpecimenHighReady;
 import org.firstinspires.ftc.teamcode.metalheads.compbot.autoactions.MainBoomToSpecimenPickReady;
 import org.firstinspires.ftc.teamcode.metalheads.compbot.autoactions.MainBoomToZero;
-import org.firstinspires.ftc.teamcode.metalheads.compbot.autoactions.ViperSlideReachedTargetPosition;
 import org.firstinspires.ftc.teamcode.metalheads.compbot.autoactions.ViperSlideToSpecimenHighReady;
 import org.firstinspires.ftc.teamcode.metalheads.compbot.autoactions.ViperSlideToZero;
 
@@ -29,7 +30,7 @@ import org.firstinspires.ftc.teamcode.metalheads.compbot.autoactions.ViperSlideT
  *
  */
 @Autonomous(name = "Autonomous Testing", group = "Auto")
-//@Disabled
+@Disabled
 public class RoadrunnerAuton extends AutoBot {
 
     private AutoActionFactory autoActionFactory;
@@ -81,7 +82,7 @@ public class RoadrunnerAuton extends AutoBot {
         super.go();
 
         int initialHangExtraTicks = 8;
-        int specimenCycleExtraTicks = 45;
+        int specimenCycleExtraTicks = 38;
 
 
         TrajectoryActionBuilder mainTrajectory = this.getDrive().actionBuilder(this.initialPose)
@@ -90,13 +91,39 @@ public class RoadrunnerAuton extends AutoBot {
 //              ----------------------------------------------------------------------------------------------
 
                 //SPECIMEN PLACE HIGH READY (Main Boom + Viper Slide)
-                .afterTime(0, new SequentialAction(
-                        new MainBoomToSpecimenHighReady(this.bigArm.mainBoom),
-                        new ViperSlideToSpecimenHighReady(this.bigArm.viperSlide)
+                // BEGINING
+                //
+                .afterTime(0, new InstantAction(()->{
+                    int targetPosition = Constants.SPECIMEN_PLACE_HIGH_READY.mainBoomPos.getPos();
+
+                    this.bigArm.mainBoom.getMotor().setTargetPosition(targetPosition);
+                    this.bigArm.mainBoom.getSecondaryMotor().setTargetPosition(targetPosition);
+
+                    this.bigArm.mainBoom.getMotor().setMode(DcMotor.RunMode.RUN_TO_POSITION);
+                    this.bigArm.mainBoom.getSecondaryMotor().setMode(DcMotor.RunMode.RUN_TO_POSITION);
+
+                    this.bigArm.mainBoom.getMotor().setPower(1);
+                    this.bigArm.mainBoom.getSecondaryMotor().setPower(1);
+
+                }))
+                .afterTime(0.3, new SequentialAction(
+                        new InstantAction(() -> {
+                            this.telemetry.log().add("1.1 Left MainBoom: " + this.bigArm.mainBoom.getSecondaryMotor().getCurrentPosition());
+                            this.telemetry.log().add("1.1 Right MainBoom: " + this.bigArm.mainBoom.getMotor().getCurrentPosition());
+                            this.telemetry.update();
+                        }),
+
+                        new ViperSlideToSpecimenHighReady(this.bigArm.viperSlide),
+
+                        new InstantAction(() -> {
+                            this.telemetry.log().add("1.2 Left MainBoom: " + this.bigArm.mainBoom.getSecondaryMotor().getCurrentPosition());
+                            this.telemetry.log().add("1.2 Right MainBoom: " + this.bigArm.mainBoom.getMotor().getCurrentPosition());
+                            this.telemetry.update();
+                        })
                 ))
 
                 //SPECIMEN PLACE HIGH READY (Servos)
-                .afterTime(0, () -> {
+                .afterTime(0.2, () -> {
 
                     this.littleArm.doubleServos.setPosition(Constants.SPECIMEN_PLACE_HIGH_READY.doubleServosPos.getPos());
                     this.littleArm.middleServo.setPosition(Constants.SPECIMEN_PLACE_HIGH_READY.middleServoPos.getPos());
@@ -112,7 +139,7 @@ public class RoadrunnerAuton extends AutoBot {
                 //Go To bar
                 .lineToY(-37,
                         new TranslationalVelConstraint(50),
-                        new ProfileAccelConstraint(-60, 30))
+                        new ProfileAccelConstraint(-60, 20))
 
 
                 //Open Claw to release Specimen
@@ -121,7 +148,7 @@ public class RoadrunnerAuton extends AutoBot {
                     this.littleArm.middleServo.setPosition(Constants.MIDDLE_SERVO_SPECIMEN_PLACED);
                 })
                 //Viper Slide -> 0
-                .afterTime(0.3, new SequentialAction(
+                .afterTime(0.4, new SequentialAction(
                         new ViperSlideToZero(this.bigArm.viperSlide),
                         new ParallelAction(
                                 new MainBoomToZero(this.bigArm.mainBoom),
@@ -171,7 +198,7 @@ public class RoadrunnerAuton extends AutoBot {
                 .splineToConstantHeading(new Vector2d(44, -11), Math.toRadians(0),
                         new TranslationalVelConstraint(30))
 
-                .splineToConstantHeading(new Vector2d(49, -14), Math.toRadians(270),
+                .splineToConstantHeading(new Vector2d(48.6, -14), Math.toRadians(270),
                         new TranslationalVelConstraint(25),
                         new ProfileAccelConstraint(-25, 60))
 
@@ -195,7 +222,7 @@ public class RoadrunnerAuton extends AutoBot {
                         new TranslationalVelConstraint(25)
                 )
 
-                .splineToConstantHeading(new Vector2d(55, -14), Math.toRadians(270),
+                .splineToConstantHeading(new Vector2d(57, -14), Math.toRadians(270),
                         new TranslationalVelConstraint(20)
                 )
 
@@ -222,7 +249,7 @@ public class RoadrunnerAuton extends AutoBot {
                         new TranslationalVelConstraint(16)
                 )
 
-                .splineToConstantHeading(new Vector2d(63, -14), Math.toRadians(270),
+                .splineToConstantHeading(new Vector2d(62.2, -14), Math.toRadians(270),
                         new TranslationalVelConstraint(18)
                 )
 
@@ -272,60 +299,46 @@ public class RoadrunnerAuton extends AutoBot {
                 .waitSeconds(0.15)
 
 
-//                //Raise Up Boom, Then Extend ViperSLide
-//                .afterTime(0, new SequentialAction(
-//                        new MainBoomToSpecimenHighReady(this.bigArm.mainBoom),
-//
-//                        new InstantAction(() -> this.littleArm.doubleServos.setPosition(Constants.SPECIMEN_PLACE_HIGH_READY.doubleServosPos.getPos())),
-//
-//                        new ViperSlideToSpecimenHighReady(this.bigArm.viperSlide),
-//
-//                        new InstantAction(() -> {
-//                            this.littleArm.middleServo.setPosition(Constants.SPECIMEN_PLACE_HIGH_READY.middleServoPos.getPos());
-//                            this.littleArm.clawRotator.setPosition(Constants.SPECIMEN_PLACE_HIGH_READY.clawRotatorPos.getPos());
-//                        })
-//                ))
-//
-////                //Move Servos
-////                .afterTime(0.15, () -> {
-////                    this.littleArm.doubleServos.setPosition(Constants.SPECIMEN_PLACE_HIGH_READY.doubleServosPos.getPos());
-////                    this.littleArm.middleServo.setPosition(Constants.SPECIMEN_PLACE_HIGH_READY.middleServoPos.getPos());
-////                    this.littleArm.clawRotator.setPosition(Constants.SPECIMEN_PLACE_HIGH_READY.clawRotatorPos.getPos());
-////                })
+                //Raise Up Boom, Then Extend ViperSLide
+                .afterTime(0, new SequentialAction(
 
+                        new MainBoomToSpecimenHighReady(this.bigArm.mainBoom),
+                        new WaitAction(0.3),
 
+                        new ParallelAction(
 
-                .afterTime(0, () -> {
-                    this.bigArm.mainBoom.setTargetPosition(Constants.MAIN_BOOM_SPECIMEN_TEST);
-                    this.bigArm.mainBoom.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-                    this.bigArm.mainBoom.setPower(1);
-                })
+                                new InstantAction(() -> {
+                                    this.telemetry.log().add("2.1 Left MainBoom: " + this.bigArm.mainBoom.getSecondaryMotor().getCurrentPosition());
+                                    this.telemetry.log().add("2.1 Right MainBoom: " + this.bigArm.mainBoom.getMotor().getCurrentPosition());
+                                    this.telemetry.update();
+                                }),
 
-                .afterTime(0.3, ()-> {
-                    this.littleArm.doubleServos.setPosition(Constants.DOUBLE_SERVOS_SPECIMEN_TEST);
-                    this.littleArm.middleServo.setPosition(0);
-                })
+                                new ViperSlideToSpecimenHighReady(this.bigArm.viperSlide, specimenCycleExtraTicks),
+
+                                new InstantAction(() -> {
+
+                                    this.littleArm.doubleServos.setPosition(Constants.SPECIMEN_PLACE_HIGH_READY.doubleServosPos.getPos());
+                                    this.littleArm.middleServo.setPosition(Constants.SPECIMEN_PLACE_HIGH_READY.middleServoPos.getPos());
+                                    this.littleArm.clawRotator.setPosition(Constants.SPECIMEN_PLACE_HIGH_READY.clawRotatorPos.getPos());
+                                }),
+
+                                new InstantAction(() -> {
+                                    this.telemetry.log().add("2.2 Left MainBoom: " + this.bigArm.mainBoom.getSecondaryMotor().getCurrentPosition());
+                                    this.telemetry.log().add("2.2 Right MainBoom: " + this.bigArm.mainBoom.getMotor().getCurrentPosition());
+                                    this.telemetry.update();
+                                })
+
+                        ))
+                )
 
 
 
                 //Hang Specimen
                 .setTangent(Math.toRadians(140))
-                .splineToConstantHeading(new Vector2d(15,-63), Math.toRadians(180),
-                        new TranslationalVelConstraint(40),
-                        new ProfileAccelConstraint(-60, 25)
-                )
-
-                .afterTime(0.9, new InstantAction(() -> {
-                    this.bigArm.mainBoom.setTargetPosition(Constants.VIPER_SLIDES_SPECIMEN_TEST);
-                    this.bigArm.viperSlide.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-                    this.bigArm.viperSlide.setPower(1);
-                }))
-
-
-                .splineToConstantHeading(new Vector2d(6,-38), Math.toRadians(90),
-                        null,
-                        new ProfileAccelConstraint(-60,30)
-                )
+                .splineToConstantHeading(new Vector2d(3,-60), Math.toRadians(180),
+                        new TranslationalVelConstraint(20))
+                .splineToConstantHeading(new Vector2d(3,-38), Math.toRadians(90),
+                        new TranslationalVelConstraint(17))
 
 
 
@@ -386,31 +399,45 @@ public class RoadrunnerAuton extends AutoBot {
 
                 //Raise Up Boom, Then Extend ViperSLide
                 .afterTime(0, new SequentialAction(
+
                         new MainBoomToSpecimenHighReady(this.bigArm.mainBoom),
+                        new WaitAction(0.3),
 
-                        new InstantAction(() -> this.littleArm.doubleServos.setPosition(Constants.SPECIMEN_PLACE_HIGH_READY.doubleServosPos.getPos())),
+                        new ParallelAction(
 
-                        new ViperSlideToSpecimenHighReady(this.bigArm.viperSlide),
+                                new InstantAction(() -> {
+                                    this.telemetry.log().add("3.1 Left MainBoom: " + this.bigArm.mainBoom.getSecondaryMotor().getCurrentPosition());
+                                    this.telemetry.log().add("3.1 Right MainBoom: " + this.bigArm.mainBoom.getMotor().getCurrentPosition());
+                                    this.telemetry.update();
+                                }),
 
-                        new InstantAction(() -> {
-                            this.littleArm.middleServo.setPosition(Constants.SPECIMEN_PLACE_HIGH_READY.middleServoPos.getPos());
-                            this.littleArm.clawRotator.setPosition(Constants.SPECIMEN_PLACE_HIGH_READY.clawRotatorPos.getPos());
-                        })
+                                new ViperSlideToSpecimenHighReady(this.bigArm.viperSlide, specimenCycleExtraTicks),
+
+                                new InstantAction(() -> {
+
+                                    this.littleArm.doubleServos.setPosition(Constants.SPECIMEN_PLACE_HIGH_READY.doubleServosPos.getPos());
+                                    this.littleArm.middleServo.setPosition(Constants.SPECIMEN_PLACE_HIGH_READY.middleServoPos.getPos());
+                                    this.littleArm.clawRotator.setPosition(Constants.SPECIMEN_PLACE_HIGH_READY.clawRotatorPos.getPos());
+
+                                }),
+                                
+                                new InstantAction(() -> {
+                                    this.telemetry.log().add("3.2 Left MainBoom: " + this.bigArm.mainBoom.getSecondaryMotor().getCurrentPosition());
+                                    this.telemetry.log().add("3.2 Right MainBoom: " + this.bigArm.mainBoom.getMotor().getCurrentPosition());
+                                    this.telemetry.update();
+                                })
+                        )
                 ))
 
 
-//                //Move Servos
-//                .afterTime(0.15, () -> {
-//                    this.littleArm.doubleServos.setPosition(Constants.SPECIMEN_PLACE_HIGH_READY.doubleServosPos.getPos());
-//                    this.littleArm.middleServo.setPosition(Constants.SPECIMEN_PLACE_HIGH_READY.middleServoPos.getPos());
-//                    this.littleArm.clawRotator.setPosition(Constants.SPECIMEN_PLACE_HIGH_READY.clawRotatorPos.getPos());
-//                })
 
 
                 //Hang Specimen
                 .setTangent(Math.toRadians(140))
-                .splineToConstantHeading(new Vector2d(15,-60), Math.toRadians(180))
-                .splineToConstantHeading(new Vector2d(3,-38), Math.toRadians(90))
+                .splineToConstantHeading(new Vector2d(15,-60), Math.toRadians(180),
+                        new TranslationalVelConstraint(20))
+                .splineToConstantHeading(new Vector2d(3,-38), Math.toRadians(90),
+                        new TranslationalVelConstraint(17))
 
 
 
@@ -424,19 +451,17 @@ public class RoadrunnerAuton extends AutoBot {
 
                 .afterTime(0.5, new SequentialAction(
 
-                        //run again to ensure it reaches the right position
-                        new ViperSlideToSpecimenHighReady(this.bigArm.viperSlide),
-
                         new ViperSlideToZero(this.bigArm.viperSlide),
 
                         new ParallelAction(
-                                new MainBoomToSpecimenPickReady(this.bigArm.mainBoom),
+                                new MainBoomToZero(this.bigArm.mainBoom),
 
                                 new InstantAction(() -> {
 
-                                    this.littleArm.doubleServos.setPosition(Constants.SPECIMEN_PICK_READY.doubleServosPos.getPos());
-                                    this.littleArm.middleServo.setPosition(Constants.SPECIMEN_PICK_READY.middleServoPos.getPos());
-                                    this.littleArm.clawRotator.setPosition(Constants.SPECIMEN_PICK_READY.clawRotatorPos.getPos());
+                                    this.littleArm.middleServo.setPosition(Constants.MIDDLE_SERVO_INIT_POS);
+                                    this.littleArm.doubleServos.setPosition(Constants.DOUBLE_SERVOS_INIT_POS);
+                                    this.littleArm.clawRotator.setPosition(Constants.CLAW_ROTATOR_INIT_POS);
+                                    this.littleArm.clawPincher.setPosition(Constants.CLAW_PINCHER_CLOSE_POS);
 
                                 })
                         )
@@ -447,13 +472,22 @@ public class RoadrunnerAuton extends AutoBot {
                 .waitSeconds(0.2)
 
 
-                //Retreat back to next Specimen
+//                //Retreat back to next Specimen
+//                .setTangent(Math.toRadians(270))
+//                .splineToConstantHeading(new Vector2d(24, -51), Math.toRadians(0))
+//                .splineToConstantHeading(new Vector2d(40, -57.5), Math.toRadians(270),
+//                        new TranslationalVelConstraint(18),
+//                        new ProfileAccelConstraint(-60, 45)
+//                )
+
+                //Retreat back to observation zone
                 .setTangent(Math.toRadians(270))
-                .splineToConstantHeading(new Vector2d(24, -51), Math.toRadians(0))
-                .splineToConstantHeading(new Vector2d(40, -57.5), Math.toRadians(270),
-                        new TranslationalVelConstraint(18),
-                        new ProfileAccelConstraint(-60, 45)
-                )
+                .splineToConstantHeading(new Vector2d(24, -51), Math.toRadians(0),
+                        new TranslationalVelConstraint(25))
+                .splineToConstantHeading(new Vector2d(44, -52), Math.toRadians(270),
+                        new TranslationalVelConstraint(20))
+
+                .waitSeconds(80)
 
 
 
@@ -464,98 +498,8 @@ public class RoadrunnerAuton extends AutoBot {
 
 
 
-//              Cycle Specimen (4th total)
+//              //TODO: Cycle Specimen (4th total)
 //              -----------------------------------------------------------------------------------------
-
-
-
-
-                .waitSeconds(0.25)
-
-                .afterTime(0.0, () -> {
-                    this.littleArm.clawPincher.setPosition(Constants.CLAW_PINCHER_CLOSE_POS);
-                })
-
-                .waitSeconds(0.15)
-
-
-                //Raise Up Boom, Then Extend ViperSLide
-                .afterTime(0, new SequentialAction(
-                        new MainBoomToSpecimenHighReady(this.bigArm.mainBoom),
-
-                        new InstantAction(() -> this.littleArm.doubleServos.setPosition(Constants.SPECIMEN_PLACE_HIGH_READY.doubleServosPos.getPos())),
-
-                        new ViperSlideToSpecimenHighReady(this.bigArm.viperSlide),
-
-                        new InstantAction(() -> {
-                            this.littleArm.middleServo.setPosition(Constants.SPECIMEN_PLACE_HIGH_READY.middleServoPos.getPos());
-                            this.littleArm.clawRotator.setPosition(Constants.SPECIMEN_PLACE_HIGH_READY.clawRotatorPos.getPos());
-                        })
-                ))
-
-//                //Move Servos
-//                .afterTime(0.15, () -> {
-//                    this.littleArm.doubleServos.setPosition(Constants.SPECIMEN_PLACE_HIGH_READY.doubleServosPos.getPos());
-//                    this.littleArm.middleServo.setPosition(Constants.SPECIMEN_PLACE_HIGH_READY.middleServoPos.getPos());
-//                    this.littleArm.clawRotator.setPosition(Constants.SPECIMEN_PLACE_HIGH_READY.clawRotatorPos.getPos());
-//                })
-
-
-
-                //Hang Specimen
-                .setTangent(Math.toRadians(140))
-                .splineToConstantHeading(new Vector2d(12,-60), Math.toRadians(180))
-                .splineToConstantHeading(new Vector2d(-5,-38), Math.toRadians(90))
-
-
-
-
-                .afterTime(0, () -> this.littleArm.clawPincher.setPosition(Constants.CLAW_PINCHER_OPEN_POS))
-
-                .afterTime(0.18, () -> this.littleArm.middleServo.setPosition((Constants.MIDDLE_SERVO_SPECIMEN_PLACED)))
-
-
-
-                .afterTime(0.5, new SequentialAction(
-
-                        //Run Again to ensure it reaches position
-                        new ViperSlideToSpecimenHighReady(this.bigArm.viperSlide),
-
-                        new ViperSlideToZero(this.bigArm.viperSlide),
-
-                        new ParallelAction(
-                                new MainBoomToZero(this.bigArm.mainBoom),
-
-                                new InstantAction(() -> {
-
-                                    this.littleArm.clawPincher.setPosition(this.littleArm.clawPincher.getConfig().homePosition);
-                                    this.littleArm.clawRotator.setPosition(this.littleArm.clawRotator.getConfig().homePosition);
-                                    this.littleArm.middleServo.setPosition(this.littleArm.middleServo.getConfig().homePosition);
-                                    this.littleArm.doubleServos.setPosition(this.littleArm.doubleServos.getConfig().homePosition);
-
-                                })
-                        )
-                ))
-
-
-                //TODO:See if this changes anything
-                .waitSeconds(0.0)
-
-
-
-                //Retreat back to next Specimen
-                .setTangent(Math.toRadians(270))
-                .splineToConstantHeading(new Vector2d(24, -51), Math.toRadians(0))
-                .splineToConstantHeading(new Vector2d(42, -57.5), Math.toRadians(270),
-                        new TranslationalVelConstraint(18),
-                        new ProfileAccelConstraint(-60, 45)
-                )
-
-
-
-
-
-
 
 
 

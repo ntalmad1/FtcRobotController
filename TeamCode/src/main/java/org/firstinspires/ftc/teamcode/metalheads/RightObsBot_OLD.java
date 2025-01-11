@@ -7,6 +7,7 @@ import com.acmerobotics.roadrunner.TranslationalVelConstraint;
 import com.acmerobotics.roadrunner.Vector2d;
 import com.acmerobotics.roadrunner.ftc.Actions;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.hardware.DcMotor;
 
 import org.firstinspires.ftc.teamcode.metalheads.compbot.AutoActionFactory;
@@ -17,7 +18,7 @@ import org.firstinspires.ftc.teamcode.metalheads.compbot.Constants;
  *
  */
 @Autonomous(name = "Right-Observation_OLD", group = "Auto")
-//@Disabled
+@Disabled
 public class RightObsBot_OLD extends AutoBot {
 
     private AutoActionFactory autoActionFactory;
