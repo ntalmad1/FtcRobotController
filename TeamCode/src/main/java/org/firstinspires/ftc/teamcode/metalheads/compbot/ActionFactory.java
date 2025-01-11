@@ -308,6 +308,7 @@ public class ActionFactory {
                 new InstantActionImpl(() -> { this.compBot.setArmPos(CompBot.ArmPos.SPECIMEN_PICK_READY); }),
                 this.compBot.littleArm.clawPincher.gotoPositionAction(Constants.CLAW_PINCHER_OPEN_POS, 1),
                 new WaitAction(400),
+                this.compBot.littleArm.middleServo.gotoPositionAction(Constants.MIDDLE_SERVO_SPECIMEN_PLACED, 1),
                 this.compBot.bigArm.viperSlide.viperSlidesGotoPositionAction(Constants.VIPER_SLIDES_MIN_TICS, 1),
                 new WaitAction(1000),
                 this.compBot.littleArm.middleServo.gotoPositionAction(Constants.SPECIMEN_PICK_READY.middleServoPos),
