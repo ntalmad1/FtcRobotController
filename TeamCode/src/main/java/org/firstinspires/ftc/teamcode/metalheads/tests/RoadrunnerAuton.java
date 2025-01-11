@@ -11,6 +11,7 @@ import com.acmerobotics.roadrunner.TranslationalVelConstraint;
 import com.acmerobotics.roadrunner.Vector2d;
 import com.acmerobotics.roadrunner.ftc.Actions;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.hardware.DcMotor;
 
 import org.firstinspires.ftc.teamcode.library.action.WaitAction;
@@ -22,7 +23,6 @@ import org.firstinspires.ftc.teamcode.metalheads.compbot.Constants;
 import org.firstinspires.ftc.teamcode.metalheads.compbot.autoactions.MainBoomToSpecimenHighReady;
 import org.firstinspires.ftc.teamcode.metalheads.compbot.autoactions.MainBoomToSpecimenPickReady;
 import org.firstinspires.ftc.teamcode.metalheads.compbot.autoactions.MainBoomToZero;
-import org.firstinspires.ftc.teamcode.metalheads.compbot.autoactions.ViperSlideReachedTargetPosition;
 import org.firstinspires.ftc.teamcode.metalheads.compbot.autoactions.ViperSlideToSpecimenHighReady;
 import org.firstinspires.ftc.teamcode.metalheads.compbot.autoactions.ViperSlideToZero;
 
@@ -30,7 +30,7 @@ import org.firstinspires.ftc.teamcode.metalheads.compbot.autoactions.ViperSlideT
  *
  */
 @Autonomous(name = "Autonomous Testing", group = "Auto")
-//@Disabled
+@Disabled
 public class RoadrunnerAuton extends AutoBot {
 
     private AutoActionFactory autoActionFactory;

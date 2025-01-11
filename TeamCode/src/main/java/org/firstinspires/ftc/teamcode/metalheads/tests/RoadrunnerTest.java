@@ -11,6 +11,7 @@ import com.acmerobotics.roadrunner.TranslationalVelConstraint;
 import com.acmerobotics.roadrunner.Vector2d;
 import com.acmerobotics.roadrunner.ftc.Actions;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.hardware.DcMotor;
 
 import org.firstinspires.ftc.teamcode.metalheads.RightObsBotConfig;
@@ -28,7 +29,7 @@ import org.firstinspires.ftc.teamcode.metalheads.compbot.autoactions.ViperSlideT
  *
  */
 @Autonomous(name = "Roadrunner Tester", group = "Auto")
-//@Disabled
+@Disabled
 public class RoadrunnerTest extends AutoBot {
 
     private AutoActionFactory autoActionFactory;
