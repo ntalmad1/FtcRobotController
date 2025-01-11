@@ -95,16 +95,16 @@ public class RoadrunnerAuton extends AutoBot {
                         new MainBoomToSpecimenHighReady(this.bigArm.mainBoom),
 
                         new InstantAction(() -> {
-                            this.telemetry.log().add("Left MainBoom: " + this.bigArm.mainBoom.getSecondaryMotor().getCurrentPosition());
-                            this.telemetry.log().add("Right MainBoom: " + this.bigArm.mainBoom.getMotor().getCurrentPosition());
+                            this.telemetry.log().add("1.1 Left MainBoom: " + this.bigArm.mainBoom.getSecondaryMotor().getCurrentPosition());
+                            this.telemetry.log().add("1.1 Right MainBoom: " + this.bigArm.mainBoom.getMotor().getCurrentPosition());
                             this.telemetry.update();
                         }),
 
                         new ViperSlideToSpecimenHighReady(this.bigArm.viperSlide),
 
                         new InstantAction(() -> {
-                            this.telemetry.log().add("Left MainBoom: " + this.bigArm.mainBoom.getSecondaryMotor().getCurrentPosition());
-                            this.telemetry.log().add("Right MainBoom: " + this.bigArm.mainBoom.getMotor().getCurrentPosition());
+                            this.telemetry.log().add("1.2 Left MainBoom: " + this.bigArm.mainBoom.getSecondaryMotor().getCurrentPosition());
+                            this.telemetry.log().add("1.2 Right MainBoom: " + this.bigArm.mainBoom.getMotor().getCurrentPosition());
                             this.telemetry.update();
                         })
                 ))
@@ -126,7 +126,7 @@ public class RoadrunnerAuton extends AutoBot {
                 //Go To bar
                 .lineToY(-37,
                         new TranslationalVelConstraint(50),
-                        new ProfileAccelConstraint(-60, 30))
+                        new ProfileAccelConstraint(-60, 20))
 
 
                 //Open Claw to release Specimen
@@ -295,8 +295,8 @@ public class RoadrunnerAuton extends AutoBot {
                         new ParallelAction(
 
                                 new InstantAction(() -> {
-                                    this.telemetry.log().add("Left MainBoom: " + this.bigArm.mainBoom.getSecondaryMotor().getCurrentPosition());
-                                    this.telemetry.log().add("Right MainBoom: " + this.bigArm.mainBoom.getMotor().getCurrentPosition());
+                                    this.telemetry.log().add("2.1 Left MainBoom: " + this.bigArm.mainBoom.getSecondaryMotor().getCurrentPosition());
+                                    this.telemetry.log().add("2.1 Right MainBoom: " + this.bigArm.mainBoom.getMotor().getCurrentPosition());
                                     this.telemetry.update();
                                 }),
 
@@ -310,8 +310,8 @@ public class RoadrunnerAuton extends AutoBot {
                                 }),
 
                                 new InstantAction(() -> {
-                                    this.telemetry.log().add("Left MainBoom: " + this.bigArm.mainBoom.getSecondaryMotor().getCurrentPosition());
-                                    this.telemetry.log().add("Right MainBoom: " + this.bigArm.mainBoom.getMotor().getCurrentPosition());
+                                    this.telemetry.log().add("2.2 Left MainBoom: " + this.bigArm.mainBoom.getSecondaryMotor().getCurrentPosition());
+                                    this.telemetry.log().add("2.2 Right MainBoom: " + this.bigArm.mainBoom.getMotor().getCurrentPosition());
                                     this.telemetry.update();
                                 })
 
@@ -397,8 +397,8 @@ public class RoadrunnerAuton extends AutoBot {
                         new ParallelAction(
 
                                 new InstantAction(() -> {
-                                    this.telemetry.log().add("Left MainBoom: " + this.bigArm.mainBoom.getSecondaryMotor().getCurrentPosition());
-                                    this.telemetry.log().add("Right MainBoom: " + this.bigArm.mainBoom.getMotor().getCurrentPosition());
+                                    this.telemetry.log().add("3.1 Left MainBoom: " + this.bigArm.mainBoom.getSecondaryMotor().getCurrentPosition());
+                                    this.telemetry.log().add("3.1 Right MainBoom: " + this.bigArm.mainBoom.getMotor().getCurrentPosition());
                                     this.telemetry.update();
                                 }),
 
@@ -413,8 +413,8 @@ public class RoadrunnerAuton extends AutoBot {
                                 }),
                                 
                                 new InstantAction(() -> {
-                                    this.telemetry.log().add("Left MainBoom: " + this.bigArm.mainBoom.getSecondaryMotor().getCurrentPosition());
-                                    this.telemetry.log().add("Right MainBoom: " + this.bigArm.mainBoom.getMotor().getCurrentPosition());
+                                    this.telemetry.log().add("3.2 Left MainBoom: " + this.bigArm.mainBoom.getSecondaryMotor().getCurrentPosition());
+                                    this.telemetry.log().add("3.2 Right MainBoom: " + this.bigArm.mainBoom.getMotor().getCurrentPosition());
                                     this.telemetry.update();
                                 })
                         )
@@ -477,6 +477,8 @@ public class RoadrunnerAuton extends AutoBot {
                         new TranslationalVelConstraint(25))
                 .splineToConstantHeading(new Vector2d(44, -52), Math.toRadians(270),
                         new TranslationalVelConstraint(20))
+
+                .waitSeconds(80)
 
 
 
