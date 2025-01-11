@@ -42,7 +42,7 @@ public class MainBoomToSpecimenHighReady implements Action {
         // checks lift's current position
         double pos = mainBoom.getCurrentPosition();
         packet.put("mainBoomPos", pos);
-        if ((pos > targetPosition -20) && (pos < targetPosition + 20)) {
+        if ((pos > targetPosition -10) && (pos < targetPosition + 10)) {
 
             return STOP;
         } else {

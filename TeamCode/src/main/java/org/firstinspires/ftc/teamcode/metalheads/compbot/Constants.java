@@ -130,7 +130,8 @@ public class Constants {
     public static final PositionsStruct SPECIMEN_PLACE_HIGH_READY = new PositionsStruct() {
         @Override
         public void setValues() {
-            mainBoomPos = new MotorPos(526);
+            // was 526
+            mainBoomPos = new MotorPos(536);
             vSlidePos = new MotorPos(1500);
             doubleServosPos = new ServoPos(0.260);
             middleServoPos = new ServoPos(0.0);
