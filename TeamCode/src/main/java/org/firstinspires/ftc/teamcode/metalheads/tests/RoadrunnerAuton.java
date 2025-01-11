@@ -82,7 +82,7 @@ public class RoadrunnerAuton extends AutoBot {
         super.go();
 
         int initialHangExtraTicks = 8;
-        int specimenCycleExtraTicks = 35;
+        int specimenCycleExtraTicks = 38;
 
 
         TrajectoryActionBuilder mainTrajectory = this.getDrive().actionBuilder(this.initialPose)
@@ -91,9 +91,22 @@ public class RoadrunnerAuton extends AutoBot {
 //              ----------------------------------------------------------------------------------------------
 
                 //SPECIMEN PLACE HIGH READY (Main Boom + Viper Slide)
-                .afterTime(0, new SequentialAction(
-                        new MainBoomToSpecimenHighReady(this.bigArm.mainBoom),
+                // BEGINING
+                //
+                .afterTime(0, new InstantAction(()->{
+                    int targetPosition = Constants.SPECIMEN_PLACE_HIGH_READY.mainBoomPos.getPos();
 
+                    this.bigArm.mainBoom.getMotor().setTargetPosition(targetPosition);
+                    this.bigArm.mainBoom.getSecondaryMotor().setTargetPosition(targetPosition);
+
+                    this.bigArm.mainBoom.getMotor().setMode(DcMotor.RunMode.RUN_TO_POSITION);
+                    this.bigArm.mainBoom.getSecondaryMotor().setMode(DcMotor.RunMode.RUN_TO_POSITION);
+
+                    this.bigArm.mainBoom.getMotor().setPower(1);
+                    this.bigArm.mainBoom.getSecondaryMotor().setPower(1);
+
+                }))
+                .afterTime(0.3, new SequentialAction(
                         new InstantAction(() -> {
                             this.telemetry.log().add("1.1 Left MainBoom: " + this.bigArm.mainBoom.getSecondaryMotor().getCurrentPosition());
                             this.telemetry.log().add("1.1 Right MainBoom: " + this.bigArm.mainBoom.getMotor().getCurrentPosition());
@@ -110,7 +123,7 @@ public class RoadrunnerAuton extends AutoBot {
                 ))
 
                 //SPECIMEN PLACE HIGH READY (Servos)
-                .afterTime(0, () -> {
+                .afterTime(0.2, () -> {
 
                     this.littleArm.doubleServos.setPosition(Constants.SPECIMEN_PLACE_HIGH_READY.doubleServosPos.getPos());
                     this.littleArm.middleServo.setPosition(Constants.SPECIMEN_PLACE_HIGH_READY.middleServoPos.getPos());
@@ -135,7 +148,7 @@ public class RoadrunnerAuton extends AutoBot {
                     this.littleArm.middleServo.setPosition(Constants.MIDDLE_SERVO_SPECIMEN_PLACED);
                 })
                 //Viper Slide -> 0
-                .afterTime(0.3, new SequentialAction(
+                .afterTime(0.4, new SequentialAction(
                         new ViperSlideToZero(this.bigArm.viperSlide),
                         new ParallelAction(
                                 new MainBoomToZero(this.bigArm.mainBoom),
