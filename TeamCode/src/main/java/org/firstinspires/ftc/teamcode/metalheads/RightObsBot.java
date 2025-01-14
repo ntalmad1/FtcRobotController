@@ -191,15 +191,15 @@ public class RightObsBot extends AutoBot {
                 .splineToConstantHeading(new Vector2d(36, -18.6), Math.toRadians(90))
 
 
-                .splineToConstantHeading(new Vector2d(44, -11), Math.toRadians(0),
+                .splineToConstantHeading(new Vector2d(43, -11), Math.toRadians(0),
                         new TranslationalVelConstraint(30))
 
-                .splineToConstantHeading(new Vector2d(48.6, -14), Math.toRadians(270),
+                .splineToConstantHeading(new Vector2d(45, -14), Math.toRadians(270),
                         new TranslationalVelConstraint(25),
                         new ProfileAccelConstraint(-25, 60))
 
                 .lineToYConstantHeading(-48)
-                .splineToConstantHeading(new Vector2d(47,-52), Math.toRadians(90),
+                .splineToConstantHeading(new Vector2d(44, -52), Math.toRadians(90),
                         null,
                         new ProfileAccelConstraint(-60, 18)
                 )
@@ -218,12 +218,12 @@ public class RightObsBot extends AutoBot {
                         new TranslationalVelConstraint(25)
                 )
 
-                .splineToConstantHeading(new Vector2d(57, -14), Math.toRadians(270),
+                .splineToConstantHeading(new Vector2d(55, -14), Math.toRadians(270),
                         new TranslationalVelConstraint(20)
                 )
 
                 .lineToYConstantHeading(-45)
-                .splineToConstantHeading(new Vector2d(55,-49), Math.toRadians(90),
+                .splineToConstantHeading(new Vector2d(54,-49), Math.toRadians(90),
                         null,
                         new ProfileAccelConstraint(-60,18)
                 )

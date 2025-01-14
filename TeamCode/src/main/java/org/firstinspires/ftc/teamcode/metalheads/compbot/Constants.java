@@ -144,6 +144,23 @@ public class Constants {
         }
     };
 
+
+    /**
+     */
+    public static final PositionsStruct SPECIMEN_PLACE_HIGH_READY_TELEOP = new PositionsStruct() {
+        @Override
+        public void setValues() {
+            // was 526
+            mainBoomPos = new MotorPos(536);
+            vSlidePos = new MotorPos(1512);
+            doubleServosPos = new ServoPos(0.260);
+            middleServoPos = new ServoPos(0.0);
+            clawRotatorPos = new ServoPos(Constants.CLAW_ROTATOR_0_DEG);
+            clawPincherPos = new ServoPos(Constants.CLAW_PINCHER_CLOSE_POS);
+        }
+    };
+
+
     /**
      */
     public static final PositionsStruct HANG_READY = new PositionsStruct() {
