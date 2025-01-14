@@ -21,79 +21,35 @@ public class RedSamples {
 //                .followTrajectorySequence(drive -> drive.trajectorySequenceBuilder(new Pose2d(35.5, -61, Math.toRadians(90)))
                 .followTrajectorySequence(drive -> drive.trajectorySequenceBuilder(new Pose2d(8, -61, Math.toRadians(90)))
 
-                        .lineTo(new Vector2d(8, -36))
+                        .lineTo(new Vector2d(8, -37))
                         //.lineToY( -39)
 
 
 
-                        /**
-                        * first sample
-                        */
-                        .setTangent(Math.toRadians(270))
-                        .splineToConstantHeading(new Vector2d(24, -44), Math.toRadians(0)) //Go towards sample
-                        //.splineToConstantHeading(new Vector2d(24, -44), Math.toRadians(0))
+                        .setTangent(Math.toRadians(-90))
+                        .splineToConstantHeading(new Vector2d(18,-50), 0)
 
-                        .splineToConstantHeading(new Vector2d(38, -18.6), Math.toRadians(90))
-                        //.splineToConstantHeading(new Vector2d(36, -18.6), Math.toRadians(0))
-
-                        .splineToConstantHeading(new Vector2d(43, -12), Math.toRadians(0))
-                        //.splineToConstantHeading(new Vector2d(43, -7), Math.toRadians(0))
-
-                        .splineToConstantHeading(new Vector2d(45.3, -14), Math.toRadians(270))
-                        //.splineToConstantHeading(new Vector2d(45.3, -14), Math.toRadians(270))
-
-                        .lineToConstantHeading(new Vector2d(45.3, -52))
-                        //.lineToYConstantHeading(-52) //Go to Observation zone
+                        //.splineToSplineHeading(new Pose2d(29.75, -33.77, Math.toRadians(34.3)), Math.toRadians(90))
+                        .splineToLinearHeading(new Pose2d(29.75, -33.77, Math.toRadians(34.3)), Math.toRadians(90))
 
 
-                        /**
-                        * second sample
-                        */
-                        .lineTo(new Vector2d(45.3, -18.6))
-                        //.lineToY(-18.6)
-
-                        .splineToConstantHeading(new Vector2d(52, -12), Math.toRadians(0))
-                        //.splineToConstantHeading(new Vector2d(52, -12), Math.toRadians(0))
-
-                        .splineToConstantHeading(new Vector2d(56, -14), Math.toRadians(270))
-                        //.splineToConstantHeading(new Vector2d(56, -14), Math.toRadians(270))
-
-                        .lineToConstantHeading(new Vector2d(56, -52))
-                        //.lineToYConstantHeading(-52)
-
-                        /**
-                        *grab first specimen
-                        */
-                        .setTangent(Math.toRadians(90))
-                        .splineToConstantHeading(new Vector2d(51, -44), Math.toRadians(180))
-
-                        .splineToConstantHeading(new Vector2d(46, -57.5), Math.toRadians(270))
-                        //TODO: SLOW!!, Grab Specimen
-
-                        .waitSeconds(0.6)
-                        //TODO:Grab Specimen
+                        .setTangent(Math.toRadians(0))
+                        .splineToLinearHeading(new Pose2d(33, -33.5, Math.toRadians(-55.7)), Math.toRadians(-90))
 
 
-                        /**
-                        * hang specimen
-                        */
-                        .setTangent(Math.toRadians(160))
-                        //.strafeTo(new Vector2d(15,-50))//Go towards bar
-
-                        .splineToConstantHeading(new Vector2d(5,-52), Math.toRadians(90))
-
-                        .lineToConstantHeading(new Vector2d(5,-39))//go forwards to hang specimen
+                        .setTangent(0)
+                        .splineToLinearHeading(new Pose2d(35, -37.5, Math.toRadians(37.8)), Math.toRadians(0))
 
 
-                        /**
-                        * Go Back to Obs. Zone
-                        */
-                        .setTangent(Math.toRadians(270))
-                        .lineToConstantHeading(new Vector2d(5,-44))
+                        .setTangent(Math.toRadians(0))
+                        .splineToLinearHeading(new Pose2d(36.5, -34, Math.toRadians(-57)), Math.toRadians(-90))
 
-                        .splineToConstantHeading(new Vector2d(34,-40), Math.toRadians(0))
 
-                        .splineToConstantHeading(new Vector2d(46, -54), Math.toRadians(270))
+                        .setTangent(0)
+                        .splineToLinearHeading(new Pose2d(37.3, -32, Math.toRadians(22.3)), Math.toRadians(0))
+
+
+
 
 
 

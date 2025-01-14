@@ -527,7 +527,7 @@ public class RightObsBot extends AutoBot {
 
 
 
-                ;
+        ;
         Actions.runBlocking(mainTrajectory.build());
 
     }
