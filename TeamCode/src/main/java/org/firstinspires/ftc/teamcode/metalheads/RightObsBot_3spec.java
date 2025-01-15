@@ -25,9 +25,9 @@ import org.firstinspires.ftc.teamcode.metalheads.compbot.autoactions.ViperSlideT
 /**
  *
  */
-@Autonomous(name = "RightObsBot", group = "Auto")
+@Autonomous(name = "RightObsBot_3spec", group = "Auto")
 //@Disabled
-public class RightObsBot extends AutoBot {
+public class RightObsBot_3spec extends AutoBot {
 
     private AutoActionFactory autoActionFactory;
 
@@ -35,7 +35,7 @@ public class RightObsBot extends AutoBot {
      * Constructor
      *
      */
-    public RightObsBot() {
+    public RightObsBot_3spec() {
         super();
 
         this.setTrajectoryFactory(new RightObsTrajectoryFactory(this));

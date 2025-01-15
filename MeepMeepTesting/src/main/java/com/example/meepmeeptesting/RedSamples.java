@@ -33,20 +33,30 @@ public class RedSamples {
                         .splineToLinearHeading(new Pose2d(29.75, -33.77, Math.toRadians(34.3)), Math.toRadians(90))
 
 
+                        .waitSeconds(0.8)
                         .setTangent(Math.toRadians(0))
                         .splineToLinearHeading(new Pose2d(33, -33.5, Math.toRadians(-55.7)), Math.toRadians(-90))
 
 
+                        .waitSeconds(0.8)
                         .setTangent(0)
                         .splineToLinearHeading(new Pose2d(35, -37.5, Math.toRadians(37.8)), Math.toRadians(0))
 
 
+                        .waitSeconds(0.8)
                         .setTangent(Math.toRadians(0))
                         .splineToLinearHeading(new Pose2d(36.5, -34, Math.toRadians(-57)), Math.toRadians(-90))
 
 
+                        .waitSeconds(0.8)
                         .setTangent(0)
                         .splineToLinearHeading(new Pose2d(37.3, -32, Math.toRadians(22.3)), Math.toRadians(0))
+
+                        .waitSeconds(0.8)
+                        .setTangent(Math.toRadians(0))
+                        .splineToLinearHeading(new Pose2d(45.25, -40, Math.toRadians(90)), Math.toRadians(-90))
+
+                        .lineTo(new Vector2d(45.25, -57.25))
 
 
 
